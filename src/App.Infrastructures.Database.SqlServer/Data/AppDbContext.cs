@@ -12,16 +12,16 @@ namespace App.Infrastructures.Database.SqlServer.Data
         {
         }
 
-        public AppDbContext(DbContextOptions<AppDbContext> options)
-            : base(options)
-        {
-        }
+        //public AppDbContext(DbContextOptions<AppDbContext> options)
+        //    : base(options)
+        //{
+        //}
 
         public virtual DbSet<Brand> Brands { get; set; } = null!;
         public virtual DbSet<Category> Categories { get; set; } = null!;
         public virtual DbSet<Collection> Collections { get; set; } = null!;
         public virtual DbSet<CollectionProduct> CollectionProducts { get; set; } = null!;
-        public virtual DbSet<Color> Colors { get; set; } = null!;
+        public virtual DbSet<App.Infrastructures.Database.SqlServer.Entities.Color> Colors { get; set; } = null!;
         public virtual DbSet<Comment> Comments { get; set; } = null!;
         public virtual DbSet<FileType> FileTypes { get; set; } = null!;
         public virtual DbSet<FileTypeExtention> FileTypeExtentions { get; set; } = null!;
