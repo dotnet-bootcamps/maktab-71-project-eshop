@@ -9,16 +9,16 @@ using System.Threading.Tasks;
 
 namespace App.Infrastructures.Database.SqlServer.Repositories
 {
-    internal class BrandRepository
+    public class BrandRepository
     {
-        public static AppDbContext _eshop = new();
-        public static void Create(Brand brand)
+        public AppDbContext _eshop = new();
+        public void Create(Brand brand)
         {
             _eshop.Brands.Add(brand);
             _eshop.SaveChanges();
         }
 
-        public static void Edit(Brand model)
+        public void Edit(Brand model)
         {
             var brand = _eshop.Brands.First(p => p.Id == model.Id);
             brand.Name = model.Name;
@@ -27,19 +27,19 @@ namespace App.Infrastructures.Database.SqlServer.Repositories
             _eshop.SaveChanges();
         }
 
-        public static void Delete(int id)
+        public void Delete(int id)
         {
             var brand = _eshop.Brands.First(p => p.Id == id);
             _eshop.Brands.Remove(brand);
             _eshop.SaveChanges();
         }
 
-        public static List<Brand> GetAll()
+        public List<Brand> GetAll()
         {
-            return _eshop.Brands.Include(b=>b.Products).ToList();
+            return _eshop.Brands.Include(b => b.Products).ToList();
         }
 
-        public static Brand GetById(int id)
+        public Brand GetById(int id)
         {
             return _eshop.Brands.First(p => p.Id == id);
         }
