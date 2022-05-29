@@ -1,0 +1,39 @@
+﻿@model CategorySaveVM
+
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-controller="Create" asp-action="Update" method="post">
+            <div class="form-group">
+                <label asp-for=Name></label>
+                <input type="text" class="form-control" asp-for=Name>
+            </div>
+            <div class="form-group">
+                <label asp-for=IsActive></label>
+                <input type="datetime" class="form-control" asp-for=IsActive>
+            </div>
+            <div class="form-group">
+                <label asp-for=DisplayOrder></label>
+                <input type="number" class="form-control" asp-for=DisplayOrder>
+            </div>
+            <div class="form-group">
+                <label asp-for=ParentCategoryId></label>
+                <input type="number" class="form-control" asp-for=ParentCategoryId>
+            </div>
+            <div class="form-group my-2">
+                <input type="radio" id="true" name="IsActive" value="1" />
+                <label for="true">فعال</label>
+                <input type="radio" id="false" name="IsActive" value="0" />
+                <label for="false">غیر فعال</label>
+            </div>
+            <div class="form-group">
+                <label asp-for=CreationDate></label>
+                <input type="date" class="form-control" asp-for=CreationDate>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+
+
