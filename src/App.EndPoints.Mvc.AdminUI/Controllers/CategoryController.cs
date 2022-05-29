@@ -1,5 +1,4 @@
 ﻿using App.EndPoints.Mvc.AdminUI.ViewModels;
-using App.Infrastructures.Database.SqlServer.Data;
 using Microsoft.AspNetCore.Mvc;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
@@ -11,7 +10,6 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
         public IActionResult Index()
         {
-            // TODO
             List<CategoryListVM> model = new List<CategoryListVM>();
             return View(model);
         }

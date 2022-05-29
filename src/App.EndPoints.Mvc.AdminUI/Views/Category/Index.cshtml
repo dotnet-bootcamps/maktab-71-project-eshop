@@ -32,29 +32,31 @@
 
         @foreach (var item in Model)
         {
-            <tr>
-                <td scope="row">
+                <tr>
+                    <td scope="row">
                     @item.Id
-                </td>
-                <td>
+                    </td>
+                    <td>
                     @item.Name
-                </td>
-                <td>
+                    </td>
+                    <td>
                     @item.IsActive
-                </td>
-                <td>
+                    </td>
+                    <td>
                     @item.DisplayOrder
-                </td>
-                <td>
+                    </td>
+                    <td>
                     @item.ParentCategoryId
-                </td>
-                <td>
+                    </td>
+                    <td>
                     @item.CreationDate
-                </td>
-                <td>
-
-                </td>
-            </tr>
+                    </td>
+                    <td>
+                        <a class="btn btn-secondary" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                        <a class="btn btn-warning" asp-action="View" asp-route-id="@item.Id">Details</a>
+                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
         }
     </tbody>
 </table>
