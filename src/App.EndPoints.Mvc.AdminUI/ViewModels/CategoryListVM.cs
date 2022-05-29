@@ -1,12 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace App.EndPoints.Mvc.AdminUI.ViewModels
+﻿namespace App.EndPoints.Mvc.AdminUI.ViewModels
 {
-    public class CategoryListVM : Controller
+    public class CategoryListVM
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+        public int Id { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public bool IsActive { get; set; }
+        public int DisplayOrder { get; set; }
+        public int ParentCategoryId { get; set; }
+        public DateTime CreationDate { get; set; }
+
     }
 }

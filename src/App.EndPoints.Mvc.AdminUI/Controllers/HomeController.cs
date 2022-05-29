@@ -18,12 +18,6 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
             return View();
         }
 
-        [HttpGet]
-        public IActionResult AddProduct()
-        {
-
-        }
-
         public IActionResult Privacy()
         {
             return View();

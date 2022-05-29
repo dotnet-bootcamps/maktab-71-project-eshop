@@ -6,10 +6,8 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly Repository _repo;
-        public CategoryController(Repository repo)
+        public CategoryController()
         {
-            _repo = repo;
         }
         public IActionResult Index()
         {
