@@ -3,13 +3,13 @@ using App.Infrastructures.Database.SqlServer.Entities;
 
 public class ProductRepository
 {
-    public static AppDbContext _eShop = new();
-    public static void Create(Product product )
+    public  AppDbContext _eShop = new();
+    public  void Create(Product product )
     {
         _eShop.Products.Add( product );
         _eShop.SaveChanges();
     }
-    public static void Edit(Product model)
+    public  void Edit(Product model)
     {
         var product = _eShop.Products.FirstOrDefault(p => p.Id == model.Id);
         product.Name = model.Name;
@@ -23,7 +23,7 @@ public class ProductRepository
 
     }
 
-    public static void Delete(int id)
+    public  void Delete(int id)
     {
         var product = _eShop.Products.FirstOrDefault(p => p.Id == id);
         _eShop.Products.Remove(product);
@@ -31,11 +31,11 @@ public class ProductRepository
 
     }
 
-    public static List<Product> GetAll()
+    public  List<Product> GetAll()
     {
         return _eShop.Products.ToList();
     }
-    public static Product GetById(int id)
+    public  Product GetById(int id)
     {
         return _eShop.Products.First(p => p.Id == id);
     }
