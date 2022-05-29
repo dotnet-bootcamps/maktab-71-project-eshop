@@ -13,7 +13,7 @@ namespace App.Infrastructures.Database.SqlServer.Ripository
     {
 
         public  AppDbContext _eshop = new();
-        public static void Create(Color color)
+        public  void Create(Color color)
         {
             _eshop.Colors.Add(color);
             _eshop.SaveChanges();
