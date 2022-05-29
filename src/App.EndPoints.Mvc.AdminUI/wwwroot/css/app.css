@@ -3550,7 +3550,7 @@ textarea.form-control-lg {
     min-width: 10rem;
     padding: .5rem 0;
     position: absolute;
-    text-align: left;
+    text-align: right;
     z-index: 1000
 }
 
@@ -12921,17 +12921,17 @@ body {
     flex-grow: 1;
     list-style: none;
     margin-bottom: 0;
-    padding-left: 0
+    padding-right: 0
 }
 
 .sidebar-link, a.sidebar-link {
     background: #222e3c;
-    border-left: 3px solid transparent;
+    border-right: 5px solid transparent;
     color: rgba(233,236,239,.5);
     cursor: pointer;
     display: block;
     font-weight: 400;
-    padding: .625rem 1.625rem;
+    padding: .625rem 1rem;
     position: relative;
     text-decoration: none;
     transition: background .1s ease-in-out
@@ -12956,8 +12956,8 @@ body {
         }
 
 .sidebar-item.active .sidebar-link:hover, .sidebar-item.active > .sidebar-link {
-    background: linear-gradient(90deg,rgba(59,125,221,.1),rgba(59,125,221,.088) 50%,transparent);
-    border-left-color: #3b7ddd;
+    background: linear-gradient(270deg,rgba(59,125,221,.1),rgba(59,125,221,.088) 50%,transparent);
+    border-right-color: #3b7ddd;
     color: #e9ecef
 }
 
@@ -12990,16 +12990,16 @@ body {
 }
 
 .sidebar.collapsed {
-    margin-left: -260px
+    margin-right: -260px
 }
 
 @media(min-width:1px)and (max-width:991.98px) {
     .sidebar {
-        margin-left: -260px
+        margin-right: -260px
     }
 
         .sidebar.collapsed {
-            margin-left: 0
+            margin-right: 0
         }
 }
 
