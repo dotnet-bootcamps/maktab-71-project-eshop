@@ -5,8 +5,3 @@
 *, p, div, span, a, ul, li {
     font-family: 'Segoe UI';
 }
-
-.navbar-align {
-    margin-right: auto;
-    margin-left: 0;
-}
