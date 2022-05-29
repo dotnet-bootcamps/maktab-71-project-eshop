@@ -25,7 +25,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         {
             throw new NotImplementedException();
         }
-        public IActionResult Edit(CategorySaveVM model)
+        public IActionResult Edit(int id)
         {
             throw new NotImplementedException();
         }
