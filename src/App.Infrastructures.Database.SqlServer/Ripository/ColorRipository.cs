@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace App.Infrastructures.Database.SqlServer.Ripository
 {
-    internal class ColorRipository
+    public class ColorRipository
     {
 
         public static AppDbContext _eshop = new();
