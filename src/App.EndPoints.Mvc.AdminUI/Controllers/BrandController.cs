@@ -1,49 +1,63 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using App.Infrastructures.Database.SqlServer.Entities;
+using App.Infrastructures.Database.SqlServer.Repositories;
+using Microsoft.AspNetCore.Mvc;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
     public class BrandController : Controller
     {
+        BrandRepository _brandRepository;
+        public BrandController()
+        {
+            _brandRepository = new BrandRepository();
+        }
+        
         public IActionResult Index()
         {
-            return View();
+            var brands = _brandRepository.GetAll();
+            return View(brands);
         }
 
 
         [HttpGet]
         public IActionResult Create()
         {
+            
             return View();
         }
 
         [HttpPost]
-        public IActionResult Create(string model)
+        public IActionResult Create(Brand model)
         {
-            return View();
+            _brandRepository.Create(model);
+            return RedirectToAction("");
         }
 
 
         [HttpGet]
-        public IActionResult Update()
+        public IActionResult Update(int id)
         {
-            return View();
+            Brand brand=_brandRepository.GetById(id);
+            return View(brand);
         }
         [HttpPost]
-        public IActionResult Update(string model)
+        public IActionResult Update(Brand model)
         {
-            return View();
+            _brandRepository.Edit(model);
+            return RedirectToAction("");
         }
 
-
-        [HttpGet]
-        public IActionResult Delete()
-        {
-            return View();
-        }
+        //[HttpGet]
+        //public IActionResult Delete()
+        //{
+        //    return View();
+        //}        
         [HttpPost]
-        public IActionResult Delete(string model)
+        public IActionResult Delete(int id)
         {
-            return View();
+            _brandRepository.Delete(id);
+            return RedirectToAction("");
         }
+
     }
 }
