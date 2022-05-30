@@ -1,12 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using App.Infrastructures.Database.SqlServer.Ripository;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
     public class ColorsController : Controller
     {
+        private readonly ColorRepository _colorRepository;
         public IActionResult Index()
         {
-            return View();
+            var result = _colorRepository.GetAll();
+            return View(result);
         }
 
 
@@ -17,9 +20,10 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(string model)
+        public IActionResult Create(App.Infrastructures.Database.SqlServer.Entities.Color model)
         {
-            return View();
+            _colorRepository.Create(model);
+            return RedirectToAction("Index");
         }
 
 
@@ -29,21 +33,19 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Update(string model)
+        public IActionResult Update(App.Infrastructures.Database.SqlServer.Entities.Color model)
         {
-            return View();
+            _colorRepository.Edit(model);
+            return RedirectToAction("Index");
         }
 
 
-        [HttpGet]
-        public IActionResult Delete()
-        {
-            return View();
-        }
+
         [HttpPost]
-        public IActionResult Delete(string model)
+        public IActionResult Delete(int id)
         {
-            return View();
+            _colorRepository.Delete(id);
+            return RedirectToAction("Index");
         }
     }
 }
