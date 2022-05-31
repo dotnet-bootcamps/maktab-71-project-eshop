@@ -5,7 +5,15 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
     public class ColorsController : Controller
     {
+    
         private readonly ColorRepository _colorRepository;
+
+
+        public ColorsController()
+        {
+
+        }
+        
         public IActionResult Index()
         {
             var result = _colorRepository.GetAll();
@@ -18,6 +26,18 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         {
             return View();
         }
+        
+        public IActionResult SubmitCreatedColor()
+        {
+            return View();
+        }
+        
+        public IActionResult Delete()
+        {
+            return View();
+        }
+        
+        public IActionResult Details()
 
         [HttpPost]
         public IActionResult Create(App.Infrastructures.Database.SqlServer.Entities.Color model)
@@ -29,6 +49,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
 
         [HttpGet]
         public IActionResult Update()
+
         {
             return View();
         }
@@ -46,6 +67,11 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         {
             _colorRepository.Delete(id);
             return RedirectToAction("Index");
+        }
+        
+        public IActionResult SubmitUpdatedColor()
+        {
+            return View();
         }
     }
 }

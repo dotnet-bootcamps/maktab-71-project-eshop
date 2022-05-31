@@ -3,6 +3,13 @@
 
 <div class="d-flex justify-content-between">
     <h1>دسته بندی ها</h1>
+    <div class="d-inline-flex">
+        <form asp-controller="Category" asp-action="Search" method="get" class="align-self-md-center mx-2">
+            <input type="text" name="q" autocomplete="off" />
+            <button type="submit" class="btn btn-secondary">جستجو</button>
+        </form>
+        <a class='btn btn-success align-self-md-center' asp-controller="Category" asp-action="Create">ایجاد</a>
+    </div>
 </div>
 
 <table class="table table-dark">
@@ -52,8 +59,7 @@
                     @item.CreationDate
                     </td>
                     <td>
-                        <a class="btn btn-secondary" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                        <a class="btn btn-warning" asp-action="View" asp-route-id="@item.Id">Details</a>
+                        <a class="btn btn-secondary" asp-action="Update" asp-route-id="@item.Id">Edit</a>
                         <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                     </td>
                 </tr>
