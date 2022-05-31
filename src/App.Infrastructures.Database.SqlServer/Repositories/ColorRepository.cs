@@ -9,16 +9,22 @@ using System.Threading.Tasks;
 
 namespace App.Infrastructures.Database.SqlServer.Ripository
 {
-    public class ColorRipository
+    public class ColorRepository
     {
 
-        public  AppDbContext _eshop = new();
-        public  void Create(Color color)
+        public AppDbContext _eshop;
+
+        public ColorRepository()
+        {
+            _eshop = new AppDbContext();
+        }
+
+        public  void Create(App.Infrastructures.Database.SqlServer.Entities.Color color)
         {
             _eshop.Colors.Add(color);
             _eshop.SaveChanges();
         }
-        public  void Edit(Color model)
+        public  void Edit(App.Infrastructures.Database.SqlServer.Entities.Color model)
         {
             var color = _eshop.Colors.First(p => p.Id == model.Id);
             color.Name = model.Name;
@@ -34,11 +40,11 @@ namespace App.Infrastructures.Database.SqlServer.Ripository
         }
 
 
-        public  List GetAll()
+        public  List<App.Infrastructures.Database.SqlServer.Entities.Color> GetAll()
         {
             return _eshop.Colors.Include(b => b.ProductColors).ToList();
         }
-        public  Color GetById(int id)
+        public App.Infrastructures.Database.SqlServer.Entities.Color GetById(int id)
         {
             return _eshop.Colors.First(p => p.Id == id);
         }

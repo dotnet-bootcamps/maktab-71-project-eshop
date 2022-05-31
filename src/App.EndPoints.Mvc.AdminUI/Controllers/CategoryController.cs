@@ -8,27 +8,42 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         public CategoryController()
         {
         }
-        public IActionResult Index()
+
+
+        [HttpGet]
+        public IActionResult Create()
         {
-            List<CategoryListVM> model = new List<CategoryListVM>();
-            return View(model);
+            return View();
         }
-        public IActionResult Add(CategorySaveVM model)
+
+        [HttpPost]
+        public IActionResult Create(string model)
         {
-            throw new NotImplementedException();
+            return View();
         }
-        public IActionResult Delete(int id)
+
+
+        [HttpGet]
+        public IActionResult Update()
         {
-            throw new NotImplementedException();
+            return View();
         }
-        public IActionResult Edit(int id)
+        [HttpPost]
+        public IActionResult Update(string model)
         {
-            throw new NotImplementedException();
+            return View();
         }
-        public IActionResult View(int id)
+
+
+        [HttpGet]
+        public IActionResult Delete()
         {
-            CategorySaveVM vm = new CategorySaveVM();
-            return View(vm);
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Delete(string model)
+        {
+            return View();
         }
     }
 }
