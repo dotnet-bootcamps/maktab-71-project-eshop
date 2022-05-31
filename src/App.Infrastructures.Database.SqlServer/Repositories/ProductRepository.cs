@@ -16,7 +16,7 @@ public class ProductRepository
         product.Description = model.Description;
         product.Weight=model.Weight;
         product.Price = model.Price;
-        product.Count = model.Count;
+        product.Stock = model.Stock;
         product.IsActive = model.IsActive;
         product.CreationDate = model.CreationDate;
         _eShop.SaveChanges();
