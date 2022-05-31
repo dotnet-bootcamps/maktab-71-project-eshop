@@ -4,6 +4,10 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
     public class ColorsController : Controller
     {
+        public ColorsController()
+        {
+
+        }
         public IActionResult Index()
         {
             return View();
@@ -15,6 +19,18 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         {
             return View();
         }
+        
+        public IActionResult SubmitCreatedColor()
+        {
+            return View();
+        }
+        
+        public IActionResult Delete()
+        {
+            return View();
+        }
+        
+        public IActionResult Details()
 
         [HttpPost]
         public IActionResult Create(string model)
@@ -25,6 +41,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
 
         [HttpGet]
         public IActionResult Update()
+
         {
             return View();
         }
@@ -42,6 +59,11 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
         [HttpPost]
         public IActionResult Delete(string model)
+        {
+            return View();
+        }
+        
+        public IActionResult SubmitUpdatedColor()
         {
             return View();
         }
