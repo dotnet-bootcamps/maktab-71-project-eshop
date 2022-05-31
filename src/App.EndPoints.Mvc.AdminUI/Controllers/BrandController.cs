@@ -26,7 +26,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         [HttpPost]
         public IActionResult Create(Brand model)
         {
-            _brandRepository.Create(model);
+            _brandRepository.Add(model);
             return RedirectToAction("");
             }
 
@@ -41,7 +41,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
 
         public IActionResult Update(Brand model)
         {
-            _brandRepository.Edit(model);
+            _brandRepository.Update(model);
             return RedirectToAction("");
         }
 
@@ -53,7 +53,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            _brandRepository.Delete(id);
+            _brandRepository.Remove(id);
             return RedirectToAction("");
         
         }
