@@ -1,0 +1,62 @@
+﻿@model IEnumerable<CategoryListVM>
+
+
+<div class="d-flex justify-content-between">
+    <h1>دسته بندی ها</h1>
+</div>
+
+<table class="table table-dark">
+    <thead>
+        <tr>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.IsActive)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.DisplayOrder)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.ParentCategoryId)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.CreationDate)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+                <tr>
+                    <td scope="row">
+                    @item.Id
+                    </td>
+                    <td>
+                    @item.Name
+                    </td>
+                    <td>
+                    @item.IsActive
+                    </td>
+                    <td>
+                    @item.DisplayOrder
+                    </td>
+                    <td>
+                    @item.ParentCategoryId
+                    </td>
+                    <td>
+                    @item.CreationDate
+                    </td>
+                    <td>
+                        <a class="btn btn-secondary" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                        <a class="btn btn-warning" asp-action="View" asp-route-id="@item.Id">Details</a>
+                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+        }
+    </tbody>
+</table>

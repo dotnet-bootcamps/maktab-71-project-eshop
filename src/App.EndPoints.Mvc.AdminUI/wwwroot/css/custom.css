@@ -6,7 +6,16 @@
     font-family: 'Segoe UI';
 }
 
+
 .navbar-align {
     margin-right: auto;
     margin-left: 0;
 }
+
+.sidebar-nav {
+    padding-right: 6px !important;
+}
+.dropdown-item{
+    text-align:start;
+}
+
