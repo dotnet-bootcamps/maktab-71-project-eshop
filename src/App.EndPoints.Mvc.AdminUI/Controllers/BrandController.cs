@@ -11,12 +11,12 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         {
             _brandRepository = new BrandRepository();
         }
-        
+
         public IActionResult Index()
         {
             var brands = _brandRepository.GetAll();
             return View(brands);
-            
+        }
         [HttpGet]
         public IActionResult Create()
         {
@@ -54,7 +54,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         public IActionResult Delete(int id)
         {
             _brandRepository.Delete(id);
-            return RedirectToAction("");=======
+            return RedirectToAction("");
         
         }
 
