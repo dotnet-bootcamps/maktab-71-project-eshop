@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using App.Infrastructures.Database.SqlServer.Ripository;
+using App.Infrastructures.Database.SqlServer.Entities;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
@@ -11,67 +12,53 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
 
         public ColorsController()
         {
-
+            _colorRepository = new ColorRepository();
         }
         
         public IActionResult Index()
         {
-            var result = _colorRepository.GetAll();
-            return View(result);
+            return View(_colorRepository.GetAll());
         }
 
-
-        [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
         
-        public IActionResult SubmitCreatedColor()
+        public IActionResult SubmitCreatedColor(Color model)
         {
-            return View();
-        }
-        
-        public IActionResult Delete()
-        {
-            return View();
-        }
-        
-        public IActionResult Details()
-
-        [HttpPost]
-        public IActionResult Create(App.Infrastructures.Database.SqlServer.Entities.Color model)
-        {
+            model.CreationDate = DateTime.Now;
+            model.IsDeleted = false;
             _colorRepository.Create(model);
-            return RedirectToAction("Index");
+            return View("Index", _colorRepository.GetAll());
         }
 
-
-        [HttpGet]
-        public IActionResult Update()
-
+        public IActionResult Update(int id)
         {
-            return View();
+            return View(_colorRepository.GetById(id));
         }
-        [HttpPost]
-        public IActionResult Update(App.Infrastructures.Database.SqlServer.Entities.Color model)
+
+        public IActionResult SubmitUpdatedColor(Color model)
         {
             _colorRepository.Edit(model);
-            return RedirectToAction("Index");
+            return View("Index", _colorRepository.GetAll());
         }
 
-
-
-        [HttpPost]
         public IActionResult Delete(int id)
         {
             _colorRepository.Delete(id);
-            return RedirectToAction("Index");
+            return View("Index", _colorRepository.GetAll());
         }
         
-        public IActionResult SubmitUpdatedColor()
+        public IActionResult Details(int id)
         {
-            return View();
+            return View(_colorRepository.GetById(id));
         }
+
+        public IActionResult Back()
+        {
+            return View("Index", _colorRepository.GetAll());
+        }
+
     }
 }

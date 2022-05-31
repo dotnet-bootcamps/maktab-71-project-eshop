@@ -1,9 +1,7 @@
-﻿@model ColorVM
+﻿@using App.Infrastructures.Database.SqlServer.Entities
+@model Color
 
 <form asp-controller="Colors" asp-action="SubmitCreatedColor">
-    <label asp-for="Id">Id:</label><br>
-    <input type="text" asp-for="Id" readonly><br>
-
     <label asp-for="Name">Name:</label><br>
     <input type="text" asp-for="Name"><br>
 
