@@ -1,5 +1,6 @@
 ﻿using App.Infrastructures.Database.SqlServer.Data;
 using App.Infrastructures.Database.SqlServer.Entities;
+using App.Infrastructures.Database.SqlServer.Repositories.Contracts;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace App.Infrastructures.Database.SqlServer.Repositories
 {
-    public class BrandRepository
+    public class BrandRepository: IBrandRepository
     {
         public AppDbContext _eshop = new();
         public void Create(Brand brand)
@@ -18,7 +19,7 @@ namespace App.Infrastructures.Database.SqlServer.Repositories
             _eshop.SaveChanges();
         }
 
-        public void Edit(Brand model)
+        public void Update(Brand model)
         {
             var brand = _eshop.Brands.First(p => p.Id == model.Id);
             brand.Name = model.Name;
@@ -27,7 +28,7 @@ namespace App.Infrastructures.Database.SqlServer.Repositories
             _eshop.SaveChanges();
         }
 
-        public void Delete(int id)
+        public void Remove(int id)
         {
             var brand = _eshop.Brands.First(p => p.Id == id);
             _eshop.Brands.Remove(brand);
@@ -39,7 +40,7 @@ namespace App.Infrastructures.Database.SqlServer.Repositories
             return _eshop.Brands.Include(b => b.Products).ToList();
         }
 
-        public Brand GetById(int id)
+        public Brand GetBy(int id)
         {
             return _eshop.Brands.First(p => p.Id == id);
         }
