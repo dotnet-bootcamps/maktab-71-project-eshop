@@ -1,5 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿global using System;
+global using System.Collections.Generic;
+global using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using App.Infrastructures.Database.SqlServer.Entities;
@@ -48,40 +49,28 @@ namespace App.Infrastructures.Database.SqlServer.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Brand>(entity =>
-            {
-                entity.Property(e => e.Name).HasMaxLength(250);
-            });
 
             modelBuilder.Entity<Category>(entity =>
             {
-                entity.Property(e => e.Name).HasMaxLength(250);
-            });
-
-            modelBuilder.Entity<Collection>(entity =>
-            {
-                entity.Property(e => e.Name).HasMaxLength(250);
+                entity
+                .HasOne(x => x.ParentCagetory)
+                .WithMany(x => x.ChildCategories)
+                .HasForeignKey(x => x.ParentCagetoryId);
             });
 
             modelBuilder.Entity<CollectionProduct>(entity =>
             {
                 entity.HasIndex(e => e.CollectionId, "IX_CollectionProducts_CollectionId");
 
-                entity.Property(e => e.Name).HasMaxLength(250);
-
                 entity.HasOne(d => d.Collection)
                     .WithMany(p => p.CollectionProducts)
                     .HasForeignKey(d => d.CollectionId);
 
-                entity.HasOne(d => d.CollectionNavigation)
+                entity.HasOne(d => d.Product)
                     .WithMany(p => p.CollectionProducts)
                     .HasForeignKey(d => d.CollectionId);
             });
 
-            modelBuilder.Entity<Color>(entity =>
-            {
-                entity.Property(e => e.Name).HasMaxLength(250);
-            });
 
             modelBuilder.Entity<Comment>(entity =>
             {
@@ -91,11 +80,6 @@ namespace App.Infrastructures.Database.SqlServer.Data
 
                 entity.HasIndex(e => e.UserId, "IX_Comments_UserId");
 
-                entity.Property(e => e.CommentText).HasMaxLength(3000);
-
-                entity.Property(e => e.Name).HasMaxLength(250);
-
-                entity.Property(e => e.Title).HasMaxLength(500);
 
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.Comments)
@@ -108,35 +92,26 @@ namespace App.Infrastructures.Database.SqlServer.Data
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Comments)
                     .HasForeignKey(d => d.UserId);
+                entity.HasOne(x => x.ParentComment)
+                    .WithMany(x => x.ChildComments)
+                    .HasForeignKey(x => x.ParentCommentId);
             });
 
-            modelBuilder.Entity<FileType>(entity =>
-            {
-                entity.ToTable("fileTypes");
-
-                entity.HasIndex(e => e.FileTypeExtentionId, "IX_fileTypes_FileTypeExtentionId");
-
-                entity.Property(e => e.Name).HasMaxLength(250);
-
-                entity.HasOne(d => d.FileTypeExtention)
-                    .WithMany(p => p.FileTypes)
-                    .HasForeignKey(d => d.FileTypeExtentionId);
-            });
 
             modelBuilder.Entity<FileTypeExtention>(entity =>
             {
-                entity.Property(e => e.Name).HasMaxLength(250);
+                entity.HasOne(x => x.FileType)
+                    .WithMany(x => x.FileTypeExtentions)
+                    .HasForeignKey(x => x.FileTypeId);
             });
 
             modelBuilder.Entity<Model>(entity =>
             {
-                entity.Property(e => e.Name).HasMaxLength(250);
+                entity.HasOne(x => x.ParentModel)
+                    .WithMany(x => x.ChildModels)
+                    .HasForeignKey(x => x.ParentModelId);
             });
 
-            modelBuilder.Entity<Operator>(entity =>
-            {
-                entity.Property(e => e.Name).HasMaxLength(250);
-            });
 
             modelBuilder.Entity<Product>(entity =>
             {
@@ -147,10 +122,6 @@ namespace App.Infrastructures.Database.SqlServer.Data
                 entity.HasIndex(e => e.ModelId, "IX_Products_ModelId");
 
                 entity.HasIndex(e => e.OperatorId, "IX_Products_OperatorId");
-
-                entity.Property(e => e.Name).HasMaxLength(250);
-
-                entity.Property(e => e.Weight).HasColumnType("decimal(18, 2)");
 
                 entity.HasOne(d => d.Brand)
                     .WithMany(p => p.Products)
@@ -175,9 +146,6 @@ namespace App.Infrastructures.Database.SqlServer.Data
 
                 entity.HasIndex(e => e.ProductId, "IX_ProductColors_ProductID");
 
-                entity.Property(e => e.Name).HasMaxLength(250);
-
-                entity.Property(e => e.ProductId).HasColumnName("ProductID");
 
                 entity.HasOne(d => d.Color)
                     .WithMany(p => p.ProductColors)
@@ -190,15 +158,13 @@ namespace App.Infrastructures.Database.SqlServer.Data
 
             modelBuilder.Entity<ProductFile>(entity =>
             {
-                entity.HasIndex(e => e.FileTypeId, "IX_ProductFiles_FileTypeId");
+                entity.HasIndex(e => e.FileTypeExtentionId, "IX_ProductFiles_FileTypeId");
 
                 entity.HasIndex(e => e.ProductId, "IX_ProductFiles_ProductId");
 
-                entity.Property(e => e.Name).HasMaxLength(250);
-
-                entity.HasOne(d => d.FileType)
+                entity.HasOne(d => d.FileTypeExtention)
                     .WithMany(p => p.ProductFiles)
-                    .HasForeignKey(d => d.FileTypeId);
+                    .HasForeignKey(d => d.FileTypeExtentionId);
 
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.ProductFiles)
@@ -210,10 +176,6 @@ namespace App.Infrastructures.Database.SqlServer.Data
                 entity.HasIndex(e => e.ProductId, "IX_ProductTags_ProductId");
 
                 entity.HasIndex(e => e.TagId, "IX_ProductTags_TagId");
-
-                entity.Property(e => e.Name).HasMaxLength(250);
-
-                entity.Property(e => e.Value).HasMaxLength(500);
 
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.ProductTags)
@@ -228,38 +190,21 @@ namespace App.Infrastructures.Database.SqlServer.Data
             {
                 entity.HasIndex(e => e.ProductId, "IX_ProductViews_ProductId");
 
-                entity.Property(e => e.Name).HasMaxLength(250);
-
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.ProductViews)
                     .HasForeignKey(d => d.ProductId);
             });
 
-            modelBuilder.Entity<Status>(entity =>
-            {
-                entity.Property(e => e.Name).HasMaxLength(250);
-            });
 
             modelBuilder.Entity<Tag>(entity =>
             {
                 entity.HasIndex(e => e.TagCategoryId, "IX_Tags_TagCategoryId");
-
-                entity.Property(e => e.Name).HasMaxLength(250);
 
                 entity.HasOne(d => d.TagCategory)
                     .WithMany(p => p.Tags)
                     .HasForeignKey(d => d.TagCategoryId);
             });
 
-            modelBuilder.Entity<TagCategory>(entity =>
-            {
-                entity.Property(e => e.Name).HasMaxLength(250);
-            });
-
-            modelBuilder.Entity<User>(entity =>
-            {
-                entity.Property(e => e.Name).HasMaxLength(250);
-            });
 
             OnModelCreatingPartial(modelBuilder);
         }

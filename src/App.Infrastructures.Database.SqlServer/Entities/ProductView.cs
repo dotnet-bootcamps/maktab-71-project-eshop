@@ -1,17 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace App.Infrastructures.Database.SqlServer.Entities
+﻿namespace App.Infrastructures.Database.SqlServer.Entities
 {
     public partial class ProductView
     {
+        #region Values
+
         public int Id { get; set; }
-        public int ProductId { get; set; }
-        public DateTime ViewTime { get; set; }
+        [MaxLength(250)]
         public string Name { get; set; } = null!;
-        public DateTime CreationDate { get; set; }
+        public DateTimeOffset ViewTime { get; set; }
+        public DateTimeOffset CreationDate { get; set; }
         public bool IsDeleted { get; set; }
 
-        public virtual Product Product { get; set; } = null!;
+        #endregion
+
+        #region Classes
+
+        public int ProductId { get; set; }
+        public virtual Product Product { get; set; } = null!; 
+
+        #endregion
     }
 }

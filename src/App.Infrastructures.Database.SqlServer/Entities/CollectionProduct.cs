@@ -1,18 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace App.Infrastructures.Database.SqlServer.Entities
+﻿namespace App.Infrastructures.Database.SqlServer.Entities
 {
     public partial class CollectionProduct
     {
-        public int Id { get; set; }
-        public int CollectionId { get; set; }
-        public int ProductId { get; set; }
-        public string Name { get; set; } = null!;
-        public DateTime CreationDate { get; set; }
-        public int IsDeleted { get; set; }
+        #region Values
 
-        public virtual Collection Collection { get; set; } = null!;
-        public virtual Product CollectionNavigation { get; set; } = null!;
+        public int Id { get; set; }
+        [MaxLength(250)]
+        public string Name { get; set; } = null!;
+        public DateTimeOffset CreationDate { get; set; }
+        public bool IsDeleted { get; set; } 
+
+        #endregion
+
+        #region Classes
+
+        public int ProductId { get; set; }
+        public virtual Product Product { get; set; } = null!;
+
+        public int CollectionId { get; set; }
+        public virtual Collection Collection { get; set; } = null!; 
+
+        #endregion
     }
 }
