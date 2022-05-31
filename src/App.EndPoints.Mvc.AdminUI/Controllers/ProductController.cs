@@ -1,49 +1,78 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using App.Infrastructures.Database.SqlServer.Data;
+using App.Infrastructures.Database.SqlServer.Entities;
+using App.Infrastructures.Database.SqlServer.Ripository;
+using App.Infrastructures.Database.SqlServer.Repositories;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
+
     public class ProductController : Controller
     {
+        ProductRepository _productRepository;
+        BrandRepository _brandRepository;
+        ColorRepository _colorRepository;
+        public ProductController()
+        {
+           _productRepository= new ProductRepository();
+           _brandRepository = new BrandRepository();
+           _colorRepository = new ColorRepository();
+        }
+
+
         public IActionResult Index()
         {
-            return View();
+            var products = _productRepository.GetAll();
+            return View(products);
         }
 
 
         [HttpGet]
         public IActionResult Create()
         {
+            ViewBag.Brands = _brandRepository.GetAll();
+            ViewBag.color = _colorRepository.GetAll();
+
             return View();
         }
 
         [HttpPost]
-        public IActionResult Create(string model)
+        public IActionResult Create(Product model)
         {
-            return View();
+            _productRepository.Create(model);
+            return RedirectToAction("Index");
         }
 
 
         [HttpGet]
-        public IActionResult Update()
+        public IActionResult Update(int Id)
         {
-            return View();
+            var product = _productRepository.GetById(Id);
+            return View(product);
         }
         [HttpPost]
-        public IActionResult Update(string model)
+        public IActionResult Update(Product model)
         {
-            return View();
+            _productRepository.Edit(model);
+
+            return RedirectToAction("Index");
         }
+   
 
 
-        [HttpGet]
-        public IActionResult Delete()
-        {
-            return View();
-        }
+        //[HttpGet]
+        //public IActionResult Delete()
+        //{
+         
+
+        //    return View();
+        //}
         [HttpPost]
-        public IActionResult Delete(string model)
+        public IActionResult Delete(int Id)
         {
-            return View();
+            _productRepository.Delete(Id);
+
+            return RedirectToAction("Index");
         }
 
     }

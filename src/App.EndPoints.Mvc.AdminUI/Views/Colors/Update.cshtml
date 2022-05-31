@@ -1,5 +1,14 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model ColorVM
+
+<form asp-controller="Colors" asp-action="SubmitUpdatedColor">
+    <label asp-for="Id">Id:</label><br>
+    <input type="text" value="@Model.Id" asp-for="Id" readonly><br>
+
+    <label asp-for="Name">Name:</label><br>
+    <input type="text" value="@Model.Name" asp-for="Name"><br>
+
+    <label asp-for="Code">Code:</label><br>
+    <input type="text" value="@Model.Code" asp-for="Code"><br>
+
+    <input type="submit" class="btn btn-primary" value="Submit">
+</form>
