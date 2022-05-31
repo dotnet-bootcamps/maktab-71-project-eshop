@@ -1,18 +1,19 @@
 ﻿using App.Infrastructures.Database.SqlServer.Data;
 using App.Infrastructures.Database.SqlServer.Entities;
+using App.Infrastructures.Database.SqlServer.Repositories.contract;
 
 
 namespace App.Infrastructures.Database.SqlServer.Ripository
 {
-    public class ProductRepository
+    public class ProductRepository:IProductRepository
     {
         public AppDbContext _eShop = new();
-        public void Create(Product product)
+        public void Add(Product product)
         {
             _eShop.Products.Add(product);
             _eShop.SaveChanges();
         }
-        public void Edit(Product model)
+        public void Update(Product model)
         {
             var product = _eShop.Products.FirstOrDefault(p => p.Id == model.Id);
             product.Name = model.Name;
@@ -26,7 +27,7 @@ namespace App.Infrastructures.Database.SqlServer.Ripository
 
         }
 
-        public void Delete(int id)
+        public void Remove(int id)
         {
             var product = _eShop.Products.FirstOrDefault(p => p.Id == id);
             _eShop.Products.Remove(product);
