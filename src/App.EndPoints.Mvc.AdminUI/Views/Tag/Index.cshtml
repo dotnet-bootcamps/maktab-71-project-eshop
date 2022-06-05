@@ -1,0 +1,28 @@
+﻿@using App.Infrastructures.Database.SqlServer.Entities
+@model List<Tag>
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>نام</th>
+            <th>تاریخ ایجاد</th>
+            <th>عملیات</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var tag in Model)
+        {
+            <tr>
+                <td>@tag.Id</td>
+                <td>@tag.Name</td>
+                <td>@tag.CreationDate</td>
+                <td>
+                    <a href="@Url.Action("Edit", "Tags", new { id = tag.Id })">Edit</a>
+                    <a href="@Url.Action("Delete", "Tags", new { id = tag.Id })">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
