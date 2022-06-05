@@ -1,5 +1,6 @@
 ﻿using App.EndPoints.Mvc.AdminUI.ViewModels;
 using App.Infrastructures.Database.SqlServer.Entities;
+using App.Infrastructures.Database.SqlServer.IRepository;
 using App.Infrastructures.Database.SqlServer.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,24 +9,27 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
     public class CategoryController : Controller
     {
 
-        private CategoryRepository category = new();
+        private ICategoryRepo _db;
+        public CategoryController(ICategoryRepo db)
+        {
+            _db = db;
+        }
 
         public IActionResult Index()
         {
-            var allCategory = category.GetAll();
+            var allCategory = _db.GetCategories;
             return View(allCategory);
         }
         [HttpGet]
         public IActionResult Create()
         {
-            
             return View();
         }
 
         [HttpPost]
         public IActionResult Create(Category model)
         {
-            category.AddCategory(model);
+            _db.Create(model);
             return View();
         }
 
@@ -33,7 +37,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         [HttpGet]
         public IActionResult Update(int id)
         {
-            var cat=category.Details(id);
+            var cat=_db.Retrieve(id);
             return View(cat);
         }
         [HttpPost]
@@ -41,7 +45,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                category.Edit(model);
+                _db.Update(model);
             }
             return View();
         }
@@ -50,12 +54,12 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            return View(category.Details(id));
+            return View(_db.Retrieve(id));
         }
         [HttpPost ,ActionName("Delete")]
         public IActionResult DeleteConfrim(int id)
         {
-            category.Delete(id);
+            _db.Delete(id);
             return View();
         }
     }
