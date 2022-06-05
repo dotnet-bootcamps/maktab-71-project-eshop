@@ -6,10 +6,10 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
     public class ColorsController : Controller
     {
     
-        private readonly ColorRepository _colorRepository;
+        private readonly IColorRepository _colorRepository;
 
 
-        public ColorsController(ColorRepository colorRepository)
+        public ColorsController(IColorRepository colorRepository)
         {
             _colorRepository = colorRepository;
         }

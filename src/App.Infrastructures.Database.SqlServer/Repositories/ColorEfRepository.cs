@@ -9,22 +9,22 @@ using System.Threading.Tasks;
 
 namespace App.Infrastructures.Database.SqlServer.Ripository
 {
-    public class ColorRepository
+    public class ColorEfRepository : IColorRepository
     {
 
         private readonly AppDbContext _eshop;
 
-        public ColorRepository(AppDbContext appDbContext)
+        public ColorEfRepository(AppDbContext appDbContext)
         {
             this._eshop = appDbContext;
         }
 
-        public  void Create(App.Infrastructures.Database.SqlServer.Entities.Color color)
+        public void Create(App.Infrastructures.Database.SqlServer.Entities.Color color)
         {
             _eshop.Colors.Add(color);
             _eshop.SaveChanges();
         }
-        public  void Edit(App.Infrastructures.Database.SqlServer.Entities.Color model)
+        public void Edit(App.Infrastructures.Database.SqlServer.Entities.Color model)
         {
             var color = _eshop.Colors.First(p => p.Id == model.Id);
             color.Name = model.Name;
@@ -32,7 +32,7 @@ namespace App.Infrastructures.Database.SqlServer.Ripository
             color.CreationDate = model.CreationDate;
             _eshop.SaveChanges();
         }
-        public  void Delete(int id)
+        public void Delete(int id)
         {
             var color = _eshop.Colors.First(p => p.Id == id);
             _eshop.Colors.Remove(color);
@@ -40,7 +40,7 @@ namespace App.Infrastructures.Database.SqlServer.Ripository
         }
 
 
-        public  List<App.Infrastructures.Database.SqlServer.Entities.Color> GetAll()
+        public List<App.Infrastructures.Database.SqlServer.Entities.Color> GetAll()
         {
             return _eshop.Colors.Include(b => b.ProductColors).ToList();
         }

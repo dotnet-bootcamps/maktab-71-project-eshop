@@ -15,7 +15,9 @@ builder.Services.AddDbContext<AppDbContext>(option =>
 //builder.Services.AddSingleton<BrandRepository>();
 builder.Services.AddScoped<BrandRepository>();
 //builder.Services.AddTransient<BrandRepository>();
-builder.Services.AddScoped<ColorRepository>();
+
+builder.Services.AddScoped<IColorRepository,ColorEfRepository>();
+//builder.Services.AddScoped<IColorRepository,ColorInMemoryRepository>();
 
 
 

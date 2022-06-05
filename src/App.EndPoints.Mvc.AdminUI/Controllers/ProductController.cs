@@ -11,11 +11,11 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
     {
         ProductRepository _productRepository;
         BrandRepository _brandRepository;
-        ColorRepository _colorRepository;
+        ColorEfRepository _colorRepository;
         public ProductController(
             ProductRepository productRepository,
             BrandRepository brandRepository,
-            ColorRepository colorRepository
+            ColorEfRepository colorRepository
             )
         {
             _productRepository = productRepository;
