@@ -1,6 +1,7 @@
 using App.Infrastructures.Database.SqlServer.Data;
 using App.Infrastructures.Database.SqlServer.Repositories;
 using App.Infrastructures.Database.SqlServer.Ripository;
+using App.Infrastructures.Database.SqlServer.Repositories.Contract;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,7 +19,7 @@ builder.Services.AddScoped<BrandRepository>();
 
 builder.Services.AddScoped<IColorRepository,ColorEfRepository>();
 //builder.Services.AddScoped<IColorRepository,ColorInMemoryRepository>();
-
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 
 

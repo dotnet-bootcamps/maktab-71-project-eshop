@@ -1,0 +1,19 @@
+﻿using App.Infrastructures.Database.SqlServer.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace App.Infrastructures.Database.SqlServer.Repositories.Contract
+{
+    public interface IProductRepository
+    {
+        public void Create(Product product);
+        public void Edit(Product model);
+        public void Delete(int id);
+        public List<Product> GetAll();
+        public Product GetById(int id);
+
+    }
+}

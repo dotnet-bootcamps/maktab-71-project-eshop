@@ -3,24 +3,28 @@ using App.Infrastructures.Database.SqlServer.Data;
 using App.Infrastructures.Database.SqlServer.Entities;
 using App.Infrastructures.Database.SqlServer.Ripository;
 using App.Infrastructures.Database.SqlServer.Repositories;
+using App.Infrastructures.Database.SqlServer.Repositories.Contract;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
 
     public class ProductController : Controller
     {
-        ProductRepository _productRepository;
+        IProductRepository _productRepository;
         BrandRepository _brandRepository;
         ColorEfRepository _colorRepository;
+        AppDbContext _context;
         public ProductController(
-            ProductRepository productRepository,
+            IProductRepository productRepository,
             BrandRepository brandRepository,
-            ColorEfRepository colorRepository
+            ColorEfRepository colorRepository,
+            AppDbContext context
             )
         {
             _productRepository = productRepository;
             _brandRepository = brandRepository;
             _colorRepository = colorRepository;
+            _context = context;
         }
 
 
