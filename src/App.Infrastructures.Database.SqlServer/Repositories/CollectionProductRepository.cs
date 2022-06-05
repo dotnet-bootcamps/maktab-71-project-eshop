@@ -4,11 +4,11 @@ using App.Infrastructures.Database.SqlServer.Entities;
 
 public class CollectionProductRepository
 {
-    private AppDbContext _shopDB;
+    private readonly AppDbContext _shopDB;
 
-    public CollectionProductRepository()
+    public CollectionProductRepository(AppDbContext appDbContext)
     {
-        _shopDB = new AppDbContext();
+        this._shopDB = appDbContext;
     }
 
     public void AddCollectionProducts(CollectionProduct item)

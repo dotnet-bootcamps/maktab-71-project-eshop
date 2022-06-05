@@ -11,7 +11,12 @@ namespace App.Infrastructures.Database.SqlServer.Repositories
 {
     public class BrandRepository
     {
-        public AppDbContext _eshop = new();
+        private readonly AppDbContext _eshop;
+        public BrandRepository(AppDbContext appDbContext)
+        {
+            this._eshop = appDbContext;
+        }
+
         public void Create(Brand brand)
         {
             _eshop.Brands.Add(brand);

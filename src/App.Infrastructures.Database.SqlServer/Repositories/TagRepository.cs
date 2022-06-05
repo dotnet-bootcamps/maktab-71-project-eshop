@@ -11,7 +11,13 @@ namespace App.Infrastructures.Database.SqlServer.Repositories
 {
     public class TagRepository
     {
-        public AppDbContext _eshop = new();
+        private readonly AppDbContext _eshop;
+
+        public TagRepository(AppDbContext appDbContext)
+        {
+            this._eshop = appDbContext;
+        }
+
         public void Create(Tag tag)
         {
             _eshop.Tags.Add(tag);

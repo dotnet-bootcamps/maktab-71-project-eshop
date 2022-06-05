@@ -1,22 +1,26 @@
 
+using App.Infrastructures.Database.SqlServer.Data;
 using App.Infrastructures.Database.SqlServer.Entities;
 using App.Infrastructures.Database.SqlServer.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
     public class BrandController : Controller
     {
-        BrandRepository _brandRepository;
-        public BrandController()
+        private readonly BrandRepository _brandRepository;
+        public BrandController(BrandRepository brandRepository)
         {
-            _brandRepository = new BrandRepository();
+            _brandRepository = brandRepository;
         }
-        
+
         public IActionResult Index()
         {
             var brands = _brandRepository.GetAll();
             return View(brands);
-            
+        }
+
         [HttpGet]
         public IActionResult Create()
         {
@@ -54,7 +58,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         public IActionResult Delete(int id)
         {
             _brandRepository.Delete(id);
-            return RedirectToAction("");=======
+            return RedirectToAction("");
         
         }
 

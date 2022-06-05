@@ -12,11 +12,15 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         ProductRepository _productRepository;
         BrandRepository _brandRepository;
         ColorRepository _colorRepository;
-        public ProductController()
+        public ProductController(
+            ProductRepository productRepository,
+            BrandRepository brandRepository,
+            ColorRepository colorRepository
+            )
         {
-           _productRepository= new ProductRepository();
-           _brandRepository = new BrandRepository();
-           _colorRepository = new ColorRepository();
+            _productRepository = productRepository;
+            _brandRepository = brandRepository;
+            _colorRepository = colorRepository;
         }
 
 

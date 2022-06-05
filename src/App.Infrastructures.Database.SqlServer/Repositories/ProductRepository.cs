@@ -6,7 +6,13 @@ namespace App.Infrastructures.Database.SqlServer.Ripository
 {
     public class ProductRepository
     {
-        public AppDbContext _eShop = new();
+        private readonly AppDbContext _eShop;
+
+        public ProductRepository(AppDbContext appDbContext)
+        {
+            this._eShop = appDbContext;
+        }
+       
         public void Create(Product product)
         {
             _eShop.Products.Add(product);

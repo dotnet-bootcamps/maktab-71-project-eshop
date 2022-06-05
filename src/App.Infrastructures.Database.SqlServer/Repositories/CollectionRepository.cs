@@ -3,11 +3,11 @@ using App.Infrastructures.Database.SqlServer.Data;
 
 public class CollectionRepository
 {
-    private AppDbContext _shopDB;
+    private readonly AppDbContext _shopDB;
 
-    public CollectionRepository()
+    public CollectionRepository(AppDbContext appDbContext)
     {
-        _shopDB = new AppDbContext();
+        this._shopDB = appDbContext;
     }
 
 

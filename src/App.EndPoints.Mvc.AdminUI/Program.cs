@@ -1,9 +1,26 @@
 using App.Infrastructures.Database.SqlServer.Data;
+using App.Infrastructures.Database.SqlServer.Repositories;
+using App.Infrastructures.Database.SqlServer.Ripository;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<AppDbContext>(option =>
+{
+    option.UseSqlServer("Data Source=.\\sql2019; Initial Catalog=DotNetShopDb; Integrated Security=TRUE");
+});
+//builder.Services.AddSingleton<BrandRepository>();
+builder.Services.AddScoped<BrandRepository>();
+//builder.Services.AddTransient<BrandRepository>();
+builder.Services.AddScoped<ColorRepository>();
+
+
+
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

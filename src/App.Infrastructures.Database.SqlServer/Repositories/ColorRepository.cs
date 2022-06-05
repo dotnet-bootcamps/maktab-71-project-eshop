@@ -12,11 +12,11 @@ namespace App.Infrastructures.Database.SqlServer.Ripository
     public class ColorRepository
     {
 
-        public AppDbContext _eshop;
+        private readonly AppDbContext _eshop;
 
-        public ColorRepository()
+        public ColorRepository(AppDbContext appDbContext)
         {
-            _eshop = new AppDbContext();
+            this._eshop = appDbContext;
         }
 
         public  void Create(App.Infrastructures.Database.SqlServer.Entities.Color color)

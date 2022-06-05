@@ -9,9 +9,9 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         private readonly ColorRepository _colorRepository;
 
 
-        public ColorsController()
+        public ColorsController(ColorRepository colorRepository)
         {
-
+            _colorRepository = colorRepository;
         }
         
         public IActionResult Index()
@@ -38,6 +38,9 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
         
         public IActionResult Details()
+        {
+            return View();
+        }
 
         [HttpPost]
         public IActionResult Create(App.Infrastructures.Database.SqlServer.Entities.Color model)
