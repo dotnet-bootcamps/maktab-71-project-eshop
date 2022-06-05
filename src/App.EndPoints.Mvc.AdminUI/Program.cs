@@ -19,6 +19,7 @@ builder.Services.AddScoped<BrandRepository>();
 builder.Services.AddScoped<IColorRepository,ColorEfRepository>();
 //builder.Services.AddScoped<IColorRepository,ColorInMemoryRepository>();
 
+builder.Services.AddScoped<IProductRepository,ProductEfRepository>();
 
 
 

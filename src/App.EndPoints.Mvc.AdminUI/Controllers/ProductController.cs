@@ -9,11 +9,11 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
 
     public class ProductController : Controller
     {
-        ProductRepository _productRepository;
+        ProductEfRepository _productRepository;
         BrandRepository _brandRepository;
         ColorEfRepository _colorRepository;
         public ProductController(
-            ProductRepository productRepository,
+            ProductEfRepository productRepository,
             BrandRepository brandRepository,
             ColorEfRepository colorRepository
             )

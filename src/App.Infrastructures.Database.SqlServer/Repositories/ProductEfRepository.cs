@@ -4,15 +4,15 @@ using App.Infrastructures.Database.SqlServer.Entities;
 
 namespace App.Infrastructures.Database.SqlServer.Ripository
 {
-    public class ProductRepository
+    public class ProductEfRepository : IProductRepository
     {
         private readonly AppDbContext _eShop;
 
-        public ProductRepository(AppDbContext appDbContext)
+        public ProductEfRepository(AppDbContext appDbContext)
         {
             this._eShop = appDbContext;
         }
-       
+
         public void Create(Product product)
         {
             _eShop.Products.Add(product);
