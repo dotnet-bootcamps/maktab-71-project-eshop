@@ -1,10 +1,10 @@
 ﻿using App.Infrastructures.Database.SqlServer.Data;
 using App.Infrastructures.Database.SqlServer.Entities;
-
+using App.Infrastructures.Database.SqlServer.Repositories.Contract;
 
 namespace App.Infrastructures.Database.SqlServer.Ripository
 {
-    public class ProductRepository
+    public class ProductRepository : IProductRepository
     {
         private readonly AppDbContext _eShop;
 
