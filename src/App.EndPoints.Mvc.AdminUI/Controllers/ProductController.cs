@@ -77,7 +77,15 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         [HttpPost]
         public IActionResult Create(CreateProductViewModel model)
         {
-            _productRepository.Create(model);
+            _productRepository.Create(new Product
+            {
+                Name = model.Name,
+                Description=model.Description,
+                Price=model.Price,
+                BrandId=model.BrandId,
+                CategoryId=model.CategoryId,
+                ModelId = model.ModelId
+            });
             return RedirectToAction("Index");
         }
 
