@@ -1,7 +1,9 @@
 ﻿using System;
 using App.Infrastructures.Database.SqlServer.Data;
+using App.Infrastructures.Database.SqlServer.Entities;
+using App.Infrastructures.Database.SqlServer.Repositories.Contract;
 
-public class CollectionRepository
+public class CollectionRepository :ICollectionRepository
 {
     private readonly AppDbContext _shopDB;
 
@@ -10,21 +12,32 @@ public class CollectionRepository
         this._shopDB = appDbContext;
     }
 
+    public Collection GetById(int id)
+    {
+        return _shopDB.Collections.First(p=>p.Id == id);
+    }
 
-    public void AddCollection(App.Infrastructures.Database.SqlServer.Entities.Collection item)
+    public List<Collection> GetAll()
+    {
+        return _shopDB.Collections.ToList();
+    }
+
+    public void Add(Collection item)
     {
         _shopDB.Collections.Add(item);
         _shopDB.SaveChanges();
 
     }
 
-    public List<App.Infrastructures.Database.SqlServer.Entities.Collection> GetAllCollection()
+    public void Update(Collection model)
     {
-        return _shopDB.Collections.ToList();
+        var collection = _shopDB.Collections.First(p => p.Id == model.Id);
+        collection.Name = model.Name;
+        collection.CreationDate = model.CreationDate;
+        _shopDB.SaveChanges();
     }
 
-
-    public void DelteCollection(App.Infrastructures.Database.SqlServer.Entities.Collection item)
+    public void Remove(Collection item)
     {
         _shopDB.Collections.Remove(item);
         _shopDB.SaveChanges();
