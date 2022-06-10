@@ -1,6 +1,6 @@
 ﻿@model ColorVM
 
-<form asp-controller="Colors" asp-action="SubmitCreatedColor">
+<form method="post" asp-controller="Colors" asp-action="SubmitCreatedColor">
     <label asp-for="Id">Id:</label><br>
     <input type="text" asp-for="Id" readonly><br>
 

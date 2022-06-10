@@ -35,7 +35,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         public IActionResult Create()
         {
             ViewBag.Brands = _brandRepository.GetAll();
-            ViewBag.color = _colorRepository.GetAll();
+            ViewBag.Color = _colorRepository.GetAll();
 
             return View();
         }
