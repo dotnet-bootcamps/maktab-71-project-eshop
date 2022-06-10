@@ -1,6 +1,6 @@
 ﻿using App.Infrastructures.Database.SqlServer.Data;
 using App.Infrastructures.Database.SqlServer.Entities;
-using App.Infrastructures.Database.SqlServer.Repositories.Contract;
+using App.Infrastructures.Database.SqlServer.Repositories.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;

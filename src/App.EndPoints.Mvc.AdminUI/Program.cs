@@ -1,8 +1,7 @@
 using App.Infrastructures.Database.SqlServer.Data;
 using App.Infrastructures.Database.SqlServer.Repositories;
-using App.Infrastructures.Database.SqlServer.Ripository;
-using App.Infrastructures.Database.SqlServer.Repositories.Contract;
 using Microsoft.EntityFrameworkCore;
+using App.Infrastructures.Database.SqlServer.Repositories.Contracts;
 
 var builder = WebApplication.CreateBuilder(args);
 

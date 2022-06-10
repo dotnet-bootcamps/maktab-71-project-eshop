@@ -12,36 +12,32 @@ namespace App.Infrastructures.Database.SqlServer.Repositories
 {
     public class ModelRepository : IModelRepository
     {
-        AppDbContext _context = new();
+        private readonly AppDbContext _appDbContext;
+        public ModelRepository(AppDbContext appDbContext)
+        {
+            _appDbContext = appDbContext;
+        }
+
         public void Add(Model model)
         {
-            _context.Add(model);
-            _context.SaveChanges();
+            _appDbContext.Add(model);
+            _appDbContext.SaveChanges();
         }
 
         public void Delete(int id)
         {
-            try
-            {
-                var model = _context.Models.SingleOrDefault(x => x.Id == id);
-                _context.SaveChanges();
-            }
-            catch (Exception)
-            {
-                return;
-            }
-
-            
+            var model = _appDbContext.Models.SingleOrDefault(x => x.Id == id);
+            _appDbContext.SaveChanges();
         }
 
         public List<Model> GetAll()
         {
-            return _context.Models.ToList();
+            return _appDbContext.Models.ToList();
         }
 
         public Model GetById(int id)
         {
-            var model = _context.Models.FirstOrDefault(x => x.Id == id);
+            var model = _appDbContext.Models.FirstOrDefault(x => x.Id == id);
             if (model is null)
             {
                 return new Model();
@@ -51,9 +47,9 @@ namespace App.Infrastructures.Database.SqlServer.Repositories
 
         public void Update(Model model)
         {
-            var dbModel = _context.Models.SingleOrDefault(x => x.Id == model.Id);
+            var dbModel = _appDbContext.Models.SingleOrDefault(x => x.Id == model.Id);
             dbModel = model;
-            _context.SaveChanges();
+            _appDbContext.SaveChanges();
         }
     }
 }

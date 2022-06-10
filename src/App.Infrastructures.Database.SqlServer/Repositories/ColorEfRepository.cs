@@ -1,5 +1,6 @@
 ﻿using App.Infrastructures.Database.SqlServer.Data;
 using App.Infrastructures.Database.SqlServer.Entities;
+using App.Infrastructures.Database.SqlServer.Repositories.Contracts;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace App.Infrastructures.Database.SqlServer.Ripository
+namespace App.Infrastructures.Database.SqlServer.Repositories
 {
     public class ColorEfRepository : IColorRepository
     {
@@ -16,15 +17,15 @@ namespace App.Infrastructures.Database.SqlServer.Ripository
 
         public ColorEfRepository(AppDbContext appDbContext)
         {
-            this._eshop = appDbContext;
+            _eshop = appDbContext;
         }
 
-        public void Create(App.Infrastructures.Database.SqlServer.Entities.Color color)
+        public void Create(Color color)
         {
             _eshop.Colors.Add(color);
             _eshop.SaveChanges();
         }
-        public void Edit(App.Infrastructures.Database.SqlServer.Entities.Color model)
+        public void Edit(Color model)
         {
             var color = _eshop.Colors.First(p => p.Id == model.Id);
             color.Name = model.Name;
@@ -40,11 +41,11 @@ namespace App.Infrastructures.Database.SqlServer.Ripository
         }
 
 
-        public List<App.Infrastructures.Database.SqlServer.Entities.Color> GetAll()
+        public List<Color> GetAll()
         {
             return _eshop.Colors.Include(b => b.ProductColors).ToList();
         }
-        public App.Infrastructures.Database.SqlServer.Entities.Color GetById(int id)
+        public Color GetById(int id)
         {
             return _eshop.Colors.First(p => p.Id == id);
         }

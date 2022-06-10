@@ -1,6 +1,6 @@
 ﻿using App.Infrastructures.Database.SqlServer.Entities;
 
-namespace App.Infrastructures.Database.SqlServer.Ripository
+namespace App.Infrastructures.Database.SqlServer.Repositories.Contracts
 {
     public interface IColorRepository
     {
