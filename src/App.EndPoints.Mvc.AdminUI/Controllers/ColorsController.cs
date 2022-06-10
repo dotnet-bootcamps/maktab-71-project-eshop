@@ -30,7 +30,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
 
         [HttpPost]
         
-        public IActionResult SubmitCreatedColor(ColorVM model)
+        public IActionResult SubmitCreatedColor(ColorViewModel model)
         {
             _colorRepository.Create(new Infrastructures.Database.SqlServer.Entities.Color
             {

@@ -4,6 +4,7 @@ using App.Infrastructures.Database.SqlServer.Entities;
 using App.Infrastructures.Database.SqlServer.Repositories;
 using App.Infrastructures.Database.SqlServer.Repositories.Contracts;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using App.EndPoints.Mvc.AdminUI.ViewModels;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
@@ -74,7 +75,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Product model)
+        public IActionResult Create(CreateProductViewModel model)
         {
             _productRepository.Create(model);
             return RedirectToAction("Index");
