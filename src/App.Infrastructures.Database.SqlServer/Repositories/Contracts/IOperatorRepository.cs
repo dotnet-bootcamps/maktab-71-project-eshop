@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace App.Infrastructures.Database.SqlServer.Repositories.Contract
+namespace App.Infrastructures.Database.SqlServer.Repositories.Contracts
 {
     public interface IOperatorRepository
     {
@@ -13,6 +13,6 @@ namespace App.Infrastructures.Database.SqlServer.Repositories.Contract
         Operator GetById(int id);
         void Add(Operator @operator);
         void Remove(int id);
-        
+
     }
 }

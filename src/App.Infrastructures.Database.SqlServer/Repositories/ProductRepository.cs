@@ -1,18 +1,18 @@
 ﻿using App.Infrastructures.Database.SqlServer.Data;
 using App.Infrastructures.Database.SqlServer.Entities;
+using App.Infrastructures.Database.SqlServer.Repositories.Contracts;
 
-
-namespace App.Infrastructures.Database.SqlServer.Ripository
+namespace App.Infrastructures.Database.SqlServer.Repositories
 {
-    public class ProductRepository
+    public class ProductRepository : IProductRepository
     {
         private readonly AppDbContext _eShop;
 
         public ProductRepository(AppDbContext appDbContext)
         {
-            this._eShop = appDbContext;
+            _eShop = appDbContext;
         }
-       
+
         public void Create(Product product)
         {
             _eShop.Products.Add(product);

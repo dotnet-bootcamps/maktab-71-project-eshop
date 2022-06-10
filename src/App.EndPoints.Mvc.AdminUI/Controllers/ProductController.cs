@@ -1,30 +1,35 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using App.Infrastructures.Database.SqlServer.Data;
 using App.Infrastructures.Database.SqlServer.Entities;
-using App.Infrastructures.Database.SqlServer.Ripository;
 using App.Infrastructures.Database.SqlServer.Repositories;
-using App.Infrastructures.Database.SqlServer.Repositories.Contract;
+using App.Infrastructures.Database.SqlServer.Repositories.Contracts;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using App.EndPoints.Mvc.AdminUI.ViewModels;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
 
     public class ProductController : Controller
     {
-        IProductRepository _productRepository;
-        BrandRepository _brandRepository;
-        ColorEfRepository _colorRepository;
-        AppDbContext _context;
+        private readonly ICategoryRepository _categoryRepository;
+        private readonly IProductRepository _productRepository;
+        private readonly IBrandRepository _brandRepository;
+        private readonly IColorRepository _colorRepository;
+        private readonly IModelRepository _modelRepository;
+
         public ProductController(
+            ICategoryRepository categoryRepository,
             IProductRepository productRepository,
-            BrandRepository brandRepository,
-            ColorEfRepository colorRepository,
-            AppDbContext context
+            IBrandRepository brandRepository,
+            IColorRepository colorRepository,
+            IModelRepository modelRepository
             )
         {
+            _categoryRepository = categoryRepository;
             _productRepository = productRepository;
             _brandRepository = brandRepository;
             _colorRepository = colorRepository;
-            _context = context;
+            _modelRepository = modelRepository;
         }
 
 
@@ -38,16 +43,49 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            ViewBag.Brands = _brandRepository.GetAll();
-            ViewBag.color = _colorRepository.GetAll();
+            ViewBag.Brands = _brandRepository.GetAll()
+                .Select(s => new SelectListItem
+                {
+                    Text = s.Name,
+                    Value = s.Id.ToString()
+                });
+
+            ViewBag.Colors = _colorRepository.GetAll()
+                .Select(s => new SelectListItem
+                {
+                    Text = s.Name,
+                    Value = s.Id.ToString()
+                });
+
+            ViewBag.Categories = _categoryRepository.GetAll()
+                .Select(s => new SelectListItem
+                {
+                    Text = s.Name,
+                    Value = s.Id.ToString()
+                });
+
+            ViewBag.Models = _modelRepository.GetAll()
+                .Select(s => new SelectListItem
+                {
+                    Text = s.Name,
+                    Value = s.Id.ToString()
+                });
 
             return View();
         }
 
         [HttpPost]
-        public IActionResult Create(Product model)
+        public IActionResult Create(CreateProductViewModel model)
         {
-            _productRepository.Create(model);
+            _productRepository.Create(new Product
+            {
+                Name = model.Name,
+                Description=model.Description,
+                Price=model.Price,
+                BrandId=model.BrandId,
+                CategoryId=model.CategoryId,
+                ModelId = model.ModelId
+            });
             return RedirectToAction("Index");
         }
 

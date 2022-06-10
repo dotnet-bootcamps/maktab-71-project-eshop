@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace App.Infrastructures.Database.SqlServer.Repositories.Contracts
 {
-    internal interface IModelRepository
+    public interface IModelRepository
     {
         void Add(Model model);
         void Update(Model model);

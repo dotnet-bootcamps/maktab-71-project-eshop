@@ -1,16 +1,17 @@
 ﻿using App.Infrastructures.Database.SqlServer.Entities;
 using App.Infrastructures.Database.SqlServer.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using App.Infrastructures.Database.SqlServer.Repositories.Contracts;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
     public class ModelController : Controller
     {
-        private ModelRepository _modelRepostitory;
+        private IModelRepository _modelRepostitory;
 
-        public ModelController()
+        public ModelController(IModelRepository modelRepository)
         {
-            _modelRepostitory = new ModelRepository();
+            _modelRepostitory = modelRepository;
         }
 
         public IActionResult Index()

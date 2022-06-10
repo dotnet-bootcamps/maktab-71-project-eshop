@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace App.Infrastructures.Database.SqlServer.Repositories
 {
+
     public class BrandRepository: IBrandRepository
     {
         private readonly AppDbContext _eshop;

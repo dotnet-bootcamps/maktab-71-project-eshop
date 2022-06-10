@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace App.EndPoints.Mvc.AdminUI.ViewModels
+namespace App.EndPoints.Mvc.AdminUI.Models
 {
     public class CategoryListVM
     {

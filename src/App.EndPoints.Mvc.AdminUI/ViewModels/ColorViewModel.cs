@@ -1,6 +1,6 @@
 ﻿namespace App.EndPoints.Mvc.AdminUI.ViewModels
 {
-    public class ColorVM
+    public class ColorViewModel
     {
         public int Id { get; set; }
         public string Code { get; set; } = null!;

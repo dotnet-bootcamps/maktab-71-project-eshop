@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using App.Infrastructures.Database.SqlServer.Ripository;
+using App.Infrastructures.Database.SqlServer.Repositories.Contracts;
+using App.EndPoints.Mvc.AdminUI.ViewModels;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
@@ -26,10 +27,18 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         {
             return View();
         }
+
+        [HttpPost]
         
-        public IActionResult SubmitCreatedColor()
+        public IActionResult SubmitCreatedColor(ColorViewModel model)
         {
-            return View();
+            _colorRepository.Create(new Infrastructures.Database.SqlServer.Entities.Color
+            {
+                Code = model.Code,
+                Name = model.Name
+            });
+
+            return RedirectToAction(nameof(Index));
         }
         
         public IActionResult Delete()

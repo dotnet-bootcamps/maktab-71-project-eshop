@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace App.Infrastructures.Database.SqlServer.Entities
 {
@@ -35,6 +36,7 @@ namespace App.Infrastructures.Database.SqlServer.Entities
         public virtual Category Category { get; set; } = null!;
         public virtual Model Model { get; set; } = null!;
         public virtual Operator Operator { get; set; } = null!;
+
         public virtual ICollection<CollectionProduct> CollectionProducts { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<ProductColor> ProductColors { get; set; }

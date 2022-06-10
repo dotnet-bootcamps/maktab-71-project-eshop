@@ -2,6 +2,7 @@
 using App.Infrastructures.Database.SqlServer.Data;
 using App.Infrastructures.Database.SqlServer.Entities;
 using App.Infrastructures.Database.SqlServer.Repositories;
+using App.Infrastructures.Database.SqlServer.Repositories.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,8 +10,8 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
     public class BrandController : Controller
     {
-        private readonly BrandRepository _brandRepository;
-        public BrandController(BrandRepository brandRepository)
+        private readonly IBrandRepository _brandRepository;
+        public BrandController(IBrandRepository brandRepository)
         {
             _brandRepository = brandRepository;
         }
@@ -37,7 +38,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         [HttpGet]
         public IActionResult Update(int id)
         {
-            Brand brand=_brandRepository.GetById(id);
+            Brand brand=_brandRepository.GetBy(id);
             return View(brand);
         }
 
@@ -45,7 +46,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
 
         public IActionResult Update(Brand model)
         {
-            _brandRepository.Edit(model);
+            _brandRepository.Update(model);
             return RedirectToAction("");
         }
 
@@ -57,7 +58,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            _brandRepository.Delete(id);
+            _brandRepository.Remove(id);
             return RedirectToAction("");
         
         }

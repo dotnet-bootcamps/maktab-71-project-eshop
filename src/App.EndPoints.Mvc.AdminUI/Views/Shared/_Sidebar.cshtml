@@ -1,0 +1,75 @@
+﻿<nav id="sidebar" class="sidebar js-sidebar">
+    <div class="sidebar-content js-simplebar">
+        <a class="sidebar-brand" href="index.html">
+            <span class="align-middle">فروشگاه دات نت</span>
+        </a>
+
+        <ul class="sidebar-nav">
+            <li class="sidebar-item active">
+                <a class="sidebar-link" href="index.html">
+                    <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">صفحه اصلی</span>
+                </a>
+            </li>
+            <li class="sidebar-header">
+                مدیریت محصولات
+            </li>
+            <li class="sidebar-item">
+                    <a class="sidebar-link" asp-controller = "Product" asp-action = "Create">
+                     <i class="align-middle" data-feather="sliders"></i> <span class="align-middle"> اضافه کردن محصولات</span>
+                    </a>
+                 </li>
+                 <li class="sidebar-item">
+                    <a class="sidebar-link" asp-controller = "Product" asp-action = "Index">
+                     <i class="align-middle" data-feather="sliders"></i> <span class="align-middle"> مشاهده لیست محصولات</span>
+                    </a>
+                 </li>
+            <li class="sidebar-header">
+                مدیریت اطلاعات پایه
+            </li>
+            
+            <li class="sidebar-item">
+                <a class="sidebar-link" asp-controller="Categories" asp-action="Index">
+                    <i class="align-middle" data-feather="log-in"></i> <span class="align-middle">دسته بندی ها</span>
+                </a>
+            </li>
+            
+            <li class="sidebar-item">
+                <a class="sidebar-link" asp-controller="models" asp-action="Index">
+                    <i class="align-middle" data-feather="log-in"></i> <span class="align-middle">مدل ها</span>
+                </a>
+            </li>
+
+            <li class="sidebar-item">
+                <a class="sidebar-link" asp-controller="Brand" asp-action="Index">
+                    <i class="align-middle" data-feather="log-in"></i> <span class="align-middle">برندها</span>
+                </a>
+            </li>
+
+            <li class="sidebar-item">
+                <a class="sidebar-link" asp-controller="Colors" asp-action="Index">
+                    <i class="align-middle" data-feather="user-plus"></i> <span class="align-middle">رنگ ها</span>
+                </a>
+            </li>
+
+            <li class="sidebar-header">
+                مدیریت سفارشات
+            </li>
+
+            <li class="sidebar-item">
+                <a class="sidebar-link" asp-controller="Orders" asp-action="Index">
+                    <i class="align-middle" data-feather="log-in"></i> <span class="align-middle">مشاهده لیست سفارشات</span>
+                </a>
+            </li>
+
+            <li class="sidebar-header">
+                مدیریت مشتریان
+            </li>
+
+            <li class="sidebar-item">
+                <a class="sidebar-link" asp-controller="Cutomers" asp-action="Index">
+                    <i class="align-middle" data-feather="log-in"></i> <span class="align-middle">مشاهده لیست کاربران</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
