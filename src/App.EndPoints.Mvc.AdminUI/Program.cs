@@ -12,15 +12,14 @@ builder.Services.AddDbContext<AppDbContext>(option =>
 {
     option.UseSqlServer("Data Source=.\\sql2019; Initial Catalog=DotNetShopDb; Integrated Security=TRUE");
 });
-//builder.Services.AddSingleton<BrandRepository>();
-builder.Services.AddScoped<BrandRepository>();
-//builder.Services.AddTransient<BrandRepository>();
 
+builder.Services.AddScoped<IBrandRepository, BrandRepository>();
 builder.Services.AddScoped<IColorRepository,ColorEfRepository>();
-//builder.Services.AddScoped<IColorRepository,ColorInMemoryRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
-
-
+builder.Services.AddScoped<ICollectionRepository, CollectionRepository>();
+builder.Services.AddScoped<IModelRepository, ModelRepository>();
+builder.Services.AddScoped<IOperatorRepository, OperatorRepository>();
+builder.Services.AddScoped<ITagRepository, TagRepository>();
 
 
 var app = builder.Build();

@@ -10,20 +10,17 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
     public class ProductController : Controller
     {
         IProductRepository _productRepository;
-        BrandRepository _brandRepository;
-        ColorEfRepository _colorRepository;
-        AppDbContext _context;
+        IBrandRepository _brandRepository;
+        IColorRepository _colorRepository;
         public ProductController(
             IProductRepository productRepository,
-            BrandRepository brandRepository,
-            ColorEfRepository colorRepository,
-            AppDbContext context
+            IBrandRepository brandRepository,
+            IColorRepository colorRepository
             )
         {
             _productRepository = productRepository;
             _brandRepository = brandRepository;
             _colorRepository = colorRepository;
-            _context = context;
         }
 
 
