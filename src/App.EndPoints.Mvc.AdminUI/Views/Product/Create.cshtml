@@ -26,7 +26,7 @@
                         <label asp-for="CategoryId"></label>
                     </div>
                     <div class="col-8">
-                        <select asp-for="CategoryId"  class="form-control">
+                        <select asp-for="CategoryId"  class="form-control" asp-items="@ViewBag.Categories">
                             <option disabled selected>-- Select Category --</option>
                         </select>
                         <span asp-validation-for="CategoryId" class="text-danger"></span>

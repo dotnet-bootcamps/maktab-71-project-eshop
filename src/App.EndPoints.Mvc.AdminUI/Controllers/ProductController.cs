@@ -9,15 +9,18 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
 
     public class ProductController : Controller
     {
-        IProductRepository _productRepository;
-        IBrandRepository _brandRepository;
-        IColorRepository _colorRepository;
+        private readonly ICategoryRepository _categoryRepository;
+        private readonly IProductRepository _productRepository;
+        private readonly IBrandRepository _brandRepository;
+        private readonly IColorRepository _colorRepository;
         public ProductController(
+            ICategoryRepository categoryRepository,
             IProductRepository productRepository,
             IBrandRepository brandRepository,
             IColorRepository colorRepository
             )
         {
+            _categoryRepository = categoryRepository;
             _productRepository = productRepository;
             _brandRepository = brandRepository;
             _colorRepository = colorRepository;
@@ -36,6 +39,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         {
             ViewBag.Brands = _brandRepository.GetAll();
             ViewBag.Color = _colorRepository.GetAll();
+            ViewBag.Categories = _ca
 
             return View();
         }
