@@ -2,7 +2,7 @@
 
 namespace App.EndPoints.Mvc.AdminUI.Models
 {
-    public class CategoryListVM
+    public class CategoryListViewModel
     {
         [Display(Name = "شناسه")]
         public int Id { get; set; }

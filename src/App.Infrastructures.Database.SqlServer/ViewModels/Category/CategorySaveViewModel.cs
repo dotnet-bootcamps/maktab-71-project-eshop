@@ -2,7 +2,7 @@
 
 namespace App.EndPoints.Mvc.AdminUI.Models
 {
-    public class CategorySaveVM
+    public class CategorySaveViewModel
     {
 
 
