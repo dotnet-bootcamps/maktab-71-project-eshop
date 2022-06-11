@@ -1,4 +1,5 @@
 ﻿using App.Infrastructures.Database.SqlServer.Entities;
+using App.Infrastructures.Database.SqlServer.ViewModels.Product;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,11 @@ namespace App.Infrastructures.Database.SqlServer.Repositories.Contracts
 {
     public interface IProductRepository
     {
-        public void Create(Product product);
-        public void Edit(Product model);
+        public void Create(ProductSaveViewModel product);
+        public void Update(ProductSaveViewModel model);
         public void Delete(int id);
-        public List<Product> GetAll();
-        public Product GetById(int id);
+        public List<ProductListViewModel> GetAll();
+        public ProductSaveViewModel GetById(int id);
 
     }
 }
