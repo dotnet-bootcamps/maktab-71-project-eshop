@@ -1,8 +1,8 @@
-﻿using App.EndPoints.Mvc.AdminUI.Models;
-using App.EndPoints.Mvc.AdminUI.Models.Brand;
+﻿using App.EndPoints.Mvc.AdminUI.ViewModels;
 using App.Infrastructures.Database.SqlServer.Data;
 using App.Infrastructures.Database.SqlServer.Entities;
 using App.Infrastructures.Database.SqlServer.Repositories.Contracts;
+using App.Infrastructures.Database.SqlServer.ViewModels.Color;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,66 +12,66 @@ using System.Threading.Tasks;
 
 namespace App.Infrastructures.Database.SqlServer.Repositories
 {
-
-    public class BrandRepository : IBrandRepository
+    public class ColorRepository : IColorRepository
     {
+
         private readonly AppDbContext _eshop;
-        public BrandRepository(AppDbContext appDbContext)
+
+        public ColorRepository(AppDbContext appDbContext)
         {
-            this._eshop = appDbContext;
+            _eshop = appDbContext;
         }
 
-        public void Create(BrandSaveViewModel model)
+        public void Create(ColorSaveViewModel model)
         {
-
-            var brand = new Brand
+            var color = new Color
             {
+                Code = model.Code,
                 Name = model.Name,
-                DisplayOrder = model.DisplayOrder,
                 CreationDate = DateTime.Now,
-                IsDeleted = false
+                IsDeleted = model.IsDeleted,
             };
-            _eshop.Brands.Add(brand);
+            _eshop.Colors.Add(color);
+            _eshop.SaveChanges();
+        }
+        public void Update(ColorSaveViewModel model)
+        {
+            var color = _eshop.Colors.First(p => p.Id == model.Id);
+            color.Name = model.Name;
+            color.Code = model.Code;
+            _eshop.SaveChanges();
+        }
+        public void Delete(int id)
+        {
+            var color = _eshop.Colors.First(p => p.Id == id);
+            _eshop.Colors.Remove(color);
             _eshop.SaveChanges();
         }
 
-        public void Update(BrandSaveViewModel model)
-        {
-            var brand = _eshop.Brands.First(p => p.Id == model.Id);
-            brand.Name = model.Name;
-            brand.DisplayOrder = model.DisplayOrder;
-            _eshop.SaveChanges();
-        }
 
-        public void Remove(int id)
+        public List<ColorListViewModel> GetAll()
         {
-            var brand = _eshop.Brands.First(p => p.Id == id);
-            _eshop.Brands.Remove(brand);
-            _eshop.SaveChanges();
-        }
-
-        public List<BrandListViewModel> GetAll()
-        {
-            return _eshop.Brands.Select(b => new BrandListViewModel
+            return _eshop.Colors.Select(b => new ColorListViewModel
             {
                 Id = b.Id,
                 Name = b.Name,
                 CreationDate = b.CreationDate,
-                DisplayOrder = b.DisplayOrder
+                Code = b.Code,
+                IsDeleted = b.IsDeleted,
             }).ToList();
         }
-
-        public BrandSaveViewModel GetBy(int id)
+        public ColorSaveViewModel GetById(int id)
         {
             try
             {
-                var model = _eshop.Brands.Select(b => new BrandSaveViewModel
+                var model = _eshop.Colors.Select(b => new ColorSaveViewModel
                 {
                     Id = b.Id,
                     Name = b.Name,
-                    DisplayOrder = b.DisplayOrder
+                    Code = b.Code,
+                    IsDeleted = b.IsDeleted,
                 }).SingleOrDefault(b => b.Id == id);
-                if (model == null) return new BrandSaveViewModel();
+                if (model == null) return new ColorSaveViewModel();
                 return model;
             }
             catch (Exception dbx)
@@ -81,5 +81,3 @@ namespace App.Infrastructures.Database.SqlServer.Repositories
         }
     }
 }
-
-

@@ -2,7 +2,7 @@
 
 namespace App.EndPoints.Mvc.AdminUI.Models
 {
-    public class CategoryListVM
+    public class CategoryListViewModel
     {
         [Display(Name = "شناسه")]
         public int Id { get; set; }
@@ -12,6 +12,9 @@ namespace App.EndPoints.Mvc.AdminUI.Models
 
         [Display(Name = "فعال بودن")]
         public bool IsActive { get; set; }
+
+        [Display(Name = "حذف شده")]
+        public bool IsDeleted { get; set; }
 
         [Display(Name = "ترتیب نمایش")]
         public int DisplayOrder { get; set; }

@@ -1,4 +1,5 @@
 
+using App.EndPoints.Mvc.AdminUI.Models;
 using App.Infrastructures.Database.SqlServer.Data;
 using App.Infrastructures.Database.SqlServer.Entities;
 using App.Infrastructures.Database.SqlServer.Repositories;
@@ -29,39 +30,32 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Brand model)
+        public IActionResult Create(BrandSaveViewModel model)
         {
             _brandRepository.Create(model);
-            return RedirectToAction("");
+            return RedirectToAction("Index");
             }
 
         [HttpGet]
         public IActionResult Update(int id)
         {
-            Brand brand=_brandRepository.GetBy(id);
-            return View(brand);
+            var model = _brandRepository.GetBy(id);
+            return View(model);
         }
 
         [HttpPost]
 
-        public IActionResult Update(Brand model)
+        public IActionResult Update(BrandSaveViewModel model)
         {
             _brandRepository.Update(model);
             return RedirectToAction("");
         }
 
-        //[HttpGet]
-        //public IActionResult Delete()
-        //{
-        //    return View();
-        //}        
-        [HttpPost]
+        [HttpGet]
         public IActionResult Delete(int id)
         {
             _brandRepository.Remove(id);
-            return RedirectToAction("");
-        
+            return RedirectToAction("Index");        
         }
-
     }
 }

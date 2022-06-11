@@ -1,18 +1,21 @@
-﻿using App.Infrastructures.Database.SqlServer.Entities;
+﻿using App.EndPoints.Mvc.AdminUI.Models;
+using App.EndPoints.Mvc.AdminUI.Models.Brand;
+using App.Infrastructures.Database.SqlServer.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace App.Infrastructures.Database.SqlServer.Repositories.Contracts
 {
     public interface IBrandRepository
     {
-        Brand GetBy(int Id);
-        List<Brand> GetAll();
-        void Create(Brand brand);
-        void Update(Brand brand);
+        BrandSaveViewModel GetBy(int Id);
+        List<BrandListViewModel> GetAll();
+        void Create(BrandSaveViewModel brand);
+        void Update(BrandSaveViewModel brand);
         void Remove(int Id);
     }
 }

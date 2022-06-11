@@ -1,13 +1,14 @@
-﻿using App.Infrastructures.Database.SqlServer.Entities;
+﻿using App.EndPoints.Mvc.AdminUI.Models;
+using App.Infrastructures.Database.SqlServer.Entities;
 
 namespace App.Infrastructures.Database.SqlServer.Repositories.Contracts
 {
     public interface ICategoryRepository
     {
-        Category GetBy(int Id);
-        List<Category> GetAll();
-        void Create(Category brand);
-        void Update(Category brand);
-        void Remove(int Id);
+        void Create(CategorySaveViewModel model);
+        void Remove(int id);
+        void Update(CategorySaveViewModel model);
+        List<CategoryListViewModel> GetAll();
+        CategorySaveViewModel GetById(int id);
     }
 }

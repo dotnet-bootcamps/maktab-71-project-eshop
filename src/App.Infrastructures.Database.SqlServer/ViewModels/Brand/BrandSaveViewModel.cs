@@ -2,7 +2,7 @@
 
 namespace App.EndPoints.Mvc.AdminUI.Models
 {
-	public class BrandDTO
+	public class BrandSaveViewModel
 	{
 
 		[Display(Name ="شناسه")]
@@ -10,9 +10,6 @@ namespace App.EndPoints.Mvc.AdminUI.Models
 
 		[Display(Name ="نام")]
 		public string Name { get; set; }
-
-		[Display(Name ="تاریخ ایجاد")]
-		public DateTime CreationDate { get; set; }
 
 		[Display(Name ="ترتیب نمایش")]
 		public int DisplayOrder { get; set; }

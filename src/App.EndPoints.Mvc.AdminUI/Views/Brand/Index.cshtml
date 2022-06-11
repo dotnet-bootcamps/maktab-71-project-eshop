@@ -1,4 +1,4 @@
-﻿@model List<App.Infrastructures.Database.SqlServer.Entities.Brand>
+﻿@model IEnumerable<BrandListViewModel>
 @{
 	ViewData["Title"] = "لیست برند‌ها";
 	Model.OrderBy(x=>x.DisplayOrder);
@@ -18,9 +18,9 @@
 	<thead>
 		<tr>
 			<th scope="col">#</th>
-			<th scope="col">شناسه</th>
-			<th scope="col">نام</th>
-			<th scope="col">تاریخ ایجاد</th>
+			<th scope="col">@Html.DisplayNameFor(model => model.Id)</th>
+			<th scope="col">@Html.DisplayNameFor(model => model.Name)</th>
+			<th scope="col">@Html.DisplayNameFor(model => model.CreationDate)</th>
 			<th scope="col">عملیات</th>
 		</tr>
 	</thead>

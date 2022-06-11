@@ -1,4 +1,4 @@
-﻿@model BrandDTO
+﻿@model BrandSaveViewModel
 
 @{
 	ViewData["Title"] = "ویرایش برند";
@@ -6,12 +6,6 @@
 
 <h3>ویرایش برند</h3>
 <form>
-
-	<div class="form-group">
-		<label asp-for="Id"></label>
-		<input class="form-control" asp-for="Id" disabled>
-	</div>
-
 	<div class="form-group">
 		<label asp-for="Name"></label>
 		<input class="form-control" asp-for="Name">
@@ -23,7 +17,7 @@
 	</div>
 
 	<div style="float:left; margin-top:5px;">
-		<button type="submit" class="btn btn-primary" asp-action="Update" formmethod="post">ایجاد</button>
+		<button type="submit" class="btn btn-primary" asp-action="Update" formmethod="post">ویرایش</button>
 		<button type="submit" class="btn btn-danger" asp-action="Index">انصراف</button>
 	</div>
 

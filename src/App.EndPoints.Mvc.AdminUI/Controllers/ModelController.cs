@@ -2,6 +2,7 @@
 using App.Infrastructures.Database.SqlServer.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using App.Infrastructures.Database.SqlServer.Repositories.Contracts;
+using App.Infrastructures.Database.SqlServer.ViewModels.Model;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
@@ -28,9 +29,9 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Model model)
+        public IActionResult Create(ModelSaveViewModel model)
         {
-            _modelRepostitory.Add(model);
+            _modelRepostitory.Create(model);
             return RedirectToAction("Index");
         }
 
@@ -42,16 +43,16 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Update(Model model)
+        public IActionResult Update(ModelSaveViewModel model)
         {
             _modelRepostitory.Update(model);
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult Delete(int Id)
         {
-            _modelRepostitory.Delete(Id);
+            _modelRepostitory.Remove(Id);
             return RedirectToAction("Index");
         }
     }
