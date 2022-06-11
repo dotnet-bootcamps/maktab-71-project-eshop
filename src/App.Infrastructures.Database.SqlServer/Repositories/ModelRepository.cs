@@ -1,6 +1,7 @@
 ﻿using App.Infrastructures.Database.SqlServer.Data;
 using App.Infrastructures.Database.SqlServer.Entities;
 using App.Infrastructures.Database.SqlServer.Repositories.Contracts;
+using App.Infrastructures.Database.SqlServer.ViewModels.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -18,38 +19,72 @@ namespace App.Infrastructures.Database.SqlServer.Repositories
             _appDbContext = appDbContext;
         }
 
-        public void Add(Model model)
+        public void Create(ModelSaveViewModel model)
         {
-            _appDbContext.Add(model);
-            _appDbContext.SaveChanges();
-        }
 
-        public void Delete(int id)
-        {
-            var model = _appDbContext.Models.SingleOrDefault(x => x.Id == id);
-            _appDbContext.SaveChanges();
-        }
-
-        public List<Model> GetAll()
-        {
-            return _appDbContext.Models.ToList();
-        }
-
-        public Model GetById(int id)
-        {
-            var model = _appDbContext.Models.FirstOrDefault(x => x.Id == id);
-            if (model is null)
+            var record = new Model
             {
-                return new Model();
-            }
-            return model;
+                Name = model.Name,
+                ParentModelId = model.ParentModelId,
+                BrandId = model.BrandId,
+                CreationDate = DateTime.Now,
+                IsDeleted = false
+            };
+            _appDbContext.Models.Add(record);
+            _appDbContext.SaveChanges();
         }
 
-        public void Update(Model model)
+        public void Update(ModelSaveViewModel model)
         {
-            var dbModel = _appDbContext.Models.SingleOrDefault(x => x.Id == model.Id);
-            dbModel = model;
+            var record = _appDbContext.Models.FirstOrDefault(p => p.Id == model.Id);
+            if (record == null) return;
+            record.Name = model.Name;
+            record.IsDeleted = model.IsDeleted;
+            record.ParentModelId = model.ParentModelId;
+            record.BrandId = model.BrandId;
             _appDbContext.SaveChanges();
+        }
+
+        public void Remove(int id)
+        {
+            var record = _appDbContext.Models.FirstOrDefault(p => p.Id == id);
+            if (record == null) return;
+            _appDbContext.Models.Remove(record);
+            _appDbContext.SaveChanges();
+        }
+
+        public List<ModelListViewModel> GetAll()
+        {
+            return _appDbContext.Models.Select(b => new ModelListViewModel
+            {
+                Id = b.Id,
+                Name = b.Name,
+                CreationDate = b.CreationDate,
+                ParentModelId = b.ParentModelId,
+                BrandId = b.BrandId,
+                IsDeleted = b.IsDeleted,
+            }).ToList();
+        }
+
+        public ModelSaveViewModel GetById(int id)
+        {
+            try
+            {
+                var model = _appDbContext.Models.Select(b => new ModelSaveViewModel
+                {
+                    Id = b.Id,
+                    Name = b.Name,
+                    ParentModelId = b.ParentModelId,
+                    BrandId = b.BrandId,
+                    IsDeleted = b.IsDeleted,
+                }).SingleOrDefault(b => b.Id == id);
+                if (model == null) return new ModelSaveViewModel();
+                return model;
+            }
+            catch (Exception dbx)
+            {
+                throw new Exception(dbx.Message, dbx.InnerException);
+            }
         }
     }
 }

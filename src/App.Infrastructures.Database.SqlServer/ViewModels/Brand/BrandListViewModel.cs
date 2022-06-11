@@ -8,12 +8,13 @@ namespace App.EndPoints.Mvc.AdminUI.Models.Brand
 		public int Id { get; set; }
 
 		[Display(Name = "نام")]
-		public string Name { get; set; }
+		public string Name { get; set; } = string.Empty;
 
 		[Display(Name = "تاریخ ایجاد")]
 		public DateTime CreationDate { get; set; }
 
 		[Display(Name = "ترتیب نمایش")]
 		public int DisplayOrder { get; set; }
+		
 	}
 }

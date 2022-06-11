@@ -1,0 +1,63 @@
+﻿@model IEnumerable<ModelListViewModel>
+
+
+<div class="d-flex justify-content-between">
+    <h1>مدل ها</h1>
+    <div class="d-inline-flex">
+        @*<form asp-controller="Category" asp-action="Search" method="get" class="align-self-md-center mx-2">
+            <input type="text" name="q" autocomplete="off" />
+            <button type="submit" class="btn btn-secondary">جستجو</button>
+        </form>*@
+        <a class='btn btn-success align-self-md-center' asp-controller="Model" asp-action="Create">ایجاد</a>
+    </div>
+</div>
+
+<table class="table table-dark">
+    <thead>
+        <tr>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.DisplayOrder)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.BrandId)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.CreationDate)
+            </th>
+            <th>عملیات</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+                <tr>
+                    <td scope="row">
+                    @item.Id
+                    </td>
+                    <td>
+                    @item.Name
+                    </td>
+                    <td>
+                    @item.DisplayOrder
+                    </td>
+                    <td>
+                    @item.BrandId
+                    </td>
+                    <td>
+                    @item.CreationDate
+                    </td>
+                    <td>
+                        <a class="btn btn-secondary" asp-action="Update" asp-controller="Model" asp-route-id="@item.Id">ویرایش</a>
+                        <a class="btn btn-danger" asp-action="Delete" asp-controller="Model" asp-route-id="@item.Id">حذف</a>
+                    </td>
+                </tr>
+        }
+    </tbody>
+</table>
