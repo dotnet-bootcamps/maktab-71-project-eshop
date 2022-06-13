@@ -5,15 +5,23 @@ VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A340F267-3318-4AE1-BF7B-457C88F05385}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01-Infrastructures", "01-Infrastructures", "{BD520F99-027D-4B73-ABB5-77BCD6C30AA5}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02-Infrastructures", "02-Infrastructures", "{BD520F99-027D-4B73-ABB5-77BCD6C30AA5}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02-EndPoints", "02-EndPoints", "{54355E0A-CEFB-4327-869F-BA576EE85CCC}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03-EndPoints", "03-EndPoints", "{54355E0A-CEFB-4327-869F-BA576EE85CCC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App.Infrastructures.Database.SqlServer", "src\App.Infrastructures.Database.SqlServer\App.Infrastructures.Database.SqlServer.csproj", "{AC0076CE-0A1D-4402-BB1D-4BA8ABC7BCF6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.Infrastructures.Database.SqlServer", "src\App.Infrastructures.Database.SqlServer\App.Infrastructures.Database.SqlServer.csproj", "{AC0076CE-0A1D-4402-BB1D-4BA8ABC7BCF6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App.EndPoints.Mvc.AdminUI", "src\App.EndPoints.Mvc.AdminUI\App.EndPoints.Mvc.AdminUI.csproj", "{0BE906C9-DE0E-41B9-974D-9DFFB9C72064}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.EndPoints.Mvc.AdminUI", "src\App.EndPoints.Mvc.AdminUI\App.EndPoints.Mvc.AdminUI.csproj", "{0BE906C9-DE0E-41B9-974D-9DFFB9C72064}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App.EndPoints.Mvc.ShopUI", "src\App.EndPoints.Mvc.ShopUI\App.EndPoints.Mvc.ShopUI.csproj", "{CBF8A57D-6529-414C-9C9B-864A77961283}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.EndPoints.Mvc.ShopUI", "src\App.EndPoints.Mvc.ShopUI\App.EndPoints.Mvc.ShopUI.csproj", "{CBF8A57D-6529-414C-9C9B-864A77961283}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01-Domain", "01-Domain", "{951BCC1C-AB21-4D3C-8640-D50EB676F88F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{6D7F7D42-35FF-49EE-9875-46DE47AA89F9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{213A5A5B-5038-4A6D-81F2-3B2465C55348}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App.Domain.Core", "App.Domain.Core\App.Domain.Core.csproj", "{A2A46D49-D67A-4BEF-BA45-BE1AB1908C5D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +41,10 @@ Global
 		{CBF8A57D-6529-414C-9C9B-864A77961283}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBF8A57D-6529-414C-9C9B-864A77961283}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CBF8A57D-6529-414C-9C9B-864A77961283}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2A46D49-D67A-4BEF-BA45-BE1AB1908C5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2A46D49-D67A-4BEF-BA45-BE1AB1908C5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2A46D49-D67A-4BEF-BA45-BE1AB1908C5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2A46D49-D67A-4BEF-BA45-BE1AB1908C5D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -43,6 +55,10 @@ Global
 		{AC0076CE-0A1D-4402-BB1D-4BA8ABC7BCF6} = {BD520F99-027D-4B73-ABB5-77BCD6C30AA5}
 		{0BE906C9-DE0E-41B9-974D-9DFFB9C72064} = {54355E0A-CEFB-4327-869F-BA576EE85CCC}
 		{CBF8A57D-6529-414C-9C9B-864A77961283} = {54355E0A-CEFB-4327-869F-BA576EE85CCC}
+		{951BCC1C-AB21-4D3C-8640-D50EB676F88F} = {A340F267-3318-4AE1-BF7B-457C88F05385}
+		{6D7F7D42-35FF-49EE-9875-46DE47AA89F9} = {951BCC1C-AB21-4D3C-8640-D50EB676F88F}
+		{213A5A5B-5038-4A6D-81F2-3B2465C55348} = {951BCC1C-AB21-4D3C-8640-D50EB676F88F}
+		{A2A46D49-D67A-4BEF-BA45-BE1AB1908C5D} = {6D7F7D42-35FF-49EE-9875-46DE47AA89F9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E33D7C88-1A57-4CA3-AE1A-7AF235D0924A}
