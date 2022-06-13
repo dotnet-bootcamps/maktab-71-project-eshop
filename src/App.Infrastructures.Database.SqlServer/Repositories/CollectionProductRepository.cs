@@ -1,6 +1,7 @@
 ﻿using System;
+using App.Domain.Core.ProductAggrigate.Entites;
 using App.Infrastructures.Database.SqlServer.Data;
-using App.Infrastructures.Database.SqlServer.Entities;
+//using App.Infrastructures.Database.SqlServer.Entities;
 
 public class CollectionProductRepository
 {
