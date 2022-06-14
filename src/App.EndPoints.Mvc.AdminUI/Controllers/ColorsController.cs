@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using App.Infrastructures.Database.SqlServer.Repositories.Contracts;
+using App.Domain.Core.BaseData.Contract.Repositories;
 using App.EndPoints.Mvc.AdminUI.ViewModels;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
@@ -32,7 +32,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         
         public IActionResult SubmitCreatedColor(ColorViewModel model)
         {
-            _colorRepository.Create(new Infrastructures.Database.SqlServer.Entities.Color
+            _colorRepository.Create(new App.Domain.Core.BaseData.Entities.Color
             {
                 Code = model.Code,
                 Name = model.Name
@@ -52,7 +52,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(App.Infrastructures.Database.SqlServer.Entities.Color model)
+        public IActionResult Create(App.Domain.Core.BaseData.Entities.Color model)
         {
             _colorRepository.Create(model);
             return RedirectToAction("Index");
@@ -66,7 +66,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Update(App.Infrastructures.Database.SqlServer.Entities.Color model)
+        public IActionResult Update(App.Domain.Core.BaseData.Entities.Color model)
         {
             _colorRepository.Edit(model);
             return RedirectToAction("Index");

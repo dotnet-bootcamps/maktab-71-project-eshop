@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="BaseData\Contract\AppServises\" />
+    <Folder Include="BaseData\Contract\Services\" />
+    <Folder Include="BaseData\DTOs\" />
+    <Folder Include="BaseData\Enums\" />
+    <Folder Include="Product\Contract\AppServices\" />
+    <Folder Include="Product\Contract\Services\" />
+    <Folder Include="Product\DTOs\" />
+    <Folder Include="Product\Enums\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\src\App.EndPoints.Mvc.ShopUI\App.EndPoints.Mvc.ShopUI.csproj" />
+  </ItemGroup>
+
+</Project>

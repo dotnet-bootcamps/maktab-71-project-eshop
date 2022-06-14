@@ -1,32 +1,35 @@
 ﻿using System;
 using App.Infrastructures.Database.SqlServer.Data;
-using App.Infrastructures.Database.SqlServer.Entities;
-
-public class CollectionProductRepository
+using App.Domain.Core.Product.Entities;
+using App.Domain.Core.Product.Contract.Repositories;
+namespace App.Infrastructures.Database.SqlServer.Repositories
 {
-    private readonly AppDbContext _shopDB;
-
-    public CollectionProductRepository(AppDbContext appDbContext)
+    public class CollectionProductRepository
     {
-        this._shopDB = appDbContext;
-    }
+        private readonly AppDbContext _shopDB;
 
-    public void AddCollectionProducts(CollectionProduct item)
-    {
-        _shopDB.CollectionProducts.Add(item);
-        _shopDB.SaveChanges();
+        public CollectionProductRepository(AppDbContext appDbContext)
+        {
+            this._shopDB = appDbContext;
+        }
 
-    }
+        public void AddCollectionProducts(CollectionProduct item)
+        {
+            _shopDB.CollectionProducts.Add(item);
+            _shopDB.SaveChanges();
 
-    public List<CollectionProduct> GetAllCollectionProducts()
-    {
-        return _shopDB.CollectionProducts.ToList();
-    }
+        }
+
+        public List<CollectionProduct> GetAllCollectionProducts()
+        {
+            return _shopDB.CollectionProducts.ToList();
+        }
 
 
-    public void DelteCollectionProducts(CollectionProduct item)
-    {
-        _shopDB.CollectionProducts.Remove(item);
-        _shopDB.SaveChanges();
+        public void DelteCollectionProducts(CollectionProduct item)
+        {
+            _shopDB.CollectionProducts.Remove(item);
+            _shopDB.SaveChanges();
+        }
     }
 }
