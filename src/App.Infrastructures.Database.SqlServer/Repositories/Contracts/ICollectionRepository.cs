@@ -1,4 +1,4 @@
-﻿using App.Infrastructures.Database.SqlServer.Entities;
+﻿using App.Domain.Core.Product_Aggregate.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

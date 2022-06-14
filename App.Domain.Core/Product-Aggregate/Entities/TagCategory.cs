@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace App.Infrastructures.Database.SqlServer.Entities
+namespace App.Domain.Core.Product_Aggregate.Entities
 {
-    public partial class Operator
+    public class TagCategory
     {
-        public Operator()
+        public TagCategory()
         {
-            Products = new HashSet<Product>();
+            Tags = new HashSet<Tag>();
         }
 
         public int Id { get; set; }
@@ -15,6 +15,6 @@ namespace App.Infrastructures.Database.SqlServer.Entities
         public DateTime CreationDate { get; set; }
         public bool IsDeleted { get; set; }
 
-        public virtual ICollection<Product> Products { get; set; }
+        public virtual ICollection<Tag> Tags { get; set; }
     }
 }

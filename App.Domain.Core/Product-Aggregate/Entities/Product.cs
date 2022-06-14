@@ -1,10 +1,13 @@
-﻿using System;
+﻿using App.Domain.Core.BaseData_Aggregate.Entities;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace App.Infrastructures.Database.SqlServer.Entities
+namespace App.Domain.Core.Product_Aggregate.Entities
 {
-    public partial class Product
+    public class Product
     {
         public Product()
         {

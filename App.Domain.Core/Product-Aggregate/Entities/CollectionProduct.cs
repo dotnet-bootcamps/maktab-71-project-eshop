@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace App.Infrastructures.Database.SqlServer.Entities
+namespace App.Domain.Core.Product_Aggregate.Entities
 {
-    public partial class CollectionProduct
+    public class CollectionProduct
     {
         public int Id { get; set; }
         public int CollectionId { get; set; }

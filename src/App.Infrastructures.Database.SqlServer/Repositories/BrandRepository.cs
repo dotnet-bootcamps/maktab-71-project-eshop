@@ -1,5 +1,5 @@
 ﻿using App.Infrastructures.Database.SqlServer.Data;
-using App.Infrastructures.Database.SqlServer.Entities;
+using App.Domain.Core.Product_Aggregate.Entities;
 using App.Infrastructures.Database.SqlServer.Repositories.Contracts;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -50,6 +50,8 @@ namespace App.Infrastructures.Database.SqlServer.Repositories
         {
             return _eshop.Brands.First(p => p.Id == id);
         }
+
+       
     }
 }
 

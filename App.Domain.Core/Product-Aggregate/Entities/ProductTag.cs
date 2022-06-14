@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace App.Infrastructures.Database.SqlServer.Entities
+namespace App.Domain.Core.Product_Aggregate.Entities
 {
-    public partial class ProductColor
+    public class ProductTag
     {
         public int Id { get; set; }
         public int ProductId { get; set; }
-        public int ColorId { get; set; }
+        public int TagId { get; set; }
+        public string Value { get; set; } = null!;
         public string Name { get; set; } = null!;
         public DateTime CreationDate { get; set; }
         public bool IsDeleted { get; set; }
 
-        public virtual Color Color { get; set; } = null!;
         public virtual Product Product { get; set; } = null!;
+        public virtual Tag Tag { get; set; } = null!;
     }
 }

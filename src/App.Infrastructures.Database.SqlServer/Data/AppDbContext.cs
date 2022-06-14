@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using App.Infrastructures.Database.SqlServer.Entities;
+using App.Domain.Core.BaseData_Aggregate.Entities;
+using App.Domain.Core.Product_Aggregate.Entities;
+
+/*using App.Infrastructures.Database.SqlServer.Entities;*/
 
 namespace App.Infrastructures.Database.SqlServer.Data
 {
@@ -21,7 +24,7 @@ namespace App.Infrastructures.Database.SqlServer.Data
         public virtual DbSet<Category> Categories { get; set; } = null!;
         public virtual DbSet<Collection> Collections { get; set; } = null!;
         public virtual DbSet<CollectionProduct> CollectionProducts { get; set; } = null!;
-        public virtual DbSet<App.Infrastructures.Database.SqlServer.Entities.Color> Colors { get; set; } = null!;
+        public virtual DbSet<App.Domain.Core.BaseData_Aggregate.Entities.Color> Colors { get; set; } = null!;
         public virtual DbSet<Comment> Comments { get; set; } = null!;
         public virtual DbSet<FileType> FileTypes { get; set; } = null!;
         public virtual DbSet<FileTypeExtention> FileTypeExtentions { get; set; } = null!;
