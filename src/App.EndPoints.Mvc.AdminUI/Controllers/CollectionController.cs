@@ -1,18 +1,16 @@
-﻿using App.Infrastructures.Database.SqlServer.Repositories;
-using Microsoft.AspNetCore.Mvc;
+﻿using App.Domain.Core.Product.Entities;
 using App.Infrastructures.Database.SqlServer.Repositories.Contracts;
-using App.Domain.Core.Product.Entities;
+using Microsoft.AspNetCore.Mvc;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
-    public class ModelController : Controller
+    public class CollectionController : Controller
     {
-        private readonly IModelRepository _repository;
-        public ModelController(IModelRepository repository)
+        private readonly ICollectionRepository _repository;
+        public CollectionController(ICollectionRepository repository)
         {
             _repository = repository;
         }
-
         public IActionResult Index()
         {
             var record = _repository.GetAll();
@@ -26,7 +24,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Model model)
+        public IActionResult Create(Collection model)
         {
             _repository.Create(model);
             return RedirectToAction("Index");
@@ -41,7 +39,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
 
         [HttpPost]
 
-        public IActionResult Update(Model model)
+        public IActionResult Update(Collection model)
         {
             _repository.Update(model);
             return RedirectToAction("Update");

@@ -1,42 +1,36 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using App.Infrastructures.Database.SqlServer.Data;
-using App.Infrastructures.Database.SqlServer.Entities;
 using App.Infrastructures.Database.SqlServer.Repositories;
 using App.Infrastructures.Database.SqlServer.Repositories.Contracts;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using App.EndPoints.Mvc.AdminUI.ViewModels;
+using App.Domain.Core.Product.Entities;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
 
     public class ProductController : Controller
     {
+        private readonly IProductRepository _repository;
         private readonly ICategoryRepository _categoryRepository;
-        private readonly IProductRepository _productRepository;
         private readonly IBrandRepository _brandRepository;
         private readonly IColorRepository _colorRepository;
         private readonly IModelRepository _modelRepository;
-
-        public ProductController(
-            ICategoryRepository categoryRepository,
-            IProductRepository productRepository,
-            IBrandRepository brandRepository,
-            IColorRepository colorRepository,
-            IModelRepository modelRepository
-            )
+        public ProductController(IProductRepository repository,ICategoryRepository catRepo
+            ,IBrandRepository brandRepo
+            ,IColorRepository colorRepo
+            ,IModelRepository modelRepo)
         {
-            _categoryRepository = categoryRepository;
-            _productRepository = productRepository;
-            _brandRepository = brandRepository;
-            _colorRepository = colorRepository;
-            _modelRepository = modelRepository;
+            _repository = repository;
+            _categoryRepository = catRepo;
+            _brandRepository = brandRepo;
+            _colorRepository = colorRepo;
+            _modelRepository = modelRepo;
         }
-
-
         public IActionResult Index()
         {
-            var products = _productRepository.GetAll();
-            return View(products);
+            var record = _repository.GetAll();
+            return View(record);
         }
 
 
@@ -77,7 +71,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         [HttpPost]
         public IActionResult Create(CreateProductViewModel model)
         {
-            _productRepository.Create(new Product
+            _repository.Create(new Product
             {
                 Name = model.Name,
                 Description=model.Description,
@@ -93,31 +87,20 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         [HttpGet]
         public IActionResult Update(int Id)
         {
-            var product = _productRepository.GetById(Id);
-            return View(product);
+            var record = _repository.GetById(Id);
+            return View(record);
         }
         [HttpPost]
         public IActionResult Update(Product model)
         {
-            _productRepository.Edit(model);
+            _repository.Update(model);
 
             return RedirectToAction("Index");
         }
-   
-
-
-        //[HttpGet]
-        //public IActionResult Delete()
-        //{
-         
-
-        //    return View();
-        //}
         [HttpPost]
-        public IActionResult Delete(int Id)
+        public IActionResult Delete(int id)
         {
-            _productRepository.Delete(Id);
-
+            _repository.Remove(id);
             return RedirectToAction("Index");
         }
 

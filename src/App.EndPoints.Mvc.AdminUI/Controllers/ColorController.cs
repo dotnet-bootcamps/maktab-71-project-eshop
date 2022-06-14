@@ -1,17 +1,19 @@
-﻿using App.Infrastructures.Database.SqlServer.Repositories;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using App.Infrastructures.Database.SqlServer.Repositories.Contracts;
-using App.Domain.Core.Product.Entities;
+using App.EndPoints.Mvc.AdminUI.ViewModels;
+using App.Domain.Core.BaseData.Entities;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
-    public class ModelController : Controller
+    public class ColorController : Controller
     {
-        private readonly IModelRepository _repository;
-        public ModelController(IModelRepository repository)
+
+        private readonly IColorRepository _repository;
+        public ColorController(IColorRepository repository)
         {
             _repository = repository;
         }
+
 
         public IActionResult Index()
         {
@@ -26,7 +28,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Model model)
+        public IActionResult Create(Color model)
         {
             _repository.Create(model);
             return RedirectToAction("Index");
@@ -41,7 +43,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
 
         [HttpPost]
 
-        public IActionResult Update(Model model)
+        public IActionResult Update(Color model)
         {
             _repository.Update(model);
             return RedirectToAction("Update");
