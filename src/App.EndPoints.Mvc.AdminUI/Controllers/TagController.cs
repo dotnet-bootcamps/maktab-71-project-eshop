@@ -1,5 +1,5 @@
-﻿using App.Domain.Core.Product.Entities;
-using App.Infrastructures.Database.SqlServer.Repositories.Contracts;
+﻿using App.Domain.Core.Product.Contracts.Repositories;
+using App.Domain.Core.Product.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers

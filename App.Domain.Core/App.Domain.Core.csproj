@@ -8,16 +8,15 @@
 
   <ItemGroup>
     <Folder Include="BaseData\Contracts\AppServices\" />
-    <Folder Include="BaseData\Contracts\Repositories\" />
     <Folder Include="BaseData\Contracts\Services\" />
     <Folder Include="BaseData\Enums\" />
     <Folder Include="BaseData\Dtos\" />
     <Folder Include="Product\Contracts\AppServices\" />
     <Folder Include="Product\Contracts\Services\" />
-    <Folder Include="Product\Contracts\Repositories\" />
     <Folder Include="Product\Enums\" />
     <Folder Include="Product\Dtos\" />
-    <Folder Include="User\Contracts\" />
+    <Folder Include="User\Contracts\AppServices\" />
+    <Folder Include="User\Contracts\Services\" />
     <Folder Include="User\Dtos\" />
     <Folder Include="User\Enums\" />
   </ItemGroup>
