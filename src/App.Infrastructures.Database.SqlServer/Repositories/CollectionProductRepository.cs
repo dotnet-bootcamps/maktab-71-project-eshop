@@ -1,6 +1,6 @@
 ﻿using System;
 using App.Infrastructures.Database.SqlServer.Data;
-using App.Infrastructures.Database.SqlServer.Entities;
+using App.Domain.Core.Product.Entities;
 
 public class CollectionProductRepository
 {
