@@ -1,8 +1,7 @@
-
-using App.Infrastructures.Database.SqlServer.Data;
-using App.Infrastructures.Database.SqlServer.Entities;
-using App.Infrastructures.Database.SqlServer.Repositories;
-using App.Infrastructures.Database.SqlServer.Repositories.Contracts;
+using App.Domain.Core.Product.Entities;
+using App.Domain.Core.BaseData.Entities;
+using App.Domain.Core.Product.Contract.Repositories;
+using App.Domain.Core.BaseData.Contract.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

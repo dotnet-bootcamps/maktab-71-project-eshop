@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using App.Infrastructures.Database.SqlServer.Data;
-using App.Infrastructures.Database.SqlServer.Entities;
-using App.Infrastructures.Database.SqlServer.Repositories;
-using App.Infrastructures.Database.SqlServer.Repositories.Contracts;
+using App.Domain.Core.BaseData.Contract.Repositories;
+using App.Domain.Core.Product.Contract.Repositories;
+using App.Domain.Core.Product.Entities;
+using App.Domain.Core.BaseData.Entities;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using App.EndPoints.Mvc.AdminUI.ViewModels;
 
