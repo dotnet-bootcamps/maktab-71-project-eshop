@@ -1,6 +1,6 @@
-﻿using App.Infrastructures.Database.SqlServer.Data;
-using App.Infrastructures.Database.SqlServer.Entities;
-using App.Infrastructures.Database.SqlServer.Repositories.Contracts;
+﻿using App.Domain.Core.ProductAgg.Contracts;
+using App.Domain.Core.ProductAgg.Entities;
+using App.Infrastructures.Database.SqlServer.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

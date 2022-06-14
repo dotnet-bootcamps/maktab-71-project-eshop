@@ -1,4 +1,5 @@
-﻿@model List<App.Infrastructures.Database.SqlServer.Entities.Brand>
+﻿@using App.Domain.Core.ProductAgg.Entities
+@model List<Brand>
 @{
 	ViewData["Title"] = "لیست برند‌ها";
 	Model.OrderBy(x=>x.DisplayOrder);

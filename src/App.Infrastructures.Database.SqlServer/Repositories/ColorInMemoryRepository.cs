@@ -1,5 +1,6 @@
-﻿using App.Infrastructures.Database.SqlServer.Data;
-using App.Infrastructures.Database.SqlServer.Repositories.Contracts;
+﻿using App.Domain.Core.ProductAgg.Contracts;
+using App.Domain.Core.ProductAgg.Entities;
+using App.Infrastructures.Database.SqlServer.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace App.Infrastructures.Database.SqlServer.Repositories
@@ -14,12 +15,12 @@ namespace App.Infrastructures.Database.SqlServer.Repositories
             _eshop = appDbContext;
         }
 
-        public void Create(Entities.Color color)
+        public void Create(Color color)
         {
             _eshop.Colors.Add(color);
             _eshop.SaveChanges();
         }
-        public void Edit(Entities.Color model)
+        public void Edit(Color model)
         {
             var color = _eshop.Colors.First(p => p.Id == model.Id);
             color.Name = model.Name;
@@ -35,11 +36,11 @@ namespace App.Infrastructures.Database.SqlServer.Repositories
         }
 
 
-        public List<Entities.Color> GetAll()
+        public List<Color> GetAll()
         {
             return _eshop.Colors.Include(b => b.ProductColors).ToList();
         }
-        public Entities.Color GetById(int id)
+        public Color GetById(int id)
         {
             return _eshop.Colors.First(p => p.Id == id);
         }
