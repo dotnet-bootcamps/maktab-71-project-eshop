@@ -1,4 +1,4 @@
-﻿using App.Infrastructures.Database.SqlServer.Entities;
+﻿using App.Domain.Core.BaseData_Aggregate.Entities;
 
 namespace App.Infrastructures.Database.SqlServer.Repositories.Contracts
 {

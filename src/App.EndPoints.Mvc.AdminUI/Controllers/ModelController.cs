@@ -1,4 +1,4 @@
-﻿using App.Infrastructures.Database.SqlServer.Entities;
+﻿using App.Domain.Core.BaseData_Aggregate.Entities;
 using App.Infrastructures.Database.SqlServer.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using App.Infrastructures.Database.SqlServer.Repositories.Contracts;

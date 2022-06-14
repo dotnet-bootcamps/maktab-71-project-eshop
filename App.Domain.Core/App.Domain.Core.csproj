@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="BaseData-Aggregate\Contracts\AppServices\" />
+    <Folder Include="BaseData-Aggregate\Contracts\Repositories\" />
+    <Folder Include="BaseData-Aggregate\Contracts\Services\" />
+    <Folder Include="BaseData-Aggregate\DTOs\" />
+    <Folder Include="BaseData-Aggregate\Enums\" />
+    <Folder Include="Product-Aggregate\Contracts\AppServices\" />
+    <Folder Include="Product-Aggregate\Contracts\Repositories\" />
+    <Folder Include="Product-Aggregate\Contracts\Services\" />
+    <Folder Include="Product-Aggregate\DTOs\" />
+    <Folder Include="Product-Aggregate\Enums\" />
+  </ItemGroup>
+
+</Project>

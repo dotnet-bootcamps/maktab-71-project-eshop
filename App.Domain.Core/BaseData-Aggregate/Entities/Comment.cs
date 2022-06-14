@@ -1,9 +1,10 @@
-﻿using System;
+﻿using App.Domain.Core.Product_Aggregate.Entities;
+using System;
 using System.Collections.Generic;
 
-namespace App.Infrastructures.Database.SqlServer.Entities
+namespace App.Domain.Core.BaseData_Aggregate.Entities
 {
-    public partial class Comment
+    public class Comment
     {
         public int Id { get; set; }
         public string Title { get; set; } = null!;

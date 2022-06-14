@@ -1,6 +1,6 @@
 ﻿using System;
 using App.Infrastructures.Database.SqlServer.Data;
-using App.Infrastructures.Database.SqlServer.Entities;
+using App.Domain.Core.Product_Aggregate.Entities;
 using App.Infrastructures.Database.SqlServer.Repositories.Contracts;
 
 public class CollectionRepository :ICollectionRepository

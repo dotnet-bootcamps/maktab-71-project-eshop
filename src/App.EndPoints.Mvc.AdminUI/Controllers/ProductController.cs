@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using App.Infrastructures.Database.SqlServer.Data;
-using App.Infrastructures.Database.SqlServer.Entities;
+using App.Domain.Core.Product_Aggregate.Entities;
 using App.Infrastructures.Database.SqlServer.Repositories;
 using App.Infrastructures.Database.SqlServer.Repositories.Contracts;
 using Microsoft.AspNetCore.Mvc.Rendering;
