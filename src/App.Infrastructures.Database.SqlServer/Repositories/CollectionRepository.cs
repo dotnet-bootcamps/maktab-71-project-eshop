@@ -1,7 +1,7 @@
 ﻿using System;
+using App.Domain.Core.Product.Contracts;
+using App.Domain.Core.Product.Entities;
 using App.Infrastructures.Database.SqlServer.Data;
-using App.Infrastructures.Database.SqlServer.Entities;
-using App.Infrastructures.Database.SqlServer.Repositories.Contracts;
 
 public class CollectionRepository :ICollectionRepository
 {

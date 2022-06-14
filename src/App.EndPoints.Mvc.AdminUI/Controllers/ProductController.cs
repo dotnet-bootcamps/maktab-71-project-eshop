@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using App.Infrastructures.Database.SqlServer.Data;
-using App.Infrastructures.Database.SqlServer.Entities;
 using App.Infrastructures.Database.SqlServer.Repositories;
-using App.Infrastructures.Database.SqlServer.Repositories.Contracts;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using App.EndPoints.Mvc.AdminUI.ViewModels;
+using App.Domain.Core.Product.Contracts;
+using App.Domain.Core.Product.Entities;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
