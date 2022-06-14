@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace App.Infrastructures.Database.SqlServer.Entities
+namespace App.Domain.Core.Tag.Entities
 {
-    public partial class FileTypeExtention
+    public partial class TagCategory
     {
-        public FileTypeExtention()
+        public TagCategory()
         {
-            FileTypes = new HashSet<FileType>();
+            Tags = new HashSet<Tag>();
         }
 
         public int Id { get; set; }
@@ -15,6 +15,6 @@ namespace App.Infrastructures.Database.SqlServer.Entities
         public DateTime CreationDate { get; set; }
         public bool IsDeleted { get; set; }
 
-        public virtual ICollection<FileType> FileTypes { get; set; }
+        public virtual ICollection<Tag> Tags { get; set; }
     }
 }

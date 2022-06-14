@@ -1,7 +1,8 @@
-﻿using System;
+﻿using App.Domain.Core.Tag.Entities;
+using System;
 using System.Collections.Generic;
 
-namespace App.Infrastructures.Database.SqlServer.Entities
+namespace App.Domain.Core.Product.Entities
 {
     public partial class ProductTag
     {
@@ -14,6 +15,6 @@ namespace App.Infrastructures.Database.SqlServer.Entities
         public bool IsDeleted { get; set; }
 
         public virtual Product Product { get; set; } = null!;
-        public virtual Tag Tag { get; set; } = null!;
+        public virtual App.Domain.Core.Tag.Entities.Tag Tag { get; set; } = null!;
     }
 }

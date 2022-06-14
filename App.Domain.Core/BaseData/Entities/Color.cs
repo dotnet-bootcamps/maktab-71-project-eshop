@@ -1,8 +1,9 @@
-﻿using System;
+﻿using App.Domain.Core.Product.Entities;
+using System;
 using System.Collections.Generic;
 
-namespace App.Infrastructures.Database.SqlServer.Entities
-{
+namespace App.Domain.Core.BaseData.Entities
+{ 
     public partial class Color
     {
         public Color()
