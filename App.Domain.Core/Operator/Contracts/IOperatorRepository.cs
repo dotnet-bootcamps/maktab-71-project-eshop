@@ -1,5 +1,4 @@
 ﻿using App.Domain.Core.Operator.Entities;
-using App.Infrastructures.Database.SqlServer.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,4 +1,6 @@
-﻿using App.Infrastructures.Database.SqlServer.Entities;
+﻿
+
+using App.Domain.Core.Product.Entities;
 
 namespace App.Domain.Core.Product.Contracts
 {
