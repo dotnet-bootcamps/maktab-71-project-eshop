@@ -1,5 +1,5 @@
-﻿using App.Infrastructures.Database.SqlServer.Data;
-using App.Infrastructures.Database.SqlServer.Entities;
+﻿using App.Domain.Core.User.Entities;
+using App.Infrastructures.Database.SqlServer.Data;
 using App.Infrastructures.Database.SqlServer.Repositories.Contracts;
 using System;
 using System.Collections.Generic;
@@ -11,42 +11,45 @@ namespace App.Infrastructures.Database.SqlServer.Repositories
 {
     public class OperatorRepository : IOperatorRepository
     {
-        private readonly AppDbContext _dbContext;
+        private readonly AppDbContext _appDbContext;
         public OperatorRepository(AppDbContext dbContext)
         {
-            _dbContext = dbContext;
+            _appDbContext = dbContext;
         }
-        public void Add(Operator shopOperator)
+        public int Create(Operator model)
         {
-            _dbContext.Add(shopOperator);
-            _dbContext.SaveChanges();
-            
-        }
-        public void Update(Operator shopOperator)
-        {
-            _dbContext.Update(shopOperator);
-            _dbContext.SaveChanges();
+            _appDbContext.Operators.Add(model);
+            _appDbContext.SaveChanges();
+            return model.Id;
 
+        }
+        public void Update(Operator model)
+        {
+            var record = _appDbContext.Operators.FirstOrDefault(p => p.Id == model.Id);
+            record.Name = model.Name;
+            record.IsDeleted = model.IsDeleted;
+            record.CreationDate = model.CreationDate;
+            _appDbContext.SaveChanges();
+        }
+        public bool Remove(int id)
+        {
+            var record = _appDbContext.Operators.FirstOrDefault(p => p.Id == id);
+            _appDbContext.Operators.Remove(record);
+            _appDbContext.SaveChanges();
+            return true;
         }
 
         public List<Operator> GetAll()
         {
-            List<Operator> OperatorList = _dbContext.Operators.ToList();
-            return OperatorList;
+            var record = _appDbContext.Operators.ToList();
+            return record;
         }
 
         public Operator GetById(int id)
         {
-            var op = _dbContext.Operators.Find(id);
-            return op;
+            var record = _appDbContext.Operators.FirstOrDefault(p => p.Id == id);
+            return record;
         }
 
-        public void Remove(int id)
-        {
-            var op = _dbContext.Operators.SingleOrDefault(x => x.Id == id);
-            _dbContext.Operators.Remove(op);
-            _dbContext.SaveChanges();
-            
-        }
     }
 }

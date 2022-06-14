@@ -1,4 +1,4 @@
-﻿using App.Infrastructures.Database.SqlServer.Entities;
+﻿using App.Domain.Core.Product.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +9,10 @@ namespace App.Infrastructures.Database.SqlServer.Repositories.Contracts
 {
     public interface IModelRepository
     {
-        void Add(Model model);
-        void Update(Model model);
-        void Delete(int id);
+        Model GetById(int Id);
         List<Model> GetAll();
-        Model GetById(int id);
+        int Create(Model model);
+        void Update(Model model);
+        bool Remove(int Id);
     }
 }

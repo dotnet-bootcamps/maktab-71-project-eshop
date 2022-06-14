@@ -1,52 +1,54 @@
-﻿using App.Infrastructures.Database.SqlServer.Data;
-using App.Infrastructures.Database.SqlServer.Entities;
+﻿using App.Domain.Core.Product.Entities;
+using App.Infrastructures.Database.SqlServer.Data;
 using App.Infrastructures.Database.SqlServer.Repositories.Contracts;
 
 namespace App.Infrastructures.Database.SqlServer.Repositories
 {
     public class ProductRepository : IProductRepository
     {
-        private readonly AppDbContext _eShop;
+        private readonly AppDbContext _appDbContext;
 
         public ProductRepository(AppDbContext appDbContext)
         {
-            _eShop = appDbContext;
+            _appDbContext = appDbContext;
         }
 
-        public void Create(Product product)
+        public int Create(Product model)
         {
-            _eShop.Products.Add(product);
-            _eShop.SaveChanges();
+            _appDbContext.Products.Add(model);
+            _appDbContext.SaveChanges();
+            return model.Id;
         }
-        public void Edit(Product model)
+        public void Update(Product model)
         {
-            var product = _eShop.Products.FirstOrDefault(p => p.Id == model.Id);
-            product.Name = model.Name;
-            product.Description = model.Description;
-            product.Weight = model.Weight;
-            product.Price = model.Price;
-            product.Count = model.Count;
-            product.IsActive = model.IsActive;
-            product.CreationDate = model.CreationDate;
-            _eShop.SaveChanges();
-
+            var record = _appDbContext.Products.FirstOrDefault(p => p.Id == model.Id);
+            record.Name = model.Name;
+            record.Description = model.Description;
+            record.Weight = model.Weight;
+            record.Price = model.Price;
+            record.Count = model.Count;
+            record.IsActive = model.IsActive;
+            record.CreationDate = model.CreationDate;
+            _appDbContext.SaveChanges();
         }
 
-        public void Delete(int id)
+        public bool Remove(int id)
         {
-            var product = _eShop.Products.FirstOrDefault(p => p.Id == id);
-            _eShop.Products.Remove(product);
-            _eShop.SaveChanges();
-
+            var record = _appDbContext.Products.FirstOrDefault(p => p.Id == id);
+            _appDbContext.Products.Remove(record);
+            _appDbContext.SaveChanges();
+            return true;
         }
 
         public List<Product> GetAll()
         {
-            return _eShop.Products.ToList();
+            var record = _appDbContext.Products.ToList();
+            return record;
         }
         public Product GetById(int id)
         {
-            return _eShop.Products.First(p => p.Id == id);
+            var record = _appDbContext.Products.FirstOrDefault(p => p.Id == id);
+            return record;
         }
     }
 }

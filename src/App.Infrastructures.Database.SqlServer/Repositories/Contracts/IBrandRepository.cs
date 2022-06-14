@@ -1,4 +1,4 @@
-﻿using App.Infrastructures.Database.SqlServer.Entities;
+﻿using App.Domain.Core.Product.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +9,10 @@ namespace App.Infrastructures.Database.SqlServer.Repositories.Contracts
 {
     public interface IBrandRepository
     {
-        Brand GetBy(int Id);
+        Brand GetById(int Id);
         List<Brand> GetAll();
-        void Create(Brand brand);
-        void Update(Brand brand);
-        void Remove(int Id);
+        int Create(Brand model);
+        void Update(Brand model);
+        bool Remove(int Id);
     }
 }

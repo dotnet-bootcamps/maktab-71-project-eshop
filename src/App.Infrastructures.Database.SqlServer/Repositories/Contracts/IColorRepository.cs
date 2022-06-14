@@ -1,13 +1,14 @@
-﻿using App.Infrastructures.Database.SqlServer.Entities;
+﻿
+using App.Domain.Core.BaseData.Entities;
 
-namespace App.Infrastructures.Database.SqlServer.Repositories.Contracts
+namespace App.Infrastructures.Database.SqlServer.Ripository
 {
     public interface IColorRepository
     {
-        void Create(Color color);
-        void Delete(int id);
-        void Edit(Color model);
+        Color GetById(int Id);
         List<Color> GetAll();
-        Color GetById(int id);
+        int Create(Color model);
+        void Update(Color model);
+        bool Remove(int Id);
     }
 }

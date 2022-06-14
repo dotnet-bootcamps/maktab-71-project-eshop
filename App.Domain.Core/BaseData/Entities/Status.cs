@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace App.Infrastructures.Database.SqlServer.Entities
+namespace App.Domain.Core.BaseData.Entities
 {
-    public partial class TagCategory
+    public partial class Status
     {
-        public TagCategory()
+        public Status()
         {
-            Tags = new HashSet<Tag>();
+            Comments = new HashSet<Comment>();
         }
 
         public int Id { get; set; }
+        public bool ForComment { get; set; }
         public string Name { get; set; } = null!;
         public DateTime CreationDate { get; set; }
         public bool IsDeleted { get; set; }
 
-        public virtual ICollection<Tag> Tags { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
     }
 }

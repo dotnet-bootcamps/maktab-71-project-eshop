@@ -1,13 +1,13 @@
-﻿using App.Infrastructures.Database.SqlServer.Entities;
+﻿using App.Domain.Core.Product.Entities;
 
 namespace App.Infrastructures.Database.SqlServer.Repositories.Contracts
 {
     public interface ICategoryRepository
     {
-        Category GetBy(int Id);
+        Category GetById(int Id);
         List<Category> GetAll();
-        void Create(Category brand);
-        void Update(Category brand);
-        void Remove(int Id);
+        int Create(Category model);
+        void Update(Category model);
+        bool Remove(int Id);
     }
 }

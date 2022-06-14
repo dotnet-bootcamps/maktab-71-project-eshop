@@ -1,4 +1,4 @@
-﻿using App.Infrastructures.Database.SqlServer.Entities;
+﻿using App.Domain.Core.User.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +9,11 @@ namespace App.Infrastructures.Database.SqlServer.Repositories.Contracts
 {
     public interface IOperatorRepository
     {
+        Operator GetById(int Id);
         List<Operator> GetAll();
-        Operator GetById(int id);
-        void Add(Operator @operator);
-        void Remove(int id);
+        int Create(Operator model);
+        void Update(Operator model);
+        bool Remove(int Id);
 
     }
 }

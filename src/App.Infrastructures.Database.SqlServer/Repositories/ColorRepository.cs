@@ -1,6 +1,6 @@
-﻿using App.Domain.Core.Product.Entities;
+﻿using App.Domain.Core.BaseData.Entities;
 using App.Infrastructures.Database.SqlServer.Data;
-using App.Infrastructures.Database.SqlServer.Repositories.Contracts;
+using App.Infrastructures.Database.SqlServer.Ripository;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,53 +10,48 @@ using System.Threading.Tasks;
 
 namespace App.Infrastructures.Database.SqlServer.Repositories
 {
-
-    public class BrandRepository: IBrandRepository
+    public class ColorRepository : IColorRepository
     {
+
         private readonly AppDbContext _appDbContext;
-        public BrandRepository(AppDbContext appDbContext)
+
+        public ColorRepository(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
         }
 
-        public int Create(Brand model)
+        public int Create(Color model)
         {
-            _appDbContext.Brands.Add(model);
+            _appDbContext.Colors.Add(model);
             _appDbContext.SaveChanges();
             return model.Id;
         }
-
-        public void Update(Brand model)
+        public void Update(Color model)
         {
-            var record = _appDbContext.Brands.FirstOrDefault(p => p.Id == model.Id);
+            var record = _appDbContext.Colors.FirstOrDefault(p => p.Id == model.Id);
             record.Name = model.Name;
-            record.DisplayOrder = model.DisplayOrder;
+            record.Code = model.Code;
             record.CreationDate = model.CreationDate;
             _appDbContext.SaveChanges();
         }
-
         public bool Remove(int id)
         {
-            var record = _appDbContext.Brands.FirstOrDefault(p => p.Id == id);
-            _appDbContext.Brands.Remove(record);
+            var record = _appDbContext.Colors.FirstOrDefault(p => p.Id == id);
+            _appDbContext.Colors.Remove(record);
             _appDbContext.SaveChanges();
             return true;
         }
 
-        public List<Brand> GetAll()
+
+        public List<Color> GetAll()
         {
-            var record = _appDbContext.Brands.ToList();
+            var record = _appDbContext.Colors.ToList();
             return record;
         }
-
-        public Brand GetById(int id)
+        public Color GetById(int id)
         {
-            var record = _appDbContext.Brands.FirstOrDefault(p => p.Id == id);
+            var record = _appDbContext.Colors.FirstOrDefault(p => p.Id == id);
             return record;
         }
-
-        
     }
 }
-
-

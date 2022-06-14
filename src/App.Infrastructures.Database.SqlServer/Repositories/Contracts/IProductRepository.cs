@@ -1,4 +1,4 @@
-﻿using App.Infrastructures.Database.SqlServer.Entities;
+﻿using App.Domain.Core.Product.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +9,11 @@ namespace App.Infrastructures.Database.SqlServer.Repositories.Contracts
 {
     public interface IProductRepository
     {
-        public void Create(Product product);
-        public void Edit(Product model);
-        public void Delete(int id);
-        public List<Product> GetAll();
-        public Product GetById(int id);
+        Product GetById(int Id);
+        List<Product> GetAll();
+        int Create(Product model);
+        void Update(Product model);
+        bool Remove(int Id);
 
     }
 }

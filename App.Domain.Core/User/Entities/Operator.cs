@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace App.Infrastructures.Database.SqlServer.Entities
+namespace App.Domain.Core.User.Entities
 {
     public partial class Operator
     {
         public Operator()
         {
-            Products = new HashSet<Product>();
+            Products = new HashSet<App.Domain.Core.Product.Entities.Product>();
         }
 
         public int Id { get; set; }
@@ -15,6 +15,6 @@ namespace App.Infrastructures.Database.SqlServer.Entities
         public DateTime CreationDate { get; set; }
         public bool IsDeleted { get; set; }
 
-        public virtual ICollection<Product> Products { get; set; }
+        public virtual ICollection<App.Domain.Core.Product.Entities.Product> Products { get; set; }
     }
 }
