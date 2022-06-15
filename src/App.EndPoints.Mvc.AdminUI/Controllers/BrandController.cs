@@ -1,4 +1,5 @@
 
+using App.Domain.Core.Product.Contracts.AppServices;
 using App.Domain.Core.Product.Contracts.Repositories;
 using App.Domain.Core.Product.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -8,13 +9,19 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
     public class BrandController : Controller
     {
         private readonly IBrandRepository _repository;
-        public BrandController(IBrandRepository repository)
+        private readonly IProductAppService _productAppService;
+
+        public BrandController(IBrandRepository repository,IProductAppService productAppService)
         {
             _repository = repository;
+            _productAppService = productAppService;
         }
 
         public IActionResult Index()
         {
+            var operatorId = 10;
+            var brands=_productAppService.GetAllBrands(operatorId);
+
             var record = _repository.GetAll();
             return View(record);
         }

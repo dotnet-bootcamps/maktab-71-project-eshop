@@ -11,8 +11,10 @@
     <Folder Include="BaseData\Contracts\Services\" />
     <Folder Include="BaseData\Enums\" />
     <Folder Include="BaseData\Dtos\" />
-    <Folder Include="Product\Contracts\AppServices\" />
-    <Folder Include="Product\Contracts\Services\" />
+    <Folder Include="Permission\Contracts\Appservices\" />
+    <Folder Include="Permission\Dtos\" />
+    <Folder Include="Permission\Entities\" />
+    <Folder Include="Permission\Enums\" />
     <Folder Include="Product\Enums\" />
     <Folder Include="Product\Dtos\" />
     <Folder Include="User\Contracts\AppServices\" />

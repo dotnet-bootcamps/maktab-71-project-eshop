@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using App.Infrastructures.Database.SqlServer.Repositories.Contracts;
 using App.Domain.Core.Product.Contracts.Repositories;
 using App.Domain.Core.BaseData.Contracts.Repositories;
+using App.Domain.Core.Product.Contracts.AppServices;
+using App.Domain.AppServices.Product;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +25,18 @@ builder.Services.AddScoped<IModelRepository, ModelRepository>();
 builder.Services.AddScoped<IOperatorRepository, OperatorRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ITagRepository, TagRepository>();
+
+
+builder.Services.AddScoped<IProductAppService, ProductAppService>();
+
+
+
+
+
+
+
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
