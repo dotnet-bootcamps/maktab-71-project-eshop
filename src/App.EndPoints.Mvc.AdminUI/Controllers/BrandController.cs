@@ -8,12 +8,10 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
     public class BrandController : Controller
     {
-        private readonly IBrandRepository _repository;
         private readonly IProductAppService _productAppService;
 
-        public BrandController(IBrandRepository repository,IProductAppService productAppService)
+        public BrandController(IProductAppService productAppService)
         {
-            _repository = repository;
             _productAppService = productAppService;
         }
 
@@ -40,7 +38,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         [HttpGet]
         public IActionResult Update(int id)
         {
-            var record = _repository.GetById(id);
+            var record =_productAppService.GetBrandById(id);
             return View(record);
         }
 
@@ -48,13 +46,13 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
 
         public IActionResult Update(Brand model)
         {
-            _repository.Update(model);
+            _productAppService.UpdateBrand(model);
             return RedirectToAction("Update");
         }
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            _repository.Remove(id);
+            _productAppService.RemoveBrand(id);
             return RedirectToAction("Index");
 
         }

@@ -86,20 +86,19 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         [HttpGet]
         public IActionResult Update(int Id)
         {
-            var record = _repository.GetById(Id);
+            var record = _productAppService.GetProductById(Id);
             return View(record);
         }
         [HttpPost]
         public IActionResult Update(Product model)
         {
-            _repository.Update(model);
-
+            _productAppService.UpdateProduct(model);
             return RedirectToAction("Index");
         }
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            _repository.Remove(id);
+            _productAppService.RemoveProduct(id);
             return RedirectToAction("Index");
         }
 

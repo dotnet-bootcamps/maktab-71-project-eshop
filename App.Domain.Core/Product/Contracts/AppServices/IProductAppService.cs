@@ -17,7 +17,23 @@ namespace App.Domain.Core.Product.Contracts.AppServices
         int CreateProduct(App.Domain.Core.Product.Entities.Product model);
 
 
-        int UpdateModel(Model model);
+        void UpdateModel(Model model);
+        void UpdateTag(Tag model);
+        void UpdateCategory(Category model);
+        void UpdateBrand(Brand model);
+        void UpdateProduct(App.Domain.Core.Product.Entities.Product model);
+
+        Model GetModelById(int id);
+        Tag GetTagById(int id);
+        Category GetCategoryById(int id);
+        Brand GetBrandById(int id);
+        App.Domain.Core.Product.Entities.Product GetProductById(int id);
+
+        bool RemoveModel(int id);
+        bool RemoveTag(int id);
+        bool RemoveBrand(int id);
+        bool RemoveCategory(int id);
+        bool RemoveProduct(int id);
 
     }
 }

@@ -15,7 +15,7 @@ namespace App.Domain.AppServices.Product
             _permissionService = permissionService;
             _productService = productService;
         }
-
+        #region GetAllMethods
         public List<Brand> GetAllBrands(int operatorId)
         {
             var permission = _permissionService.HasPermission(operatorId, (int)PermissionsEnum.ViewBrands);
@@ -68,7 +68,9 @@ namespace App.Domain.AppServices.Product
             var models = _productService.GetAllModels();
             return models;
         }
+        #endregion
 
+        #region CreateMethods
         public int CreateModel(Model model)
         {
             var id = _productService.CreateModel(model);
@@ -99,9 +101,96 @@ namespace App.Domain.AppServices.Product
             return id;
         }
 
-        public int UpdateModel(Model model)
+
+        #endregion
+
+        #region UpdateMethods
+        public void UpdateModel(Model model)
         {
-            throw new NotImplementedException();
+            _productService.UpdateModel(model);
         }
+
+        public void UpdateTag(Tag model)
+        {
+            _productService.UpdateTag(model);
+        }
+
+        public void UpdateCategory(Category model)
+        {
+            _productService.UpdateCategory(model);
+        }
+
+        public void UpdateBrand(Brand model)
+        {
+            _productService.UpdateBrand(model);
+        }
+
+        public void UpdateProduct(Core.Product.Entities.Product model)
+        {
+            _productService.UpdateProduct(model);
+        }
+        #endregion
+
+        #region GetMethods
+        public Model GetModelById(int id)
+        {
+            return _productService.GetModelById(id);
+        }
+
+        public Tag GetTagById(int id)
+        {
+            return _productService.GetTagById(id);
+        }
+
+        public Category GetCategoryById(int id)
+        {
+            return _productService.GetCategoryById(id);
+        }
+
+        public Brand GetBrandById(int id)
+        {
+            return _productService.GetBrandById(id);
+        }
+
+        public Core.Product.Entities.Product GetProductById(int id)
+        {
+            return _productService.GetProductById(id);
+        }
+
+        #endregion
+
+        #region RemoveMethods
+        public bool RemoveModel(int id)
+        {
+            _productService.RemoveModel(id);
+            return true;
+        }
+
+        public bool RemoveTag(int id)
+        {
+            _productService.RemoveTag(id);
+            return true;
+        }
+
+        public bool RemoveBrand(int id)
+        {
+            _productService.RemoveBrand(id);
+            return true;
+        }
+
+        public bool RemoveCategory(int id)
+        {
+            _productService.RemoveCategory(id);
+            return true;
+        }
+
+        public bool RemoveProduct(int id)
+        {
+            _productService.RemoveProduct(id);
+            return true;
+        }
+
+
+        #endregion
     }
 }

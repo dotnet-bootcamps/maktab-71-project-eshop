@@ -7,12 +7,10 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
     public class ModelController : Controller
     {
-        private readonly IModelRepository _repository;
         private readonly IProductAppService _productAppService;
 
-        public ModelController(IModelRepository repository,IProductAppService productAppService)
+        public ModelController(IProductAppService productAppService)
         {
-            _repository = repository;
             _productAppService = productAppService;
         }
 
@@ -39,7 +37,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         [HttpGet]
         public IActionResult Update(int id)
         {
-            var record = _repository.GetById(id);
+            var record = _productAppService.GetModelById(id);
             return View(record);
         }
 
@@ -47,13 +45,13 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
 
         public IActionResult Update(Model model)
         {
-            _repository.Update(model);
+            _productAppService.UpdateModel(model);
             return RedirectToAction("Update");
         }
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            _repository.Remove(id);
+            _productAppService.RemoveModel(id);
             return RedirectToAction("Index");
 
         }

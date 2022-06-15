@@ -7,12 +7,10 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
     public class TagController : Controller
     {
-        private readonly ITagRepository _repository;
         private readonly IProductAppService _productAppService;
 
-        public TagController(ITagRepository repository, IProductAppService productAppService)
+        public TagController(IProductAppService productAppService)
         {
-            _repository = repository;
             _productAppService = productAppService;
         }
         public IActionResult Index()
@@ -38,7 +36,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         [HttpGet]
         public IActionResult Update(int id)
         {
-            var record = _repository.GetById(id);
+            var record = _productAppService.GetTagById(id);
             return View(record);
         }
 
@@ -46,15 +44,14 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
 
         public IActionResult Update(Tag model)
         {
-            _repository.Update(model);
+            _productAppService.UpdateTag(model);
             return RedirectToAction("Update");
         }
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            _repository.Remove(id);
+            _productAppService.RemoveTag(id);
             return RedirectToAction("Index");
-
         }
     }
 }

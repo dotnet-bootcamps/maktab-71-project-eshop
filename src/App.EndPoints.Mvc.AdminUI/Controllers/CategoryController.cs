@@ -7,13 +7,9 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
     public class CategoryController : Controller
     {
-
-        private readonly ICategoryRepository _repository;
         private readonly IProductAppService _productAppService;
-
         public CategoryController(ICategoryRepository repository,IProductAppService productAppService)
         {
-            _repository = repository;
             _productAppService = productAppService;
         }
 
@@ -40,7 +36,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         [HttpGet]
         public IActionResult Update(int id)
         {
-            var record = _repository.GetById(id);
+            var record = _productAppService.GetCategoryById(id);
             return View(record);
         }
 
@@ -48,15 +44,14 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
 
         public IActionResult Update(Category model)
         {
-            _repository.Update(model);
+            _productAppService.UpdateCategory(model);
             return RedirectToAction("Update");
         }
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            _repository.Remove(id);
+            _productAppService.RemoveCategory(id);
             return RedirectToAction("Index");
-
         }
     }
 }
