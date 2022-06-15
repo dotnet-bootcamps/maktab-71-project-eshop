@@ -21,9 +21,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         {
             var operatorId = 10;
             var brands=_productAppService.GetAllBrands(operatorId);
-
-            var record = _repository.GetAll();
-            return View(record);
+            return View(brands);
         }
 
         [HttpGet]
@@ -35,7 +33,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         [HttpPost]
         public IActionResult Create(Brand model)
         {
-            _repository.Create(model);
+            _productAppService.CreateBrand(model);
             return RedirectToAction("Index");
         }
 

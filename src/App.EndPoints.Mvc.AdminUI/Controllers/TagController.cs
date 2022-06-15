@@ -1,4 +1,5 @@
-﻿using App.Domain.Core.Product.Contracts.Repositories;
+﻿using App.Domain.Core.Product.Contracts.AppServices;
+using App.Domain.Core.Product.Contracts.Repositories;
 using App.Domain.Core.Product.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,14 +8,18 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
     public class TagController : Controller
     {
         private readonly ITagRepository _repository;
-        public TagController(ITagRepository repository)
+        private readonly IProductAppService _productAppService;
+
+        public TagController(ITagRepository repository, IProductAppService productAppService)
         {
             _repository = repository;
+            _productAppService = productAppService;
         }
         public IActionResult Index()
         {
-            var record = _repository.GetAll();
-            return View(record);
+            var operatorId = 5;
+            var tags=_productAppService.GetAllTags(operatorId);
+            return View(tags);
         }
 
         [HttpGet]
@@ -26,7 +31,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         [HttpPost]
         public IActionResult Create(Tag model)
         {
-            _repository.Create(model);
+            _productAppService.CreateTag(model);
             return RedirectToAction("Index");
         }
 

@@ -1,21 +1,26 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using App.Domain.Core.Product.Entities;
 using App.Domain.Core.Product.Contracts.Repositories;
+using App.Domain.Core.Product.Contracts.AppServices;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
     public class ModelController : Controller
     {
         private readonly IModelRepository _repository;
-        public ModelController(IModelRepository repository)
+        private readonly IProductAppService _productAppService;
+
+        public ModelController(IModelRepository repository,IProductAppService productAppService)
         {
             _repository = repository;
+            _productAppService = productAppService;
         }
 
         public IActionResult Index()
         {
-            var record = _repository.GetAll();
-            return View(record);
+            var operatorId = 10;
+            var models = _productAppService.GetAllModels(operatorId);
+            return View(models);
         }
 
         [HttpGet]
@@ -27,7 +32,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         [HttpPost]
         public IActionResult Create(Model model)
         {
-            _repository.Create(model);
+            _productAppService.CreateModel(model);
             return RedirectToAction("Index");
         }
 

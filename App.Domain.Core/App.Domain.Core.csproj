@@ -14,7 +14,6 @@
     <Folder Include="Permission\Contracts\Appservices\" />
     <Folder Include="Permission\Dtos\" />
     <Folder Include="Permission\Entities\" />
-    <Folder Include="Permission\Enums\" />
     <Folder Include="Product\Enums\" />
     <Folder Include="Product\Dtos\" />
     <Folder Include="User\Contracts\AppServices\" />

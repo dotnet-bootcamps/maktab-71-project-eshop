@@ -5,6 +5,7 @@ using App.EndPoints.Mvc.AdminUI.ViewModels;
 using App.Domain.Core.Product.Entities;
 using App.Domain.Core.Product.Contracts.Repositories;
 using App.Domain.Core.BaseData.Contracts.Repositories;
+using App.Domain.Core.Product.Contracts.AppServices;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
@@ -16,28 +17,34 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         private readonly IBrandRepository _brandRepository;
         private readonly IColorRepository _colorRepository;
         private readonly IModelRepository _modelRepository;
+        private readonly IProductAppService _productAppService;
+
         public ProductController(IProductRepository repository,ICategoryRepository catRepo
             ,IBrandRepository brandRepo
             ,IColorRepository colorRepo
-            ,IModelRepository modelRepo)
+            ,IModelRepository modelRepo
+            , IProductAppService productAppService)
         {
             _repository = repository;
             _categoryRepository = catRepo;
             _brandRepository = brandRepo;
             _colorRepository = colorRepo;
             _modelRepository = modelRepo;
+            _productAppService = productAppService;
         }
         public IActionResult Index()
         {
-            var record = _repository.GetAll();
-            return View(record);
+            var operatorId = 10;
+            var products = _productAppService.GetAllProducts(operatorId);
+            return View(products);
         }
 
 
         [HttpGet]
         public IActionResult Create()
         {
-            ViewBag.Brands = _brandRepository.GetAll()
+            var operatorId = 10;
+            ViewBag.Brands = _productAppService.GetAllBrands(operatorId)
                 .Select(s => new SelectListItem
                 {
                     Text = s.Name,
@@ -51,14 +58,14 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
                     Value = s.Id.ToString()
                 });
 
-            ViewBag.Categories = _categoryRepository.GetAll()
+            ViewBag.Categories = _productAppService.GetAllCategories(operatorId)
                 .Select(s => new SelectListItem
                 {
                     Text = s.Name,
                     Value = s.Id.ToString()
                 });
 
-            ViewBag.Models = _modelRepository.GetAll()
+            ViewBag.Models = _productAppService.GetAllModels(operatorId)
                 .Select(s => new SelectListItem
                 {
                     Text = s.Name,
@@ -69,17 +76,9 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(CreateProductViewModel model)
+        public IActionResult Create(Product model)
         {
-            _repository.Create(new Product
-            {
-                Name = model.Name,
-                Description=model.Description,
-                Price=model.Price,
-                BrandId=model.BrandId,
-                CategoryId=model.CategoryId,
-                ModelId = model.ModelId
-            });
+            _productAppService.CreateProduct(model);
             return RedirectToAction("Index");
         }
 

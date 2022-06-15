@@ -1,4 +1,5 @@
-﻿using App.Domain.Core.Product.Contracts.Repositories;
+﻿using App.Domain.Core.Product.Contracts.AppServices;
+using App.Domain.Core.Product.Contracts.Repositories;
 using App.Domain.Core.Product.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,15 +9,19 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
     {
 
         private readonly ICategoryRepository _repository;
-        public CategoryController(ICategoryRepository repository)
+        private readonly IProductAppService _productAppService;
+
+        public CategoryController(ICategoryRepository repository,IProductAppService productAppService)
         {
             _repository = repository;
+            _productAppService = productAppService;
         }
 
         public IActionResult Index()
         {
-            var record = _repository.GetAll();
-            return View(record);
+            var operatorId = 10;
+            var categories=_productAppService.GetAllCategories(operatorId);
+            return View(categories);
         }
 
         [HttpGet]
@@ -28,7 +33,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         [HttpPost]
         public IActionResult Create(Category model)
         {
-            _repository.Create(model);
+            _productAppService.CreateCategory(model);
             return RedirectToAction("Index");
         }
 
