@@ -1,49 +1,48 @@
-﻿using App.Infrastructures.Database.SqlServer.Data;
-using App.Infrastructures.Database.SqlServer.Entities;
-using App.Infrastructures.Database.SqlServer.Repositories.Contracts;
+﻿using App.Domain.Core.Product.Entities;
+using App.Infrastructures.Database.SqlServer.Data;
+using App.Domain.Core.Product.Contracts.Repositories;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace App.Infrastructures.Database.SqlServer.Repositories
 {
     public class TagRepository : ITagRepository
     {
-        private readonly AppDbContext _eshop;
+        private readonly AppDbContext _appDbContext;
 
         public TagRepository(AppDbContext appDbContext)
         {
-            this._eshop = appDbContext;
+            _appDbContext = appDbContext;
         }
 
-        public void Create(Tag tag)
+        public int Create(Tag model)
         {
-            _eshop.Tags.Add(tag);
-            _eshop.SaveChanges();
+            _appDbContext.Tags.Add(model);
+            _appDbContext.SaveChanges();
+            return model.Id;
         }
         public void Update(Tag tag)
         {
-            var _tag = _eshop.Tags.First(p => p.Id == tag.Id);
-            _tag.Name = tag.Name;
-            _tag.CreationDate = tag.CreationDate;
-            _eshop.SaveChanges();
+            var record = _appDbContext.Tags.First(p => p.Id == tag.Id);
+            record.Name = tag.Name;
+            record.CreationDate = tag.CreationDate;
+            _appDbContext.SaveChanges();
         }
-        public void Remove(int id)
+        public bool Remove(int id)
         {
-            var _tag = _eshop.Tags.First(p => p.Id == id);
-            _eshop.Tags.Remove(_tag);
-            _eshop.SaveChanges();
+            var record = _appDbContext.Tags.FirstOrDefault(p => p.Id == id);
+            _appDbContext.Tags.Remove(record);
+            _appDbContext.SaveChanges();
+            return true;
         }
         public List<Tag> GetAll()
         {
-            return _eshop.Tags.Include(b => b.ProductTags).ToList();
+            var record = _appDbContext.Tags.ToList();
+            return record;
         }
         public Tag GetById(int id)
         {
-            return _eshop.Tags.First(p => p.Id == id);
+            var record = _appDbContext.Tags.FirstOrDefault(p => p.Id == id);
+            return record;
         }
     }
 }

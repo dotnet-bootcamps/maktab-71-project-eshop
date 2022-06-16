@@ -1,11 +1,11 @@
-﻿@model BrandDTO
+﻿@model Brand
 
 @{
 	ViewData["Title"] = "ویرایش برند";
 }
 
 <h3>ویرایش برند</h3>
-<form>
+<form asp-action="Update" method="post">
 
 	<div class="form-group">
 		<label asp-for="Id"></label>
@@ -23,7 +23,7 @@
 	</div>
 
 	<div style="float:left; margin-top:5px;">
-		<button type="submit" class="btn btn-primary" asp-action="Update" formmethod="post">ایجاد</button>
+		<button type="submit" class="btn btn-primary">ویرایش</button>
 		<button type="submit" class="btn btn-danger" asp-action="Index">انصراف</button>
 	</div>
 

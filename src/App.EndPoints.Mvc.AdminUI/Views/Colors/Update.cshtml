@@ -1,14 +1,13 @@
-﻿@model ColorViewModel
-
-<form asp-controller="Colors" asp-action="SubmitUpdatedColor">
-    <label asp-for="Id">Id:</label><br>
+﻿@model Color
+<form asp-controller="Color" asp-action="Update" method="post">
+    <label asp-for="Id"></label><br>
     <input type="text" value="@Model.Id" asp-for="Id" readonly><br>
 
-    <label asp-for="Name">Name:</label><br>
+    <label asp-for="Name"></label><br>
     <input type="text" value="@Model.Name" asp-for="Name"><br>
 
-    <label asp-for="Code">Code:</label><br>
+    <label asp-for="Code"></label><br>
     <input type="text" value="@Model.Code" asp-for="Code"><br>
 
-    <input type="submit" class="btn btn-primary" value="Submit">
+    <input type="submit" class="btn btn-primary" value="ویرایش">
 </form>

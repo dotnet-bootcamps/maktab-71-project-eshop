@@ -1,6 +1,6 @@
-﻿using App.Infrastructures.Database.SqlServer.Data;
-using App.Infrastructures.Database.SqlServer.Entities;
-using App.Infrastructures.Database.SqlServer.Repositories.Contracts;
+﻿using App.Domain.Core.Product.Entities;
+using App.Infrastructures.Database.SqlServer.Data;
+using App.Domain.Core.Product.Contracts.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -13,43 +13,49 @@ namespace App.Infrastructures.Database.SqlServer.Repositories
 
     public class BrandRepository: IBrandRepository
     {
-        private readonly AppDbContext _eshop;
+        private readonly AppDbContext _appDbContext;
         public BrandRepository(AppDbContext appDbContext)
         {
-            this._eshop = appDbContext;
+            _appDbContext = appDbContext;
         }
 
-        public void Create(Brand brand)
+        public int Create(Brand model)
         {
-            _eshop.Brands.Add(brand);
-            _eshop.SaveChanges();
+            _appDbContext.Brands.Add(model);
+            _appDbContext.SaveChanges();
+            return model.Id;
         }
 
         public void Update(Brand model)
         {
-            var brand = _eshop.Brands.First(p => p.Id == model.Id);
-            brand.Name = model.Name;
-            brand.DisplayOrder = model.DisplayOrder;
-            brand.CreationDate = model.CreationDate;
-            _eshop.SaveChanges();
+            var record = _appDbContext.Brands.FirstOrDefault(p => p.Id == model.Id);
+            record.Name = model.Name;
+            record.DisplayOrder = model.DisplayOrder;
+            record.CreationDate = model.CreationDate;
+            _appDbContext.SaveChanges();
         }
 
-        public void Remove(int id)
+        public bool Remove(int id)
         {
-            var brand = _eshop.Brands.First(p => p.Id == id);
-            _eshop.Brands.Remove(brand);
-            _eshop.SaveChanges();
+            var record = _appDbContext.Brands.FirstOrDefault(p => p.Id == id);
+            _appDbContext.Brands.Remove(record);
+            _appDbContext.SaveChanges();
+            return true;
         }
 
         public List<Brand> GetAll()
         {
-            return _eshop.Brands.Include(b => b.Products).ToList();
+            var record = _appDbContext.Brands.ToList();
+            return record;
         }
 
-        public Brand GetBy(int id)
+        public Brand GetById(int id)
         {
-            return _eshop.Brands.First(p => p.Id == id);
+            var record = _appDbContext.Brands.FirstOrDefault(p => p.Id == id);
+            return record;
         }
+
+        
     }
 }
 

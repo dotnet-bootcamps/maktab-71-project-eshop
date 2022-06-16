@@ -1,0 +1,24 @@
+﻿@model List<Model>
+<a type="button" class="btn btn-success" asp-action="Create" asp-controller="Model">افزودن مدل</a>
+<table class="table table-hover table-striped">
+    <tr>
+        <th>شناسه</th>
+        <th>نام</th>
+        <th>ای دی برند</th>
+        <th>تاریخ ایجاد</th>
+        <th>عملیات</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.Name</td>
+            <td>@item.BrandId</td>
+            <td>@item.CreationDate</td>
+            <td>
+                <a type="button" class="btn btn-warning" asp-action="Update" asp-controller="Colors" asp-route-id="@item.Id">ویرایش</a>
+                <a type="button" class="btn btn-danger" asp-action="Delete" asp-controller="Colors" asp-route-id="@item.Id">حذف</a>
+            </td>
+        </tr>
+    }
+</table>

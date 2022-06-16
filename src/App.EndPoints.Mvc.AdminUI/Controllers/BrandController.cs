@@ -1,24 +1,21 @@
-
-using App.Infrastructures.Database.SqlServer.Data;
-using App.Infrastructures.Database.SqlServer.Entities;
-using App.Infrastructures.Database.SqlServer.Repositories;
-using App.Infrastructures.Database.SqlServer.Repositories.Contracts;
+using App.Domain.Core.Product.Contracts.AppServices;
+using App.Domain.Core.Product.Entities;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
     public class BrandController : Controller
     {
-        private readonly IBrandRepository _brandRepository;
-        public BrandController(IBrandRepository brandRepository)
+        private readonly IProductAppService _productAppService;
+
+        public BrandController(IProductAppService productAppService)
         {
-            _brandRepository = brandRepository;
+            _productAppService = productAppService;
         }
 
         public IActionResult Index()
         {
-            var brands = _brandRepository.GetAll();
+            var operatorId = 10;
+            var brands=_productAppService.GetAllBrands(operatorId);
             return View(brands);
         }
 
@@ -31,36 +28,30 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         [HttpPost]
         public IActionResult Create(Brand model)
         {
-            _brandRepository.Create(model);
-            return RedirectToAction("");
-            }
+            _productAppService.CreateBrand(model);
+            return RedirectToAction("Index");
+        }
 
         [HttpGet]
         public IActionResult Update(int id)
         {
-            Brand brand=_brandRepository.GetBy(id);
-            return View(brand);
+            var record =_productAppService.GetBrandById(id);
+            return View(record);
         }
 
         [HttpPost]
 
         public IActionResult Update(Brand model)
         {
-            _brandRepository.Update(model);
-            return RedirectToAction("");
+            _productAppService.UpdateBrand(model);
+            return RedirectToAction("Update");
         }
-
-        //[HttpGet]
-        //public IActionResult Delete()
-        //{
-        //    return View();
-        //}        
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            _brandRepository.Remove(id);
-            return RedirectToAction("");
-        
+            _productAppService.RemoveBrand(id);
+            return RedirectToAction("Index");
+
         }
 
     }

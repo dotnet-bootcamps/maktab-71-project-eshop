@@ -1,25 +1,24 @@
-﻿using App.Infrastructures.Database.SqlServer.Entities;
-using App.Infrastructures.Database.SqlServer.Repositories;
-using Microsoft.AspNetCore.Mvc;
-using App.Infrastructures.Database.SqlServer.Repositories.Contracts;
+﻿using Microsoft.AspNetCore.Mvc;
+using App.Domain.Core.Product.Entities;
+using App.Domain.Core.Product.Contracts.AppServices;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
     public class ModelController : Controller
     {
-        private IModelRepository _modelRepostitory;
+        private readonly IProductAppService _productAppService;
 
-        public ModelController(IModelRepository modelRepository)
+        public ModelController(IProductAppService productAppService)
         {
-            _modelRepostitory = modelRepository;
+            _productAppService = productAppService;
         }
 
         public IActionResult Index()
         {
-            var models = _modelRepostitory.GetAll();
+            var operatorId = 10;
+            var models = _productAppService.GetAllModels(operatorId);
             return View(models);
         }
-
 
         [HttpGet]
         public IActionResult Create()
@@ -30,29 +29,30 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         [HttpPost]
         public IActionResult Create(Model model)
         {
-            _modelRepostitory.Add(model);
+            _productAppService.CreateModel(model);
             return RedirectToAction("Index");
         }
 
         [HttpGet]
-        public IActionResult Update(int Id)
+        public IActionResult Update(int id)
         {
-            var model = _modelRepostitory.GetById(Id);
-            return View(model);
+            var record = _productAppService.GetModelById(id);
+            return View(record);
         }
 
         [HttpPost]
+
         public IActionResult Update(Model model)
         {
-            _modelRepostitory.Update(model);
-            return RedirectToAction("Index");
+            _productAppService.UpdateModel(model);
+            return RedirectToAction("Update");
         }
-
         [HttpPost]
-        public IActionResult Delete(int Id)
+        public IActionResult Delete(int id)
         {
-            _modelRepostitory.Delete(Id);
+            _productAppService.RemoveModel(id);
             return RedirectToAction("Index");
+
         }
     }
 }

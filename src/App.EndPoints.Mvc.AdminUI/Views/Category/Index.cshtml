@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CategoryListVM>
+﻿@model List<Category>
 
 
 <div class="d-flex justify-content-between">
@@ -12,26 +12,20 @@
     </div>
 </div>
 
-<table class="table table-dark">
+<table class="table table-striped table-hover">
     <thead>
         <tr>
             <th scope="col">
-                @Html.DisplayNameFor(model => model.Id)
+                شناسه
             </th>
             <th scope="col">
-                @Html.DisplayNameFor(model => model.Name)
+                نام
             </th>
             <th scope="col">
-                @Html.DisplayNameFor(model => model.IsActive)
+                تاریخ ایجاد
             </th>
             <th scope="col">
-                @Html.DisplayNameFor(model => model.DisplayOrder)
-            </th>
-            <th scope="col">
-                @Html.DisplayNameFor(model => model.ParentCategoryId)
-            </th>
-            <th scope="col">
-                @Html.DisplayNameFor(model => model.CreationDate)
+                عملیات
             </th>
         </tr>
     </thead>
@@ -47,20 +41,11 @@
                     @item.Name
                     </td>
                     <td>
-                    @item.IsActive
-                    </td>
-                    <td>
-                    @item.DisplayOrder
-                    </td>
-                    <td>
-                    @item.ParentCategoryId
-                    </td>
-                    <td>
                     @item.CreationDate
                     </td>
                     <td>
-                        <a class="btn btn-secondary" asp-action="Update" asp-route-id="@item.Id">Edit</a>
-                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        <a class="btn btn-secondary" asp-action="Update" asp-route-id="@item.Id">ویرایش</a>
+                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">حذف</a>
                     </td>
                 </tr>
         }

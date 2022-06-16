@@ -1,6 +1,6 @@
-﻿using App.Infrastructures.Database.SqlServer.Data;
-using App.Infrastructures.Database.SqlServer.Entities;
-using App.Infrastructures.Database.SqlServer.Repositories.Contracts;
+﻿using App.Domain.Core.Product.Entities;
+using App.Infrastructures.Database.SqlServer.Data;
+using App.Domain.Core.Product.Contracts.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -18,38 +18,37 @@ namespace App.Infrastructures.Database.SqlServer.Repositories
             _appDbContext = appDbContext;
         }
 
-        public void Add(Model model)
+        public int Create(Model model)
         {
-            _appDbContext.Add(model);
+            _appDbContext.Models.Add(model);
+            _appDbContext.SaveChanges();
+            return model.Id;
+        }
+        public void Update(Model model)
+        {
+            var record = _appDbContext.Models.FirstOrDefault(x => x.Id == model.Id);
+            record.Name = model.Name;
+            record.BrandId = model.BrandId;
             _appDbContext.SaveChanges();
         }
-
-        public void Delete(int id)
+        public bool Remove(int id)
         {
-            var model = _appDbContext.Models.SingleOrDefault(x => x.Id == id);
+            var record = _appDbContext.Models.FirstOrDefault(p => p.Id == id);
+            _appDbContext.Models.Remove(record);
             _appDbContext.SaveChanges();
+            return true;
         }
 
         public List<Model> GetAll()
         {
-            return _appDbContext.Models.ToList();
+            var record = _appDbContext.Models.ToList();
+            return record;
         }
 
         public Model GetById(int id)
         {
-            var model = _appDbContext.Models.FirstOrDefault(x => x.Id == id);
-            if (model is null)
-            {
-                return new Model();
-            }
-            return model;
-        }
-
-        public void Update(Model model)
-        {
-            var dbModel = _appDbContext.Models.SingleOrDefault(x => x.Id == model.Id);
-            dbModel = model;
-            _appDbContext.SaveChanges();
+            var record = _appDbContext.Models.FirstOrDefault(p => p.Id == id);
+            return record;
         }
     }
 }

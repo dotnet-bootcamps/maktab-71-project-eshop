@@ -1,41 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using App.Infrastructures.Database.SqlServer.Data;
-using App.Infrastructures.Database.SqlServer.Entities;
-using App.Infrastructures.Database.SqlServer.Repositories;
-using App.Infrastructures.Database.SqlServer.Repositories.Contracts;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using App.EndPoints.Mvc.AdminUI.ViewModels;
+using App.Domain.Core.Product.Entities;
+using App.Domain.Core.Product.Contracts.Repositories;
+using App.Domain.Core.BaseData.Contracts.Repositories;
+using App.Domain.Core.Product.Contracts.AppServices;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
 
     public class ProductController : Controller
     {
-        private readonly ICategoryRepository _categoryRepository;
-        private readonly IProductRepository _productRepository;
-        private readonly IBrandRepository _brandRepository;
-        private readonly IColorRepository _colorRepository;
-        private readonly IModelRepository _modelRepository;
+        private readonly IProductAppService _productAppService;
 
-        public ProductController(
-            ICategoryRepository categoryRepository,
-            IProductRepository productRepository,
-            IBrandRepository brandRepository,
-            IColorRepository colorRepository,
-            IModelRepository modelRepository
-            )
-        {
-            _categoryRepository = categoryRepository;
-            _productRepository = productRepository;
-            _brandRepository = brandRepository;
-            _colorRepository = colorRepository;
-            _modelRepository = modelRepository;
+        public ProductController(IProductAppService productAppService)
+        {            
+            _productAppService = productAppService;
         }
-
-
         public IActionResult Index()
         {
-            var products = _productRepository.GetAll();
+            var operatorId = 10;
+            var products = _productAppService.GetAllProducts(operatorId);
             return View(products);
         }
 
@@ -43,28 +27,29 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            ViewBag.Brands = _brandRepository.GetAll()
+            var operatorId = 10;
+            ViewBag.Brands = _productAppService.GetAllBrands(operatorId)
                 .Select(s => new SelectListItem
                 {
                     Text = s.Name,
                     Value = s.Id.ToString()
                 });
 
-            ViewBag.Colors = _colorRepository.GetAll()
+            ViewBag.Colors = _productAppService.GetAllColors(operatorId)
                 .Select(s => new SelectListItem
                 {
                     Text = s.Name,
                     Value = s.Id.ToString()
                 });
 
-            ViewBag.Categories = _categoryRepository.GetAll()
+            ViewBag.Categories = _productAppService.GetAllCategories(operatorId)
                 .Select(s => new SelectListItem
                 {
                     Text = s.Name,
                     Value = s.Id.ToString()
                 });
 
-            ViewBag.Models = _modelRepository.GetAll()
+            ViewBag.Models = _productAppService.GetAllModels(operatorId)
                 .Select(s => new SelectListItem
                 {
                     Text = s.Name,
@@ -75,17 +60,9 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(CreateProductViewModel model)
+        public IActionResult Create(Product model)
         {
-            _productRepository.Create(new Product
-            {
-                Name = model.Name,
-                Description=model.Description,
-                Price=model.Price,
-                BrandId=model.BrandId,
-                CategoryId=model.CategoryId,
-                ModelId = model.ModelId
-            });
+            _productAppService.CreateProduct(model);
             return RedirectToAction("Index");
         }
 
@@ -93,31 +70,19 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         [HttpGet]
         public IActionResult Update(int Id)
         {
-            var product = _productRepository.GetById(Id);
-            return View(product);
+            var record = _productAppService.GetProductById(Id);
+            return View(record);
         }
         [HttpPost]
         public IActionResult Update(Product model)
         {
-            _productRepository.Edit(model);
-
+            _productAppService.UpdateProduct(model);
             return RedirectToAction("Index");
         }
-   
-
-
-        //[HttpGet]
-        //public IActionResult Delete()
-        //{
-         
-
-        //    return View();
-        //}
         [HttpPost]
-        public IActionResult Delete(int Id)
+        public IActionResult Delete(int id)
         {
-            _productRepository.Delete(Id);
-
+            _productAppService.RemoveProduct(id);
             return RedirectToAction("Index");
         }
 

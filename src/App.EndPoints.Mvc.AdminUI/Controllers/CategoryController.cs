@@ -1,62 +1,57 @@
-﻿//using App.EndPoints.Mvc.AdminUI.ViewModels;
-//using App.Infrastructures.Database.SqlServer.Entities;
-//using App.Infrastructures.Database.SqlServer.Repositories;
-//using Microsoft.AspNetCore.Mvc;
+﻿using App.Domain.Core.Product.Contracts.AppServices;
+using App.Domain.Core.Product.Contracts.Repositories;
+using App.Domain.Core.Product.Entities;
+using Microsoft.AspNetCore.Mvc;
 
-//namespace App.EndPoints.Mvc.AdminUI.Controllers
-//{
-//    public class CategoryController : Controller
-//    {
+namespace App.EndPoints.Mvc.AdminUI.Controllers
+{
+    public class CategoryController : Controller
+    {
+        private readonly IProductAppService _productAppService;
+        public CategoryController(ICategoryRepository repository,IProductAppService productAppService)
+        {
+            _productAppService = productAppService;
+        }
 
-//        private CategoryRepository category = new();
+        public IActionResult Index()
+        {
+            var operatorId = 10;
+            var categories=_productAppService.GetAllCategories(operatorId);
+            return View(categories);
+        }
 
-//        public IActionResult Index()
-//        {
-//            var allCategory = category.GetAll();
-//            return View(allCategory);
-//        }
-//        [HttpGet]
-//        public IActionResult Create()
-//        {
-            
-//            return View();
-//        }
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
 
-//        [HttpPost]
-//        public IActionResult Create(Category model)
-//        {
-//            category.AddCategory(model);
-//            return View();
-//        }
+        [HttpPost]
+        public IActionResult Create(Category model)
+        {
+            _productAppService.CreateCategory(model);
+            return RedirectToAction("Index");
+        }
 
+        [HttpGet]
+        public IActionResult Update(int id)
+        {
+            var record = _productAppService.GetCategoryById(id);
+            return View(record);
+        }
 
-//        [HttpGet]
-//        public IActionResult Update(int id)
-//        {
-//            var cat=category.Details(id);
-//            return View(cat);
-//        }
-//        [HttpPost]
-//        public IActionResult Update(Category model)
-//        {
-//            if (ModelState.IsValid)
-//            {
-//                category.Edit(model);
-//            }
-//            return View();
-//        }
+        [HttpPost]
 
-
-//        [HttpGet]
-//        public IActionResult Delete(int id)
-//        {
-//            return View(category.Details(id));
-//        }
-//        [HttpPost ,ActionName("Delete")]
-//        public IActionResult DeleteConfrim(int id)
-//        {
-//            category.Delete(id);
-//            return View();
-//        }
-//    }
-//}
+        public IActionResult Update(Category model)
+        {
+            _productAppService.UpdateCategory(model);
+            return RedirectToAction("Update");
+        }
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            _productAppService.RemoveCategory(id);
+            return RedirectToAction("Index");
+        }
+    }
+}

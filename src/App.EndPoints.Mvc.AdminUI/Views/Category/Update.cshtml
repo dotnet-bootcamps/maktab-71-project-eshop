@@ -1,4 +1,4 @@
-﻿@model CategorySaveVM
+﻿@model Category
 
 
 <div class="row">
@@ -8,29 +8,33 @@
                 <label asp-for=Name></label>
                 <input type="text" class="form-control" asp-for=Name>
             </div>
-            <div class="form-group">
-                <label asp-for=IsActive></label>
-                <input type="datetime" class="form-control" asp-for=IsActive>
-            </div>
+            <hr />
             <div class="form-group">
                 <label asp-for=DisplayOrder></label>
                 <input type="number" class="form-control" asp-for=DisplayOrder>
             </div>
+            <hr />
             <div class="form-group">
-                <label asp-for=ParentCategoryId></label>
-                <input type="number" class="form-control" asp-for=ParentCategoryId>
+                <label asp-for=ParentCagetoryId></label>
+                <input type="number" class="form-control" asp-for=ParentCagetoryId>
             </div>
-            <div class="form-group my-2">
-                <input type="radio" id="true" name="IsActive" value="1" />
-                <label for="true">فعال</label>
-                <input type="radio" id="false" name="IsActive" value="0" />
-                <label for="false">غیر فعال</label>
+            <hr />
+            <div class="form-group">
+                <div class="form-check">
+                    <label class="form-check-label" asp-for=IsActive>غیر فعال</label>
+                    <input class="form-check-input" type="radio" value="false" class="form-control" asp-for=IsActive>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label" asp-for=IsActive>فعال</label>
+                    <input class="form-check-input" type="radio" value="true" class="form-control" asp-for=IsActive>
+                </div>
             </div>
+            <hr />
             <div class="form-group">
                 <label asp-for=CreationDate></label>
                 <input type="date" class="form-control" asp-for=CreationDate>
             </div>
-
+            <br />
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
