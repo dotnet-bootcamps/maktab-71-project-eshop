@@ -1,24 +1,26 @@
 
-using App.Infrastructures.Database.SqlServer.Data;
-using App.Infrastructures.Database.SqlServer.Entities;
-using App.Infrastructures.Database.SqlServer.Repositories;
-using App.Infrastructures.Database.SqlServer.Repositories.Contracts;
+using App.Domain.Core.Product.Contracts.AppServices;
+using App.Domain.Core.Product.Contracts.Repositories;
+using App.Domain.Core.Product.Entities;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
     public class BrandController : Controller
     {
         private readonly IBrandRepository _brandRepository;
-        public BrandController(IBrandRepository brandRepository)
+        private readonly IProductAppService _productAppService;
+        public BrandController(IBrandRepository brandRepository
+            ,IProductAppService productAppService)
+
         {
+            _productAppService = productAppService;
             _brandRepository = brandRepository;
         }
 
         public IActionResult Index()
         {
-            var brands = _brandRepository.GetAll();
+            var brands = _productAppService.GetAllBrands();
             return View(brands);
         }
 

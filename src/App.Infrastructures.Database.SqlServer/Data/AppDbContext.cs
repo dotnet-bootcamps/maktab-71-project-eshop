@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
-using App.Infrastructures.Database.SqlServer.Entities;
+using App.Domain.Core.Product.Entities;
+using App.Domain.Core.BaseData.Entities;
+using App.Domain.Core.Operator.Entities;
 
 namespace App.Infrastructures.Database.SqlServer.Data
 {
@@ -21,7 +21,7 @@ namespace App.Infrastructures.Database.SqlServer.Data
         public virtual DbSet<Category> Categories { get; set; } = null!;
         public virtual DbSet<Collection> Collections { get; set; } = null!;
         public virtual DbSet<CollectionProduct> CollectionProducts { get; set; } = null!;
-        public virtual DbSet<App.Infrastructures.Database.SqlServer.Entities.Color> Colors { get; set; } = null!;
+        public virtual DbSet<Color> Colors { get; set; } = null!;
         public virtual DbSet<Comment> Comments { get; set; } = null!;
         public virtual DbSet<FileType> FileTypes { get; set; } = null!;
         public virtual DbSet<FileTypeExtention> FileTypeExtentions { get; set; } = null!;
@@ -36,7 +36,6 @@ namespace App.Infrastructures.Database.SqlServer.Data
         public virtual DbSet<Tag> Tags { get; set; } = null!;
         public virtual DbSet<TagCategory> TagCategories { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
-
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

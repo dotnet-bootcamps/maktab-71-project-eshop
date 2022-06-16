@@ -1,5 +1,4 @@
-﻿using System;
-using App.Domain.Core.Product.Entities;
+﻿using App.Domain.Core.Product.Entities;
 using App.Infrastructures.Database.SqlServer.Data;
 
 public class CollectionProductRepository

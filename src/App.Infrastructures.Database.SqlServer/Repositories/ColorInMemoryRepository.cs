@@ -1,6 +1,6 @@
-﻿using App.Domain.Core.BaseData.Entities;
+﻿using App.Domain.Core.BaseData.Contracts.Repositories;
+using App.Domain.Core.BaseData.Entities;
 using App.Infrastructures.Database.SqlServer.Data;
-using App.Infrastructures.Database.SqlServer.Repositories.Contracts;
 using Microsoft.EntityFrameworkCore;
 
 namespace App.Infrastructures.Database.SqlServer.Repositories

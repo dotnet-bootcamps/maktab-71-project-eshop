@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace App.Domain.Core.BaseData.Entities
+namespace App.Domain.Core.Operator.Entities
 {
     public partial class Operator
     {

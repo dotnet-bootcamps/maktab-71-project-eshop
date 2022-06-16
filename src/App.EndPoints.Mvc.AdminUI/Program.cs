@@ -1,7 +1,12 @@
 using App.Infrastructures.Database.SqlServer.Data;
 using App.Infrastructures.Database.SqlServer.Repositories;
 using Microsoft.EntityFrameworkCore;
-using App.Infrastructures.Database.SqlServer.Repositories.Contracts;
+
+using App.Domain.Core.Product.Contracts.Repositories;
+using App.Domain.Core.Operator.Contract.Repositories;
+using App.Domain.Core.BaseData.Contracts.Repositories;
+using App.Domain.Core.Product.Contracts.AppServices;
+using App.Domain.AppServices.Product;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +28,11 @@ builder.Services.AddScoped<ITagRepository, TagRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 var app = builder.Build();
 
+
+
+
+
+builder.Services.AddScoped<IProductAppService, ProductAppService>();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

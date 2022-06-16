@@ -1,5 +1,4 @@
 ﻿//using App.EndPoints.Mvc.AdminUI.ViewModels;
-//using App.Infrastructures.Database.SqlServer.Entities;
 //using App.Infrastructures.Database.SqlServer.Repositories;
 //using Microsoft.AspNetCore.Mvc;
 
@@ -18,7 +17,7 @@
 //        [HttpGet]
 //        public IActionResult Create()
 //        {
-            
+
 //            return View();
 //        }
 
@@ -33,7 +32,7 @@
 //        [HttpGet]
 //        public IActionResult Update(int id)
 //        {
-//            var cat=category.Details(id);
+//            var cat = category.Details(id);
 //            return View(cat);
 //        }
 //        [HttpPost]
@@ -52,7 +51,7 @@
 //        {
 //            return View(category.Details(id));
 //        }
-//        [HttpPost ,ActionName("Delete")]
+//        [HttpPost, ActionName("Delete")]
 //        public IActionResult DeleteConfrim(int id)
 //        {
 //            category.Delete(id);

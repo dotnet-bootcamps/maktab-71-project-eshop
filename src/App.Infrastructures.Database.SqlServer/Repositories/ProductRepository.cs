@@ -1,7 +1,6 @@
-﻿using App.Domain.Core.Product.Entities;
+﻿using App.Domain.Core.Product.Contracts.Repositories;
+using App.Domain.Core.Product.Entities;
 using App.Infrastructures.Database.SqlServer.Data;
-using App.Infrastructures.Database.SqlServer.Entities;
-using App.Infrastructures.Database.SqlServer.Repositories.Contracts;
 
 namespace App.Infrastructures.Database.SqlServer.Repositories
 {

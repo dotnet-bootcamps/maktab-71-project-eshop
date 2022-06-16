@@ -8,13 +8,11 @@
 
   <ItemGroup>
     <Folder Include="BaseData\Contracts\AppServices\" />
-    <Folder Include="BaseData\Contracts\Repositories\" />
     <Folder Include="BaseData\Contracts\Services\" />
     <Folder Include="BaseData\Enums\" />
     <Folder Include="BaseData\DTOs\" />
-    <Folder Include="Product\Contracts\AppServices\" />
-    <Folder Include="Product\Contracts\Repositories\" />
-    <Folder Include="Product\Contracts\Services\" />
+    <Folder Include="Operator\DTOs\" />
+    <Folder Include="Operator\Enums\" />
     <Folder Include="Product\DTOs\" />
     <Folder Include="Product\Enums\" />
   </ItemGroup>

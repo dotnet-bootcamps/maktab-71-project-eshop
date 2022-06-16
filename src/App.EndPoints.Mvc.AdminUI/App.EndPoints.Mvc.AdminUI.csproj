@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\App.Domain.AppServices\App.Domain.AppServices.csproj" />
     <ProjectReference Include="..\..\App.Domain.Core\App.Domain.Core.csproj" />
     <ProjectReference Include="..\App.Infrastructures.Database.SqlServer\App.Infrastructures.Database.SqlServer.csproj" />
   </ItemGroup>

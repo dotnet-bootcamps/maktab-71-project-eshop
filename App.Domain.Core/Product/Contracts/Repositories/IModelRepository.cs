@@ -1,12 +1,8 @@
 ﻿using App.Domain.Core.Product.Entities;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace App.Infrastructures.Database.SqlServer.Repositories.Contracts
+
+namespace App.Domain.Core.Product.Contracts.Repositories
 {
     public interface IModelRepository
     {
