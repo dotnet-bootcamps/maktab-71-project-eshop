@@ -11,6 +11,8 @@ using App.Domain.Core.Permission.Contracts.Services;
 using App.Domain.Services.Permission;
 using App.Domain.Core.BaseData.Contracts.Services;
 using App.Domain.Services.BaseData;
+using App.Domain.Core.Product.Contracts.Services;
+using App.Domain.Services.Product;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,7 +35,7 @@ builder.Services.AddScoped<ITagRepository, TagRepository>();
 builder.Services.AddScoped<IOperatorRepository, OperatorRepository>();
 
 
-
+builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IProductAppService, ProductAppService>();
 builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
 builder.Services.AddScoped<IPermissionService, PermissionService>();

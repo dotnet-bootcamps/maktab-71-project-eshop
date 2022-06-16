@@ -10,24 +10,10 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
 
     public class ProductController : Controller
     {
-        private readonly IProductRepository _repository;
-        private readonly ICategoryRepository _categoryRepository;
-        private readonly IBrandRepository _brandRepository;
-        private readonly IColorRepository _colorRepository;
-        private readonly IModelRepository _modelRepository;
         private readonly IProductAppService _productAppService;
 
-        public ProductController(IProductRepository repository,ICategoryRepository catRepo
-            ,IBrandRepository brandRepo
-            ,IColorRepository colorRepo
-            ,IModelRepository modelRepo
-            , IProductAppService productAppService)
-        {
-            _repository = repository;
-            _categoryRepository = catRepo;
-            _brandRepository = brandRepo;
-            _colorRepository = colorRepo;
-            _modelRepository = modelRepo;
+        public ProductController(IProductAppService productAppService)
+        {            
             _productAppService = productAppService;
         }
         public IActionResult Index()
@@ -49,7 +35,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
                     Value = s.Id.ToString()
                 });
 
-            ViewBag.Colors = _colorRepository.GetAll()
+            ViewBag.Colors = _productAppService.GetAllColors(operatorId)
                 .Select(s => new SelectListItem
                 {
                     Text = s.Name,

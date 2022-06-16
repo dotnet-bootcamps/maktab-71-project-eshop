@@ -24,20 +24,20 @@ namespace App.Domain.AppServices.Product
         public List<Brand> GetAllBrands(int operatorId)
         {
             var permission = _permissionService.HasPermission(operatorId, (int)PermissionsEnum.ViewBrands);
-            if (!permission)
-            {
-                throw new UnauthorizedAccessException();
-            }
+            //if (!permission)
+            //{
+            //    throw new UnauthorizedAccessException();
+            //}
             var brands = _productService.GetAllBrands();
             return brands;
         }
         public List<Category> GetAllCategories(int operatorId)
         {
             var permission = _permissionService.HasPermission(operatorId, (int)PermissionsEnum.ViewCategories);
-            if (!permission)
-            {
-                throw new UnauthorizedAccessException();
-            }
+            //if (!permission)
+            //{
+            //    throw new UnauthorizedAccessException();
+            //}
             var categories = _productService.GetAllCategories();
             return categories;
         }
@@ -45,10 +45,10 @@ namespace App.Domain.AppServices.Product
         public List<Core.Product.Entities.Product> GetAllProducts(int operatorId)
         {
             var permission = _permissionService.HasPermission(operatorId, (int)PermissionsEnum.ViewProducts);
-            if (!permission)
-            {
-                throw new UnauthorizedAccessException();
-            }
+            //if (!permission)
+            //{
+            //    throw new UnauthorizedAccessException();
+            //}
             var products = _productService.GetAllProducts();
             return products;
         }
@@ -56,30 +56,30 @@ namespace App.Domain.AppServices.Product
         public List<Tag> GetAllTags(int operatorId)
         {
             var permission = _permissionService.HasPermission(operatorId, (int)PermissionsEnum.ViewTags);
-            if (!permission)
-            {
-                throw new UnauthorizedAccessException();
-            }
+            //if (!permission)
+            //{
+            //    throw new UnauthorizedAccessException();
+            //}
             var tags = _productService.GetAllTags();
             return tags;
         }
         public List<Model> GetAllModels(int operatorId)
         {
             var permission = _permissionService.HasPermission(operatorId, (int)PermissionsEnum.ViewModels);
-            if (!permission)
-            {
-                throw new UnauthorizedAccessException();
-            }
+            //if (!permission)
+            //{
+            //    throw new UnauthorizedAccessException();
+            //}
             var models = _productService.GetAllModels();
             return models;
         }
         public List<Color> GetAllColors(int operatorId)
         {
             var permission = _permissionService.HasPermission(operatorId, (int)PermissionsEnum.ViewColors);
-            if (!permission)
-            {
-                throw new UnauthorizedAccessException();
-            }
+            //if (!permission)
+            //{
+            //    throw new UnauthorizedAccessException();
+            //}
             var colors = _colorService.GetAllColors();
             return colors;
         }
