@@ -1,4 +1,4 @@
-﻿using App.Domain.Core.ProductAgg.Contracts;
+﻿using App.Domain.Core.ProductAgg.Contracts.Repositories;
 using App.Domain.Core.ProductAgg.Entities;
 using App.Infrastructures.Database.SqlServer.Data;
 using Microsoft.EntityFrameworkCore;

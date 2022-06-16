@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace App.Domain.Core.ProductAgg.Contracts
+namespace App.Domain.Core.ProductAgg.Contracts.Repositories
 {
     public interface ITagRepository
     {

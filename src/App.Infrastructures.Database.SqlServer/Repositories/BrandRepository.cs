@@ -1,4 +1,4 @@
-﻿using App.Domain.Core.ProductAgg.Contracts;
+﻿using App.Domain.Core.ProductAgg.Contracts.Repositories;
 using App.Domain.Core.ProductAgg.Entities;
 using App.Infrastructures.Database.SqlServer.Data;
 using Microsoft.EntityFrameworkCore;
@@ -21,13 +21,9 @@ namespace App.Infrastructures.Database.SqlServer.Repositories
             _eshop.SaveChanges();
         }
 
-        public void Update(Brand model)
+        public void Update(Brand brand)
         {
-            var brand = _eshop.Brands.First(p => p.Id == model.Id);
-            brand.Name = model.Name;
-            brand.DisplayOrder = model.DisplayOrder;
-            brand.CreationDate = model.CreationDate;
-            _eshop.SaveChanges();
+            _eshop.Brands.Update(brand);
         }
 
         public void Remove(int id)
@@ -45,6 +41,15 @@ namespace App.Infrastructures.Database.SqlServer.Repositories
         public Brand GetBy(int id)
         {
             return _eshop.Brands.First(p => p.Id == id);
+        }
+
+        public bool Exists(string name)
+        {
+            return _eshop.Brands.Any(p => p.Name == name);
+        }
+        public bool Exists(int id)
+        {
+            return _eshop.Brands.Any(p => p.Id == id);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using App.Domain.Core.UserAgg.Entities;
+﻿using App.Domain.Core.BaseDataAgg.Entities;
+using App.Domain.Core.UserAgg.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

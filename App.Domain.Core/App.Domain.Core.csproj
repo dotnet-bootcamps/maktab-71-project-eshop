@@ -7,7 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="BaseDataAgg\Contracts\" />
+    <Folder Include="BaseDataAgg\Contracts\Repositories\" />
+    <Folder Include="BaseDataAgg\Contracts\Services\" />
+    <Folder Include="BaseDataAgg\Contracts\ApplicationServices\" />
+    <Folder Include="BaseDataAgg\DTOs\" />
+    <Folder Include="BaseDataAgg\Enums\" />
+    <Folder Include="ProductAgg\Enums\" />
+    <Folder Include="UserAgg\Contracts\ApplicationServices\" />
+    <Folder Include="UserAgg\Contracts\Services\" />
+    <Folder Include="UserAgg\DTOs\" />
+    <Folder Include="UserAgg\Enums\" />
   </ItemGroup>
 
 </Project>

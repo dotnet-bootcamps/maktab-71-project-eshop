@@ -1,7 +1,8 @@
-﻿using System;
+﻿using App.Domain.Core.ProductAgg.Entities;
+using System;
 using System.Collections.Generic;
 
-namespace App.Domain.Core.ProductAgg.Entities
+namespace App.Domain.Core.BaseDataAgg.Entities
 {
     public partial class Model
     {

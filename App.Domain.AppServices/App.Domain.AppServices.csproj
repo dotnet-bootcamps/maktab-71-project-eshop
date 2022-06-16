@@ -6,4 +6,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="User\" />
+    <Folder Include="BaseData\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\App.Domain.Core\App.Domain.Core.csproj" />
+  </ItemGroup>
+
 </Project>

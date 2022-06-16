@@ -1,4 +1,4 @@
-﻿using App.Domain.Core.ProductAgg.Entities;
+﻿using App.Domain.Core.BaseDataAgg.Entities;
 
 namespace App.Infrastructures.Database.SqlServer.Ripository
 {

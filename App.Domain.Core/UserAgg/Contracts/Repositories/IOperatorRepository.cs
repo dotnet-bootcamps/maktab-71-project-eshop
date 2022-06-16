@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace App.Domain.Core.UserAgg.Contracts
+namespace App.Domain.Core.UserAgg.Contracts.Repositories
 {
     public interface IOperatorRepository
     {

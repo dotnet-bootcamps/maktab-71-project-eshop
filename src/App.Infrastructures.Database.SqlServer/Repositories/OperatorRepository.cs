@@ -1,4 +1,4 @@
-﻿using App.Domain.Core.UserAgg.Contracts;
+﻿using App.Domain.Core.UserAgg.Contracts.Repositories;
 using App.Domain.Core.UserAgg.Entities;
 using App.Infrastructures.Database.SqlServer.Data;
 using System;

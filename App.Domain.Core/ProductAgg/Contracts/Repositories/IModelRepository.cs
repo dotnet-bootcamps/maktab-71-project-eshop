@@ -1,11 +1,11 @@
-﻿using App.Domain.Core.ProductAgg.Entities;
+﻿using App.Domain.Core.BaseDataAgg.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace App.Domain.Core.ProductAgg.Contracts
+namespace App.Domain.Core.ProductAgg.Contracts.Repositories
 {
     public interface IModelRepository
     {

@@ -1,7 +1,7 @@
 ﻿using App.Infrastructures.Database.SqlServer.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using App.Domain.Core.ProductAgg.Contracts;
-using App.Domain.Core.ProductAgg.Entities;
+using App.Domain.Core.BaseDataAgg.Entities;
+using App.Domain.Core.ProductAgg.Contracts.Repositories;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {

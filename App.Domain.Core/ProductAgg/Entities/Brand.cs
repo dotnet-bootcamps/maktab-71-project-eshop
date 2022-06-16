@@ -10,6 +10,14 @@ namespace App.Domain.Core.ProductAgg.Entities
             Products = new HashSet<Product>();
         }
 
+        public Brand( string name , int displayOrder)
+        {
+            Name = name;
+            CreationDate = DateTime.Now;
+            IsDeleted = false;
+            DisplayOrder = displayOrder;
+        }
+
         public int Id { get; set; }
         public int DisplayOrder { get; set; }
         public string Name { get; set; } = null!;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using App.Domain.Core.BaseDataAgg.Entities;
+using System;
 using System.Collections.Generic;
 
 namespace App.Domain.Core.ProductAgg.Entities
