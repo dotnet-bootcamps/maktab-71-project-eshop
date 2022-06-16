@@ -1,12 +1,7 @@
-﻿using App.Domain.Core.Product.Contracts;
+﻿using App.Domain.Core.Product.Contracts.Repositories;
 using App.Domain.Core.Product.Entities;
 using App.Infrastructures.Database.SqlServer.Data;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace App.Infrastructures.Database.SqlServer.Repositories
 {

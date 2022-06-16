@@ -1,9 +1,8 @@
-﻿using System;
-using App.Domain.Core.Product.Contracts;
+﻿using App.Domain.Core.Product.Contracts.Repositories;
 using App.Domain.Core.Product.Entities;
 using App.Infrastructures.Database.SqlServer.Data;
 
-public class CollectionRepository :ICollectionRepository
+public class CollectionRepository : ICollectionRepository
 {
     private readonly AppDbContext _shopDB;
 
@@ -14,7 +13,7 @@ public class CollectionRepository :ICollectionRepository
 
     public Collection GetById(int id)
     {
-        return _shopDB.Collections.First(p=>p.Id == id);
+        return _shopDB.Collections.First(p => p.Id == id);
     }
 
     public List<Collection> GetAll()

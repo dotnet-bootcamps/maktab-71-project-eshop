@@ -1,4 +1,4 @@
-﻿using App.Domain.Core.Product.Contracts;
+﻿using App.Domain.Core.Product.Contracts.Repositories;
 using App.Domain.Core.Product.Entities;
 using App.Infrastructures.Database.SqlServer.Data;
 

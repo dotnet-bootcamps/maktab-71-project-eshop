@@ -1,6 +1,7 @@
-﻿using App.Domain.Core.Product.Entities;
+﻿using App.Domain.Core.BaseData.Entities;
+using App.Domain.Core.Product.Entities;
 
-namespace App.Domain.Core.Product.Contracts
+namespace App.Domain.Core.BaseData.Contracts.Repositories
 {
     public interface IColorRepository
     {

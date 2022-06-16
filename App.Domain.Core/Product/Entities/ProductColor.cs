@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using App.Domain.Core.BaseData.Entities;
 
 namespace App.Domain.Core.Product.Entities
 {

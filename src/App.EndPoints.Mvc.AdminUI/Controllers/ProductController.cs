@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using App.Infrastructures.Database.SqlServer.Data;
-using App.Infrastructures.Database.SqlServer.Repositories;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using App.EndPoints.Mvc.AdminUI.ViewModels;
-using App.Domain.Core.Product.Contracts;
 using App.Domain.Core.Product.Entities;
+using App.Domain.Core.Product.Contracts.Repositories;
+using App.Domain.Core.BaseData.Contracts.Repositories;
+using App.Domain.Core.Product.Contracts.AppServices;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
@@ -16,13 +16,15 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         private readonly IBrandRepository _brandRepository;
         private readonly IColorRepository _colorRepository;
         private readonly IModelRepository _modelRepository;
+        private readonly IProductAppService _productAppService;
 
         public ProductController(
             ICategoryRepository categoryRepository,
             IProductRepository productRepository,
             IBrandRepository brandRepository,
             IColorRepository colorRepository,
-            IModelRepository modelRepository
+            IModelRepository modelRepository,
+            IProductAppService productAppService
             )
         {
             _categoryRepository = categoryRepository;
@@ -30,8 +32,8 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
             _brandRepository = brandRepository;
             _colorRepository = colorRepository;
             _modelRepository = modelRepository;
+            _productAppService = productAppService;
         }
-
 
         public IActionResult Index()
         {
@@ -43,7 +45,8 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            ViewBag.Brands = _brandRepository.GetAll()
+            var operatorId = 5;
+            ViewBag.Brands = _productAppService.GetAllBrands(operatorId)
                 .Select(s => new SelectListItem
                 {
                     Text = s.Name,

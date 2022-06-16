@@ -1,8 +1,9 @@
 ﻿using System;
+using App.Domain.Core.Product.Contracts.Repositories;
 using App.Domain.Core.Product.Entities;
 using App.Infrastructures.Database.SqlServer.Data;
 
-public class CollectionProductRepository
+public class CollectionProductRepository : ICollectionProductRepository
 {
     private readonly AppDbContext _shopDB;
 

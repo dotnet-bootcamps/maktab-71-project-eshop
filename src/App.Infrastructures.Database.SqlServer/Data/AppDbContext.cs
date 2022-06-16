@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using App.Domain.Core.BaseData.Entities;
+using App.Domain.Core.Operator.Entities;
 using App.Domain.Core.Product.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;

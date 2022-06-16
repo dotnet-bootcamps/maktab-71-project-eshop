@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using ProductEntity = App.Domain.Core.Product.Entities;
 
-namespace App.Domain.Core.BaseData.Entities
+namespace App.Domain.Core.Operator.Entities
 {
     public partial class Operator
     {

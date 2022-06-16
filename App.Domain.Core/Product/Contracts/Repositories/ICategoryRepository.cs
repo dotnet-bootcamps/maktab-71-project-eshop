@@ -1,6 +1,6 @@
 ﻿using App.Domain.Core.Product.Entities;
 
-namespace App.Domain.Core.Product.Contracts
+namespace App.Domain.Core.Product.Contracts.Repositories
 {
     public interface ICategoryRepository
     {

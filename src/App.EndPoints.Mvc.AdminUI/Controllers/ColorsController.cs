@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using App.EndPoints.Mvc.AdminUI.ViewModels;
-using App.Domain.Core.Product.Entities;
-using App.Domain.Core.Product.Contracts;
+using App.Domain.Core.BaseData.Contracts.Repositories;
+using App.Domain.Core.BaseData.Entities;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {

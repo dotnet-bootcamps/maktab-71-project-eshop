@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using App.Domain.Core.Product.Contracts;
 using App.Domain.Core.Product.Entities;
+using App.Domain.Core.Product.Contracts.Repositories;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {

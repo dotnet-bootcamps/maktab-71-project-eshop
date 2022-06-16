@@ -1,9 +1,5 @@
 ﻿using App.Domain.Core.BaseData.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using OperatorEntities = App.Domain.Core.Operator.Entities;
 
 namespace App.Domain.Core.Product.Entities
 {
@@ -38,7 +34,7 @@ namespace App.Domain.Core.Product.Entities
         public virtual Brand Brand { get; set; } = null!;
         public virtual Category Category { get; set; } = null!;
         public virtual Model Model { get; set; } = null!;
-        public virtual Operator Operator { get; set; } = null!;
+        public virtual OperatorEntities.Operator Operator { get; set; } = null!;
 
         public virtual ICollection<CollectionProduct> CollectionProducts { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }

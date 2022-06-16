@@ -1,11 +1,6 @@
-﻿using App.Domain.Core.BaseData.Contract;
-using App.Domain.Core.BaseData.Entities;
+﻿using OperatorEntities = App.Domain.Core.Operator.Entities;
 using App.Infrastructures.Database.SqlServer.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using App.Domain.Core.Operator.Contracts.Repositories;
 
 namespace App.Infrastructures.Database.SqlServer.Repositories
 {
@@ -16,26 +11,26 @@ namespace App.Infrastructures.Database.SqlServer.Repositories
         {
             _dbContext = dbContext;
         }
-        public void Add(Operator shopOperator)
+        public void Add(OperatorEntities.Operator shopOperator)
         {
             _dbContext.Add(shopOperator);
             _dbContext.SaveChanges();
             
         }
-        public void Update(Operator shopOperator)
+        public void Update(OperatorEntities.Operator shopOperator)
         {
             _dbContext.Update(shopOperator);
             _dbContext.SaveChanges();
 
         }
 
-        public List<Operator> GetAll()
+        public List<OperatorEntities.Operator> GetAll()
         {
-            List<Operator> OperatorList = _dbContext.Operators.ToList();
+            List<OperatorEntities.Operator> OperatorList = _dbContext.Operators.ToList();
             return OperatorList;
         }
 
-        public Operator GetById(int id)
+        public OperatorEntities.Operator GetById(int id)
         {
             var op = _dbContext.Operators.Find(id);
             return op;
