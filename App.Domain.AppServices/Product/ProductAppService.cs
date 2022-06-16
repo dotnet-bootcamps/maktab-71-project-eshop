@@ -1,4 +1,6 @@
-﻿using App.Domain.Core.Permission.Contracts.Services;
+﻿using App.Domain.Core.BaseData.Contracts.Services;
+using App.Domain.Core.BaseData.Entities;
+using App.Domain.Core.Permission.Contracts.Services;
 using App.Domain.Core.Permission.Enums;
 using App.Domain.Core.Product.Contracts.AppServices;
 using App.Domain.Core.Product.Contracts.Services;
@@ -9,11 +11,14 @@ namespace App.Domain.AppServices.Product
     {
         private readonly IPermissionService _permissionService;
         private readonly IProductService _productService;
+        private readonly IColorService _colorService;
 
-        public ProductAppService(IPermissionService permissionService,IProductService productService)
+        public ProductAppService(IPermissionService permissionService,IProductService productService
+            ,IColorService colorService)
         {
             _permissionService = permissionService;
             _productService = productService;
+            _colorService = colorService;
         }
         #region GetAllMethods
         public List<Brand> GetAllBrands(int operatorId)
@@ -68,6 +73,16 @@ namespace App.Domain.AppServices.Product
             var models = _productService.GetAllModels();
             return models;
         }
+        public List<Color> GetAllColors(int operatorId)
+        {
+            var permission = _permissionService.HasPermission(operatorId, (int)PermissionsEnum.ViewColors);
+            if (!permission)
+            {
+                throw new UnauthorizedAccessException();
+            }
+            var colors = _colorService.GetAllColors();
+            return colors;
+        }
         #endregion
 
         #region CreateMethods
@@ -100,6 +115,11 @@ namespace App.Domain.AppServices.Product
             var id = _productService.CreateProduct(model);
             return id;
         }
+        public int CreateColor(Color model)
+        {
+            var id = _colorService.CreateColor(model);
+            return id;
+        }
 
 
         #endregion
@@ -129,6 +149,10 @@ namespace App.Domain.AppServices.Product
         {
             _productService.UpdateProduct(model);
         }
+        public void UpdateColor(Color model)
+        {
+            _colorService.UpdateColor(model);
+        }
         #endregion
 
         #region GetMethods
@@ -156,40 +180,41 @@ namespace App.Domain.AppServices.Product
         {
             return _productService.GetProductById(id);
         }
-
+        public Color GetColorById(int id)
+        {
+            return _colorService.GetColorById(id);
+        }
         #endregion
 
         #region RemoveMethods
         public bool RemoveModel(int id)
-        {
-            _productService.RemoveModel(id);
-            return true;
+        {            
+            return _productService.RemoveModel(id);
         }
 
         public bool RemoveTag(int id)
-        {
-            _productService.RemoveTag(id);
-            return true;
+        {            
+            return _productService.RemoveTag(id);
         }
 
         public bool RemoveBrand(int id)
-        {
-            _productService.RemoveBrand(id);
-            return true;
+        {            
+            return _productService.RemoveBrand(id);
         }
 
         public bool RemoveCategory(int id)
-        {
-            _productService.RemoveCategory(id);
-            return true;
+        {            
+            return _productService.RemoveCategory(id);
         }
 
         public bool RemoveProduct(int id)
-        {
-            _productService.RemoveProduct(id);
-            return true;
+        {            
+            return _productService.RemoveProduct(id);
         }
-
+        public bool RemoveColor(int id)
+        {
+            return _colorService.RemoveColor(id);
+        }
 
         #endregion
     }

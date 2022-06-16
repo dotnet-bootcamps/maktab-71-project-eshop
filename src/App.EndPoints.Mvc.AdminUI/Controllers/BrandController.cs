@@ -1,9 +1,6 @@
-
 using App.Domain.Core.Product.Contracts.AppServices;
-using App.Domain.Core.Product.Contracts.Repositories;
 using App.Domain.Core.Product.Entities;
 using Microsoft.AspNetCore.Mvc;
-
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
     public class BrandController : Controller

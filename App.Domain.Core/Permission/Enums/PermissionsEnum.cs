@@ -13,6 +13,7 @@ namespace App.Domain.Core.Permission.Enums
         ViewTags=3,
         ViewProducts=4,
         ViewModels=5,
+        ViewColors=6,
 
     }
 }
