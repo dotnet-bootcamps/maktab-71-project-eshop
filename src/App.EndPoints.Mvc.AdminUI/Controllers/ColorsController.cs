@@ -22,15 +22,13 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
             return View(result);
         }
 
-
         [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
 
-        [HttpPost]
-        
+        [HttpPost]        
         public IActionResult SubmitCreatedColor(ColorViewModel model)
         {
             _colorRepository.Create(new Color

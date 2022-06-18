@@ -34,6 +34,7 @@ builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
 
 builder.Services.AddScoped<IProductAppService, ProductAppService>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IProductSurenessService, ProductSurenessService>();
 builder.Services.AddScoped<IPermissionService, PermissionService>();
 var app = builder.Build();
 

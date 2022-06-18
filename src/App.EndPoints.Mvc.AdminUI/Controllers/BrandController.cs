@@ -1,6 +1,7 @@
 using App.Domain.Core.Product.Entities;
 using Microsoft.AspNetCore.Mvc;
 using App.Domain.Core.Product.Contracts.Repositories;
+using App.Domain.Core.Product.Dtos;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
@@ -34,7 +35,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         [HttpGet]
         public IActionResult Update(int id)
         {
-            Brand brand=_brandRepository.GetBy(id);
+            BrandDto brand=_brandRepository.GetBy(id);
             return View(brand);
         }
 

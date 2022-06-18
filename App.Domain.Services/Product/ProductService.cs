@@ -1,5 +1,6 @@
 ﻿using App.Domain.Core.Product.Contracts.Repositories;
 using App.Domain.Core.Product.Contracts.Services;
+using App.Domain.Core.Product.Dtos;
 using App.Domain.Core.Product.Entities;
 
 namespace App.Domain.Services.Product
@@ -11,7 +12,13 @@ namespace App.Domain.Services.Product
         {
             _brandRepository = brandRepository;
         }
-        public List<Brand> GetAllBrands()
+
+        public void CreateBrand(Brand brand)
+        {
+            _brandRepository.Create(brand);
+        }
+
+        public List<BrandDto> GetAllBrands()
         {
             return _brandRepository.GetAll();
         }

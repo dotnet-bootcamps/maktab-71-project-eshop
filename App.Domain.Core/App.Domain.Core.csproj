@@ -15,15 +15,14 @@
   <ItemGroup>
     <Folder Include="BaseData\Contracts\AppServices\" />
     <Folder Include="BaseData\Contracts\Services\" />
-    <Folder Include="BaseData\DTOs\" />
+    <Folder Include="BaseData\Dtos\" />
     <Folder Include="BaseData\Enums\" />
     <Folder Include="Operator\Contracts\AppServices\" />
     <Folder Include="Operator\Contracts\Services\" />
-    <Folder Include="Operator\DTOs\" />
+    <Folder Include="Operator\Dtos\" />
     <Folder Include="Operator\Enums\" />
     <Folder Include="Permission\Contracts\AppServices\" />
-    <Folder Include="Permission\DTOs\" />
-    <Folder Include="Product\DTOs\" />
+    <Folder Include="Permission\Dtos\" />
     <Folder Include="Product\Enums\" />
   </ItemGroup>
 
