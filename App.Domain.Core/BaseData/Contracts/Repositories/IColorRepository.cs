@@ -10,5 +10,6 @@ namespace App.Domain.Core.BaseData.Contracts.Repositories
         int Create(Color model);
         void Update(Color model);
         bool Remove(int Id);
+        Color GetExitingColor(string name, string code);
     }
 }

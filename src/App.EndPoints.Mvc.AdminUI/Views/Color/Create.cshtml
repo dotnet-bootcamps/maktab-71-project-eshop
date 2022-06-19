@@ -1,14 +1,11 @@
 ﻿@model Color
 
-<form method="post" asp-controller="Colors" asp-action="Create">
-    <label asp-for="Id"></label><br>
-    <input type="text" asp-for="Id" readonly><br>
-
+<form method="post" asp-controller="Color" asp-action="Create">
     <label asp-for="Name"></label><br>
     <input type="text" asp-for="Name"><br>
 
     <label asp-for="Code">Code:</label><br>
-    <input type="text" asp-for="Code"><br>
+    <input type="color" asp-for="Code"><br>
 
     <input type="submit" class="btn btn-primary" value="ایجاد">
 </form>

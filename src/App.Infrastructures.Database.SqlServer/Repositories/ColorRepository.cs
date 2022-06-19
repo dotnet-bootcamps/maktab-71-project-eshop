@@ -47,5 +47,11 @@ namespace App.Infrastructures.Database.SqlServer.Repositories
             var record = _appDbContext.Colors.FirstOrDefault(p => p.Id == id);
             return record;
         }
+
+        public Color GetExitingColor(string name, string code)
+        {
+            var record = _appDbContext.Colors.FirstOrDefault(x=>x.Name== name && x.Code == code);
+            return record;
+        }
     }
 }

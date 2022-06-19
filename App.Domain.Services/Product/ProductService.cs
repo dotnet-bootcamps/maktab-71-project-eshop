@@ -173,5 +173,12 @@ namespace App.Domain.Services.Product
             _productRepository.Remove(id);
             return true;
         }
+
+        public void EnsureProductIsNotExist(string name, int categoryId, int brandId, int modelId)
+        {
+            var record = _productRepository.GetExitingProduct(name, categoryId, brandId, modelId);
+            if (record is not null)
+                throw new Exception("Product Is Already Exist");
+        }
     }
 }

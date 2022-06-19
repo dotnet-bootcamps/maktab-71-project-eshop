@@ -44,5 +44,12 @@ namespace App.Domain.Services.BaseData
         {
             _colorRepository.Update(color);
         }
+
+        public void EnsureColorIsNotExist(string name, string code)
+        {
+            var color = _colorRepository.GetExitingColor(name, code);
+            if (color is not null)
+                throw new Exception("Color Already Exist");
+        }
     }
 }

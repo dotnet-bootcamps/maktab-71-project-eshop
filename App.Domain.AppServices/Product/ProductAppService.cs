@@ -12,13 +12,30 @@ namespace App.Domain.AppServices.Product
         private readonly IPermissionService _permissionService;
         private readonly IProductService _productService;
         private readonly IColorService _colorService;
+        private readonly IBrandService _brandService;
+        private readonly ICategoryService _categoryService;
+        private readonly ITagService _tagService;
+        private readonly ICollectionService _collectionService;
+        private readonly IModelService _modelService;
 
-        public ProductAppService(IPermissionService permissionService,IProductService productService
-            ,IColorService colorService)
+        public ProductAppService(
+            IPermissionService permissionService
+            ,IProductService productService
+            ,IColorService colorService
+            ,IBrandService brandService
+            ,ICategoryService categoryService
+            ,ITagService tagService
+            ,ICollectionService collectionService
+            ,IModelService modelService)
         {
             _permissionService = permissionService;
             _productService = productService;
             _colorService = colorService;
+            _brandService = brandService;
+            _categoryService = categoryService;
+            _tagService = tagService;
+            _collectionService = collectionService;
+            _modelService = modelService;
         }
         #region GetAllMethods
         public List<Brand> GetAllBrands(int operatorId)
@@ -88,35 +105,41 @@ namespace App.Domain.AppServices.Product
         #region CreateMethods
         public int CreateModel(Model model)
         {
+            _modelService.EnsureModelIsNotExist(model.Name);
             var id = _productService.CreateModel(model);
             return id;
         }
 
         public int CreateBrand(Brand model)
         {
+            _brandService.EnsureBrandIsNotExist(model.Name);
             var id = _productService.CreateBrand(model);
             return id;
         }
 
         public int CreateCategory(Category model)
         {
+            _categoryService.EnsureCategoryIsNotExist(model.Name);
             var id = _productService.CreateCategory(model);
             return id;
         }
 
         public int CreateTag(Tag model)
         {
+            _tagService.EnsureTagIsNotExist(model.Name);
             var id = _productService.CreateTag(model);
             return id;
         }
 
         public int CreateProduct(Core.Product.Entities.Product model)
         {
+            _productService.EnsureProductIsNotExist(model.Name,model.CategoryId,model.BrandId,model.BrandId);
             var id = _productService.CreateProduct(model);
             return id;
         }
         public int CreateColor(Color model)
         {
+            _colorService.EnsureColorIsNotExist(model.Name, model.Code);
             var id = _colorService.CreateColor(model);
             return id;
         }

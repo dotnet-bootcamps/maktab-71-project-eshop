@@ -10,6 +10,7 @@ namespace App.Domain.Core.Product.Contracts.Repositories
     public interface ITagRepository 
     {
         Tag GetById(int Id);
+        Tag GetByName(string name);
         List<Tag> GetAll();
         int Create(Tag model);
         void Update(Tag model);

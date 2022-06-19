@@ -34,5 +34,7 @@ namespace App.Domain.Core.Product.Contracts.Services
         bool RemoveCategory(int id);
         bool RemoveProduct(int id);
 
+        void EnsureProductIsNotExist(string name,int categoryId,int brandId,int modelId);
+
     }
 }

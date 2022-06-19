@@ -44,8 +44,9 @@ public class CollectionRepository :ICollectionRepository
         return record;
     }
 
-
-
-    
-
+    public Collection GetByName(string name)
+    {
+        var record = _appDbContext.Collections.FirstOrDefault(p => p.Name == name);
+        return record;
+    }
 }

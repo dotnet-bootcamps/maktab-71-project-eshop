@@ -11,6 +11,7 @@ namespace App.Domain.Core.Product.Contracts.Repositories
     public interface ICollectionRepository
     {
         Collection GetById(int Id);
+        Collection GetByName(string name);
         List<Collection> GetAll();
         int Create(Collection model);
         void Update(Collection model);

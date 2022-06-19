@@ -50,5 +50,12 @@ namespace App.Infrastructures.Database.SqlServer.Repositories
             var record = _appDbContext.Products.FirstOrDefault(p => p.Id == id);
             return record;
         }
+
+        public Product GetExitingProduct(string name, int categoryId, int brandId, int modelId)
+        {
+            var record = _appDbContext.Products
+                .FirstOrDefault(x => x.Name == name && x.CategoryId == categoryId && x.BrandId == brandId && x.ModelId == modelId);
+            return record;
+        }
     }
 }

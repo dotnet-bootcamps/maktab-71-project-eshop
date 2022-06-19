@@ -55,7 +55,11 @@ namespace App.Infrastructures.Database.SqlServer.Repositories
             return record;
         }
 
-        
+        public Brand GetByName(string name)
+        {
+            var record = _appDbContext.Brands.FirstOrDefault(p => p.Name == name);
+            return record;
+        }
     }
 }
 

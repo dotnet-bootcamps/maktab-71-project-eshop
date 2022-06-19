@@ -47,6 +47,12 @@ namespace App.Infrastructures.Database.SqlServer.Repositories
             var record = _appDbContext.Categories.FirstOrDefault(p => p.Id == id);
             return record;
         }
+
+        public Category GetByName(string name)
+        {
+            var record = _appDbContext.Categories.FirstOrDefault(p => p.Name == name);
+            return record;
+        }
     }
 }
 

@@ -50,5 +50,11 @@ namespace App.Infrastructures.Database.SqlServer.Repositories
             var record = _appDbContext.Models.FirstOrDefault(p => p.Id == id);
             return record;
         }
+
+        public Model GetByName(string name)
+        {
+            var record = _appDbContext.Models.FirstOrDefault(p => p.Name == name);
+            return record;
+        }
     }
 }

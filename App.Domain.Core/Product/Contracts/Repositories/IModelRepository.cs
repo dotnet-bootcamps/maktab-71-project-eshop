@@ -10,6 +10,7 @@ namespace App.Domain.Core.Product.Contracts.Repositories
     public interface IModelRepository
     {
         Model GetById(int Id);
+        Model GetByName(string name);
         List<Model> GetAll();
         int Create(Model model);
         void Update(Model model);

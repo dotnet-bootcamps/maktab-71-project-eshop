@@ -44,5 +44,11 @@ namespace App.Infrastructures.Database.SqlServer.Repositories
             var record = _appDbContext.Tags.FirstOrDefault(p => p.Id == id);
             return record;
         }
+
+        public Tag GetByName(string name)
+        {
+            var record = _appDbContext.Tags.FirstOrDefault(p => p.Name == name);
+            return record;
+        }
     }
 }
