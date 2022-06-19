@@ -79,7 +79,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
             _productAppService.UpdateProduct(model);
             return RedirectToAction("Index");
         }
-        [HttpPost]
+        [HttpGet]
         public IActionResult Delete(int id)
         {
             _productAppService.RemoveProduct(id);

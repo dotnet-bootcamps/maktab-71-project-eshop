@@ -47,7 +47,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
             _productAppService.UpdateModel(model);
             return RedirectToAction("Update");
         }
-        [HttpPost]
+        [HttpGet]
         public IActionResult Delete(int id)
         {
             _productAppService.RemoveModel(id);

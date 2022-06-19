@@ -46,11 +46,12 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
             _productAppService.UpdateTag(model);
             return RedirectToAction("Update");
         }
-        [HttpPost]
+        [HttpGet]
         public IActionResult Delete(int id)
         {
             _productAppService.RemoveTag(id);
             return RedirectToAction("Index");
         }
     }
+
 }

@@ -44,7 +44,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
             _repository.Update(model);
             return RedirectToAction("Update");
         }
-        [HttpPost]
+        [HttpGet]
         public IActionResult Delete(int id)
         {
             _repository.Remove(id);
