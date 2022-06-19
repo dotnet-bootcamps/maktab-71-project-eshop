@@ -1,4 +1,5 @@
-﻿using App.Domain.Core.BaseData.Entities;
+﻿using App.Domain.Core.BaseData.Dtos;
+using App.Domain.Core.BaseData.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace App.Domain.Core.BaseData.Contracts.Services
 {
     public interface IColorService
     {
-        List<Color> GetAllColors();
+        List<ColorDto> GetAllColors();
         Color GetColorById(int id);
         int CreateColor(Color color);
         bool RemoveColor(int id);

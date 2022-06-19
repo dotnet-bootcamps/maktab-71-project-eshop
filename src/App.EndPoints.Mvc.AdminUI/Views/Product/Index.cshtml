@@ -1,4 +1,4 @@
-﻿@model List<Product>
+﻿@model List<ProductDto>
 <div class="container p-3">
     <div class="row pt-4">
         <div class="col-6">
@@ -30,7 +30,7 @@
                         <td width="10%">@item.Id</td>
                         <td width="15%">@item.Name</td>
                         <td width="15%">@item.Price</td>
-                        <td width="20%">@item.Category.Name</td>
+                        <td width="20%">@*@item.Category.Name*@</td>
                         <td width="20%">
                             <div class="w-75 btn-group " role="group">
                                 <a asp-controller="Product" asp-action="Update" asp-route-Id="@item.Id" class="btn btn-primary m-1 p-1"><i class="fas fa-edit">ویرایش</i></a>

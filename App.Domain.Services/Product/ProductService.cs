@@ -1,5 +1,6 @@
 ﻿using App.Domain.Core.Product.Contracts.Repositories;
 using App.Domain.Core.Product.Contracts.Services;
+using App.Domain.Core.Product.Dtos;
 using App.Domain.Core.Product.Entities;
 
 namespace App.Domain.Services.Product
@@ -25,32 +26,90 @@ namespace App.Domain.Services.Product
             _modelRepository = modelRepository;
         }
 
-        public List<Brand> GetAllBrands()
+        public List<BrandDto> GetAllBrands()
         {
-            var brands = _brandRepository.GetAll();
+            var brands = _brandRepository.GetAll()
+                .Select(x => new BrandDto
+                { Id = x.Id, Name = x.Name, IsDeleted = x.IsDeleted, CreationDate = x.CreationDate, DisplayOrder = x.DisplayOrder })
+                .ToList();
+            
             return brands;
         }
 
-        public List<Category> GetAllCategories()
+        public List<CategoryDto> GetAllCategories()
         {
-            var categories = _categoryRepository.GetAll();
+            var categories = _categoryRepository.GetAll()
+                .Select(x => new CategoryDto
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    IsDeleted = x.IsDeleted,
+                    CreationDate = x.CreationDate
+                ,
+                    DisplayOrder = x.DisplayOrder,
+                    IsActive = x.IsActive,
+                    ParentCagetoryId = x.ParentCagetoryId
+                })
+                .ToList();
             return categories;
         }
 
-        public List<Core.Product.Entities.Product> GetAllProducts()
+        public List<ProductDto> GetAllProducts()
         {
-            var products = _productRepository.GetAll();
+            var products = _productRepository.GetAll()
+                .Select(x => new ProductDto
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    IsDeleted = x.IsDeleted
+                ,
+                    CreationDate = x.CreationDate,
+                    Description = x.Description,
+                    OperatorId = x.OperatorId,
+                    BrandId = x.BrandId,
+                    CategoryId = x.CategoryId,
+                    Count = x.Count,
+                    IsActive = x.IsActive,
+                    IsShowPrice = x.IsShowPrice,
+                    IsOrginal = x.IsOrginal,
+                    ModelId = x.ModelId,
+                    Price = x.Price,
+                    Weight = x.Weight
+                })
+                .ToList();
             return products;
         }
 
-        public List<Tag> GetAllTags()
+        public List<TagDto> GetAllTags()
         {
-            var tags = _tagRepository.GetAll();
+            var tags = _tagRepository.GetAll()
+                .Select(x => new TagDto
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    IsDeleted = x.IsDeleted
+                ,
+                    CreationDate = x.CreationDate,
+                    HasValue = x.HasValue,
+                    TagCategoryId = x.TagCategoryId
+                })
+                .ToList();
             return tags;
         }
-        public List<Model> GetAllModels()
+        public List<ModelDto> GetAllModels()
         {
-            var models = _modelRepository.GetAll();
+            var models = _modelRepository.GetAll()
+                .Select(x => new ModelDto
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    IsDeleted = x.IsDeleted
+                ,
+                    CreationDate = x.CreationDate,
+                    BrandId = x.BrandId,
+                    ParentModelId = x.ParentModelId,
+                })
+                .ToList();
             return models;
         }
 

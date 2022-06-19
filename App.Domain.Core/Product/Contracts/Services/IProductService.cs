@@ -1,14 +1,15 @@
-﻿using App.Domain.Core.Product.Entities;
+﻿using App.Domain.Core.Product.Dtos;
+using App.Domain.Core.Product.Entities;
 
 namespace App.Domain.Core.Product.Contracts.Services
 {
     public interface IProductService
     {
-        List<Brand> GetAllBrands();
-        List<Category> GetAllCategories();
-        List<Tag> GetAllTags();
-        List<Model> GetAllModels();
-        List<App.Domain.Core.Product.Entities.Product> GetAllProducts();
+        List<BrandDto> GetAllBrands();
+        List<CategoryDto> GetAllCategories();
+        List<TagDto> GetAllTags();
+        List<ModelDto> GetAllModels();
+        List<ProductDto> GetAllProducts();
 
         int CreateModel(Model model);
         int CreateBrand(Brand model);

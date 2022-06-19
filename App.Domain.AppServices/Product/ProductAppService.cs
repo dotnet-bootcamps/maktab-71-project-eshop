@@ -1,9 +1,11 @@
 ﻿using App.Domain.Core.BaseData.Contracts.Services;
+using App.Domain.Core.BaseData.Dtos;
 using App.Domain.Core.BaseData.Entities;
 using App.Domain.Core.Permission.Contracts.Services;
 using App.Domain.Core.Permission.Enums;
 using App.Domain.Core.Product.Contracts.AppServices;
 using App.Domain.Core.Product.Contracts.Services;
+using App.Domain.Core.Product.Dtos;
 using App.Domain.Core.Product.Entities;
 namespace App.Domain.AppServices.Product
 {
@@ -38,7 +40,7 @@ namespace App.Domain.AppServices.Product
             _modelService = modelService;
         }
         #region GetAllMethods
-        public List<Brand> GetAllBrands(int operatorId)
+        public List<BrandDto> GetAllBrands(int operatorId)
         {
             var permission = _permissionService.HasPermission(operatorId, (int)PermissionsEnum.ViewBrands);
             //if (!permission)
@@ -48,7 +50,7 @@ namespace App.Domain.AppServices.Product
             var brands = _productService.GetAllBrands();
             return brands;
         }
-        public List<Category> GetAllCategories(int operatorId)
+        public List<CategoryDto> GetAllCategories(int operatorId)
         {
             var permission = _permissionService.HasPermission(operatorId, (int)PermissionsEnum.ViewCategories);
             //if (!permission)
@@ -59,7 +61,7 @@ namespace App.Domain.AppServices.Product
             return categories;
         }
 
-        public List<Core.Product.Entities.Product> GetAllProducts(int operatorId)
+        public List<ProductDto> GetAllProducts(int operatorId)
         {
             var permission = _permissionService.HasPermission(operatorId, (int)PermissionsEnum.ViewProducts);
             //if (!permission)
@@ -70,7 +72,7 @@ namespace App.Domain.AppServices.Product
             return products;
         }
 
-        public List<Tag> GetAllTags(int operatorId)
+        public List<TagDto> GetAllTags(int operatorId)
         {
             var permission = _permissionService.HasPermission(operatorId, (int)PermissionsEnum.ViewTags);
             //if (!permission)
@@ -80,7 +82,7 @@ namespace App.Domain.AppServices.Product
             var tags = _productService.GetAllTags();
             return tags;
         }
-        public List<Model> GetAllModels(int operatorId)
+        public List<ModelDto> GetAllModels(int operatorId)
         {
             var permission = _permissionService.HasPermission(operatorId, (int)PermissionsEnum.ViewModels);
             //if (!permission)
@@ -90,7 +92,7 @@ namespace App.Domain.AppServices.Product
             var models = _productService.GetAllModels();
             return models;
         }
-        public List<Color> GetAllColors(int operatorId)
+        public List<ColorDto> GetAllColors(int operatorId)
         {
             var permission = _permissionService.HasPermission(operatorId, (int)PermissionsEnum.ViewColors);
             //if (!permission)

@@ -1,22 +1,22 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using App.Domain.Core.BaseData.Contracts.Repositories;
 using App.Domain.Core.BaseData.Entities;
+using App.Domain.Core.Product.Contracts.AppServices;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
     public class ColorController : Controller
     {
-
-        private readonly IColorRepository _repository;
-        public ColorController(IColorRepository repository)
+        private readonly IProductAppService _productAppService;
+        public ColorController(IProductAppService productAppService)
         {
-            _repository = repository;
+            _productAppService = productAppService;
         }
 
 
         public IActionResult Index()
         {
-            var record = _repository.GetAll();
+            var operatorId = 10;
+            var record = _productAppService.GetAllColors(operatorId);
             return View(record);
         }
 
@@ -29,14 +29,14 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         [HttpPost]
         public IActionResult Create(Color model)
         {
-            _repository.Create(model);
+            _productAppService.CreateColor(model);
             return RedirectToAction("Index");
         }
 
         [HttpGet]
         public IActionResult Update(int id)
         {
-            var record = _repository.GetById(id);
+            var record = _productAppService.GetColorById(id);
             return View(record);
         }
 
@@ -44,13 +44,13 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
 
         public IActionResult Update(Color model)
         {
-            _repository.Update(model);
+            _productAppService.UpdateColor(model);
             return RedirectToAction("Update");
         }
-        [HttpPost]
+        [HttpGet]
         public IActionResult Delete(int id)
         {
-            _repository.Remove(id);
+            _productAppService.RemoveColor(id);
             return RedirectToAction("Index");
 
         }

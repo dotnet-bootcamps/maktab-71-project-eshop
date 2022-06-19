@@ -1,5 +1,6 @@
 ﻿using App.Domain.Core.BaseData.Contracts.Repositories;
 using App.Domain.Core.BaseData.Contracts.Services;
+using App.Domain.Core.BaseData.Dtos;
 using App.Domain.Core.BaseData.Entities;
 using System;
 using System.Collections.Generic;
@@ -29,9 +30,18 @@ namespace App.Domain.Services.BaseData
             return record;
         }
 
-        public List<Color> GetAllColors()
+        public List<ColorDto> GetAllColors()
         {
-            var record=_colorRepository.GetAll();
+            var record = _colorRepository.GetAll()
+                .Select(x => new ColorDto
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Code = x.Code,
+                    CreationDate = x.CreationDate,
+                    IsDeleted = x.IsDeleted
+                })
+                .ToList();
             return record;
         }
 

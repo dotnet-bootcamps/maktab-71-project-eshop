@@ -1,16 +1,18 @@
-﻿using App.Domain.Core.BaseData.Entities;
+﻿using App.Domain.Core.BaseData.Dtos;
+using App.Domain.Core.BaseData.Entities;
+using App.Domain.Core.Product.Dtos;
 using App.Domain.Core.Product.Entities;
 
 namespace App.Domain.Core.Product.Contracts.AppServices
 {
     public interface IProductAppService
     {
-        List<Brand> GetAllBrands(int operatorId);
-        List<Category> GetAllCategories(int operatorId);
-        List<Tag> GetAllTags(int operatorId);
-        List<Model> GetAllModels(int operatorId);
-        List<App.Domain.Core.Product.Entities.Product> GetAllProducts(int operatorId);
-        List<Color> GetAllColors(int operatorId);
+        List<BrandDto> GetAllBrands(int operatorId);
+        List<CategoryDto> GetAllCategories(int operatorId);
+        List<TagDto> GetAllTags(int operatorId);
+        List<ModelDto> GetAllModels(int operatorId);
+        List<ProductDto> GetAllProducts(int operatorId);
+        List<ColorDto> GetAllColors(int operatorId);
 
         int CreateModel(Model model);
         int CreateBrand(Brand model);
