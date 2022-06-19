@@ -1,24 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using App.Infrastructures.Database.SqlServer.Repositories.Contracts;
+
 using App.EndPoints.Mvc.AdminUI.ViewModels;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
     public class ColorsController : Controller
     {
-    
-        private readonly IColorRepository _colorRepository;
-
-
-        public ColorsController(IColorRepository colorRepository)
-        {
-            _colorRepository = colorRepository;
-        }
         
         public IActionResult Index()
         {
-            var result = _colorRepository.GetAll();
-            return View(result);
+            //var result = _colorRepository.GetAll();
+            //return View(result);
+            return View();
         }
 
 
@@ -32,11 +25,11 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         
         public IActionResult SubmitCreatedColor(ColorViewModel model)
         {
-            _colorRepository.Create(new Infrastructures.Database.SqlServer.Entities.Color
-            {
-                Code = model.Code,
-                Name = model.Name
-            });
+            //_colorRepository.Create(new Infrastructures.Database.SqlServer.Entities.Color
+            //{
+            //    Code = model.Code,
+            //    Name = model.Name
+            //});
 
             return RedirectToAction(nameof(Index));
         }
@@ -52,9 +45,9 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(App.Infrastructures.Database.SqlServer.Entities.Color model)
+        public IActionResult Create(int id)
         {
-            _colorRepository.Create(model);
+            //_colorRepository.Create(model);
             return RedirectToAction("Index");
         }
 
@@ -66,9 +59,9 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Update(App.Infrastructures.Database.SqlServer.Entities.Color model)
+        public IActionResult Update(int id)
         {
-            _colorRepository.Edit(model);
+            //_colorRepository.Edit(model);
             return RedirectToAction("Index");
         }
 
@@ -77,7 +70,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            _colorRepository.Delete(id);
+            //_colorRepository.Delete(id);
             return RedirectToAction("Index");
         }
         

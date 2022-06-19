@@ -1,25 +1,33 @@
-
-using App.Infrastructures.Database.SqlServer.Data;
-using App.Infrastructures.Database.SqlServer.Entities;
-using App.Infrastructures.Database.SqlServer.Repositories;
-using App.Infrastructures.Database.SqlServer.Repositories.Contracts;
+using App.Domain.Core.BaseData.Contarcts.AppServices;
+using App.Domain.Core.BaseData.Dtos;
+using App.EndPoints.Mvc.AdminUI.Models.ViewModels.Product;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+
+
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
     public class BrandController : Controller
     {
-        private readonly IBrandRepository _brandRepository;
-        public BrandController(IBrandRepository brandRepository)
+        private readonly IBrandAppService _brandAppService;
+
+        public BrandController(IBrandAppService brandAppService)
         {
-            _brandRepository = brandRepository;
+            _brandAppService = brandAppService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var brands = _brandRepository.GetAll();
-            return View(brands);
+            var brands = await _brandAppService.GetBrands();
+            var brandsModel= brands.Select(p=> new BrandOutputViewModel()
+            {
+                Id = p.Id,
+                Name= p.Name,
+                DisplayOrder = p.DisplayOrder,
+                CreationDate = p.CreationDate,
+                IsDeleted= p.IsDeleted,
+            }).ToList();
+            return View(brandsModel);
         }
 
         [HttpGet]
@@ -29,36 +37,44 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Brand model)
+        public async Task<IActionResult> Create(BrandInputViewModel brand)
         {
-            _brandRepository.Create(model);
+            await _brandAppService.SetBrand(brand.Name,brand.DisplayOrder);
             return RedirectToAction("");
-            }
+        }
 
         [HttpGet]
         public IActionResult Update(int id)
         {
-            Brand brand=_brandRepository.GetBy(id);
-            return View(brand);
+            var brand= _brandAppService.GetBrand(id);
+            BrandOutputViewModel brandInput = new BrandOutputViewModel()
+            {
+               Id=id,
+               Name = brand.Name,
+               DisplayOrder=brand.DisplayOrder,
+            };
+            return View(brandInput);
         }
 
         [HttpPost]
-
-        public IActionResult Update(Brand model)
+        public IActionResult Update(BrandOutputViewModel brand)
         {
-            _brandRepository.Update(model);
+            _brandAppService.UpdateBrand(brand.Id,brand.Name,brand.DisplayOrder);
             return RedirectToAction("");
         }
 
-        //[HttpGet]
-        //public IActionResult Delete()
-        //{
-        //    return View();
-        //}        
-        [HttpPost]
+        [HttpGet]
         public IActionResult Delete(int id)
         {
-            _brandRepository.Remove(id);
+            var brand = _brandAppService.GetBrand(id);
+            return View(brand);
+
+        }
+
+        [HttpPost]
+        public IActionResult DeleteBrand(int id)
+        {
+            _brandAppService.DeleteBrand(id);
             return RedirectToAction("");
         
         }

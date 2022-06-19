@@ -1,7 +1,21 @@
+using App.Domain.AppServices.BaseData;
+using App.Domain.AppServices.Product;
+using App.Domain.Core.BaseData.Contarcts.AppServices;
+using App.Domain.Core.BaseData.Contarcts.Repositories;
+using App.Domain.Core.BaseData.Contarcts.Services;
+using App.Domain.Core.Operator.Contract.Repositories;
+using App.Domain.Core.Permission.Contarcts.Repositories;
+using App.Domain.Core.Permission.Contarcts.Services;
+using App.Domain.Core.Product.Contacts.AppServices;
+
+using App.Domain.Services.BaseData;
+using App.Domain.Services.Permission;
+using App.Infrastructures.Database.Repos.Ef.BaseData;
+using App.Infrastructures.Database.Repos.Ef.Permission;
 using App.Infrastructures.Database.SqlServer.Data;
-using App.Infrastructures.Database.SqlServer.Repositories;
+
 using Microsoft.EntityFrameworkCore;
-using App.Infrastructures.Database.SqlServer.Repositories.Contracts;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,14 +27,32 @@ builder.Services.AddDbContext<AppDbContext>(option =>
     option.UseSqlServer("Data Source=(LocalDb)\\MSSQLLocalDB; Initial Catalog=DotNetShopDb; Integrated Security=TRUE");
 });
 
-builder.Services.AddScoped<IBrandRepository, BrandRepository>();
-builder.Services.AddScoped<IColorRepository,ColorEfRepository>();
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
-builder.Services.AddScoped<ICollectionRepository, CollectionRepository>();
-builder.Services.AddScoped<IModelRepository, ModelRepository>();
-builder.Services.AddScoped<IOperatorRepository, OperatorRepository>();
-builder.Services.AddScoped<ITagRepository, TagRepository>();
-builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+
+
+
+
+builder.Services.AddScoped<IProductAppService, ProductAppService>();
+
+#region BaseData
+builder.Services.AddScoped<IBaseDataAppService, BaseDataAppService>();
+builder.Services.AddScoped<IBaseDataService, BaseDataService>();
+builder.Services.AddScoped<IBaseDataCommandRepository, BaseDataCommandRepository>();
+builder.Services.AddScoped<IBaseDataQueryRepository, BaseDataQueryRepository>();
+#endregion BaseData
+#region Brand
+builder.Services.AddScoped<IBrandAppService, BrandAppService>();
+builder.Services.AddScoped<IBrandService, BrandService>();
+builder.Services.AddScoped<IBrandCommandRepository, BrandCommandRepository>();
+builder.Services.AddScoped<IBrandQueryRepository, BrandQueryRepository>();
+#endregion Brand
+
+#region Permission
+builder.Services.AddScoped<IPermissionService, PermissionService>();
+builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
+#endregion Permission
+
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

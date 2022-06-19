@@ -1,6 +1,6 @@
 ﻿//using App.EndPoints.Mvc.AdminUI.ViewModels;
-//using App.Infrastructures.Database.SqlServer.Entities;
-//using App.Infrastructures.Database.SqlServer.Repositories;
+//
+//
 //using Microsoft.AspNetCore.Mvc;
 
 //namespace App.EndPoints.Mvc.AdminUI.Controllers

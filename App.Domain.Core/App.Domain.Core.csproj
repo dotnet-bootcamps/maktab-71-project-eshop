@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="BaseData\Enums\" />
+    <Folder Include="Operator\Dtos\" />
+    <Folder Include="Operator\Enums\" />
+    <Folder Include="Permission\Contarcts\AppServices\" />
+    <Folder Include="Permission\Entities\" />
+    <Folder Include="Product\Contacts\Repositories\" />
+    <Folder Include="Product\Dtos\" />
+    <Folder Include="Product\Enums\" />
+  </ItemGroup>
+
+</Project>
