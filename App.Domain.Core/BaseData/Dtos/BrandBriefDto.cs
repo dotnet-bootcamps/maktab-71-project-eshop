@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace App.Domain.Core.BaseData.Dtos
 {
-    public class BrandBrifDto
+    public class BrandBriefDto
     {
         public int DisplayOrder { get; set; }
         public string Name { get; set; } = null!;

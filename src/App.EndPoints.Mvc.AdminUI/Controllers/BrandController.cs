@@ -18,7 +18,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var brands = await _brandAppService.GetBrands();
+            var brands = await _brandAppService.GetAll();
             var brandsModel= brands.Select(p=> new BrandOutputViewModel()
             {
                 Id = p.Id,
@@ -39,14 +39,14 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(BrandInputViewModel brand)
         {
-            await _brandAppService.SetBrand(brand.Name,brand.DisplayOrder);
+            await _brandAppService.Set(brand.Name,brand.DisplayOrder);
             return RedirectToAction("");
         }
 
         [HttpGet]
         public IActionResult Update(int id)
         {
-            var brand= _brandAppService.GetBrand(id);
+            var brand= _brandAppService.Get(id);
             BrandOutputViewModel brandInput = new BrandOutputViewModel()
             {
                Id=id,
@@ -59,14 +59,14 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         [HttpPost]
         public IActionResult Update(BrandOutputViewModel brand)
         {
-            _brandAppService.UpdateBrand(brand.Id,brand.Name,brand.DisplayOrder);
+            _brandAppService.Update(brand.Id,brand.Name,brand.DisplayOrder, brand.IsDeleted);
             return RedirectToAction("");
         }
 
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            var brand = _brandAppService.GetBrand(id);
+            var brand = _brandAppService.Get(id);
             return View(brand);
 
         }
@@ -74,7 +74,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         [HttpPost]
         public IActionResult DeleteBrand(int id)
         {
-            _brandAppService.DeleteBrand(id);
+            _brandAppService.Delete(id);
             return RedirectToAction("");
         
         }
