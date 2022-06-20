@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace App.Domain.Core.Product.Contracts.Repositories
 {
-    public class PermissionRepository : IPermissionRepository
+    public class PermissionQueryRepository : IPermissionRepository
     {
         public List<int> GetOperatorPermissions(int operatorId)
         {

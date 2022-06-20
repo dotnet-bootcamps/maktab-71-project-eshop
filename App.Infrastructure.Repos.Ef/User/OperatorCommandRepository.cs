@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace App.Infrastructures.Database.SqlServer.Repositories
 {
-    public class OperatorRepository : IOperatorRepository
+    public class OperatorCommandRepository : IOperatorRepository
     {
         private readonly AppDbContext _appDbContext;
-        public OperatorRepository(AppDbContext dbContext)
+        public OperatorCommandRepository(AppDbContext dbContext)
         {
             _appDbContext = dbContext;
         }

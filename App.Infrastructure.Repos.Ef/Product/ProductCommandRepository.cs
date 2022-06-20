@@ -4,11 +4,11 @@ using App.Domain.Core.Product.Contracts.Repositories;
 
 namespace App.Infrastructures.Database.SqlServer.Repositories
 {
-    public class ProductRepository : IProductRepository
+    public class ProductCommandRepository : IProductRepository
     {
         private readonly AppDbContext _appDbContext;
 
-        public ProductRepository(AppDbContext appDbContext)
+        public ProductCommandRepository(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
         }

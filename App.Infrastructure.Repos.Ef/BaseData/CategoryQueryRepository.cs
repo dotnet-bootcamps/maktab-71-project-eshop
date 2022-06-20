@@ -4,10 +4,10 @@ using App.Domain.Core.Product.Contracts.Repositories;
 
 namespace App.Infrastructures.Database.SqlServer.Repositories
 {
-    public class CategoryRepository : ICategoryRepository
+    public class CategoryQueryRepository : ICategoryRepository
     {
         private readonly AppDbContext _appDbContext;
-        public CategoryRepository(AppDbContext appDbContext)
+        public CategoryQueryRepository(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
         }

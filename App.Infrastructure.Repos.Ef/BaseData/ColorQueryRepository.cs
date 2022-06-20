@@ -4,12 +4,12 @@ using App.Infrastructures.Database.SqlServer.Data;
 
 namespace App.Infrastructures.Database.SqlServer.Repositories
 {
-    public class ColorRepository : IColorRepository
+    public class ColorQueryRepository : IColorRepository
     {
 
         private readonly AppDbContext _appDbContext;
 
-        public ColorRepository(AppDbContext appDbContext)
+        public ColorQueryRepository(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
         }

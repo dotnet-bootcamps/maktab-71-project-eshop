@@ -3,11 +3,11 @@ using App.Domain.Core.Product.Entities;
 using App.Infrastructures.Database.SqlServer.Data;
 using App.Domain.Core.Product.Contracts.Repositories;
 
-public class CollectionRepository :ICollectionRepository
+public class CollectionCommandRepository :ICollectionRepository
 {
     private readonly AppDbContext _appDbContext;
 
-    public CollectionRepository(AppDbContext appDbContext)
+    public CollectionCommandRepository(AppDbContext appDbContext)
     {
         _appDbContext = appDbContext;
     }

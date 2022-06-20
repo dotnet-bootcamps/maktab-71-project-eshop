@@ -11,10 +11,10 @@ using System.Threading.Tasks;
 namespace App.Infrastructures.Database.SqlServer.Repositories
 {
 
-    public class BrandRepository: IBrandRepository
+    public class BrandQueryRepository: IBrandRepository
     {
         private readonly AppDbContext _appDbContext;
-        public BrandRepository(AppDbContext appDbContext)
+        public BrandQueryRepository(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
         }
