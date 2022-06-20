@@ -4,7 +4,7 @@ using App.Domain.Core.Product.Contracts.Repositories;
 
 namespace App.Infrastructures.Database.SqlServer.Repositories
 {
-    public class ProductCommandRepository : IProductRepository
+    public class ProductCommandRepository : IProductCommandRepository
     {
         private readonly AppDbContext _appDbContext;
 

@@ -1,17 +1,17 @@
 ﻿using App.Domain.Core.Product.Entities;
 using App.Infrastructures.Database.SqlServer.Data;
-using App.Domain.Core.Product.Contracts.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using App.Domain.Core.BaseData.Contracts.Repositories;
 
 namespace App.Infrastructures.Database.SqlServer.Repositories
 {
 
-    public class BrandQueryRepository: IBrandRepository
+    public class BrandQueryRepository: IBrandQueryRepository
     {
         private readonly AppDbContext _appDbContext;
         public BrandQueryRepository(AppDbContext appDbContext)

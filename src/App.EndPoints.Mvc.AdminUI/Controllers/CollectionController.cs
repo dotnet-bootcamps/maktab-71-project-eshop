@@ -6,8 +6,8 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
     public class CollectionController : Controller
     {
-        private readonly ICollectionRepository _repository;
-        public CollectionController(ICollectionRepository repository)
+        private readonly ICollectionCommandRepository _repository;
+        public CollectionController(ICollectionCommandRepository repository)
         {
             _repository = repository;
         }

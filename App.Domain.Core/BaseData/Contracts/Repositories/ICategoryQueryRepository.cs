@@ -1,8 +1,12 @@
-﻿using App.Domain.Core.Product.Entities;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace App.Domain.Core.Product.Contracts.Repositories
+namespace App.Domain.Core.BaseData.Contracts.Repositories
 {
-    public interface ICategoryRepository
+    public interface ICategoryQueryRepository
     {
         Category GetById(int Id);
         Category GetByName(string name);

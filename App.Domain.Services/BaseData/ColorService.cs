@@ -12,9 +12,9 @@ namespace App.Domain.Services.BaseData
 {
     public class ColorService : IColorService
     {
-        private readonly IColorRepository _colorRepository;
+        private readonly IColorQueryRepository _colorRepository;
 
-        public ColorService(IColorRepository colorRepository)
+        public ColorService(IColorQueryRepository colorRepository)
         {
             _colorRepository = colorRepository;
         }

@@ -10,9 +10,9 @@ namespace App.Domain.Services.Product
 {
     public class CollectionService : ICollectionService
     {
-        private readonly ICollectionRepository _collectionRepository;
+        private readonly ICollectionCommandRepository _collectionRepository;
 
-        public CollectionService(ICollectionRepository collectionRepository)
+        public CollectionService(ICollectionCommandRepository collectionRepository)
         {
             _collectionRepository = collectionRepository;
         }

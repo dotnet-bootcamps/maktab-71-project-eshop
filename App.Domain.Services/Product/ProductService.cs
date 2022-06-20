@@ -9,15 +9,15 @@ namespace App.Domain.Services.Product
     {
         private readonly IBrandRepository _brandRepository;
         private readonly ICategoryRepository _categoryRepository;
-        private readonly ITagRepository _tagRepository;
-        private readonly IProductRepository _productRepository;
-        private readonly IModelRepository _modelRepository;
+        private readonly ITagCommandRepository _tagRepository;
+        private readonly IProductCommandRepository _productRepository;
+        private readonly IModelCommandRepository _modelRepository;
 
         public ProductService(IBrandRepository brandRepository
             , ICategoryRepository categoryRepository
-            , ITagRepository tagRepository
-            , IProductRepository productRepository
-            , IModelRepository modelRepository)
+            , ITagCommandRepository tagRepository
+            , IProductCommandRepository productRepository
+            , IModelCommandRepository modelRepository)
         {
             _brandRepository = brandRepository;
             _categoryRepository = categoryRepository;

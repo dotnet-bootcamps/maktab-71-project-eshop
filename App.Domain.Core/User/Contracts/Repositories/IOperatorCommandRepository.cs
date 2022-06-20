@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace App.Infrastructures.Database.SqlServer.Repositories.Contracts
 {
-    public interface IOperatorRepository
+    public interface IOperatorCommandRepository
     {
         Operator GetById(int Id);
         List<Operator> GetAll();

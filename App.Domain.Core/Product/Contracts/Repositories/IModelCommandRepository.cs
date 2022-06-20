@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace App.Domain.Core.Product.Contracts.Repositories
 {
-    public interface IModelRepository
+    public interface IModelCommandRepository
     {
         Model GetById(int Id);
         Model GetByName(string name);

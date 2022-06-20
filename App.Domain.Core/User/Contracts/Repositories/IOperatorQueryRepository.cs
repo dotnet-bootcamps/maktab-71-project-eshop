@@ -1,12 +1,13 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace App.Infrastructure.Repos.Ef.User
+namespace App.Domain.Core.User.Contracts.Repositories
 {
-    internal class OpertatorQueryRepository
+    public interface IOperatorQueryRepository
     {
     }
 }

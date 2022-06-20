@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace App.Domain.Core.Product.Contracts.Repositories
 {
-    public interface IProductRepository
+    public interface IProductCommandRepository
     {
         App.Domain.Core.Product.Entities.Product GetById(int Id);
         List<App.Domain.Core.Product.Entities.Product> GetAll();

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using App.Domain.Core.Permission.Contracts.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace App.Infrastructure.Repos.Ef.Permission
 {
-    internal class Class1
+    public class PermissionCommandRepository : IPermissionCommandRepository
     {
     }
 }

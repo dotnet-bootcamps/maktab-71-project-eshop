@@ -10,9 +10,9 @@ namespace App.Domain.Services.Permission
 {
     public class PermissionService : IPermissionService
     {
-        private readonly IPermissionRepository _permissionRepository;
+        private readonly IPermissionQueryRepository _permissionRepository;
 
-        public PermissionService(IPermissionRepository permissionRepository)
+        public PermissionService(IPermissionQueryRepository permissionRepository)
         {
             _permissionRepository = permissionRepository;
         }

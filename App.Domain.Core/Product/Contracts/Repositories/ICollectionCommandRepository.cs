@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace App.Domain.Core.Product.Contracts.Repositories
 {
-    public interface ICollectionRepository
+    public interface ICollectionCommandRepository
     {
         Collection GetById(int Id);
         Collection GetByName(string name);

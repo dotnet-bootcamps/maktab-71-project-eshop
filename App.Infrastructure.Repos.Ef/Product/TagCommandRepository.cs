@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace App.Infrastructures.Database.SqlServer.Repositories
 {
-    public class TagCommandRepository : ITagRepository
+    public class TagCommandRepository : ITagCommandRepository
     {
         private readonly AppDbContext _appDbContext;
 

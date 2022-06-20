@@ -10,9 +10,9 @@ namespace App.Domain.Services.Product
 {
     public class TagService : ITagService
     {
-        private readonly ITagRepository _tagRepository;
+        private readonly ITagCommandRepository _tagRepository;
 
-        public TagService(ITagRepository tagRepository)
+        public TagService(ITagCommandRepository tagRepository)
         {
             _tagRepository = tagRepository;
         }

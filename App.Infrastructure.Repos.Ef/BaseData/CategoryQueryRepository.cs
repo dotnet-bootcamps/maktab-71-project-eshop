@@ -1,10 +1,11 @@
 ﻿using App.Domain.Core.Product.Entities;
 using App.Infrastructures.Database.SqlServer.Data;
 using App.Domain.Core.Product.Contracts.Repositories;
+using App.Domain.Core.BaseData.Contracts.Repositories;
 
 namespace App.Infrastructures.Database.SqlServer.Repositories
 {
-    public class CategoryQueryRepository : ICategoryRepository
+    public class CategoryQueryRepository : ICategoryQueryRepository
     {
         private readonly AppDbContext _appDbContext;
         public CategoryQueryRepository(AppDbContext appDbContext)

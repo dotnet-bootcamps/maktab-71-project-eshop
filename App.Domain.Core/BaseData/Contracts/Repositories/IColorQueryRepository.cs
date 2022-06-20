@@ -3,7 +3,7 @@ using App.Domain.Core.BaseData.Entities;
 
 namespace App.Domain.Core.BaseData.Contracts.Repositories
 {
-    public interface IColorRepository
+    public interface IColorQueryRepository
     {
         Color GetById(int Id);
         List<Color> GetAll();

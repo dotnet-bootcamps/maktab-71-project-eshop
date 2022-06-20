@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace App.Domain.Core.Product.Contracts.Repositories
 {
-    public interface IBrandRepository
+    public interface ITagCommandRepository 
     {
-        Brand GetById(int Id);
-        Brand GetByName(string name);
-        List<Brand> GetAll();
-        int Create(Brand model);
-        void Update(Brand model);
+        Tag GetById(int Id);
+        Tag GetByName(string name);
+        List<Tag> GetAll();
+        int Create(Tag model);
+        void Update(Tag model);
         bool Remove(int Id);
     }
 }

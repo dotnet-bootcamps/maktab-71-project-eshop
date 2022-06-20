@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace App.Infrastructures.Database.SqlServer.Repositories
 {
-    public class ModelCommandRepository : IModelRepository
+    public class ModelCommandRepository : IModelCommandRepository
     {
         private readonly AppDbContext _appDbContext;
         public ModelCommandRepository(AppDbContext appDbContext)

@@ -27,15 +27,15 @@ builder.Services.AddDbContext<AppDbContext>(option =>
 
 builder.Services.AddScoped<IBrandRepository, BrandRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
-builder.Services.AddScoped<ICollectionRepository, CollectionRepository>();
-builder.Services.AddScoped<IColorRepository, ColorRepository>();
-builder.Services.AddScoped<IModelRepository, ModelRepository>();
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
-builder.Services.AddScoped<ITagRepository, TagRepository>();
-builder.Services.AddScoped<IOperatorRepository, OperatorRepository>();
+builder.Services.AddScoped<ICollectionCommandRepository, CollectionRepository>();
+builder.Services.AddScoped<IColorQueryRepository, ColorRepository>();
+builder.Services.AddScoped<IModelCommandRepository, ModelRepository>();
+builder.Services.AddScoped<IProductCommandRepository, ProductRepository>();
+builder.Services.AddScoped<ITagCommandRepository, TagRepository>();
+builder.Services.AddScoped<IOperatorCommandRepository, OperatorRepository>();
 
 builder.Services.AddScoped<IProductAppService, ProductAppService>();
-builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
+builder.Services.AddScoped<IPermissionQueryRepository, PermissionRepository>();
 builder.Services.AddScoped<IPermissionService, PermissionService>();
 builder.Services.AddScoped<IColorService, ColorService>();
 builder.Services.AddScoped<IProductService, ProductService>();

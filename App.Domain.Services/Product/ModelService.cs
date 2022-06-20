@@ -10,9 +10,9 @@ namespace App.Domain.Services.Product
 {
     public class ModelService : IModelService
     {
-        private readonly IModelRepository _modelRepository;
+        private readonly IModelCommandRepository _modelRepository;
 
-        public ModelService(IModelRepository modelRepository)
+        public ModelService(IModelCommandRepository modelRepository)
         {
             _modelRepository = modelRepository;
         }
