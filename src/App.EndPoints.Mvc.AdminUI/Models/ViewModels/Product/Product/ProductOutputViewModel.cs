@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace App.Infrastructures.Database.SqlServer.ViewModels.Product
+namespace App.EndPoints.Mvc.AdminUI.ViewModels
 {
-    public class ProductListViewModel
+    public class ProductOutputViewModel
     {
         [Display(Name = "شناسه")]
         public int Id { get; set; }

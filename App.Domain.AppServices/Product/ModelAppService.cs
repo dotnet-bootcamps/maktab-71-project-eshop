@@ -1,4 +1,5 @@
-﻿using App.Domain.Core.Product.Contacts.Services;
+﻿using App.Domain.Core.Product.Contacts.AppServices;
+using App.Domain.Core.Product.Contacts.Services;
 using App.Domain.Core.Product.Dtos;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace App.Domain.AppServices.Product
 {
-    public class ModelAppService
+    public class ModelAppService : IModelAppService
     {
         private readonly IModelService _service;
         public ModelAppService(IModelService categoryService)

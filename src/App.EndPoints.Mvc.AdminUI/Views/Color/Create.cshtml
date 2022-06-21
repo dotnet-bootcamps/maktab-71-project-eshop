@@ -1,0 +1,11 @@
+﻿@model ColorInputViewModel
+
+<form method="post" asp-controller="Color" asp-action="Create">
+    <label asp-for="Name"></label><br>
+    <input type="text" asp-for="Name"><br>
+
+    <label asp-for="Code"></label><br>
+    <input type="text" asp-for="Code"><br>
+
+    <input type="submit" class="btn btn-primary" value="Submit">
+</form>

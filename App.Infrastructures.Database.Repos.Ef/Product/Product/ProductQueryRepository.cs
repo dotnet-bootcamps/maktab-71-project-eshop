@@ -1,4 +1,8 @@
-﻿using System;
+﻿using App.Domain.Core.Product.Contacts.Repositories.Product;
+using App.Domain.Core.Product.Dtos;
+using App.Infrastructures.Database.SqlServer.Data;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,59 +10,83 @@ using System.Threading.Tasks;
 
 namespace App.Infrastructures.Database.Repos.Ef.Product.Product
 {
-    public class ProductQueryRepository
+    public class ProductQueryRepository : IProductQueryRepository
     {
         private readonly AppDbContext _context;
 
-        public ModelQueryRepository(AppDbContext context)
+        public ProductQueryRepository(AppDbContext context)
         {
             _context = context;
         }
-        public async Task<List<ModelDto>> GetAll()
+        public async Task<List<ProductDto>> GetAll()
         {
-            return await _context.Models.Select(p => new ModelDto()
+            return await _context.Products.Select(p => new ProductDto()
             {
-                Id = p.Id,
-                CreationDate = p.CreationDate,
+                CategoryId = p.CategoryId,
+                BrandId = p.BrandId,
+                Weight = p.Weight,
+                IsOrginal = p.IsOrginal,
+                Description = p.Description,
+                Count = p.Count,
+                ModelId = p.ModelId,
+                Price = p.Price,
+                IsShowPrice = p.IsShowPrice,
+                IsActive = p.IsActive,
+                OperatorId = p.OperatorId,
                 Name = p.Name,
                 IsDeleted = p.IsDeleted,
-                ParentModelId = p.ParentModelId,
-                BrandId = p.BrandId
+                CreationDate = p.CreationDate
             }).ToListAsync();
         }
 
-        public async Task<ModelDto> Get(int id)
+        public async Task<ProductDto> Get(int id)
         {
-            var record = await _context.Models.Where(p => p.Id == id).Select(p => new ModelDto()
+            var record = await _context.Products.Where(p => p.Id == id).Select(p => new ProductDto()
             {
-                Id = p.Id,
-                CreationDate = p.CreationDate,
+                CategoryId = p.CategoryId,
+                BrandId = p.BrandId,
+                Weight = p.Weight,
+                IsOrginal = p.IsOrginal,
+                Description = p.Description,
+                Count = p.Count,
+                ModelId = p.ModelId,
+                Price = p.Price,
+                IsShowPrice = p.IsShowPrice,
+                IsActive = p.IsActive,
+                OperatorId = p.OperatorId,
                 Name = p.Name,
                 IsDeleted = p.IsDeleted,
-                BrandId = p.BrandId,
-                ParentModelId = p.ParentModelId,
+                CreationDate = p.CreationDate
             }).SingleOrDefaultAsync();
             if (record == null)
             {
-                throw new Exception($"No Model with id : {id}!");
+                throw new Exception($"No Product with id : {id}!");
             }
             return record;
         }
 
-        public async Task<ModelDto> Get(string name)
+        public async Task<ProductDto> Get(string name)
         {
-            var record = await _context.Models.Where(p => p.Name == name).Select(p => new ModelDto()
+            var record = await _context.Products.Where(p => p.Name == name).Select(p => new ProductDto()
             {
-                Id = p.Id,
-                CreationDate = p.CreationDate,
+                CategoryId = p.CategoryId,
+                BrandId = p.BrandId,
+                Weight = p.Weight,
+                IsOrginal = p.IsOrginal,
+                Description = p.Description,
+                Count = p.Count,
+                ModelId = p.ModelId,
+                Price = p.Price,
+                IsShowPrice = p.IsShowPrice,
+                IsActive = p.IsActive,
+                OperatorId = p.OperatorId,
                 Name = p.Name,
                 IsDeleted = p.IsDeleted,
-                BrandId = p.BrandId,
-                ParentModelId = p.ParentModelId,
+                CreationDate = p.CreationDate
             }).SingleOrDefaultAsync();
             if (record == null)
             {
-                throw new Exception($"No Model with name : {name}!");
+                throw new Exception($"No Product with name : {name}!");
             }
             return record;
         }

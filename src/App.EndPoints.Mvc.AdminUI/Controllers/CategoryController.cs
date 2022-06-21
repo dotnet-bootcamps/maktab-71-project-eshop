@@ -82,7 +82,6 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
                 IsActive = model.IsActive,
                 IsDeleted = model.IsDeleted,
                 ParentCagetoryId = model.ParentCategoryId,
-                CreationDate = DateTime.Now,
                 DisplayOrder = model.DisplayOrder
             };
             await _categoryAppService.Update(dto);

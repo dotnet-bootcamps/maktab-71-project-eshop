@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace App.Infrastructures.Database.SqlServer.ViewModels.Model
+namespace App.EndPoints.Mvc.AdminUI.ViewModels
 {
     public class ModelInputViewModel
     {
@@ -15,8 +15,6 @@ namespace App.Infrastructures.Database.SqlServer.ViewModels.Model
 		[Display(Name = "نام")]
 		public string Name { get; set; } = string.Empty;
 
-		[Display(Name = "ترتیب نمایش")]
-		public int DisplayOrder { get; set; }
 		[Display(Name = "شناسه مدل والد")]
 		public int ParentModelId { get; set; }
 		[Display(Name = "شناسه برند")]

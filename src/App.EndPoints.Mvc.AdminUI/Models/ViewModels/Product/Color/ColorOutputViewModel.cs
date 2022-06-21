@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace App.Infrastructures.Database.SqlServer.ViewModels.Color
+namespace App.EndPoints.Mvc.AdminUI.ViewModels
 {
-    public class ColorListViewModel
+    public class ColorOutputViewModel
     {
         [Display(Name = "شناسه")]
         public int Id { get; set; }

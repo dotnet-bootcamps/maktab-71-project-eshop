@@ -8,6 +8,9 @@ using App.Domain.Core.Permission.Contarcts.Repositories;
 using App.Domain.Core.Permission.Contarcts.Services;
 using App.Domain.Core.Product.Contacts.AppServices;
 using App.Domain.Core.Product.Contacts.Repositories.Category;
+using App.Domain.Core.Product.Contacts.Repositories.Color;
+using App.Domain.Core.Product.Contacts.Repositories.Model;
+using App.Domain.Core.Product.Contacts.Repositories.Product;
 using App.Domain.Core.Product.Contacts.Services;
 using App.Domain.Services.BaseData;
 using App.Domain.Services.Permission;
@@ -15,6 +18,9 @@ using App.Domain.Services.Product;
 using App.Infrastructures.Database.Repos.Ef.BaseData;
 using App.Infrastructures.Database.Repos.Ef.Permission;
 using App.Infrastructures.Database.Repos.Ef.Product.Category;
+using App.Infrastructures.Database.Repos.Ef.Product.Color;
+using App.Infrastructures.Database.Repos.Ef.Product.Model;
+using App.Infrastructures.Database.Repos.Ef.Product.Product;
 using App.Infrastructures.Database.SqlServer.Data;
 
 using Microsoft.EntityFrameworkCore;
@@ -54,6 +60,24 @@ builder.Services.AddScoped<ICategoryAppService, CategoryAppService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ICategoryCommandRepository, CategoryCommandRepository>();
 builder.Services.AddScoped<ICategoryQueryRepository, CategoryQueryRepository>();
+#endregion
+#region Color
+builder.Services.AddScoped<IColorAppService, ColorAppService>();
+builder.Services.AddScoped<IColorService, ColorService>();
+builder.Services.AddScoped<IColorCommandRepository, ColorCommandRepository>();
+builder.Services.AddScoped<IColorQueryRepository, ColorQueryRepository>();
+#endregion
+#region Model 
+builder.Services.AddScoped<IModelAppService, ModelAppService>();
+builder.Services.AddScoped<IModelService, ModelService>();
+builder.Services.AddScoped<IModelCommandRepository, ModelCommandRepository>();
+builder.Services.AddScoped<IModelQueryRepository, ModelQueryRepository>();
+#endregion
+#region Product 
+builder.Services.AddScoped<IProductAppService, ProductAppService>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IProductCommandRepository, ProductCommandRepository>();
+builder.Services.AddScoped<IProductQueryRepository, ProductQueryRepository>();
 #endregion
 #endregion
 

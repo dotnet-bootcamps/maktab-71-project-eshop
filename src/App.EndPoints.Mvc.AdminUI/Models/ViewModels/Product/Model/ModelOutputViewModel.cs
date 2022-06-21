@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace App.Infrastructures.Database.SqlServer.ViewModels.Model
+namespace App.EndPoints.Mvc.AdminUI.ViewModels
 {
-    public class ModelListViewModel
+    public class ModelOutputViewModel
     {
 		[Display(Name = "شناسه")]
 		public int Id { get; set; }
@@ -18,8 +18,6 @@ namespace App.Infrastructures.Database.SqlServer.ViewModels.Model
 		[Display(Name = "تاریخ ایجاد")]
 		public DateTime CreationDate { get; set; }
 
-		[Display(Name = "ترتیب نمایش")]
-		public int DisplayOrder { get; set; }
 		[Display(Name = "شناسه مدل والد")]
 		public int ParentModelId { get; set; }
 		[Display(Name = "شناسه برند")]

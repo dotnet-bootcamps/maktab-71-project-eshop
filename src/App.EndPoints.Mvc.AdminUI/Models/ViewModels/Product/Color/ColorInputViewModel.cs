@@ -2,7 +2,7 @@
 
 namespace App.EndPoints.Mvc.AdminUI.ViewModels
 {
-    public class ColorSaveViewModel
+    public class ColorInputViewModel
     {    
         [Display(Name = "شناسه")]
         public int Id { get; set; }

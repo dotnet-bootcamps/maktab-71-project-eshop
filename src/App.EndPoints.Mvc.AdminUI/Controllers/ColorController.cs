@@ -2,6 +2,7 @@
 
 using App.EndPoints.Mvc.AdminUI.ViewModels;
 using App.Domain.Core.Product.Contacts.AppServices;
+using App.Domain.Core.Product.Dtos.Color;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
@@ -17,18 +18,16 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var categories = await _appService.GetAll();
-            var categoriesModel = categories.Select(p => new ColorOutputViewModel()
+            var records = await _appService.GetAll();
+            var recordsModel = records.Select(p => new ColorOutputViewModel()
             {
                 Id = p.Id,
                 Name = p.Name,
-                DisplayOrder = p.DisplayOrder,
                 CreationDate = p.CreationDate,
                 IsDeleted = p.IsDeleted,
-                IsActive = p.IsActive,
-                ParentColorId = p.ParentCagetoryId
+                Code = p.Code,
             }).ToList();
-            return View(categoriesModel);
+            return View(recordsModel);
         }
 
         [HttpGet]
@@ -43,12 +42,10 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
             var dto = new ColorDto
             {
                 Id = color.Id,
-                Name = color.Name,
-                IsActive = color.IsActive,
-                IsDeleted = color.IsDeleted,
-                ParentCagetoryId = color.ParentColorId,
+                Name = color.Name,                
+                IsDeleted = color.IsDeleted,              
                 CreationDate = DateTime.Now,
-                DisplayOrder = color.DisplayOrder
+                Code = color.Code,
             };
             await _appService.Set(dto);
             return RedirectToAction("Index");
@@ -62,10 +59,8 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
             {
                 Id = dto.Id,
                 Name = dto.Name,
-                IsActive = dto.IsActive,
                 IsDeleted = dto.IsDeleted,
-                ParentColorId = dto.ParentCagetoryId,
-                DisplayOrder = dto.DisplayOrder,
+                Code = dto.Code,
             };
 
             return View(viewModel);
@@ -77,12 +72,9 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
             var dto = new ColorDto
             {
                 Id = model.Id,
-                Name = model.Name,
-                IsActive = model.IsActive,
+                Name = model.Name,               
                 IsDeleted = model.IsDeleted,
-                ParentCagetoryId = model.ParentColorId,
-                CreationDate = DateTime.Now,
-                DisplayOrder = model.DisplayOrder
+                Code = model.Code 
             };
             await _appService.Update(dto);
             return RedirectToAction("Index");
