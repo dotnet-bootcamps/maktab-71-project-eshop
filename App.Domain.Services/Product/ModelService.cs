@@ -1,8 +1,6 @@
-﻿
-using App.Domain.Core.Product.Contacts.Repositories.Product;
+﻿using App.Domain.Core.Product.Contacts.Repositories.Model;
 using App.Domain.Core.Product.Contacts.Services;
 using App.Domain.Core.Product.Dtos;
-using App.Domain.Core.Product.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,12 +9,11 @@ using System.Threading.Tasks;
 
 namespace App.Domain.Services.Product
 {
-    public class ProductService : IProductService
+    public class ModelService : IModelService
     {
-
-        private readonly IProductCommandRepository _commandRepository;
-        private readonly IProductQueryRepository _queryRepository;
-        public ProductService(IProductCommandRepository categoryCommandRepository, IProductQueryRepository categoryQueryRepository)
+        private readonly IModelCommandRepository _commandRepository;
+        private readonly IModelQueryRepository _queryRepository;
+        public ModelService(IModelCommandRepository categoryCommandRepository, IModelQueryRepository categoryQueryRepository)
         {
             _queryRepository = categoryQueryRepository;
             _commandRepository = categoryCommandRepository;
@@ -46,30 +43,29 @@ namespace App.Domain.Services.Product
             await _queryRepository.Get(id);
         }
 
-        public async Task<ProductDto> Get(int id)
+        public async Task<ModelDto> Get(int id)
         {
             return await _queryRepository.Get(id);
         }
 
-        public async Task<ProductDto> Get(string name)
+        public async Task<ModelDto> Get(string name)
         {
             return await _queryRepository.Get(name);
         }
 
-        public async Task<List<ProductDto>> GetAll()
+        public async Task<List<ModelDto>> GetAll()
         {
             return await _queryRepository.GetAll();
         }
 
-        public async Task Set(ProductDto dto)
+        public async Task Set(ModelDto dto)
         {
             await _commandRepository.Add(dto);
         }
 
-        public async Task Update(ProductDto dto)
+        public async Task Update(ModelDto dto)
         {
             await _commandRepository.Update(dto);
         }
-
     }
 }

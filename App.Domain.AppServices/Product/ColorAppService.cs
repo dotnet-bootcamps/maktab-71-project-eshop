@@ -1,8 +1,6 @@
-﻿
-using App.Domain.Core.Product.Contacts.AppServices;
+﻿using App.Domain.Core.Product.Contacts.AppServices;
 using App.Domain.Core.Product.Contacts.Services;
-using App.Domain.Core.Product.Dtos;
-using App.Domain.Core.Product.Entities;
+using App.Domain.Core.Product.Dtos.Color;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace App.Domain.AppServices.Product
 {
-    public class ProductAppService : IProductAppService
+    public class ColorAppService : IColorAppService
     {
-        private readonly IProductService _service;
-        public ProductAppService(IProductService categoryService)
+        private readonly IColorService _service;
+        public ColorAppService(IColorService categoryService)
         {
             _service = categoryService;
         }
@@ -24,32 +22,31 @@ namespace App.Domain.AppServices.Product
             await _service.Delete(id);
         }
 
-        public async Task<ProductDto> Get(int id)
+        public async Task<ColorDto> Get(int id)
         {
             return await _service.Get(id);
         }
 
-        public async Task<ProductDto> Get(string name)
+        public async Task<ColorDto> Get(string name)
         {
             return await _service.Get(name);
         }
 
-        public async Task<List<ProductDto>> GetAll()
+        public async Task<List<ColorDto>> GetAll()
         {
             return await _service.GetAll();
         }
 
-        public async Task Set(ProductDto dto)
+        public async Task Set(ColorDto dto)
         {
             await _service.EnsureExists(dto.Id);
             await _service.Set(dto);
         }
 
-        public async Task Update(ProductDto dto)
+        public async Task Update(ColorDto dto)
         {
             await _service.EnsureExists(dto.Id);
             await _service.Update(dto);
         }
-
     }
 }
