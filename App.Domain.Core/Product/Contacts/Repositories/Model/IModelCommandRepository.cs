@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace App.Domain.Core.Product.Contacts.Repositories.Color
+namespace App.Domain.Core.Product.Contacts.Repositories.Model
 {
     public interface IModelCommandRepository
     {
