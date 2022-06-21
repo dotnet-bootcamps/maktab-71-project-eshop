@@ -34,55 +34,40 @@ namespace App.Infrastructures.Database.Repos.Ef.Product.Category
 
         public async Task<CategoryDto> Get(int id)
         {
-            try
+            var record = await _context.Categories.Where(p => p.Id == id).Select(p => new CategoryDto()
             {
-                var record = await _context.Categories.Where(p => p.Id == id).Select(p => new CategoryDto()
-                {
-                    Id = p.Id,
-                    DisplayOrder = p.DisplayOrder,
-                    CreationDate = p.CreationDate,
-                    Name = p.Name,
-                    IsDeleted = p.IsDeleted,
-                    ParentCagetoryId = p.ParentCagetoryId,
-                    IsActive = p.IsActive,             
-                }).SingleOrDefaultAsync();
-                if (record == null)
-                {
-                    throw new Exception($"No Category with id : {id}!");
-                }
-                return record;
-            }
-            catch (Exception dbx)
+                Id = p.Id,
+                DisplayOrder = p.DisplayOrder,
+                CreationDate = p.CreationDate,
+                Name = p.Name,
+                IsDeleted = p.IsDeleted,
+                ParentCagetoryId = p.ParentCagetoryId,
+                IsActive = p.IsActive,             
+            }).SingleOrDefaultAsync();
+            if (record == null)
             {
-                throw new Exception(dbx.Message, dbx.InnerException);
+                throw new Exception($"No Category with id : {id}!");
             }
-            
+            return record;                       
         }
 
         public async Task<CategoryDto> Get(string name)
         {
-            try
+            var record = await _context.Categories.Where(p => p.Name == name).Select(p => new CategoryDto()
             {
-                var record = await _context.Categories.Where(p => p.Name == name).Select(p => new CategoryDto()
-                {
-                    Id = p.Id,
-                    DisplayOrder = p.DisplayOrder,
-                    CreationDate = p.CreationDate,
-                    Name = p.Name,
-                    IsDeleted = p.IsDeleted,
-                    ParentCagetoryId = p.ParentCagetoryId,
-                    IsActive = p.IsActive,
-                }).SingleOrDefaultAsync();
-                if (record == null)
-                {
-                    throw new Exception($"No Category with name : {name}!");
-                }
-                return record;
-            }
-            catch (Exception dbx)
+                Id = p.Id,
+                DisplayOrder = p.DisplayOrder,
+                CreationDate = p.CreationDate,
+                Name = p.Name,
+                IsDeleted = p.IsDeleted,
+                ParentCagetoryId = p.ParentCagetoryId,
+                IsActive = p.IsActive,
+            }).SingleOrDefaultAsync();
+            if (record == null)
             {
-                throw new Exception(dbx.Message, dbx.InnerException);
+                throw new Exception($"No Category with name : {name}!");
             }
+            return record;
         }
     }
 }
