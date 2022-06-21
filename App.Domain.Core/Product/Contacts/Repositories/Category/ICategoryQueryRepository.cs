@@ -10,7 +10,7 @@ namespace App.Domain.Core.Product.Contacts.Repositories.Category
     public interface ICategoryQueryRepository
     {
         Task<List<CategoryDto>> GetAll();
-        CategoryDto Get(int id);
-        CategoryDto Get(string name);
+        Task<CategoryDto> Get(int id);
+        Task<CategoryDto> Get(string name);
     }
 }

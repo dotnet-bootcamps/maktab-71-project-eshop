@@ -1,5 +1,6 @@
 ﻿using App.Domain.Core.Product.Dtos;
 using App.Infrastructures.Database.SqlServer.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,30 +34,23 @@ namespace App.Infrastructures.Database.Repos.Ef.Product.Category
 
         public void Delete(int id)
         {
-            try
-            {
-                var category = _context.Categories.Where(p => p.Id == id).SingleOrDefault();
 
-                _context.Remove(category!);
-                _context.SaveChanges();
-            }
-            catch (Exception dbx)
-            {
+            var category = _context.Categories.Where(p => p.Id == id).Single();
 
-                throw new Exception(dbx.Message, dbx.InnerException);
-            }                
+            _context.Remove(category!);
+            _context.SaveChanges();           
         }
 
-        public void Update(CategoryDto dto)
+        public async Task Update(CategoryDto dto)
         {
-            var category = _context.Categories.Where(p => p.Id == dto.Id).Single();
+            var category = await _context.Categories.Where(p => p.Id == dto.Id).SingleAsync();
             category.Name = dto.Name;
             category.CreationDate = dto.CreationDate;
             category.IsDeleted = dto.IsDeleted;
             category.IsActive = dto.IsActive;
             category.ParentCagetoryId = dto.ParentCagetoryId;
             category.DisplayOrder = dto.DisplayOrder;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }

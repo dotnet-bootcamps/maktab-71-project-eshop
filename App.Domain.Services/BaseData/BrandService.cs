@@ -25,7 +25,7 @@ public class BrandService :IBrandService
     {
         var brand = _brandQueryRepository.Get(name);
         if (brand != null)
-            throw new Exception($"there is a brand with name = {name}");
+            throw new Exception($"there is already a brand with name = {name}");
     }
 
     public void EnsureExists(string name)

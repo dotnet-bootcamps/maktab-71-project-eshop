@@ -31,11 +31,11 @@ namespace App.Infrastructures.Database.Repos.Ef.Product.Category
             }).ToListAsync();
         }
 
-        public CategoryDto Get(int id)
+        public async Task<CategoryDto> Get(int id)
         {
             try
             {
-                var record = _context.Categories.Where(p => p.Id == id).Select(p => new CategoryDto()
+                var record = await _context.Categories.Where(p => p.Id == id).Select(p => new CategoryDto()
                 {
                     Id = p.Id,
                     DisplayOrder = p.DisplayOrder,
@@ -44,7 +44,7 @@ namespace App.Infrastructures.Database.Repos.Ef.Product.Category
                     IsDeleted = p.IsDeleted,
                     ParentCagetoryId = p.ParentCagetoryId,
                     IsActive = p.IsActive,             
-                }).SingleOrDefault();
+                }).SingleOrDefaultAsync();
                 if (record == null)
                 {
                     throw new Exception($"No Category with id : {id}!");
@@ -58,11 +58,11 @@ namespace App.Infrastructures.Database.Repos.Ef.Product.Category
             
         }
 
-        public CategoryDto Get(string name)
+        public async Task<CategoryDto> Get(string name)
         {
             try
             {
-                var record = _context.Categories.Where(p => p.Name == name).Select(p => new CategoryDto()
+                var record = await _context.Categories.Where(p => p.Name == name).Select(p => new CategoryDto()
                 {
                     Id = p.Id,
                     DisplayOrder = p.DisplayOrder,
@@ -71,7 +71,7 @@ namespace App.Infrastructures.Database.Repos.Ef.Product.Category
                     IsDeleted = p.IsDeleted,
                     ParentCagetoryId = p.ParentCagetoryId,
                     IsActive = p.IsActive,
-                }).SingleOrDefault();
+                }).SingleOrDefaultAsync();
                 if (record == null)
                 {
                     throw new Exception($"No Category with name : {name}!");

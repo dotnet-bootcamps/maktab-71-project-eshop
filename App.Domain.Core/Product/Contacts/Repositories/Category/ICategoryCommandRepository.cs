@@ -9,8 +9,8 @@ namespace App.Domain.Core.Product.Contacts.Repositories.Category
 {
     public interface ICategoryCommandRepository
     {
-        Task Add(CategorySaveDto dto);
-        void Update(CategorySaveDto dto);
+        Task Add(CategoryDto dto);
+        Task Update(CategoryDto dto);
         void Delete(int id);
     }
 }
