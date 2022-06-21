@@ -27,7 +27,7 @@ public class BrandQueryRepository : IBrandQueryRepository
 
     public BrandDto? Get(int id)
     {
-        return _context.Brands.AsNoTracking().Where(p => p.Id == id).Select(p => new BrandDto()
+        return _context.Brands.Where(p => p.Id == id).Select(p => new BrandDto()
         {
             Id = p.Id,
             DisplayOrder = p.DisplayOrder,
@@ -39,7 +39,7 @@ public class BrandQueryRepository : IBrandQueryRepository
 
     public BrandDto? Get(string name)
     {
-        return _context.Brands.AsNoTracking().Where(p => p.Name == name).Select(p => new BrandDto()
+        return _context.Brands.Where(p => p.Name == name).Select(p => new BrandDto()
         {
             Id = p.Id,
             DisplayOrder = p.DisplayOrder,

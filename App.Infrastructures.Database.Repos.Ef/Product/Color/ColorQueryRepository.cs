@@ -30,7 +30,7 @@ namespace App.Infrastructures.Database.Repos.Ef.Product.Color
             }).ToListAsync();
         }
 
-        public async Task<ColorDto> Get(int id)
+        public async Task<ColorDto>? Get(int id)
         {
             var record = await _context.Colors.Where(p => p.Id == id).Select(p => new ColorDto()
             {
@@ -40,14 +40,10 @@ namespace App.Infrastructures.Database.Repos.Ef.Product.Color
                 Name = p.Name,
                 IsDeleted = p.IsDeleted,
             }).SingleOrDefaultAsync();
-            if (record == null)
-            {
-                throw new Exception($"No Color with id : {id}!");
-            }
             return record;
         }
 
-        public async Task<ColorDto> Get(string name)
+        public async Task<ColorDto>? Get(string name)
         {
             var record = await _context.Colors.Where(p => p.Name == name).Select(p => new ColorDto()
             {
@@ -57,10 +53,6 @@ namespace App.Infrastructures.Database.Repos.Ef.Product.Color
                 IsDeleted = p.IsDeleted,
                 Code = p.Code,
             }).SingleOrDefaultAsync();
-            if (record == null)
-            {
-                throw new Exception($"No Color with name : {name}!");
-            }
             return record;
         }
     }

@@ -38,12 +38,20 @@ namespace App.Domain.Services.Product
 
         public async Task EnsureExists(string name)
         {
-            await _queryRepository.Get(name);
+            var record = await _queryRepository.Get(name);
+            if (record == null)
+            {
+                throw new Exception($"Category {name} Doesn't Exists!");
+            }
         }
 
         public async Task EnsureExists(int id)
         {
-            await _queryRepository.Get(id);
+            var record = await _queryRepository.Get(id);
+            if (record == null)
+            {
+                throw new Exception($"Category {id} Doesn't Exists!");
+            }
         }
 
         public async Task<ProductDto> Get(int id)

@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="BaseData\Enums\" />
-    <Folder Include="Operator\Dtos\" />
     <Folder Include="Operator\Enums\" />
     <Folder Include="Permission\Contarcts\AppServices\" />
     <Folder Include="Permission\Entities\" />

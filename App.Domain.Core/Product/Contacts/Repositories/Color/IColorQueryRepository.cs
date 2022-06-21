@@ -11,7 +11,7 @@ namespace App.Domain.Core.Product.Contacts.Repositories.Color
     public interface IColorQueryRepository
     {
         Task<List<ColorDto>> GetAll();
-        Task<ColorDto> Get(int id);
-        Task<ColorDto> Get(string name);
+        Task<ColorDto>? Get(int id);
+        Task<ColorDto>? Get(string name);
     }
 }

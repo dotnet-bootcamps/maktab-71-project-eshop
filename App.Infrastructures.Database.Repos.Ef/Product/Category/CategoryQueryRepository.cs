@@ -32,7 +32,7 @@ namespace App.Infrastructures.Database.Repos.Ef.Product.Category
             }).ToListAsync();
         }
 
-        public async Task<CategoryDto> Get(int id)
+        public async Task<CategoryDto>? Get(int id)
         {
             var record = await _context.Categories.Where(p => p.Id == id).Select(p => new CategoryDto()
             {
@@ -44,14 +44,10 @@ namespace App.Infrastructures.Database.Repos.Ef.Product.Category
                 ParentCagetoryId = p.ParentCagetoryId,
                 IsActive = p.IsActive,             
             }).SingleOrDefaultAsync();
-            if (record == null)
-            {
-                throw new Exception($"No Category with id : {id}!");
-            }
             return record;                       
         }
 
-        public async Task<CategoryDto> Get(string name)
+        public async Task<CategoryDto>? Get(string name)
         {
             var record = await _context.Categories.Where(p => p.Name == name).Select(p => new CategoryDto()
             {
@@ -63,10 +59,6 @@ namespace App.Infrastructures.Database.Repos.Ef.Product.Category
                 ParentCagetoryId = p.ParentCagetoryId,
                 IsActive = p.IsActive,
             }).SingleOrDefaultAsync();
-            if (record == null)
-            {
-                throw new Exception($"No Category with name : {name}!");
-            }
             return record;
         }
     }

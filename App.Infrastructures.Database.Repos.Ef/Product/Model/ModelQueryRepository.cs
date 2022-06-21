@@ -31,7 +31,7 @@ namespace App.Infrastructures.Database.Repos.Ef.Product.Model
             }).ToListAsync();
         }
 
-        public async Task<ModelDto> Get(int id)
+        public async Task<ModelDto>? Get(int id)
         {
             var record = await _context.Models.Where(p => p.Id == id).Select(p => new ModelDto()
             {
@@ -42,14 +42,10 @@ namespace App.Infrastructures.Database.Repos.Ef.Product.Model
                 BrandId = p.BrandId,
                 ParentModelId = p.ParentModelId,
             }).SingleOrDefaultAsync();
-            if (record == null)
-            {
-                throw new Exception($"No Model with id : {id}!");
-            }
             return record;
         }
 
-        public async Task<ModelDto> Get(string name)
+        public async Task<ModelDto>? Get(string name)
         {
             var record = await _context.Models.Where(p => p.Name == name).Select(p => new ModelDto()
             {
@@ -60,10 +56,6 @@ namespace App.Infrastructures.Database.Repos.Ef.Product.Model
                 BrandId = p.BrandId,
                 ParentModelId = p.ParentModelId,
             }).SingleOrDefaultAsync();
-            if (record == null)
-            {
-                throw new Exception($"No Model with name : {name}!");
-            }
             return record;
         }
     }

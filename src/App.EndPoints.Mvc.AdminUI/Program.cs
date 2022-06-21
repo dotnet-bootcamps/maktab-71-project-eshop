@@ -1,9 +1,12 @@
 using App.Domain.AppServices.BaseData;
+using App.Domain.AppServices.Operator;
 using App.Domain.AppServices.Product;
 using App.Domain.Core.BaseData.Contarcts.AppServices;
 using App.Domain.Core.BaseData.Contarcts.Repositories;
 using App.Domain.Core.BaseData.Contarcts.Services;
+using App.Domain.Core.Operator.Contract.AppServices;
 using App.Domain.Core.Operator.Contract.Repositories;
+using App.Domain.Core.Operator.Contract.Services;
 using App.Domain.Core.Permission.Contarcts.Repositories;
 using App.Domain.Core.Permission.Contarcts.Services;
 using App.Domain.Core.Product.Contacts.AppServices;
@@ -13,9 +16,11 @@ using App.Domain.Core.Product.Contacts.Repositories.Model;
 using App.Domain.Core.Product.Contacts.Repositories.Product;
 using App.Domain.Core.Product.Contacts.Services;
 using App.Domain.Services.BaseData;
+using App.Domain.Services.Operator;
 using App.Domain.Services.Permission;
 using App.Domain.Services.Product;
 using App.Infrastructures.Database.Repos.Ef.BaseData;
+using App.Infrastructures.Database.Repos.Ef.Operator;
 using App.Infrastructures.Database.Repos.Ef.Permission;
 using App.Infrastructures.Database.Repos.Ef.Product.Category;
 using App.Infrastructures.Database.Repos.Ef.Product.Color;
@@ -80,7 +85,12 @@ builder.Services.AddScoped<IProductCommandRepository, ProductCommandRepository>(
 builder.Services.AddScoped<IProductQueryRepository, ProductQueryRepository>();
 #endregion
 #endregion
-
+#region Operator 
+builder.Services.AddScoped<IOperatorAppService, OperatorAppService>();
+builder.Services.AddScoped<IOperatorService, OperatorService>();
+builder.Services.AddScoped<IOperatorCommandRepository, OperatorCommandRepository>();
+builder.Services.AddScoped<IOperatorQueryRepository, OperatorQueryRepository>();
+#endregion
 #region Permission
 builder.Services.AddScoped<IPermissionService, PermissionService>();
 builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();

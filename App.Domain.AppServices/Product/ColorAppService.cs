@@ -39,7 +39,7 @@ namespace App.Domain.AppServices.Product
 
         public async Task Set(ColorDto dto)
         {
-            await _service.EnsureExists(dto.Id);
+            await _service.EnsureDoesNotExist(dto.Name);
             await _service.Set(dto);
         }
 

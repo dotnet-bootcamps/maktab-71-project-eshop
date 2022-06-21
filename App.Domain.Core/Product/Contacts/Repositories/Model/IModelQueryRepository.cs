@@ -10,7 +10,7 @@ namespace App.Domain.Core.Product.Contacts.Repositories.Model
     public interface IModelQueryRepository
     {
         Task<List<ModelDto>> GetAll();
-        Task<ModelDto> Get(int id);
-        Task<ModelDto> Get(string name);
+        Task<ModelDto>? Get(int id);
+        Task<ModelDto>? Get(string name);
     }
 }

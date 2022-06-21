@@ -64,13 +64,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Create(ProductInputViewModel product)
+        public async Task<IActionResult> Create()
         {
             var brands = await _brandAppService.GetAll();
             ViewBag.Brands = brands.Select
@@ -112,6 +106,13 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
                     Text = s.Name,
                     Value = s.Id.ToString()
                 });
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(ProductInputViewModel product)
+        {
+            
 
             var dto = new ProductDto
             {

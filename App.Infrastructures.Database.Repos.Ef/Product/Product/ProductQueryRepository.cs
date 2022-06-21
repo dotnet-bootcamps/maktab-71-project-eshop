@@ -39,7 +39,7 @@ namespace App.Infrastructures.Database.Repos.Ef.Product.Product
             }).ToListAsync();
         }
 
-        public async Task<ProductDto> Get(int id)
+        public async Task<ProductDto>? Get(int id)
         {
             var record = await _context.Products.Where(p => p.Id == id).Select(p => new ProductDto()
             {
@@ -58,14 +58,10 @@ namespace App.Infrastructures.Database.Repos.Ef.Product.Product
                 IsDeleted = p.IsDeleted,
                 CreationDate = p.CreationDate
             }).SingleOrDefaultAsync();
-            if (record == null)
-            {
-                throw new Exception($"No Product with id : {id}!");
-            }
             return record;
         }
 
-        public async Task<ProductDto> Get(string name)
+        public async Task<ProductDto>? Get(string name)
         {
             var record = await _context.Products.Where(p => p.Name == name).Select(p => new ProductDto()
             {
@@ -84,10 +80,6 @@ namespace App.Infrastructures.Database.Repos.Ef.Product.Product
                 IsDeleted = p.IsDeleted,
                 CreationDate = p.CreationDate
             }).SingleOrDefaultAsync();
-            if (record == null)
-            {
-                throw new Exception($"No Product with name : {name}!");
-            }
             return record;
         }
     }

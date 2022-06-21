@@ -1,19 +1,19 @@
-﻿using App.Domain.Core.Product.Contacts.Repositories.Category;
-using App.Domain.Core.Product.Contacts.Services;
-using App.Domain.Core.Product.Dtos;
+﻿using App.Domain.Core.Operator.Contract.Repositories;
+using App.Domain.Core.Operator.Contract.Services;
+using App.Domain.Core.Operator.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace App.Domain.Services.Product
+namespace App.Domain.Services.Operator
 {
-    public class CategoryService : ICategoryService
+    public class OperatorService : IOperatorService
     {
-        private readonly ICategoryCommandRepository _commandRepository;
-        private readonly ICategoryQueryRepository _queryRepository;
-        public CategoryService(ICategoryCommandRepository categoryCommandRepository, ICategoryQueryRepository categoryQueryRepository)
+        private readonly IOperatorCommandRepository _commandRepository;
+        private readonly IOperatorQueryRepository _queryRepository;
+        public OperatorService(IOperatorCommandRepository categoryCommandRepository, IOperatorQueryRepository categoryQueryRepository)
         {
             _queryRepository = categoryQueryRepository;
             _commandRepository = categoryCommandRepository;
@@ -29,8 +29,8 @@ namespace App.Domain.Services.Product
             var record = await _queryRepository.Get(name);
             if (record != null)
             {
-                throw new Exception($"Category {name} Already Exists!");
-            }           
+                throw new Exception($"Operator {name} Already Exists!");
+            }
         }
 
         public async Task EnsureExists(string name)
@@ -38,40 +38,40 @@ namespace App.Domain.Services.Product
             var record = await _queryRepository.Get(name);
             if (record == null)
             {
-                throw new Exception($"No Category with name : {name}!");
+                throw new Exception($"No Operator with name : {name}!");
             }
         }
 
-        public async Task EnsureExists(int id)  
+        public async Task EnsureExists(int id)
         {
             var record = await _queryRepository.Get(id);
             if (record == null)
             {
-                throw new Exception($"No Category with id : {id}!");
+                throw new Exception($"No Operator with id : {id}!");
             }
         }
 
-        public async Task<CategoryDto> Get(int id)
+        public async Task<OperatorDto> Get(int id)
         {
             return await _queryRepository.Get(id);
         }
 
-        public async Task<CategoryDto> Get(string name)
+        public async Task<OperatorDto> Get(string name)
         {
             return await _queryRepository.Get(name);
         }
 
-        public async Task<List<CategoryDto>> GetAll()
+        public async Task<List<OperatorDto>> GetAll()
         {
             return await _queryRepository.GetAll();
         }
 
-        public async Task Set(CategoryDto dto)
+        public async Task Set(OperatorDto dto)
         {
             await _commandRepository.Add(dto);
         }
 
-        public async Task Update(CategoryDto dto)
+        public async Task Update(OperatorDto dto)
         {
             await _commandRepository.Update(dto);
         }
