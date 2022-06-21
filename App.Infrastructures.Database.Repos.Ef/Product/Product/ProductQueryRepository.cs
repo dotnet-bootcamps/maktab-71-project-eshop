@@ -22,6 +22,7 @@ namespace App.Infrastructures.Database.Repos.Ef.Product.Product
         {
             return await _context.Products.Select(p => new ProductDto()
             {
+                Id = p.Id,
                 CategoryId = p.CategoryId,
                 BrandId = p.BrandId,
                 Weight = p.Weight,
@@ -43,6 +44,7 @@ namespace App.Infrastructures.Database.Repos.Ef.Product.Product
         {
             var record = await _context.Products.Where(p => p.Id == id).Select(p => new ProductDto()
             {
+                Id = p.Id,
                 CategoryId = p.CategoryId,
                 BrandId = p.BrandId,
                 Weight = p.Weight,
@@ -65,6 +67,7 @@ namespace App.Infrastructures.Database.Repos.Ef.Product.Product
         {
             var record = await _context.Products.Where(p => p.Name == name).Select(p => new ProductDto()
             {
+                Id = p.Id,
                 CategoryId = p.CategoryId,
                 BrandId = p.BrandId,
                 Weight = p.Weight,

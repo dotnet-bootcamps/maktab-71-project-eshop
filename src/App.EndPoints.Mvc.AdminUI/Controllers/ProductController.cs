@@ -10,6 +10,8 @@ using App.Domain.Core.Product.Contacts.AppServices;
 using App.Domain.Core.Product.Dtos;
 using App.Domain.Core.BaseData.Contarcts.AppServices;
 using App.Domain.Core.Operator.Entities;
+using App.Domain.Core.Operator.Contract.AppServices;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
@@ -21,7 +23,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         private readonly IColorAppService _colorAppService;
         private readonly IModelAppService _modelAppService;
         private readonly ICategoryAppService _categoryAppService;
-
+        private readonly IOperatorAppService _operatorAppService;
         // TODO : Operator
 
         public ProductController(
@@ -29,7 +31,8 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
             IBrandAppService brandAppService,
             IColorAppService colorAppService,
             IModelAppService modelAppService,
-            ICategoryAppService categoryAppService
+            ICategoryAppService categoryAppService,
+            IOperatorAppService operatorAppService
             )
         {
             _productAppService = appService;
@@ -37,6 +40,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
             _colorAppService = colorAppService;
             _modelAppService = modelAppService;
             _categoryAppService = categoryAppService;
+            _operatorAppService = operatorAppService;
         }
 
         public async Task<IActionResult> Index()
@@ -94,12 +98,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
                     Text = s.Name,
                     Value = s.Id.ToString()
                 });
-            var operators = new List<Operator>
-            {
-                new Operator { Name = "a", Id = 1},
-                new Operator { Name = "b", Id = 2},
-                new Operator { Name = "c", Id = 3},
-            };
+            var operators = await _operatorAppService.GetAll();          
             ViewBag.Operators = operators
                 .Select(s => new SelectListItem
                 {
@@ -167,12 +166,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
                     Text = s.Name,
                     Value = s.Id.ToString()
                 });
-            var operators = new List<Operator>
-            {
-                new Operator { Name = "a", Id = 1},
-                new Operator { Name = "b", Id = 2},
-                new Operator { Name = "c", Id = 3},
-            };
+            var operators = await _operatorAppService.GetAll();
             ViewBag.Operators = operators
                 .Select(s => new SelectListItem
                 {
@@ -232,6 +226,5 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
             await _productAppService.Delete(id);
             return RedirectToAction("Index");
         }
-
     }
 }
