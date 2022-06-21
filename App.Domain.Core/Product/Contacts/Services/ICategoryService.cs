@@ -14,9 +14,9 @@ namespace App.Domain.Core.Product.Contacts.Services
         Task<CategoryDto> Get(int id);
         Task<CategoryDto> Get(string name);
         Task Update(CategoryDto dto);
-        void Delete(int id);
-        void EnsureDoesNotExist(string name);
-        void EnsureExists(string name);
-        void EnsureExists(int id);
+        Task Delete(int id);
+        Task EnsureDoesNotExist(string name);
+        Task EnsureExists(string name);
+        Task EnsureExists(int id);
     }
 }

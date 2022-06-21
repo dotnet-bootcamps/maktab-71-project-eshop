@@ -2,7 +2,7 @@
 
 namespace App.EndPoints.Mvc.AdminUI.Models
 {
-    public class CategoryListVM
+    public class CategoryInputViewModel
     {
         [Display(Name = "شناسه")]
         public int Id { get; set; }
@@ -19,8 +19,7 @@ namespace App.EndPoints.Mvc.AdminUI.Models
         [Display(Name = " شناسه دسته بندی")]
         public int ParentCategoryId { get; set; }
 
-        [Display(Name = "تاریخ ثبت")]
-        public DateTime CreationDate { get; set; }
-
+        [Display(Name = "حذف شده")]
+        public bool IsDeleted { get; set; }
     }
 }

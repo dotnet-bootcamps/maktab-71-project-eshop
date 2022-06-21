@@ -2,9 +2,10 @@
 
 namespace App.EndPoints.Mvc.AdminUI.Models
 {
-    public class CategorySaveVM
+    public class CategoryOutputViewModel
     {
-
+        [Display(Name = "شناسه")]
+        public int Id { get; set; }
 
         [Display(Name = "نام")]
         public string Name { get; set; } = string.Empty;
@@ -20,5 +21,8 @@ namespace App.EndPoints.Mvc.AdminUI.Models
 
         [Display(Name = "تاریخ ثبت")]
         public DateTime CreationDate { get; set; }
+        [Display(Name = "حذف شده")]
+        public bool IsDeleted { get; set; }
+
     }
 }

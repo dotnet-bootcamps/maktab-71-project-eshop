@@ -19,26 +19,26 @@ namespace App.Domain.Services.Product
             _commandRepository = categoryCommandRepository;
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            _commandRepository.Delete(id);
+            await _commandRepository.Delete(id);
         }
 
-        public void EnsureDoesNotExist(string name)
+        public async Task EnsureDoesNotExist(string name)
         {
-            var record = _queryRepository.Get(name);
+            var record = await _queryRepository.Get(name);
             if (record != null)
             {
                 throw new Exception($"Category {name} Already Exists!");
             }
         }
 
-        public async void EnsureExists(string name)
+        public async Task EnsureExists(string name)
         {
             await _queryRepository.Get(name);
         }
 
-        public async void EnsureExists(int id)
+        public async Task EnsureExists(int id)
         {
             await _queryRepository.Get(id);
         }

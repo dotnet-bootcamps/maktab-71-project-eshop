@@ -16,10 +16,10 @@ namespace App.Domain.AppServices.Product
         {
             _service = categoryService;
         }
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            _service.EnsureExists(id);
-            _service.Delete(id);
+            await _service.EnsureExists(id);
+            await _service.Delete(id);
         }
 
         public async Task<CategoryDto> Get(int id)
@@ -39,13 +39,13 @@ namespace App.Domain.AppServices.Product
 
         public async Task Set(CategoryDto dto)
         {
-            _service.EnsureExists(dto.Id);
+            await _service.EnsureExists(dto.Id);
             await _service.Set(dto);
         }
 
         public async Task Update(CategoryDto dto)
         {
-            _service.EnsureExists(dto.Id);
+            await _service.EnsureExists(dto.Id);
             await _service.Update(dto);
         }
     }

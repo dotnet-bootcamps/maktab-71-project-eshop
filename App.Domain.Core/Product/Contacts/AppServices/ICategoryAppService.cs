@@ -14,6 +14,6 @@ namespace App.Domain.Core.Product.Contacts.AppServices
         Task<CategoryDto> Get(int id);
         Task<CategoryDto> Get(string name);
         Task Update(CategoryDto dto);
-        void Delete(int id);
+        Task Delete(int id);
     }
 }

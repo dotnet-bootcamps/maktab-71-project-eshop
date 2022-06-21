@@ -1,30 +1,35 @@
-﻿using App.EndPoints.Mvc.AdminUI.ViewModels;
+﻿using App.Domain.Core.Product.Contacts.AppServices;
+using App.Domain.Core.Product.Dtos;
+using App.EndPoints.Mvc.AdminUI.Models;
+using App.EndPoints.Mvc.AdminUI.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
-    public class BrandController : Controller
+    public class CategoryController : Controller
     {
-        private readonly IBrandAppService _brandAppService;
+        private readonly ICategoryAppService _categoryAppService;
 
-        public BrandController(IBrandAppService brandAppService)
+        public CategoryController(ICategoryAppService categoryAppService)
         {
-            _brandAppService = brandAppService;
+            _categoryAppService = categoryAppService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var brands = await _brandAppService.GetAll();
-            var brandsModel = brands.Select(p => new BrandOutputViewModel()
+            var categories = await _categoryAppService.GetAll();
+            var categoriesModel = categories.Select(p => new CategoryOutputViewModel()
             {
                 Id = p.Id,
                 Name = p.Name,
                 DisplayOrder = p.DisplayOrder,
                 CreationDate = p.CreationDate,
                 IsDeleted = p.IsDeleted,
+                IsActive = p.IsActive,
+                ParentCategoryId = p.ParentCagetoryId
             }).ToList();
-            return View(brandsModel);
+            return View(categoriesModel);
         }
 
         [HttpGet]
@@ -34,47 +39,61 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(BrandInputViewModel brand)
+        public async Task<IActionResult> Create(CategoryInputViewModel category)
         {
-            await _brandAppService.Set(brand.Name, brand.DisplayOrder);
-            return RedirectToAction("");
-        }
-
-        [HttpGet]
-        public IActionResult Update(int id)
-        {
-            var brand = _brandAppService.Get(id);
-            BrandOutputViewModel brandInput = new BrandOutputViewModel()
+            var dto = new CategoryDto
             {
-                Id = id,
-                Name = brand.Name,
-                DisplayOrder = brand.DisplayOrder,
+                Id = category.Id,
+                Name = category.Name,
+                IsActive = category.IsActive,
+                IsDeleted = category.IsDeleted,
+                ParentCagetoryId = category.ParentCategoryId,
+                CreationDate = DateTime.Now,
+                DisplayOrder = category.DisplayOrder
             };
-            return View(brandInput);
-        }
-
-        [HttpPost]
-        public IActionResult Update(BrandOutputViewModel brand)
-        {
-            _brandAppService.Update(brand.Id, brand.Name, brand.DisplayOrder, brand.IsDeleted);
-            return RedirectToAction("");
+            await _categoryAppService.Set(dto);
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Update(int id)
         {
-            var brand = _brandAppService.Get(id);
-            return View(brand);
+            var dto = await _categoryAppService.Get(id);
+            var viewModel = new CategoryInputViewModel
+            {
+                Id = dto.Id,
+                Name = dto.Name,
+                IsActive=dto.IsActive,
+                IsDeleted=dto.IsDeleted,
+                ParentCategoryId= dto.ParentCagetoryId,
+                DisplayOrder = dto.DisplayOrder,
+            };
 
+            return View(viewModel);
         }
 
         [HttpPost]
-        public IActionResult DeleteBrand(int id)
+        public async Task<IActionResult> Update(CategoryInputViewModel model)
         {
-            _brandAppService.Delete(id);
-            return RedirectToAction("");
-
+            var dto = new CategoryDto
+            {
+                Id = model.Id,
+                Name = model.Name,
+                IsActive = model.IsActive,
+                IsDeleted = model.IsDeleted,
+                ParentCagetoryId = model.ParentCategoryId,
+                CreationDate = DateTime.Now,
+                DisplayOrder = model.DisplayOrder
+            };
+            await _categoryAppService.Update(dto);
+            return RedirectToAction("Index");
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _categoryAppService.Delete(id);
+            return RedirectToAction("Index");
+        }
     }
 }

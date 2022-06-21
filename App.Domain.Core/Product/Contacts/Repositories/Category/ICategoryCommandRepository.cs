@@ -11,6 +11,6 @@ namespace App.Domain.Core.Product.Contacts.Repositories.Category
     {
         Task Add(CategoryDto dto);
         Task Update(CategoryDto dto);
-        void Delete(int id);
+        Task Delete(int id);
     }
 }

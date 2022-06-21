@@ -1,4 +1,5 @@
-﻿using App.Domain.Core.Product.Dtos;
+﻿using App.Domain.Core.Product.Contacts.Repositories.Category;
+using App.Domain.Core.Product.Dtos;
 using App.Infrastructures.Database.SqlServer.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace App.Infrastructures.Database.Repos.Ef.Product.Category
 {
-    public class CategoryCommandRepository
+    public class CategoryCommandRepository : ICategoryCommandRepository
     {
         private readonly AppDbContext _context;
 
@@ -32,13 +33,13 @@ namespace App.Infrastructures.Database.Repos.Ef.Product.Category
             await _context.SaveChangesAsync();
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
 
-            var category = _context.Categories.Where(p => p.Id == id).Single();
+            var category = await _context.Categories.Where(p => p.Id == id).SingleAsync();
 
             _context.Remove(category!);
-            _context.SaveChanges();           
+            await _context.SaveChangesAsync();           
         }
 
         public async Task Update(CategoryDto dto)

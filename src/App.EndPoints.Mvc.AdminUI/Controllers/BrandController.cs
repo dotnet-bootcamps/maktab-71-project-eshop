@@ -66,18 +66,8 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            var brand = _brandAppService.Get(id);
-            return View(brand);
-
-        }
-
-        [HttpPost]
-        public IActionResult DeleteBrand(int id)
-        {
             _brandAppService.Delete(id);
-            return RedirectToAction("");
-        
+            return RedirectToAction("Index");
         }
-
     }
 }

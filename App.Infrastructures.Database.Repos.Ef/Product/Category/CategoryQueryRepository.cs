@@ -1,4 +1,5 @@
-﻿using App.Domain.Core.Product.Dtos;
+﻿using App.Domain.Core.Product.Contacts.Repositories.Category;
+using App.Domain.Core.Product.Dtos;
 using App.Infrastructures.Database.SqlServer.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace App.Infrastructures.Database.Repos.Ef.Product.Category
 {
-    public class CategoryQueryRepository
+    public class CategoryQueryRepository : ICategoryQueryRepository
     {
         private readonly AppDbContext _context;
 
