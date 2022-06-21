@@ -35,7 +35,6 @@ public class BrandQueryRepository : IBrandQueryRepository
             Name = p.Name,
             IsDeleted = p.IsDeleted,
         }).FirstOrDefault();
-     
     }
 
     public BrandDto? Get(string name)

@@ -5,12 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace App.Domain.Core.Product.Contacts.Repositories.Category
+namespace App.Domain.Core.Product.Contacts.AppServices
 {
-    public interface ICategoryQueryRepository
+    public interface ICategoryAppService
     {
         Task<List<CategoryDto>> GetAll();
+        Task Set(CategorySaveDto dto);
         CategoryDto Get(int id);
         CategoryDto Get(string name);
+        void Update(CategorySaveDto dto);
+        void Delete(int id);
     }
 }
