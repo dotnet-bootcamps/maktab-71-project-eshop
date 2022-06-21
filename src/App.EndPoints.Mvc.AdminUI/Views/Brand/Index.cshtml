@@ -1,4 +1,4 @@
-﻿@model List<App.EndPoints.Mvc.AdminUI.Models.ViewModels.Product.BrandOutputViewModel>
+﻿@model List<BrandOutputViewModel>
 @{
 	ViewData["Title"] = "لیست برند‌ها";
 	Model.OrderBy(x=>x.DisplayOrder);
@@ -29,7 +29,7 @@
 		{
 			<tr>
 				<th scope="row">
-					@rowCount
+					@(rowCount++)
 				</th>
 				<td>@brand.Id</td>
 				<td>@brand.Name</td>

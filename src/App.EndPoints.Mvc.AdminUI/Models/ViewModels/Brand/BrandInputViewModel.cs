@@ -1,4 +1,4 @@
-﻿namespace App.EndPoints.Mvc.AdminUI.Models.ViewModels.Product
+﻿namespace App.EndPoints.Mvc.AdminUI.Models.ViewModels.Brand
 {
     public class BrandInputViewModel
     {

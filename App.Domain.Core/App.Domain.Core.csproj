@@ -12,8 +12,6 @@
     <Folder Include="Operator\Enums\" />
     <Folder Include="Permission\Contarcts\AppServices\" />
     <Folder Include="Permission\Entities\" />
-    <Folder Include="Product\Contacts\Repositories\" />
-    <Folder Include="Product\Dtos\" />
     <Folder Include="Product\Enums\" />
   </ItemGroup>
 

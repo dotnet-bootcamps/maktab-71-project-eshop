@@ -16,39 +16,39 @@ public class BrandAppService : IBrandAppService
         _permissionService = permissionService;
     }
 
-    public void DeleteBrand(int id)
+    public void Delete(int id)
     {
-        _permissionService.HasPermission(1, 7);
-        _brandService.EnsureBrandExist(id);
-        _brandService.DeleteBrand(id);
+        _permissionService.EnsureHasPermission(1, 7);
+        _brandService.EnsureBrandExists(id);
+        _brandService.Delete(id);
     }
 
-    public BrandDto GetBrand(int id)
+    public BrandDto Get(int id)
     {
-        return _brandService.GetBrand(id);
+        return _brandService.Get(id);
     }
 
-    public BrandDto GetBrand(string name)
+    public BrandDto Get(string name)
     {
-        return _brandService.GetBrand(name);
+        return _brandService.Get(name);
     }
 
-    public async Task<List<BrandDto>> GetBrands()
+    public async Task<List<BrandDto>> GetAll()
     {
-        return await _brandService.GetBrands();
+        return await _brandService.GetAll();
     }
 
-    public async Task SetBrand(string name, int displayOrder)
+    public async Task Set(string name, int displayOrder)
     {
-        _permissionService.HasPermission(1, 5);
-        _brandService.EnsureBrandDoseNotExist(name);
-        await _brandService.SetBrand(name, displayOrder);
+        await _permissionService.EnsureHasPermission(1, 5);
+        await _brandService.EnsureBrandDoseNotExist(name);
+        await _brandService.Set(name, displayOrder);
     }
 
-    public void UpdateBrand(int id, string name, int displayOrder)
+    public void Update(int id, string name, int displayOrder)
     {
-        _permissionService.HasPermission(1, 6);
-        _brandService.EnsureBrandExist(id);
-        _brandService.UpdateBrand(id, name, displayOrder);
+        _permissionService.EnsureHasPermission(1, 6);
+        _brandService.EnsureBrandExists(id);
+        _brandService.Update(id, name, displayOrder);
     }
 }

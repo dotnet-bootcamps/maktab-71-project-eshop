@@ -11,7 +11,7 @@ public class BrandCommandRepository : IBrandCommandRepository
     {
         _context = context;
     }
-    public async Task AddBrand(string name, int displayOrder, DateTime creationDate, bool isDeleted)
+    public async Task Add(string name, int displayOrder, DateTime creationDate, bool isDeleted)
     {
         Brand brand = new()
         {
@@ -24,14 +24,14 @@ public class BrandCommandRepository : IBrandCommandRepository
         await _context.SaveChangesAsync();
     }
 
-    public void DeleteBrand(int id)
+    public void Delete(int id)
     {
         var brand = _context.Brands.Where(p => p.Id == id).Single();
         _context.Remove(brand);
         _context.SaveChanges();
     }
 
-    public void UpdateBrand(int id, string name, int displayOrder)
+    public void Update(int id, string name, int displayOrder)
     {
         var brand = _context.Brands.Where(p => p.Id == id).Single();
         brand.Name = name;

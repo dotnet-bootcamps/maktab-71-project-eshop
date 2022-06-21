@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace App.Domain.Core.Permission.Enums
 {
-    public enum PermissionEnum
+    public enum PermissionsEnum
     {
         ViewBrands =1,
         EditBrand =2,
@@ -14,5 +14,6 @@ namespace App.Domain.Core.Permission.Enums
         RemoveBrand=4,
         ViewProducts=5,
         EditProduct=6,
+        RemoveProduct=7,
     }
 }

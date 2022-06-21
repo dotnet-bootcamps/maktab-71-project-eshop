@@ -3,6 +3,7 @@ using App.Domain.Core.Permission.Contarcts.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Authentication;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,13 +17,11 @@ namespace App.Domain.Services.Permission
         {
             _permissionRepository = permissionRepository;
         }
-        public bool HasPermission(int operatorId, int permissionId)
+        public async Task EnsureHasPermission(int operatorId, int permissionId)
         {
-            if (operatorId==1)
-                return true;
-            var operatorPermissions = _permissionRepository.GetOperatorPermissions(operatorId);
-            return operatorPermissions.Any(x=> x == permissionId);
-       
+            var operatorHasPermission = (await _permissionRepository.GetOperatorPermissions(operatorId)).Any(x => x == permissionId);
+            if (!operatorHasPermission)
+                throw new UnauthorizedAccessException("The operator has not permission to this operation");
         }
     }
 }

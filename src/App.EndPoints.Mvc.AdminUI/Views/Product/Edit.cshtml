@@ -1,9 +1,6 @@
-﻿@using App.Domain.Core.Product.Entities
+﻿@model ProductInputViewModel
 
-
-@model Product
-
-<form method="post"  asp-controller="Product" asp-action="Edit">
+<form method="post" asp-controller="Product" asp-action="Edit">
 
     <input asp-for="Id" hidden />
 
@@ -33,9 +30,11 @@
                         <label asp-for="CategoryId"></label>
                     </div>
                     <div class="col-8">
-                        <select asp-for="CategoryId"  class="form-control">
+                        <input asp-for="CategoryId" class="form-control" />
+                        @*<select asp-for="CategoryId" class="form-control" asp-items="@ViewBag.Categories">
                             <option disabled selected>-- Select Category --</option>
-                        </select>
+                            </select>*@
+
                         <span asp-validation-for="CategoryId" class="text-danger"></span>
                     </div>
                 </div>
@@ -45,7 +44,7 @@
                         <label asp-for="BrandId"></label>
                     </div>
                     <div class="col-8">
-                        <select asp-for="BrandId"  class="form-control">
+                        <select asp-for="BrandId" class="form-control" asp-items="@ViewBag.Brands">
                             <option disabled selected>-- Select Brand --</option>
                         </select>
                         <span asp-validation-for="BrandId" class="text-danger"></span>
@@ -92,9 +91,10 @@
                         <label asp-for="ModelId"></label>
                     </div>
                     <div class="col-8">
-                        <select asp-for="ModelId"  class="form-control">
+                        @*<select asp-for="ModelId" class="form-control" asp-items="@ViewBag.Models">
                             <option disabled selected>-- Select Model --</option>
-                        </select>
+                            </select>*@
+                        <input asp-for="ModelId" class="form-control" />
                         <span asp-validation-for="ModelId" class="text-danger"></span>
                     </div>
                 </div>
@@ -114,46 +114,74 @@
                         <label asp-for="OperatorId"></label>
                     </div>
                     <div class="col-8">
-                        <select asp-for="OperatorId"  class="form-control">
+                        @*<select asp-for="OperatorId" class="form-control">
                             <option disabled selected>-- Select Operator --</option>
-                        </select>
+                        </select>*@
+                        <input asp-for="OperatorId" class="form-control" />
                         <span asp-validation-for="OperatorId" class="text-danger"></span>
                     </div>
                 </div>
-
                 <div class="form-group row p-3">
                     <div class="col-4">
-                        <label asp-for="ProductColors"></label>
+                        <label asp-for="IsOrginal"></label>
                     </div>
                     <div class="col-8">
-                        <select asp-for="ProductColors"  class="form-control">
-                            <option disabled selected>-- Select Color --</option>
-                        </select>
-                        <span asp-validation-for="ProductColors" class="text-danger"></span>
+                        <input type="checkbox" asp-for="IsOrginal" />
+                        <span asp-validation-for="IsOrginal" class="text-danger"></span>
                     </div>
                 </div>
 
                 <div class="form-group row p-3">
                     <div class="col-4">
-                        <label asp-for="ProductTags"></label>
+                        <label asp-for="IsActive"></label>
                     </div>
                     <div class="col-8">
-                        <select asp-for="ProductTags"  class="form-control">
-                            <option disabled selected>-- Select Color --</option>
-                        </select>
-                        <span asp-validation-for="ProductTags" class="text-danger"></span>
+                        <input type="checkbox" asp-for="IsActive" />
+                        <span asp-validation-for="IsActive" class="text-danger"></span>
                     </div>
                 </div>
 
-               
+                <div class="form-group row p-3">
+                    <div class="col-4">
+                        <label asp-for="IsShowPrice"></label>
+                    </div>
+                    <div class="col-8">
+                        <input type="checkbox" asp-for="IsShowPrice" />
+                        <span asp-validation-for="IsShowPrice" class="text-danger"></span>
+                    </div>
+                </div>
+                @*                <div class="form-group row p-3">
+                    <div class="col-4">
+                    <label asp-for="ProductColors"></label>
+                    </div>
+                    <div class="col-8">
+                    <select asp-for="ProductColors"  class="form-control">
+                    <option disabled selected>-- Select Color --</option>
+                    </select>
+                    <span asp-validation-for="ProductColors" class="text-danger"></span>
+                    </div>
+                    </div>
+
+                    <div class="form-group row p-3">
+                    <div class="col-4">
+                    <label asp-for="ProductTags"></label>
+                    </div>
+                    <div class="col-8">
+                    <select asp-for="ProductTags"  class="form-control">
+                    <option disabled selected>-- Select Color --</option>
+                    </select>
+                    <span asp-validation-for="ProductTags" class="text-danger"></span>
+                    </div>
+                    </div>
+                *@
+
                 <div class="form-group row p-3">
                     <div class="col-8 offset-4 row">
-                        <input type="submit"  value="Create" class="btn btn-primary w-100" />
-
                         <div class="col">
+                            <input type="submit" value="ذخیره" class="btn btn-primary w-100" />
                         </div>
                         <div class="col">
-                            <a asp-controller="Category" asp-action="Index" class="btn btn-success"><i class="fas fa-sign-out-alt"></i></a>
+                            <a asp-controller="Product" asp-action="Index" class="btn btn-secondary"><i class="fas fa-sign-out-alt">بازگشت به لیست</i></a>
                         </div>
                     </div>
                 </div>

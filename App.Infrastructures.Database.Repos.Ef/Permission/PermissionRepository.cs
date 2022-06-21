@@ -9,9 +9,10 @@ namespace App.Infrastructures.Database.Repos.Ef.Permission
 {
     public class PermissionRepository : IPermissionRepository
     {
-        public List<int> GetOperatorPermissions(int operatorId)
+        public async Task<List<int>> GetOperatorPermissions(int operatorId)
         {
-            throw new NotImplementedException();
+            List<int> permissions = Enumerable.Range(1, 10).ToList();
+            return permissions;
         }
     }
 }

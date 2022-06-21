@@ -7,11 +7,14 @@ using App.Domain.Core.Operator.Contract.Repositories;
 using App.Domain.Core.Permission.Contarcts.Repositories;
 using App.Domain.Core.Permission.Contarcts.Services;
 using App.Domain.Core.Product.Contacts.AppServices;
-
+using App.Domain.Core.Product.Contacts.Repositories;
+using App.Domain.Core.Product.Contacts.Services;
 using App.Domain.Services.BaseData;
 using App.Domain.Services.Permission;
+using App.Domain.Services.Product;
 using App.Infrastructures.Database.Repos.Ef.BaseData;
 using App.Infrastructures.Database.Repos.Ef.Permission;
+using App.Infrastructures.Database.Repos.Ef.Product;
 using App.Infrastructures.Database.SqlServer.Data;
 
 using Microsoft.EntityFrameworkCore;
@@ -39,6 +42,14 @@ builder.Services.AddScoped<IBaseDataService, BaseDataService>();
 builder.Services.AddScoped<IBaseDataCommandRepository, BaseDataCommandRepository>();
 builder.Services.AddScoped<IBaseDataQueryRepository, BaseDataQueryRepository>();
 #endregion BaseData
+
+#region Product
+builder.Services.AddScoped<IProductQueryRepository, ProductQueryRepository>();
+builder.Services.AddScoped<IProductCommandRepository, ProductCommandRepository>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IProductAppService, ProductAppService>();
+#endregion Product
+
 #region Brand
 builder.Services.AddScoped<IBrandAppService, BrandAppService>();
 builder.Services.AddScoped<IBrandService, BrandService>();

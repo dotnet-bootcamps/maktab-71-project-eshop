@@ -1,6 +1,6 @@
 using App.Domain.Core.BaseData.Contarcts.AppServices;
 using App.Domain.Core.BaseData.Dtos;
-using App.EndPoints.Mvc.AdminUI.Models.ViewModels.Product;
+using App.EndPoints.Mvc.AdminUI.Models.ViewModels.Brand;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -18,14 +18,14 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var brands = await _brandAppService.GetBrands();
-            var brandsModel= brands.Select(p=> new BrandOutputViewModel()
+            var brands = await _brandAppService.GetAll();
+            var brandsModel = brands.Select(p => new BrandOutputViewModel()
             {
                 Id = p.Id,
-                Name= p.Name,
+                Name = p.Name,
                 DisplayOrder = p.DisplayOrder,
                 CreationDate = p.CreationDate,
-                IsDeleted= p.IsDeleted,
+                IsDeleted = p.IsDeleted,
             }).ToList();
             return View(brandsModel);
         }
@@ -39,19 +39,19 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(BrandInputViewModel brand)
         {
-            await _brandAppService.SetBrand(brand.Name,brand.DisplayOrder);
+            await _brandAppService.Set(brand.Name, brand.DisplayOrder);
             return RedirectToAction("");
         }
 
         [HttpGet]
         public IActionResult Update(int id)
         {
-            var brand= _brandAppService.GetBrand(id);
+            var brand = _brandAppService.Get(id);
             BrandOutputViewModel brandInput = new BrandOutputViewModel()
             {
-               Id=id,
-               Name = brand.Name,
-               DisplayOrder=brand.DisplayOrder,
+                Id = id,
+                Name = brand.Name,
+                DisplayOrder = brand.DisplayOrder,
             };
             return View(brandInput);
         }
@@ -59,14 +59,14 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         [HttpPost]
         public IActionResult Update(BrandOutputViewModel brand)
         {
-            _brandAppService.UpdateBrand(brand.Id,brand.Name,brand.DisplayOrder);
+            _brandAppService.Update(brand.Id, brand.Name, brand.DisplayOrder);
             return RedirectToAction("");
         }
 
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            var brand = _brandAppService.GetBrand(id);
+            var brand = _brandAppService.Get(id);
             return View(brand);
 
         }
@@ -74,9 +74,9 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         [HttpPost]
         public IActionResult DeleteBrand(int id)
         {
-            _brandAppService.DeleteBrand(id);
+            _brandAppService.Delete(id);
             return RedirectToAction("");
-        
+
         }
 
     }

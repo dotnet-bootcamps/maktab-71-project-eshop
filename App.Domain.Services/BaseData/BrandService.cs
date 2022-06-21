@@ -4,72 +4,79 @@ using App.Domain.Core.BaseData.Contarcts.Services;
 using App.Domain.Core.BaseData.Dtos;
 
 namespace App.Domain.Services.BaseData;
-public class BrandService :IBrandService
+public class BrandService : IBrandService
 {
     private readonly IBrandCommandRepository _brandCommandRepository;
     private readonly IBrandQueryRepository _brandQueryRepository;
 
     public BrandService(IBrandCommandRepository brandCommandRepository
-        ,IBrandQueryRepository brandQueryRepository)
+        , IBrandQueryRepository brandQueryRepository)
     {
         _brandCommandRepository = brandCommandRepository;
         _brandQueryRepository = brandQueryRepository;
     }
 
-    public void DeleteBrand(int id)
+    public void Delete(int id)
     {
-        _brandCommandRepository.DeleteBrand(id);
+        _brandCommandRepository.Delete(id);
     }
 
-    public void EnsureBrandDoseNotExist(string name)
+    public async Task EnsureBrandDoseNotExist(string name)
     {
-        var brand = _brandQueryRepository.GetBrand(name);
+        var brand = _brandQueryRepository.Get(name);
         if (brand != null)
             throw new Exception($"there is a brand with name = {name}");
     }
 
-    public void EnsureBrandExist(string name)
+    public async Task EnsureBrandDoseNotExist(int id)
     {
-        var brand = _brandQueryRepository.GetBrand(name);
+        var brand = _brandQueryRepository.Get(id);
+        if (brand != null)
+            throw new Exception($"there is a brand with id = {id}");
+    }
+
+    public void EnsureBrandExists(string name)
+    {
+        var brand = _brandQueryRepository.Get(name);
         if (brand == null)
             throw new Exception($"there is no brand with name = {name}");
     }
 
-    public void EnsureBrandExist(int id)
+    public void EnsureBrandExists(int id)
     {
-        var brand = _brandQueryRepository.GetBrand(id);
+        var brand = _brandQueryRepository.Get(id);
         if (brand == null)
             throw new Exception($"there is no brand with id = {id}");
     }
 
-    public BrandDto GetBrand(int id)
+    public BrandDto Get(int id)
     {
-        var brand = _brandQueryRepository.GetBrand(id);
+        var brand = _brandQueryRepository.Get(id);
         if (brand == null)
             throw new Exception($"there is no brand with id = {id}");
         return brand;
     }
 
-    public BrandDto GetBrand(string name)
+    public BrandDto Get(string name)
     {
-        var brand = _brandQueryRepository.GetBrand(name);
+        var brand = _brandQueryRepository.Get(name);
         if (brand == null)
             throw new Exception($"there is no brand with name = {name}");
         return brand;
     }
 
-    public async Task<List<BrandDto>> GetBrands()
+    public async Task<List<BrandDto>> GetAll()
     {
-        return await _brandQueryRepository.GetAllBrands();
+        return await _brandQueryRepository.GetAll();
     }
 
-    public async Task SetBrand(string name, int displayOrder)
+    public async Task Set(string name, int displayOrder)
     {
-        await _brandCommandRepository.AddBrand(name, displayOrder, DateTime.Now, false);
+        await _brandCommandRepository.Add(name, displayOrder, DateTime.Now, false);
     }
 
-    public void UpdateBrand(int id, string name, int displayOrder)
+    public void Update(int id, string name, int displayOrder)
     {
-        _brandCommandRepository.UpdateBrand(id, name, displayOrder);
+        _brandCommandRepository.Update(id, name, displayOrder);
     }
 }
