@@ -17,9 +17,9 @@ namespace App.Domain.Services.Permission
             _permissionRepository = permissionRepository;
         }
 
-        public bool HasPermission(int operatorId, int permissionId)
+        public async Task<bool> HasPermission(int operatorId, int permissionId)
         {
-            var permissions = _permissionRepository.GetOperatorPermissions(operatorId);
+            var permissions = await _permissionRepository.GetOperatorPermissions(operatorId);
             var hasPermission=permissions.Any(p=>p==permissionId);
             return hasPermission;
         }

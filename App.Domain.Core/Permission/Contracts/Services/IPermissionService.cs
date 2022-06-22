@@ -8,6 +8,6 @@ namespace App.Domain.Core.Permission.Contracts.Services
 {
     public interface IPermissionService
     {
-        bool HasPermission(int operatorId, int permissionId);
+        Task<bool> HasPermission(int operatorId, int permissionId);
     }
 }

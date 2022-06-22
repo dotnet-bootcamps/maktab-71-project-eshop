@@ -40,14 +40,14 @@ namespace App.Domain.AppServices.Product
             _modelService = modelService;
         }
         #region GetAllMethods
-        public List<BrandDto> GetAllBrands(int operatorId)
+        public async Task<List<BrandDto>> GetAllBrands(int operatorId)
         {
             var permission = _permissionService.HasPermission(operatorId, (int)PermissionsEnum.ViewBrands);
             //if (!permission)
             //{
             //    throw new UnauthorizedAccessException();
             //}
-            var brands = _productService.GetAllBrands();
+            var brands = await _brandService.GetAll();
             return brands;
         }
         public List<CategoryDto> GetAllCategories(int operatorId)

@@ -2,6 +2,8 @@
 using App.Infrastructures.Database.SqlServer.Data;
 using App.Domain.Core.Product.Contracts.Repositories;
 using App.Domain.Core.BaseData.Contracts.Repositories;
+using App.Domain.Core.BaseData.Dtos;
+using Microsoft.EntityFrameworkCore;
 
 namespace App.Infrastructures.Database.SqlServer.Repositories
 {
@@ -13,46 +15,49 @@ namespace App.Infrastructures.Database.SqlServer.Repositories
             _appDbContext = appDbContext;
         }
 
-        public int Create(Category model)
+        public async Task<CategoryDto?> Get(int id)
         {
-            _appDbContext.Categories.Add(model);
-            _appDbContext.SaveChanges();
-            return model.Id;
+            var category = await _appDbContext.Categories.Where(x => x.Id == id).Select(x => new CategoryDto()
+            {
+                Id = x.Id,
+                Name = x.Name,
+                CreationDate = x.CreationDate,
+                DisplayOrder = x.DisplayOrder,
+                IsDeleted = x.IsDeleted,
+                IsActive = x.IsActive,
+                ParentCagetoryId = x.ParentCagetoryId
+            }).SingleAsync();
+            return category;
         }
 
-        public void Update(Category model)
+        public async Task<CategoryDto?> Get(string name)
         {
-            var record = _appDbContext.Categories.FirstOrDefault(p => p.Id == model.Id);
-            record.Name = model.Name;
-            record.DisplayOrder = model.DisplayOrder;
-            record.CreationDate = model.CreationDate;
-            _appDbContext.SaveChanges();
+            var category = await _appDbContext.Categories.Where(x => x.Name.ToLower() == name.ToLower()).Select(x => new CategoryDto()
+            {
+                Id = x.Id,
+                Name = x.Name,
+                CreationDate = x.CreationDate,
+                DisplayOrder = x.DisplayOrder,
+                IsDeleted = x.IsDeleted,
+                IsActive = x.IsActive,
+                ParentCagetoryId = x.ParentCagetoryId
+            }).SingleAsync();
+            return category;
         }
 
-        public bool Remove(int id)
+        public async Task<List<CategoryDto>> GetAll()
         {
-            var record = _appDbContext.Categories.FirstOrDefault(p => p.Id == id);
-            _appDbContext.Categories.Remove(record);
-            _appDbContext.SaveChanges();
-            return true;
-        }
-
-        public List<Category> GetAll()
-        {
-            var record = _appDbContext.Categories.ToList();
-            return record;
-        }
-
-        public Category GetById(int id)
-        {
-            var record = _appDbContext.Categories.FirstOrDefault(p => p.Id == id);
-            return record;
-        }
-
-        public Category GetByName(string name)
-        {
-            var record = _appDbContext.Categories.FirstOrDefault(p => p.Name == name);
-            return record;
+            var brands = await _appDbContext.Categories.Select(x => new CategoryDto()
+            {
+                Id = x.Id,
+                Name = x.Name,
+                CreationDate = x.CreationDate,
+                ParentCagetoryId = x.ParentCagetoryId,
+                DisplayOrder = x.DisplayOrder,
+                IsActive = x.IsActive,
+                IsDeleted = x.IsDeleted
+            }).ToListAsync();
+            return brands;
         }
     }
 }

@@ -2,6 +2,6 @@
 {
     public interface IPermissionQueryRepository
     {
-        List<int> GetOperatorPermissions(int operatorId);
+        Task<List<int>> GetOperatorPermissions(int operatorId);
     }
 }

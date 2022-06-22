@@ -7,7 +7,7 @@ namespace App.Domain.Core.Product.Contracts.AppServices
 {
     public interface IProductAppService
     {
-        List<BrandDto> GetAllBrands(int operatorId);
+        Task<List<BrandDto>> GetAllBrands(int operatorId);
         List<CategoryDto> GetAllCategories(int operatorId);
         List<TagDto> GetAllTags(int operatorId);
         List<ModelDto> GetAllModels(int operatorId);

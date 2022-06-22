@@ -1,5 +1,4 @@
-﻿using App.Domain.Core.Product.Entities;
-using App.Infrastructures.Database.SqlServer.Data;
+﻿using App.Infrastructures.Database.SqlServer.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using App.Domain.Core.BaseData.Contracts.Repositories;
+using System.Linq.Expressions;
+using App.Domain.Core.BaseData.Dtos;
 
 namespace App.Infrastructures.Database.SqlServer.Repositories
 {
@@ -19,47 +20,66 @@ namespace App.Infrastructures.Database.SqlServer.Repositories
             _appDbContext = appDbContext;
         }
 
-        public int Create(Brand model)
+        public async Task<List<BrandDto>> GetAll()
         {
-            _appDbContext.Brands.Add(model);
-            _appDbContext.SaveChanges();
-            return model.Id;
+            var brands = await _appDbContext.Brands.Select(p => new BrandDto()
+            {
+                Id = p.Id,
+                Name = p.Name,
+                DisplayOrder = p.DisplayOrder,
+                CreationDate = p.CreationDate,
+                IsDeleted = p.IsDeleted
+            }).AsNoTracking()
+            .ToListAsync();
+            return brands;
         }
 
-        public void Update(Brand model)
+        public async Task<BrandDto?> Get(int id)
         {
-            var record = _appDbContext.Brands.FirstOrDefault(p => p.Id == model.Id);
-            record.Name = model.Name;
-            record.DisplayOrder = model.DisplayOrder;
-            record.CreationDate = model.CreationDate;
-            _appDbContext.SaveChanges();
+
+            var brand = await _appDbContext.Brands.Where(p => p.Id == id).Select(p => new BrandDto()
+            {
+                Id = p.Id,
+                Name = p.Name,
+                DisplayOrder = p.DisplayOrder,
+                CreationDate = p.CreationDate,
+                IsDeleted = p.IsDeleted
+            }).SingleOrDefaultAsync();
+            return brand;
         }
 
-        public bool Remove(int id)
+        public async Task<BrandDto?> Get(string name)
         {
-            var record = _appDbContext.Brands.FirstOrDefault(p => p.Id == id);
-            _appDbContext.Brands.Remove(record);
-            _appDbContext.SaveChanges();
-            return true;
+            var brand =await _appDbContext.Brands.Where(x => x.Name.ToLower() == name.ToLower()).Select(p => new BrandDto()
+            {
+                Id = p.Id,
+                Name = p.Name,
+                DisplayOrder = p.DisplayOrder,
+                CreationDate = p.CreationDate,
+                IsDeleted = p.IsDeleted
+            }).SingleOrDefaultAsync();
+            return brand;
         }
+        
+        //public async Task<BrandDto?> Get(Expression<Func<BrandDto, bool>> func)
+        //{
+        //    var x = (IQueryable<BrandDto>)_appDbContext.Brands;
+        //    var brand = _appDbContext.Brands.Where(func);
+        //    var y = x.Where(func);
+        //    int qq = 2;
+        //    string kk = (string)qq;
+        //        .Select(p => new BrandDto()
+        //         {
+        //             Id = p.Id,
+        //             Name = p.Name,
+        //             DisplayOrder = p.DisplayOrder,
+        //             CreationDate = p.CreationDate,
+        //             IsDeleted = p.IsDeleted
+        //         }).SingleOrDefaultAsync();
+        //    return brand;
 
-        public List<Brand> GetAll()
-        {
-            var record = _appDbContext.Brands.ToList();
-            return record;
-        }
+        //}
 
-        public Brand GetById(int id)
-        {
-            var record = _appDbContext.Brands.FirstOrDefault(p => p.Id == id);
-            return record;
-        }
-
-        public Brand GetByName(string name)
-        {
-            var record = _appDbContext.Brands.FirstOrDefault(p => p.Name == name);
-            return record;
-        }
     }
 }
 

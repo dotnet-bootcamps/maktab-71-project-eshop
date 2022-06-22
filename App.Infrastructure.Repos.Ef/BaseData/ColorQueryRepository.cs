@@ -1,6 +1,8 @@
 ﻿using App.Domain.Core.BaseData.Contracts.Repositories;
+using App.Domain.Core.BaseData.Dtos;
 using App.Domain.Core.BaseData.Entities;
 using App.Infrastructures.Database.SqlServer.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace App.Infrastructures.Database.SqlServer.Repositories
 {
@@ -14,44 +16,43 @@ namespace App.Infrastructures.Database.SqlServer.Repositories
             _appDbContext = appDbContext;
         }
 
-        public int Create(Color model)
+        public async Task<ColorDto?> Get(int id)
         {
-            _appDbContext.Colors.Add(model);
-            _appDbContext.SaveChanges();
-            return model.Id;
-        }
-        public void Update(Color model)
-        {
-            var record = _appDbContext.Colors.FirstOrDefault(p => p.Id == model.Id);
-            record.Name = model.Name;
-            record.Code = model.Code;
-            record.CreationDate = model.CreationDate;
-            _appDbContext.SaveChanges();
-        }
-        public bool Remove(int id)
-        {
-            var record = _appDbContext.Colors.FirstOrDefault(p => p.Id == id);
-            _appDbContext.Colors.Remove(record);
-            _appDbContext.SaveChanges();
-            return true;
+            var color = await _appDbContext.Colors.Where(x => x.Id == id).Select(x => new ColorDto()
+            {
+                Id = x.Id,
+                Name = x.Name,
+                CreationDate = x.CreationDate,
+                IsDeleted = x.IsDeleted,
+                Code = x.Code
+            }).SingleAsync();
+            return color;
         }
 
-
-        public List<Color> GetAll()
+        public async Task<ColorDto?> Get(string name)
         {
-            var record = _appDbContext.Colors.ToList();
-            return record;
+            var color = await _appDbContext.Colors.Where(x => x.Name.ToLower() == name.ToLower()).Select(x => new ColorDto()
+            {
+                Id = x.Id,
+                Name = x.Name,
+                CreationDate = x.CreationDate,
+                IsDeleted = x.IsDeleted,
+                Code = x.Code
+            }).SingleAsync();
+            return color;
         }
-        public Color GetById(int id)
-        {
-            var record = _appDbContext.Colors.FirstOrDefault(p => p.Id == id);
-            return record;
-        }
 
-        public Color GetExitingColor(string name, string code)
+        public async Task<List<ColorDto>> GetAll()
         {
-            var record = _appDbContext.Colors.FirstOrDefault(x=>x.Name== name && x.Code == code);
-            return record;
+            var colors = await _appDbContext.Colors.Select(x => new ColorDto()
+            {
+                Id = x.Id,
+                Name = x.Name,
+                CreationDate = x.CreationDate,
+                Code= x.Code,
+                IsDeleted = x.IsDeleted
+            }).ToListAsync();
+            return colors;
         }
     }
 }

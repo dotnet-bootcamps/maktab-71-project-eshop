@@ -1,5 +1,4 @@
 ﻿using App.Domain.Core.BaseData.Dtos;
-using App.Domain.Core.BaseData.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace App.Domain.Core.BaseData.Contracts.Services
 {
-    public interface IColorService
+    public interface IBrandService
     {
         //Query
-        Task<List<ColorDto>> GetAll();
-        Task<ColorDto?> Get(int id);
-        Task<ColorDto?> Get(string name);
+        Task<List<BrandDto>> GetAll();
+        Task<BrandDto?> Get(int id);
+        Task<BrandDto?> Get(string name);
 
         //Command
         Task<int> Create(string name, int displayOrder);
@@ -21,8 +20,8 @@ namespace App.Domain.Core.BaseData.Contracts.Services
         Task Update(int id, string name, int displayOrder);
 
         //Ensurness
-        Task EnsureColorIsNotExist(string name);
-        Task EnsureColorIsExist(string name);
-        Task EnsureColorIsExist(int id);
+        Task EnsureBrandIsNotExist(string name);
+        Task EnsureBrandIsExist(string name);
+        Task EnsureBrandIsExist(int id);
     }
 }

@@ -9,9 +9,9 @@ namespace App.Domain.Core.Product.Contracts.Repositories
 {
     public class PermissionQueryRepository : IPermissionQueryRepository
     {
-        public List<int> GetOperatorPermissions(int operatorId)
+        public async Task<List<int>> GetOperatorPermissions(int operatorId)
         {
-            var result=new List<int>();
+            var result = new List<int>();
             result.Add(3);
             result.Add(8);
             result.Add(9);

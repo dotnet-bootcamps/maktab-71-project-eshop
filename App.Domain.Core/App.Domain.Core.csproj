@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="BaseData\Contracts\AppServices\" />
     <Folder Include="BaseData\Enums\" />
     <Folder Include="Permission\Contracts\Appservices\" />
     <Folder Include="Permission\Dtos\" />
