@@ -17,7 +17,7 @@ namespace App.Domain.Core.BaseData.Contracts.Services
         //Command
         Task<int> Create(string name, int displayOrder,int parentCategoryId);
         Task Delete(int id);
-        Task Update(int id, string name, int displayOrder, int parentCategoryId,int isActive,int isDeleted);
+        Task Update(int id, string name, int displayOrder, int parentCategoryId,bool isActive,bool isDeleted);
 
         //Ensurness
         Task EnsureCategoryIsNotExist(string name);

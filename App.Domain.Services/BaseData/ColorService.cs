@@ -12,54 +12,70 @@ namespace App.Domain.Services.BaseData
 {
     public class ColorService : IColorService
     {
-        private readonly IColorQueryRepository _colorRepository;
+        private readonly IColorQueryRepository _colorQueryRepository;
+        private readonly IColorCommandRepository _colorCommandRepository;
 
-        public ColorService(IColorQueryRepository colorRepository)
+        public ColorService(IColorQueryRepository colorQueryRepository
+            ,IColorCommandRepository colorCommandRepository)
         {
-            _colorRepository = colorRepository;
-        }
-        public int CreateColor(Color color)
-        {
-            _colorRepository.Create(color);
-            return color.Id;
+            _colorQueryRepository = colorQueryRepository;
+            _colorCommandRepository = colorCommandRepository;
         }
 
-        public Color GetColorById(int id)
+        //Commands :
+        public async Task<int> Create(string name, string code)
         {
-            var record=_colorRepository.GetById(id);
-            return record;
+            var id = await _colorCommandRepository.Add(name,code,DateTime.Now,false);
+            return id;
         }
 
-        public List<ColorDto> GetAllColors()
+        public async Task Delete(int id)
         {
-            var record = _colorRepository.GetAll()
-                .Select(x => new ColorDto
-                {
-                    Id = x.Id,
-                    Name = x.Name,
-                    Code = x.Code,
-                    CreationDate = x.CreationDate,
-                    IsDeleted = x.IsDeleted
-                })
-                .ToList();
-            return record;
+            await _colorCommandRepository.Remove(id);
+        }
+        public async Task Update(int id, string name, string code, bool isDeleted)
+        {
+            await _colorCommandRepository.Update(id, name, code, isDeleted);
+        }
+        
+        //Queries :
+        public async Task<ColorDto?> Get(int id)
+        {
+            var color = await _colorQueryRepository.Get(id);
+            return color;
         }
 
-        public bool RemoveColor(int id)
+        public async Task<ColorDto?> Get(string name)
         {
-            return _colorRepository.Remove(id);
+            var color = await _colorQueryRepository.Get(name);
+            return color;
         }
 
-        public void UpdateColor(Color color)
+        public async Task<List<ColorDto>> GetAll()
         {
-            _colorRepository.Update(color);
+            var colors = await _colorQueryRepository.GetAll();
+            return colors;
+        }
+         //Ensurness :
+        public async Task EnsureColorIsExist(string name)
+        {
+            var color = await _colorQueryRepository.Get(name);
+            if(color == null)
+                throw new Exception($"There is no Color with Name :{name}");
         }
 
-        public void EnsureColorIsNotExist(string name, string code)
+        public async Task EnsureColorIsExist(int id)
         {
-            var color = _colorRepository.GetExitingColor(name, code);
-            if (color is not null)
-                throw new Exception("Color Already Exist");
+            var color = await _colorQueryRepository.Get(id);
+            if (color == null)
+                throw new Exception($"There is no Color with Id :{id}");
+        }
+
+        public async Task EnsureColorIsNotExist(string name)
+        {
+            var color = await _colorQueryRepository.Get(name);
+            if (color != null)
+                throw new Exception($"There is a Color with Name :{name}");
         }
     }
 }

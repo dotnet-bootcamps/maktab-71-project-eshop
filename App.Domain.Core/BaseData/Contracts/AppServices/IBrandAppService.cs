@@ -1,5 +1,5 @@
 ﻿
-using App.Domain.Core.Product.Dtos;
+using App.Domain.Core.BaseData.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;

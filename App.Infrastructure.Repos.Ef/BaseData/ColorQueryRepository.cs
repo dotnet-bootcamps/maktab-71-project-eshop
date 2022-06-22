@@ -25,7 +25,7 @@ namespace App.Infrastructures.Database.SqlServer.Repositories
                 CreationDate = x.CreationDate,
                 IsDeleted = x.IsDeleted,
                 Code = x.Code
-            }).SingleAsync();
+            }).FirstOrDefaultAsync();
             return color;
         }
 
@@ -38,7 +38,7 @@ namespace App.Infrastructures.Database.SqlServer.Repositories
                 CreationDate = x.CreationDate,
                 IsDeleted = x.IsDeleted,
                 Code = x.Code
-            }).SingleAsync();
+            }).SingleOrDefaultAsync();
             return color;
         }
 

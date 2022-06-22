@@ -44,7 +44,7 @@ namespace App.Infrastructures.Database.SqlServer.Repositories
                 DisplayOrder = p.DisplayOrder,
                 CreationDate = p.CreationDate,
                 IsDeleted = p.IsDeleted
-            }).SingleOrDefaultAsync();
+            }).FirstOrDefaultAsync();
             return brand;
         }
 

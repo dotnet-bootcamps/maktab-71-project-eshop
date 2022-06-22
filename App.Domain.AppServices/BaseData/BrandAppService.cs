@@ -1,8 +1,8 @@
 ﻿using App.Domain.Core.BaseData.Contracts.AppServices;
 using App.Domain.Core.BaseData.Contracts.Services;
+using App.Domain.Core.BaseData.Dtos;
 using App.Domain.Core.Permission.Contracts.Services;
 using App.Domain.Core.Permission.Enums;
-using App.Domain.Core.Product.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;

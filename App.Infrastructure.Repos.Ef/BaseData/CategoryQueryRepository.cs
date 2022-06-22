@@ -26,7 +26,7 @@ namespace App.Infrastructures.Database.SqlServer.Repositories
                 IsDeleted = x.IsDeleted,
                 IsActive = x.IsActive,
                 ParentCagetoryId = x.ParentCagetoryId
-            }).SingleAsync();
+            }).FirstOrDefaultAsync();
             return category;
         }
 
@@ -41,7 +41,7 @@ namespace App.Infrastructures.Database.SqlServer.Repositories
                 IsDeleted = x.IsDeleted,
                 IsActive = x.IsActive,
                 ParentCagetoryId = x.ParentCagetoryId
-            }).SingleAsync();
+            }).SingleOrDefaultAsync();
             return category;
         }
 

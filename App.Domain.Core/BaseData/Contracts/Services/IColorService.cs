@@ -16,9 +16,9 @@ namespace App.Domain.Core.BaseData.Contracts.Services
         Task<ColorDto?> Get(string name);
 
         //Command
-        Task<int> Create(string name, int displayOrder);
+        Task<int> Create(string name, string code);
         Task Delete(int id);
-        Task Update(int id, string name, int displayOrder);
+        Task Update(int id, string name, string code,bool isDeleted);
 
         //Ensurness
         Task EnsureColorIsNotExist(string name);

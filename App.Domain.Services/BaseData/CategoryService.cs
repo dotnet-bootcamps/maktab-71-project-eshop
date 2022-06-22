@@ -1,5 +1,6 @@
 ﻿using App.Domain.Core.BaseData.Contracts.Repositories;
 using App.Domain.Core.BaseData.Contracts.Services;
+using App.Domain.Core.BaseData.Dtos;
 using App.Domain.Core.Product.Dtos;
 using System;
 using System.Collections.Generic;
@@ -21,49 +22,62 @@ namespace App.Domain.Services.BaseData
             _categoryCommandRepository = categoryCommandRepository;
             _categoryQueryRepository = categoryQueryRepository;
         }
+
+        //Commands :
         public async Task<int> Create(string name, int displayOrder, int parentCategoryId)
         {
-            var id = await _categoryCommandRepository.Add(name, displayOrder,parentCategoryId)
+            var id = await _categoryCommandRepository.Add(name, displayOrder, DateTime.Now, parentCategoryId, false, true);
+            return id;
         }
 
-        public Task Delete(int id)
+        public async Task Delete(int id)
         {
-            throw new NotImplementedException();
+            await _categoryCommandRepository.Remove(id);
+        }
+        public async Task Update(int id, string name, int displayOrder, int parentCategoryId, bool isActive, bool isDeleted)
+        {
+            await _categoryCommandRepository.Update(id, name, displayOrder, parentCategoryId, isActive, isDeleted);
         }
 
-        public Task EnsureCategoryIsExist(string name)
+        //Queries :
+        public async Task<CategoryDto?> Get(int id)
         {
-            throw new NotImplementedException();
+            var category = await _categoryQueryRepository.Get(id);
+            return category;
         }
 
-        public Task EnsureCategoryIsExist(int id)
+        public async Task<CategoryDto?> Get(string name)
         {
-            throw new NotImplementedException();
+            var category = await _categoryQueryRepository.Get(name);
+            return category;
         }
 
-        public Task EnsureCategoryIsNotExist(string name)
+        public async Task<List<CategoryDto>> GetAll()
         {
-            throw new NotImplementedException();
+            var categories = await _categoryQueryRepository.GetAll();
+            return categories;
         }
 
-        public Task<CategoryDto?> Get(int id)
+        //Ensurness :
+        public async Task EnsureCategoryIsExist(string name)
         {
-            throw new NotImplementedException();
+            var category = await _categoryQueryRepository.Get(name);
+            if (category == null)
+                throw new Exception($"There is no Category with Name :{name}");
         }
 
-        public Task<CategoryDto?> Get(string name)
+        public async Task EnsureCategoryIsExist(int id)
         {
-            throw new NotImplementedException();
+            var category = await _categoryQueryRepository.Get(id);
+            if (category == null)
+                throw new Exception($"There is no Category with Id :{id}");
         }
 
-        public Task<List<CategoryDto>> GetAll()
+        public async Task EnsureCategoryIsNotExist(string name)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task Update(int id, string name, int displayOrder, int parentCategoryId, int isActive, int isDeleted)
-        {
-            throw new NotImplementedException();
+            var category = await _categoryQueryRepository.Get(name);
+            if (category != null)
+                throw new Exception($"There is A Category with Name :{name}");
         }
     }
 }
