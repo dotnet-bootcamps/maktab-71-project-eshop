@@ -13,7 +13,7 @@ namespace App.Domain.Core.BaseData.Contarcts.AppServices
         Task SetColor(string name,string code);
         ColorDto GetColor(int id);
         ColorDto GetColor(string name);
-        void UpdateColor(int id, string name,string coloe);
+        void UpdateColor(int id, string name,string code);
         void DeleteColor(int id);
     }
 }

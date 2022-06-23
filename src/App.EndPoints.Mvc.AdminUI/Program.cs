@@ -7,11 +7,14 @@ using App.Domain.Core.Operator.Contract.Repositories;
 using App.Domain.Core.Permission.Contarcts.Repositories;
 using App.Domain.Core.Permission.Contarcts.Services;
 using App.Domain.Core.Product.Contacts.AppServices;
-
+using App.Domain.Core.Product.Contacts.Repositories;
+using App.Domain.Core.Product.Contacts.Services;
 using App.Domain.Services.BaseData;
 using App.Domain.Services.Permission;
+using App.Domain.Services.Product;
 using App.Infrastructures.Database.Repos.Ef.BaseData;
 using App.Infrastructures.Database.Repos.Ef.Permission;
+using App.Infrastructures.Database.Repos.Ef.Product;
 using App.Infrastructures.Database.SqlServer.Data;
 
 using Microsoft.EntityFrameworkCore;
@@ -47,7 +50,6 @@ builder.Services.AddScoped<IBrandCommandRepository, BrandCommandRepository>();
 builder.Services.AddScoped<IBrandQueryRepository, BrandQueryRepository>();
 #endregion Brand
 
-
 #region Color
 builder.Services.AddScoped<IColorAppService, ColorAppService>();
 builder.Services.AddScoped<IColorService, ColorService>();
@@ -55,6 +57,12 @@ builder.Services.AddScoped<IColorCommandRepository, ColorCommandRepository>();
 builder.Services.AddScoped<IColorQueryRepository, ColorQueryRepository>();
 #endregion Color
 
+#region Category
+builder.Services.AddScoped<ICategoryAppService, CategoryAppService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<ICategoryCommandRepository, CategoryCommandRepository>();
+builder.Services.AddScoped<ICategoryQueryRepository, CategoryQueryRepository>();
+#endregion Category
 
 
 #region Permission

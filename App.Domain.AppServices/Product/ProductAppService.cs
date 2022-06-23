@@ -1,4 +1,5 @@
-﻿using App.Domain.Core.BaseData.Dtos;
+﻿using App.Domain.Core.BaseData.Contarcts.Services;
+using App.Domain.Core.BaseData.Dtos;
 using App.Domain.Core.Permission.Contarcts.Services;
 using App.Domain.Core.Permission.Enums;
 using App.Domain.Core.Product.Contacts.AppServices;
@@ -13,9 +14,9 @@ using System.Threading.Tasks;
 
 namespace App.Domain.AppServices.Product
 {
+
     public class ProductAppService : IProductAppService
     {
-       
-      
+
     }
 }

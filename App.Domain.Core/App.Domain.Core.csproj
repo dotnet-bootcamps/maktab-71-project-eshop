@@ -11,22 +11,16 @@
     <Compile Remove="Operator\Dtos\**" />
     <Compile Remove="Operator\Enums\**" />
     <Compile Remove="Permission\Entities\**" />
-    <Compile Remove="Product\Contacts\Repositories\**" />
-    <Compile Remove="Product\Dtos\**" />
     <Compile Remove="Product\Enums\**" />
     <EmbeddedResource Remove="BaseData\Enums\**" />
     <EmbeddedResource Remove="Operator\Dtos\**" />
     <EmbeddedResource Remove="Operator\Enums\**" />
     <EmbeddedResource Remove="Permission\Entities\**" />
-    <EmbeddedResource Remove="Product\Contacts\Repositories\**" />
-    <EmbeddedResource Remove="Product\Dtos\**" />
     <EmbeddedResource Remove="Product\Enums\**" />
     <None Remove="BaseData\Enums\**" />
     <None Remove="Operator\Dtos\**" />
     <None Remove="Operator\Enums\**" />
     <None Remove="Permission\Entities\**" />
-    <None Remove="Product\Contacts\Repositories\**" />
-    <None Remove="Product\Dtos\**" />
     <None Remove="Product\Enums\**" />
   </ItemGroup>
 
