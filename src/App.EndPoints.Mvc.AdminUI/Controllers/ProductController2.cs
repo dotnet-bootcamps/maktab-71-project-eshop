@@ -9,32 +9,23 @@ using App.Domain.Core.Product.Entities;
 using App.Domain.Core.BaseData.Contarcts.Repositories;
 using App.Domain.Core.Product.Contarcts.Repositories;
 using App.Domain.Core.Product.Dtos;
-using App.Domain.Core.Product.Contacts.AppServices;
-using App.Domain.Core.BaseData.Contarcts.AppServices;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
 
-    public class ProductController : Controller
+    public class ProductController2 : Controller
     {
-        private readonly IProductAppService _productAppService;
-        private readonly IBrandAppService _brandAppService;
-        //private readonly IProductQueryRepository _productQueryRepository;
-        //private readonly IProductCommandRepository _productCommandRepository;
+        private readonly IProductQueryRepository _productQueryRepository;
         private readonly AppDbContext _dbContext;
 
-        //public ProductController(IProductQueryRepository productQueryRepository, IProductCommandRepository productCommandRepository, AppDbContext dbContext)
-        public ProductController(IProductAppService productAppService, IProductQueryRepository productQueryRepository, IBrandAppService brandAppService)
+        public ProductController2(IProductQueryRepository productQueryRepository,AppDbContext dbContext)
         {
-            _productAppService = productAppService;
-            _brandAppService = brandAppService;
-            //_dbContext = dbContext;
-            //_productQueryRepository = productQueryRepository;
+            _productQueryRepository = productQueryRepository;
+            _dbContext = dbContext;
         }
         public async Task<IActionResult> Index()
         {
-            var products =await _productAppService.GetAll();
-            //var products =await _productQueryRepository.GetAll();
+            var products =await _productQueryRepository.GetAll();
             return View(products);
         }
 
@@ -42,32 +33,31 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            ViewBag.Brands = _productAppService.GetAllBrands()
+            ViewBag.Brands = _dbContext.Brands.ToList()
                 .Select(s => new SelectListItem
                 {
                     Text = s.Name,
                     Value = s.Id.ToString()
-                });
-            ViewBag.Colors = _productAppService.GetAllColors()
-                .Select(s => new SelectListItem
-                {
-                    Text = s.Name,
-                    Value = s.Id.ToString()
-                });
-
-            ViewBag.Categories = _productAppService.GetAllCategories()
-                .Select(s => new SelectListItem
-                {
-                    Text = s.Name,
-                    Value = s.Id.ToString()
-                });
-            ViewBag.Models = _productAppService.GetAllModels()
+               });
+            ViewBag.Colors = _dbContext.Colors.ToList()
                 .Select(s => new SelectListItem
                 {
                     Text = s.Name,
                     Value = s.Id.ToString()
                 });
 
+            ViewBag.Categories = _dbContext.Categories.ToList()
+                .Select(s => new SelectListItem
+                {
+                    Text = s.Name,
+                    Value = s.Id.ToString()
+                });
+            ViewBag.Models = _dbContext.Models.ToList()
+                .Select(s => new SelectListItem
+                {
+                    Text = s.Name,
+                    Value = s.Id.ToString()
+                });
             List<SelectListItem> boolSelectListItem = new List<SelectListItem>();
             boolSelectListItem.Add(new SelectListItem()
             {
@@ -86,9 +76,10 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(ProductDTO model)
+        public IActionResult Create(ProductDTO model)
         {
-            /*model.IsDeleted = false;
+            model.IsDeleted = false;
+            
             Product pr = new Product()
             {
                 BrandId = model.BrandId,
@@ -105,48 +96,45 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
                 Name=model.Name,
                 IsShowPrice = model.IsShowPrice,
                 Price=model.Price,
-            };*/
-            await _productAppService.AddProduct(model);
-            /*_dbContext.Products.Add(pr);
-            _dbContext.SaveChanges();*/
+                
+
+            };
+            _dbContext.Products.Add(pr);
+            _dbContext.SaveChanges();
             return RedirectToAction("Index");
         }
 
 
         [HttpGet]
-        public async Task<IActionResult> Update(int id)
+        public IActionResult Update(int id)
         {
-            //var model = _dbContext.Products.SingleOrDefault(x => x.Id == id);
-            var model =await _productAppService.Get(id);
-            model.OperatorId = 1;
 
-            ViewBag.Brands = _productAppService.GetAllBrands()
+            var model = _dbContext.Products.SingleOrDefault(x => x.Id == id);
+            ViewBag.Brands = _dbContext.Brands.ToList()
                 .Select(s => new SelectListItem
                 {
                     Text = s.Name,
                     Value = s.Id.ToString()
                 });
-            ViewBag.Colors = _productAppService.GetAllColors()
-                .Select(s => new SelectListItem
-                {
-                    Text = s.Name,
-                    Value = s.Id.ToString()
-                });
-
-            ViewBag.Categories = _productAppService.GetAllCategories()
-                .Select(s => new SelectListItem
-                {
-                    Text = s.Name,
-                    Value = s.Id.ToString()
-                });
-            ViewBag.Models = _productAppService.GetAllModels()
+            ViewBag.Colors = _dbContext.Colors.ToList()
                 .Select(s => new SelectListItem
                 {
                     Text = s.Name,
                     Value = s.Id.ToString()
                 });
 
-
+            ViewBag.Categories = _dbContext.Categories.ToList()
+                .Select(s => new SelectListItem
+                {
+                    Text = s.Name,
+                    Value = s.Id.ToString()
+                });
+            ViewBag.Models = _dbContext.Models.ToList()
+                .Select(s => new SelectListItem
+                {
+                    Text = s.Name,
+                    Value = s.Id.ToString()
+                });
             List<SelectListItem> boolSelectListItem = new List<SelectListItem>();
             boolSelectListItem.Add(new SelectListItem()
             {
@@ -161,7 +149,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
             ViewBag.IsOrginal = boolSelectListItem;
             ViewBag.IsShowPrice = boolSelectListItem;
             ViewBag.IsActive = boolSelectListItem;
-            /*ProductDTO productDTO = new ProductDTO() {
+            ProductDTO productDTO = new ProductDTO() {
                 BrandId = model.BrandId,
                 CategoryId = model.CategoryId,
                 OperatorId = 1,
@@ -178,14 +166,14 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
                 Price = model.Price,
             };
 
-*/
-            return View(model);
+
+            return View(productDTO);
             
         }
         [HttpPost]
         public IActionResult Update(ProductDTO model)
         {
-            /*Product pr = new Product()
+            Product pr = new Product()
             {
                 Id=model.Id,
                 BrandId = model.BrandId,
@@ -206,26 +194,26 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
 
             };
             _dbContext.Products.Update(pr);
-            _dbContext.SaveChanges();*/
-            _productAppService.UpdateProduct(model);
+            _dbContext.SaveChanges();
             return RedirectToAction("Index");
         }
    
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
-            var model = await _productAppService.Get(id);
+            var model = await _productQueryRepository.Get(id);
             return View(model);
 
         }
         [HttpPost]
-        public async Task<IActionResult> DeletePost(ProductDTO model)
+        public IActionResult DeletePost(ProductDTO model)
         {
-            /*Product pr = new Product()
+            Product pr = new Product()
             {
                 Id = model.Id
-            };*/
-            await _productAppService.DeleteProduct(model);
+            };
+            _dbContext.Products.Remove(pr);
+            _dbContext.SaveChanges();
 
             return RedirectToAction("Index");
         }

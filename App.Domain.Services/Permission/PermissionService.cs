@@ -16,11 +16,11 @@ namespace App.Domain.Services.Permission
         {
             _permissionRepository = permissionRepository;
         }
-        public bool HasPermission(int operatorId, int permissionId)
+        public async Task<bool> HasPermission(int operatorId, int permissionId)
         {
             if (operatorId==1)
                 return true;
-            var operatorPermissions = _permissionRepository.GetOperatorPermissions(operatorId);
+            var operatorPermissions =await _permissionRepository.GetOperatorPermissions(operatorId);
             return operatorPermissions.Any(x=> x == permissionId);
        
         }

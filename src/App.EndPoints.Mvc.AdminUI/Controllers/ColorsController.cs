@@ -1,17 +1,32 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
 using App.EndPoints.Mvc.AdminUI.ViewModels;
+using App.Domain.Core.BaseData.Contarcts.AppServices;
+using App.EndPoints.Mvc.AdminUI.Models.ViewModels.Product;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
     public class ColorsController : Controller
     {
-        
-        public IActionResult Index()
+        private readonly IColorAppService _colorAppService;
+
+        public ColorsController(IColorAppService colorAppService)
         {
-            //var result = _colorRepository.GetAll();
-            //return View(result);
-            return View();
+            _colorAppService = colorAppService;
+        }
+        public async Task<IActionResult> Index()
+        {
+            var result =await _colorAppService.GetAll();
+            var colorsModel=result.Select(a => new ColorOutputViewModel()
+            {
+                Id = a.Id,
+                Name = a.Name,
+                Code = a.Code,
+                CreationDate = a.CreationDate,
+                IsDeleted = a.IsDeleted
+            }).ToList() ;
+
+            return View(colorsModel);
         }
 
 
@@ -20,63 +35,64 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         {
             return View();
         }
-
         [HttpPost]
-        
-        public IActionResult SubmitCreatedColor(ColorViewModel model)
-        {
-            //_colorRepository.Create(new Infrastructures.Database.SqlServer.Entities.Color
-            //{
-            //    Code = model.Code,
-            //    Name = model.Name
-            //});
-
-            return RedirectToAction(nameof(Index));
-        }
-        
-        public IActionResult Delete()
-        {
-            return View();
-        }
-        
-        public IActionResult Details()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult Create(int id)
+        public async Task<IActionResult> Create(ColorInputViewModel colorModel)
         {
             //_colorRepository.Create(model);
+            await _colorAppService.SetColor(colorModel.Code, colorModel.Name);
+            return RedirectToAction("Index");
+        }
+        public async Task<IActionResult> Details(int id)
+        {
+            var c = await _colorAppService.Get(id);
+            ColorOutputViewModel colorModel = new ColorOutputViewModel()
+            {
+                Id=id,
+                Code=c.Code,
+                Name=c.Name,
+                CreationDate=c.CreationDate,
+                IsDeleted=c.IsDeleted
+            };
+            return View(colorModel);
+        }
+
+        
+
+        [HttpGet]
+        public async Task<IActionResult> Update(int id)
+        {
+            var c =await _colorAppService.Get(id);
+            ColorOutputViewModel colorModel = new ColorOutputViewModel()
+            {
+                Id=id,
+                Code=c.Code,
+                Name=c.Name
+            };
+            return View(colorModel);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Update(ColorOutputViewModel colorModel)
+        {
+            //_colorRepository.Edit(model);
+            await _colorAppService.UpdateColor(colorModel.Id,colorModel.Code,colorModel.Name);
             return RedirectToAction("Index");
         }
 
 
         [HttpGet]
-        public IActionResult Update()
-
-        {
-            return View();
-        }
-        [HttpPost]
-        public IActionResult Update(int id)
-        {
-            //_colorRepository.Edit(model);
-            return RedirectToAction("Index");
-        }
-
-
-
-        [HttpPost]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             //_colorRepository.Delete(id);
-            return RedirectToAction("Index");
+            var color =await _colorAppService.Get(id);
+            return View(color);
         }
-        
-        public IActionResult SubmitUpdatedColor()
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteColor(int id)
         {
-            return View();
+            //_colorRepository.Delete(id);
+            await _colorAppService.DeleteColor(id);
+            return RedirectToAction("Index");
         }
     }
 }

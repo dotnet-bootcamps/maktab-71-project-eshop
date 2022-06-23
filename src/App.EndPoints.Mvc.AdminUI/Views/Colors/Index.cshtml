@@ -1,7 +1,5 @@
-﻿@using App.Domain.Core.BaseData.Entities
-
-
-@model List<Color>
+﻿@using App.EndPoints.Mvc.AdminUI.Models.ViewModels.Product
+@model List<ColorOutputViewModel>
 
 @{
     ViewData["Title"] = "Home Page";
@@ -33,6 +31,7 @@
             <tr>
                 <th>شناسه</th>
                 <th>نام</th>
+                <th>کد</th>
                 <th colspan="3">عملیات</th>
             </tr>
             @foreach (var item in Model)
@@ -40,8 +39,9 @@
                 <tr>
                     <td>@item.Id</td>
                     <td>@item.Name</td>
+                    <td>@item.Code</td>
                     <td><a type="button" class="btn btn-primary" asp-action="Details" asp-controller="Colors" asp-route-id="@item.Id">مشاهده جزيیات</a></td>
-                    <td><a type="button" class="btn btn-warning" asp-action="Edit" asp-controller="Colors" asp-route-id="@item.Id">ویرایش</a></td>
+                    <td><a type="button" class="btn btn-warning" asp-action="Update" asp-controller="Colors" asp-route-id="@item.Id">ویرایش</a></td>
                     <td><a type="button" class="btn btn-danger" asp-action="Delete" asp-controller="Colors" asp-route-id="@item.Id">حذف</a></td>
                 </tr>
             }
