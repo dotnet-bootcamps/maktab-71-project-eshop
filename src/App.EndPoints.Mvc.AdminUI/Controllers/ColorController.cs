@@ -1,23 +1,23 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using App.Domain.Core.BaseData.Entities;
-using App.Domain.Core.Product.Contracts.AppServices;
+using App.Domain.Core.BaseData.Contracts.AppServices;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
     public class ColorController : Controller
     {
-        private readonly IProductAppService _productAppService;
-        public ColorController(IProductAppService productAppService)
+        private readonly IColorAppService _colorAppService;
+
+        public ColorController(IColorAppService colorAppService)
         {
-            _productAppService = productAppService;
+            _colorAppService = colorAppService;
         }
 
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var operatorId = 10;
-            var record = _productAppService.GetAllColors(operatorId);
-            return View(record);
+            var colors = await _colorAppService.GetAll();
+            return View(colors);
         }
 
         [HttpGet]
@@ -27,30 +27,30 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Color model)
+        public async Task<IActionResult> Create(string name, string code)
         {
-            _productAppService.CreateColor(model);
+            await _colorAppService.Create(name, code);
             return RedirectToAction("Index");
         }
 
         [HttpGet]
-        public IActionResult Update(int id)
+        public async Task<IActionResult> Update(int id)
         {
-            var record = _productAppService.GetColorById(id);
-            return View(record);
+            var color = await _colorAppService.Get(id);
+            return View(color);
         }
 
         [HttpPost]
 
-        public IActionResult Update(Color model)
+        public async Task<IActionResult> Update(int id, string name, string code, bool isDeleted)
         {
-            _productAppService.UpdateColor(model);
+            await _colorAppService.Update(id, name, code, isDeleted);
             return RedirectToAction("Update");
         }
         [HttpGet]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            _productAppService.RemoveColor(id);
+            await _colorAppService.Delete(id);
             return RedirectToAction("Index");
 
         }

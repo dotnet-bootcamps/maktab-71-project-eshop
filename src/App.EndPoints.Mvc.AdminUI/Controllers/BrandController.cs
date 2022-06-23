@@ -1,6 +1,4 @@
 using App.Domain.Core.BaseData.Contracts.AppServices;
-using App.Domain.Core.Product.Contracts.AppServices;
-using App.Domain.Core.Product.Entities;
 using Microsoft.AspNetCore.Mvc;
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
@@ -13,10 +11,10 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
             _brandAppService = brandAppService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var operatorId = 10;
-            var brands=_productAppService.GetAllBrands(operatorId);
+            var brands= await _brandAppService.GetAll();
             return View(brands);
         }
 
@@ -27,30 +25,30 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Brand model)
+        public async Task<IActionResult> Create(string name,int displayOrder)
         {
-            _productAppService.CreateBrand(model);
+            await _brandAppService.Create(name,displayOrder);
             return RedirectToAction("Index");
         }
 
         [HttpGet]
-        public IActionResult Update(int id)
+        public async Task<IActionResult> Update(int id)
         {
-            var record =_productAppService.GetBrandById(id);
-            return View(record);
+            var brand = await _brandAppService.Get(id);
+            return View(brand);
         }
 
         [HttpPost]
 
-        public IActionResult Update(Brand model)
+        public async Task<IActionResult> Update(int id, string name, int displayOrder)
         {
-            _productAppService.UpdateBrand(model);
+            await _brandAppService.Update(id,name,displayOrder);
             return RedirectToAction("Update");
         }
         [HttpGet]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            _productAppService.RemoveBrand(id);
+            await _brandAppService.Delete(id);
             return RedirectToAction("Index");
 
         }

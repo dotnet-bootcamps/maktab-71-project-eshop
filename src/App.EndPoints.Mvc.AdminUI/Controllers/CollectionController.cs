@@ -1,20 +1,20 @@
-﻿using App.Domain.Core.Product.Contracts.Repositories;
-using App.Domain.Core.Product.Entities;
+﻿using App.Domain.Core.Product.Contracts.AppServices;
 using Microsoft.AspNetCore.Mvc;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
     public class CollectionController : Controller
     {
-        private readonly ICollectionCommandRepository _repository;
-        public CollectionController(ICollectionCommandRepository repository)
+        private readonly ICollectionAppService _collectionAppService;
+
+        public CollectionController(ICollectionAppService collectionAppService)
         {
-            _repository = repository;
+            _collectionAppService = collectionAppService;
         }
-        public IActionResult Index()
+        public async  Task<IActionResult> Index()
         {
-            var record = _repository.GetAll();
-            return View(record);
+            var collections =await _collectionAppService.GetAll();
+            return View(collections);
         }
 
         [HttpGet]
@@ -24,30 +24,30 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Collection model)
+        public async Task<IActionResult> Create(string name)
         {
-            _repository.Create(model);
+            await _collectionAppService.Create(name);
             return RedirectToAction("Index");
         }
 
         [HttpGet]
-        public IActionResult Update(int id)
+        public async Task<IActionResult> Update(int id)
         {
-            var record = _repository.GetById(id);
-            return View(record);
+            var collection = await _collectionAppService.Get(id);
+            return View(collection);
         }
 
         [HttpPost]
 
-        public IActionResult Update(Collection model)
+        public async Task<IActionResult> Update(int id, string name, bool isDeleted)
         {
-            _repository.Update(model);
+            await _collectionAppService.Update(id, name, isDeleted);
             return RedirectToAction("Update");
         }
         [HttpGet]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            _repository.Remove(id);
+            await _collectionAppService.Delete(id);
             return RedirectToAction("Index");
 
         }

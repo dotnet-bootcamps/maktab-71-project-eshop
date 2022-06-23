@@ -8,7 +8,7 @@ namespace App.Domain.Core.Product.Entities
         public Brand()
         {
             Products = new HashSet<Product>();
-            CreationDate = DateTime.Now;
+            
         }
 
         public int Id { get; set; }

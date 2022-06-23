@@ -26,9 +26,4 @@
     <ProjectReference Include="..\App.Infrastructures.Database.SqlServer\App.Infrastructures.Database.SqlServer.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\ViewModels\BaseData\" />
-    <Folder Include="Models\ViewModels\Product\" />
-  </ItemGroup>
-
 </Project>

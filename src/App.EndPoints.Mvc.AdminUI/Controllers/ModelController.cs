@@ -6,17 +6,17 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
     public class ModelController : Controller
     {
-        private readonly IProductAppService _productAppService;
+        private readonly IModelAppService _modelAppService;
 
-        public ModelController(IProductAppService productAppService)
+        public ModelController(IModelAppService modelAppService)
         {
-            _productAppService = productAppService;
+            _modelAppService = modelAppService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var operatorId = 10;
-            var models = _productAppService.GetAllModels(operatorId);
+            var models = await _modelAppService.GetAll();
             return View(models);
         }
 
@@ -27,30 +27,30 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Model model)
+        public async Task<IActionResult> Create(string name, int parentModelId, int brandId)
         {
-            _productAppService.CreateModel(model);
+            await _modelAppService.Create(name, parentModelId, brandId);
             return RedirectToAction("Index");
         }
 
         [HttpGet]
-        public IActionResult Update(int id)
+        public async Task<IActionResult> Update(int id)
         {
-            var record = _productAppService.GetModelById(id);
-            return View(record);
+            var model = await _modelAppService.Get(id);
+            return View(model);
         }
 
         [HttpPost]
 
-        public IActionResult Update(Model model)
+        public async Task<IActionResult> Update(int id, string name, int parentModelId, int brandId, bool isDeleted)
         {
-            _productAppService.UpdateModel(model);
+            await _modelAppService.Update(id, name, parentModelId,brandId, isDeleted);
             return RedirectToAction("Update");
         }
         [HttpGet]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            _productAppService.RemoveModel(id);
+            await _modelAppService.Delete(id);
             return RedirectToAction("Index");
 
         }

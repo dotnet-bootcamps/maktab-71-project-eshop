@@ -6,16 +6,16 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
     public class TagController : Controller
     {
-        private readonly IProductAppService _productAppService;
+        private readonly ITagAppService _tagAppService;
 
-        public TagController(IProductAppService productAppService)
+        public TagController(ITagAppService tagAppService)
         {
-            _productAppService = productAppService;
+            _tagAppService = tagAppService;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var operatorId = 5;
-            var tags=_productAppService.GetAllTags(operatorId);
+            var tags = await _tagAppService.GetAll();
             return View(tags);
         }
 
@@ -26,30 +26,30 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Tag model)
+        public async Task<IActionResult> Create(string name, int tagCategoryId, bool hasValue)
         {
-            _productAppService.CreateTag(model);
+            await _tagAppService.Create(name, tagCategoryId, hasValue);
             return RedirectToAction("Index");
         }
 
         [HttpGet]
-        public IActionResult Update(int id)
+        public async Task<IActionResult> Update(int id)
         {
-            var record = _productAppService.GetTagById(id);
-            return View(record);
+            var tag = await _tagAppService.Get(id);
+            return View(tag);
         }
 
         [HttpPost]
 
-        public IActionResult Update(Tag model)
+        public async Task<IActionResult> Update(int id, string name, int tagCategoryId, bool hasValue, bool isDeleted)
         {
-            _productAppService.UpdateTag(model);
+            await _tagAppService.Update(id, name, tagCategoryId,hasValue,isDeleted);
             return RedirectToAction("Update");
         }
         [HttpGet]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            _productAppService.RemoveTag(id);
+            await _tagAppService.Delete(id);
             return RedirectToAction("Index");
         }
     }

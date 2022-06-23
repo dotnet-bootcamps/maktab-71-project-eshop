@@ -1,22 +1,21 @@
-﻿using App.Domain.Core.Product.Contracts.AppServices;
-using App.Domain.Core.Product.Contracts.Repositories;
-using App.Domain.Core.Product.Entities;
+﻿using App.Domain.Core.BaseData.Contracts.AppServices;
 using Microsoft.AspNetCore.Mvc;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly IProductAppService _productAppService;
-        public CategoryController(ICategoryRepository repository,IProductAppService productAppService)
+        private readonly ICategoryAppService _categoryAppService;
+
+        public CategoryController(ICategoryAppService categoryAppService)
         {
-            _productAppService = productAppService;
+            _categoryAppService = categoryAppService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var operatorId = 10;
-            var categories=_productAppService.GetAllCategories(operatorId);
+            var categories = await _categoryAppService.GetAll();
             return View(categories);
         }
 
@@ -27,30 +26,30 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Category model)
+        public async Task<IActionResult> Create(string name, int displayOrder, int parentCategoryId)
         {
-            _productAppService.CreateCategory(model);
+            await _categoryAppService.Create(name, displayOrder, parentCategoryId);
             return RedirectToAction("Index");
         }
 
         [HttpGet]
-        public IActionResult Update(int id)
+        public async Task<IActionResult> Update(int id)
         {
-            var record = _productAppService.GetCategoryById(id);
-            return View(record);
+            var category = await _categoryAppService.Get(id);
+            return View(category);
         }
 
         [HttpPost]
 
-        public IActionResult Update(Category model)
+        public async Task<IActionResult> Update(int id, string name, int displayOrder, int parentCategoryId, bool isActive, bool isDeleted)
         {
-            _productAppService.UpdateCategory(model);
+            await _categoryAppService.Update(id, name, displayOrder, parentCategoryId, isActive, isDeleted);    
             return RedirectToAction("Update");
         }
         [HttpGet]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            _productAppService.RemoveCategory(id);
+            await _categoryAppService.Delete(id);
             return RedirectToAction("Index");
         }
     }
