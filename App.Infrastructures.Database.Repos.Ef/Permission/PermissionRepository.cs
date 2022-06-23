@@ -9,7 +9,7 @@ namespace App.Infrastructures.Database.Repos.Ef.Permission
 {
     public class PermissionRepository : IPermissionRepository
     {
-        public List<int> GetOperatorPermissions(int operatorId)
+        public Task<List<int>> GetOperatorPermissions(int operatorId)
         {
             throw new NotImplementedException();
         }

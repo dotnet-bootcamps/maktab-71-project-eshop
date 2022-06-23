@@ -1,9 +1,6 @@
-﻿@model ColorViewModel
+﻿@model App.EndPoints.Mvc.AdminUI.Models.ViewModels.Product.ColorInputViewModel
 
-<form method="post" asp-controller="Colors" asp-action="SubmitCreatedColor">
-    <label asp-for="Id">Id:</label><br>
-    <input type="text" asp-for="Id" readonly><br>
-
+<form method="post" asp-controller="Colors" asp-action="Create">
     <label asp-for="Name">Name:</label><br>
     <input type="text" asp-for="Name"><br>
 

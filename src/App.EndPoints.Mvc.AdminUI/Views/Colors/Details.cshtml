@@ -1,5 +1,5 @@
-﻿
-@model ColorViewModel
+﻿@model App.EndPoints.Mvc.AdminUI.Models.ViewModels.Product.ColorOutputViewModel
+@*@model ColorViewModel*@
 
 <html>
 
@@ -26,17 +26,20 @@
             <tr>
                 <th>شناسه</th>
                 <th>نام</th>
+                <th>کد</th>
                 <th>تاریخ ایجاد</th>
+                <th> وضعیت حذف</th>
             </tr>
             <tr>
                 <td>@Model.Id</td>
                 <td>@Model.Name</td>
                 <td>@Model.Code</td>
                 <td>@Model.CreationDate.ToShortDateString()</td>
+                <td>@Model.IsDeleted</td>
             </tr>
         </table>
         <br><br>
-        <a type="button" class="btn btn-danger" style="margin-bottom:8px" asp-action="Back" asp-controller="Colors">بازگشت</a>
+        <a type="button" class="btn btn-danger" style="margin-bottom:8px" asp-action="Index" asp-controller="Colors">بازگشت</a>
     </body>
 
 </html>

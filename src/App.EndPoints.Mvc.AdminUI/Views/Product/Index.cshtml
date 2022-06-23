@@ -1,13 +1,12 @@
-﻿@using App.Domain.Core.Product.Entities
-
-@model List<Product>
+﻿@using App.Domain.Core.Product.Dtos
+@model List<ProductDTO>
 <div class="container p-3">
     <div class="row pt-4">
         <div class="col-6">
             <h2 class="text-primary">Product List</h2>
         </div>
         <div class="col-6">
-            <a class="btn btn-primary" asp-controller="Product" asp-action="Create"><i class="fas fa-plus"></i></a>
+            <a class="btn btn-primary" asp-controller="Product" asp-action="Create"><i class="fas fa-plus"></i>New Product</a>
         </div>
     </div>
     <br />
@@ -19,9 +18,20 @@
                 <thead>
                     <tr>
                         <th>Id</th>
-                        <th>Product Name</th>
+                        <th>Name</th>
+                        <th>Weight</th>
+                        <th>Count</th>
                         <th>Price</th>
+                        <th>CreationDate</th>
+                        <th>Description</th>
                         <th>Category Name</th>
+                        <th>Brand Name</th>
+                        <th>Model Name</th>
+                        <th>OperatorId</th>
+                        <th>IsOrginal</th>
+                        <th>IsShowPrice</th>
+                        <th>IsActive</th>
+                        <th>IsDeleted</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -31,13 +41,24 @@
                             <tr>
                                 <td width="10%">@item.Id</td>
                                 <td width="15%">@item.Name</td>
+                                <td width="15%">@item.Weight</td>
+                                <td width="15%">@item.Count</td>
                                 <td width="15%">@item.Price</td>
-                                <td width="20%">@item.Category.Name</td>
+                                <td width="15%">@item.CreationDate</td>
+                                <td width="15%">@item.Description</td>
+                                <td width="20%">@item.CategoryName</td>
+                                <td width="20%">@item.BrandName</td>
+                                <td width="20%">@item.ModelName</td>
+                                <td width="20%">@item.OperatorId</td>
+                                <td width="20%">@item.IsOrginal</td>
+                                <td width="20%">@item.IsShowPrice</td>
+                                <td width="20%">@item.IsActive</td>
+                                <td width="20%">@item.IsDeleted</td>
 
                                 <td width="20%">
                                     <div class="w-75 btn-group " role="group" >
-                                        <a asp-controller="Product" asp-action="Edit" asp-route-Id="@item.Id" class="btn btn-primary m-1 p-1"><i class="fas fa-edit"></i>Edt</a>
-                                        <a asp-controller="Product" asp-action="Delete" asp-route-Id="@item.Id" class="btn btn-danger m-1 p-1"><i class="far fa-trash-alt"></i>Delete</a>
+                                        <a asp-controller="Product" asp-action="Update" asp-route-id="@item.Id" class="btn btn-primary m-1 p-1"><i class="fas fa-edit"></i>Update</a>
+                                        <a asp-controller="Product" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger m-1 p-1"><i class="far fa-trash-alt"></i>Delete</a>
                                     </div>
                                 </td>
 
