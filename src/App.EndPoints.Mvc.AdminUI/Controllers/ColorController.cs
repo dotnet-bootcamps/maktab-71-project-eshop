@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using App.Domain.Core.BaseData.Contracts.AppServices;
+using App.EndPoints.Mvc.AdminUI.Models.ViewModels.BaseData;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
@@ -17,7 +18,15 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         {
             var operatorId = 10;
             var colors = await _colorAppService.GetAll();
-            return View(colors);
+            var colorModel = colors.Select(c => new ColorOutputViewModel()
+            {
+                Code = c.Code,
+                Name = c.Name,
+                Id = c.Id,
+                CreationDate = c.CreationDate,
+                IsDeleted = c.IsDeleted
+            }).ToList();
+            return View(colorModel);
         }
 
         [HttpGet]
@@ -27,9 +36,9 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(string name, string code)
+        public async Task<IActionResult> Create(ColorInputViewModel color)
         {
-            await _colorAppService.Create(name, code);
+            await _colorAppService.Create(color.Name, color.Code);
             return RedirectToAction("Index");
         }
 
@@ -37,14 +46,22 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         public async Task<IActionResult> Update(int id)
         {
             var color = await _colorAppService.Get(id);
-            return View(color);
+            var colorInput = new ColorOutputViewModel()
+            {
+                IsDeleted = color.IsDeleted,
+                CreationDate = color.CreationDate,
+                Code = color.Code,
+                Id = id,
+                Name = color.Name
+            };
+            return View(colorInput);
         }
 
         [HttpPost]
 
-        public async Task<IActionResult> Update(int id, string name, string code, bool isDeleted)
+        public async Task<IActionResult> Update(ColorOutputViewModel color)
         {
-            await _colorAppService.Update(id, name, code, isDeleted);
+            await _colorAppService.Update(color.Id, color.Name, color.Code, color.IsDeleted);
             return RedirectToAction("Update");
         }
         [HttpGet]

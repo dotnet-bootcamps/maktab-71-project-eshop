@@ -1,4 +1,5 @@
 ﻿using App.Domain.Core.BaseData.Contracts.AppServices;
+using App.EndPoints.Mvc.AdminUI.Models.ViewModels.BaseData;
 using Microsoft.AspNetCore.Mvc;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
@@ -16,7 +17,17 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         {
             var operatorId = 10;
             var categories = await _categoryAppService.GetAll();
-            return View(categories);
+            var categoryModels = categories.Select(p => new CategoryOutPutViewModel()
+            {
+                Id = p.Id,
+                Name = p.Name,
+                DisplayOrder = p.DisplayOrder,
+                CreationDate = p.CreationDate,
+                ParentCagetoryId = p.ParentCagetoryId,
+                IsDeleted = p.IsDeleted,
+                IsActive = p.IsActive
+            }).ToList().OrderBy(x=>x.DisplayOrder);
+            return View(categoryModels);
         }
 
         [HttpGet]
@@ -26,9 +37,9 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(string name, int displayOrder, int parentCategoryId)
+        public async Task<IActionResult> Create(CategoryInputViewModel category)
         {
-            await _categoryAppService.Create(name, displayOrder, parentCategoryId);
+            await _categoryAppService.Create(category.Name, category.DisplayOrder, category.ParentCagetoryId);
             return RedirectToAction("Index");
         }
 
@@ -36,14 +47,20 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         public async Task<IActionResult> Update(int id)
         {
             var category = await _categoryAppService.Get(id);
+            var categoryInput = new CategoryOutPutViewModel()
+            {
+                DisplayOrder = category.DisplayOrder,
+                Name = category.Name,
+                ParentCagetoryId = category.ParentCagetoryId
+            };
             return View(category);
         }
 
         [HttpPost]
 
-        public async Task<IActionResult> Update(int id, string name, int displayOrder, int parentCategoryId, bool isActive, bool isDeleted)
+        public async Task<IActionResult> Update(CategoryOutPutViewModel category)
         {
-            await _categoryAppService.Update(id, name, displayOrder, parentCategoryId, isActive, isDeleted);    
+            await _categoryAppService.Update(category.Id, category.Name, category.DisplayOrder, category.ParentCagetoryId, category.IsActive, category.IsDeleted);    
             return RedirectToAction("Update");
         }
         [HttpGet]

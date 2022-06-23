@@ -1,5 +1,6 @@
 ﻿using App.Domain.Core.Product.Contracts.AppServices;
 using App.Domain.Core.Product.Entities;
+using App.EndPoints.Mvc.AdminUI.Models.ViewModels.Product;
 using Microsoft.AspNetCore.Mvc;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
@@ -16,7 +17,16 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         {
             var operatorId = 5;
             var tags = await _tagAppService.GetAll();
-            return View(tags);
+            var tagModels=tags.Select(x => new TagOutputViewModel()
+            {
+                Id = x.Id,
+                Name = x.Name,
+                CreationDate = x.CreationDate,
+                HasValue = x.HasValue,
+                IsDeleted = x.IsDeleted,
+                TagCategoryId = x.TagCategoryId
+            }).ToList();
+            return View(tagModels);
         }
 
         [HttpGet]
@@ -26,9 +36,9 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(string name, int tagCategoryId, bool hasValue)
+        public async Task<IActionResult> Create(TagInputViewModel tag)
         {
-            await _tagAppService.Create(name, tagCategoryId, hasValue);
+            await _tagAppService.Create(tag.Name, tag.TagCategoryId, tag.HasValue);
             return RedirectToAction("Index");
         }
 
@@ -36,14 +46,23 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         public async Task<IActionResult> Update(int id)
         {
             var tag = await _tagAppService.Get(id);
-            return View(tag);
+            var tagInput = new TagOutputViewModel()
+            {
+                CreationDate = tag.CreationDate,
+                HasValue = tag.HasValue,
+                Id = id,
+                IsDeleted = tag.IsDeleted,
+                Name = tag.Name,
+                TagCategoryId = tag.TagCategoryId
+            };
+            return View(tagInput);
         }
 
         [HttpPost]
 
-        public async Task<IActionResult> Update(int id, string name, int tagCategoryId, bool hasValue, bool isDeleted)
+        public async Task<IActionResult> Update(TagOutputViewModel tag)
         {
-            await _tagAppService.Update(id, name, tagCategoryId,hasValue,isDeleted);
+            await _tagAppService.Update(tag.Id, tag.Name, tag.TagCategoryId, tag.HasValue, tag.IsDeleted);
             return RedirectToAction("Update");
         }
         [HttpGet]

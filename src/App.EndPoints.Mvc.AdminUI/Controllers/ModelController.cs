@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using App.Domain.Core.Product.Entities;
 using App.Domain.Core.Product.Contracts.AppServices;
+using App.EndPoints.Mvc.AdminUI.Models.ViewModels.Product;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
@@ -17,7 +18,16 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         {
             var operatorId = 10;
             var models = await _modelAppService.GetAll();
-            return View(models);
+            var modelView = models.Select(x => new ModelOutputViewModel()
+            {
+                Id = x.Id,
+                BrandId = x.BrandId,
+                CreationDate = x.CreationDate,
+                IsDeleted = x.IsDeleted,
+                Name = x.Name,
+                ParentModelId = x.ParentModelId
+            }).ToList();
+            return View(modelView);
         }
 
         [HttpGet]
@@ -27,9 +37,9 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(string name, int parentModelId, int brandId)
+        public async Task<IActionResult> Create(ModelInputViewModel model)
         {
-            await _modelAppService.Create(name, parentModelId, brandId);
+            await _modelAppService.Create(model.Name, model.ParentModelId, model.BrandId);
             return RedirectToAction("Index");
         }
 
@@ -37,14 +47,23 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         public async Task<IActionResult> Update(int id)
         {
             var model = await _modelAppService.Get(id);
-            return View(model);
+            var modelView = new ModelOutputViewModel()
+            {
+                Id = id,
+                Name = model.Name,
+                CreationDate = model.CreationDate,
+                IsDeleted = model.IsDeleted,
+                BrandId = model.BrandId,
+                ParentModelId = model.ParentModelId
+            };
+            return View(modelView);
         }
 
         [HttpPost]
 
-        public async Task<IActionResult> Update(int id, string name, int parentModelId, int brandId, bool isDeleted)
+        public async Task<IActionResult> Update(ModelOutputViewModel model)
         {
-            await _modelAppService.Update(id, name, parentModelId,brandId, isDeleted);
+            await _modelAppService.Update(model.Id, model.Name, model.ParentModelId,model.BrandId, model.IsDeleted);
             return RedirectToAction("Update");
         }
         [HttpGet]

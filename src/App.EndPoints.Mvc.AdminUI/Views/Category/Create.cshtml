@@ -1,4 +1,4 @@
-﻿@model Category
+﻿@model CategoryInputViewModel
 <div class="row">
     <div class="col-4">
         <form asp-controller="Category" asp-action="Create" method="post">
@@ -8,14 +8,7 @@
             </div>
             <hr />
             <div class="form-group">
-                <div class="form-check">
-                    <label class="form-check-label" asp-for=IsActive>غیر فعال</label>
-                    <input class="form-check-input" type="radio" value="false" class="form-control" asp-for=IsActive>
-                </div>
-                <div class="form-check">
-                    <label class="form-check-label" asp-for=IsActive>فعال</label>
-                    <input class="form-check-input" type="radio" value="true" class="form-control" asp-for=IsActive>
-                </div>
+                
             </div>
             <hr />
             <div class="form-group">
@@ -28,10 +21,6 @@
                 <input type="number" class="form-control" asp-for=ParentCagetoryId>
             </div>
             <hr />
-            <div class="form-group">
-                <label asp-for=CreationDate></label>
-                <input type="date" class="form-control" asp-for=CreationDate>
-            </div>
             <br />
             <button type="submit" class="btn btn-primary">ایجاد</button>
         </form>

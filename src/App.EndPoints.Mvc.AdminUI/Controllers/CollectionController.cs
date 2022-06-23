@@ -1,4 +1,5 @@
 ﻿using App.Domain.Core.Product.Contracts.AppServices;
+using App.EndPoints.Mvc.AdminUI.Models.ViewModels.Product;
 using Microsoft.AspNetCore.Mvc;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
@@ -14,6 +15,13 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         public async  Task<IActionResult> Index()
         {
             var collections =await _collectionAppService.GetAll();
+            var collectionModels=collections.Select(x=>new CollectionOutputViewModel()
+            {
+                CreationDate=x.CreationDate,
+                Id=x.Id,
+                Name=x.Name,
+                IsDeleted=x.IsDeleted
+            }).ToList();
             return View(collections);
         }
 
@@ -24,9 +32,9 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(string name)
+        public async Task<IActionResult> Create(CollectionInputViewModel collection)
         {
-            await _collectionAppService.Create(name);
+            await _collectionAppService.Create(collection.Name);
             return RedirectToAction("Index");
         }
 
@@ -34,14 +42,21 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         public async Task<IActionResult> Update(int id)
         {
             var collection = await _collectionAppService.Get(id);
-            return View(collection);
+            var collectionInput = new CollectionOutputViewModel()
+            {
+                Id = id,
+                IsDeleted = collection.IsDeleted,
+                Name = collection.Name,
+                CreationDate = collection.CreationDate,
+            };
+            return View(collectionInput);
         }
 
         [HttpPost]
 
-        public async Task<IActionResult> Update(int id, string name, bool isDeleted)
+        public async Task<IActionResult> Update(CollectionOutputViewModel collection)
         {
-            await _collectionAppService.Update(id, name, isDeleted);
+            await _collectionAppService.Update(collection.Id, collection.Name, collection.IsDeleted);
             return RedirectToAction("Update");
         }
         [HttpGet]

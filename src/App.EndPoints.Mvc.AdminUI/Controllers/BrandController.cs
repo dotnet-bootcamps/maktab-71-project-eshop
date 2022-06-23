@@ -1,4 +1,5 @@
 using App.Domain.Core.BaseData.Contracts.AppServices;
+using App.EndPoints.Mvc.AdminUI.Models.ViewModels.BaseData;
 using Microsoft.AspNetCore.Mvc;
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
@@ -15,7 +16,15 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         {
             var operatorId = 10;
             var brands= await _brandAppService.GetAll();
-            return View(brands);
+            var brandModel=brands.Select(p=>new BrandOutputViewModel()
+            {
+                CreationDate=p.CreationDate,
+                DisplayOrder=p.DisplayOrder,
+                IsDeleted=p.IsDeleted,
+                Id=p.Id,
+                Name=p.Name
+            }).ToList();
+            return View(brandModel.OrderBy(x=>x.DisplayOrder));
         }
 
         [HttpGet]
@@ -25,9 +34,9 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(string name,int displayOrder)
+        public async Task<IActionResult> Create(BrandInputVeiwModel brand)
         {
-            await _brandAppService.Create(name,displayOrder);
+            await _brandAppService.Create(brand.Name,brand.DisplayOrder);
             return RedirectToAction("Index");
         }
 
@@ -35,14 +44,21 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         public async Task<IActionResult> Update(int id)
         {
             var brand = await _brandAppService.Get(id);
-            return View(brand);
+            BrandOutputViewModel brandInput = new BrandOutputViewModel()
+            {
+                Id = id,
+                Name = brand.Name,
+                DisplayOrder = brand.DisplayOrder,
+                IsDeleted=brand.IsDeleted
+            };
+            return View(brandInput);
         }
 
         [HttpPost]
 
-        public async Task<IActionResult> Update(int id, string name, int displayOrder)
+        public async Task<IActionResult> Update(BrandOutputViewModel brand)
         {
-            await _brandAppService.Update(id,name,displayOrder);
+            await _brandAppService.Update(brand.Id,brand.Name,brand.DisplayOrder);
             return RedirectToAction("Update");
         }
         [HttpGet]
