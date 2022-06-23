@@ -1,4 +1,5 @@
-﻿using App.Domain.Core.Product.Entities;
+﻿using App.Domain.Core.Product.Dtos;
+using App.Domain.Core.Product.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,10 @@ namespace App.Domain.Core.Product.Contracts.Repositories
 {
     public interface IProductCommandRepository
     {
-       
+        Task<int> Add(ProductDto product);
+        Task Update(ProductDto product);
+        Task Remove(int Id);
+
 
     }
 }
