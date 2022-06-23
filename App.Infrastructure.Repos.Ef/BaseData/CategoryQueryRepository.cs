@@ -1,11 +1,9 @@
-﻿using App.Domain.Core.Product.Entities;
-using App.Infrastructures.Database.SqlServer.Data;
-using App.Domain.Core.Product.Contracts.Repositories;
+﻿using App.Infrastructures.Database.SqlServer.Data;
 using App.Domain.Core.BaseData.Contracts.Repositories;
 using App.Domain.Core.BaseData.Dtos;
 using Microsoft.EntityFrameworkCore;
 
-namespace App.Infrastructures.Database.SqlServer.Repositories
+namespace App.Infrastructure.Repos.Ef.BaseData
 {
     public class CategoryQueryRepository : ICategoryQueryRepository
     {

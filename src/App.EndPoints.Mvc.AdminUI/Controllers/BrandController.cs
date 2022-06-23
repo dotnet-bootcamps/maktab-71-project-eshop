@@ -1,3 +1,4 @@
+using App.Domain.Core.BaseData.Contracts.AppServices;
 using App.Domain.Core.Product.Contracts.AppServices;
 using App.Domain.Core.Product.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -5,11 +6,11 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
     public class BrandController : Controller
     {
-        private readonly IProductAppService _productAppService;
+        private readonly IBrandAppService _brandAppService;
 
-        public BrandController(IProductAppService productAppService)
-        {
-            _productAppService = productAppService;
+        public BrandController(IBrandAppService brandAppService)
+        {            
+            _brandAppService = brandAppService;
         }
 
         public IActionResult Index()

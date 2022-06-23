@@ -1,15 +1,15 @@
 ﻿using App.Infrastructures.Database.SqlServer.Data;
 using Microsoft.EntityFrameworkCore;
+using App.Domain.Core.BaseData.Contracts.Repositories;
+using App.Domain.Core.BaseData.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using App.Domain.Core.BaseData.Contracts.Repositories;
 using System.Linq.Expressions;
-using App.Domain.Core.BaseData.Dtos;
 
-namespace App.Infrastructures.Database.SqlServer.Repositories
+namespace App.Infrastructure.Repos.Ef.BaseData
 {
 
     public class BrandQueryRepository: IBrandQueryRepository

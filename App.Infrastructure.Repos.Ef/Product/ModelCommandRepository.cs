@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace App.Infrastructures.Database.SqlServer.Repositories
+namespace App.Infrastructure.Repos.Ef.Product
 {
     public class ModelCommandRepository : IModelCommandRepository
     {

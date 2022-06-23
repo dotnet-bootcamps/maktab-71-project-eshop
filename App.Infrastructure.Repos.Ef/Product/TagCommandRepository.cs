@@ -3,7 +3,7 @@ using App.Infrastructures.Database.SqlServer.Data;
 using App.Domain.Core.Product.Contracts.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace App.Infrastructures.Database.SqlServer.Repositories
+namespace App.Infrastructure.Repos.Ef.Product
 {
     public class TagCommandRepository : ITagCommandRepository
     {

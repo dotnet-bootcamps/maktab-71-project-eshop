@@ -22,7 +22,13 @@
     <ProjectReference Include="..\..\App.Domain.AppServices\App.Domain.AppServices.csproj" />
     <ProjectReference Include="..\..\App.Domain.Core\App.Domain.Core.csproj" />
     <ProjectReference Include="..\..\App.Domain.Services\App.Domain.Services.csproj" />
+    <ProjectReference Include="..\..\App.Infrastructure.Repos.Ef\App.Infrastructure.Repos.Ef.csproj" />
     <ProjectReference Include="..\App.Infrastructures.Database.SqlServer\App.Infrastructures.Database.SqlServer.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\ViewModels\BaseData\" />
+    <Folder Include="Models\ViewModels\Product\" />
   </ItemGroup>
 
 </Project>

@@ -1,13 +1,13 @@
-﻿using App.Domain.Core.User.Entities;
+﻿using App.Domain.Core.User.Contracts.Repositories;
+using App.Domain.Core.User.Entities;
 using App.Infrastructures.Database.SqlServer.Data;
-using App.Infrastructures.Database.SqlServer.Repositories.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace App.Infrastructures.Database.SqlServer.Repositories
+namespace App.Infrastructure.Repos.Ef.User
 {
     public class OperatorCommandRepository : IOperatorCommandRepository
     {

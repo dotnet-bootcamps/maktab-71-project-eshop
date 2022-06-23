@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace App.Domain.Core.Product.Contracts.Repositories
+namespace App.Infrastructure.Repos.Ef.Permission
 {
     public class PermissionQueryRepository : IPermissionQueryRepository
     {

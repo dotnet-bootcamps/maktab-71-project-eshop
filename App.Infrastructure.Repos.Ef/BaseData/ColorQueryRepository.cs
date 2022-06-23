@@ -4,7 +4,7 @@ using App.Domain.Core.BaseData.Entities;
 using App.Infrastructures.Database.SqlServer.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace App.Infrastructures.Database.SqlServer.Repositories
+namespace App.Infrastructure.Repos.Ef.BaseData
 {
     public class ColorQueryRepository : IColorQueryRepository
     {
