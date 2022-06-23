@@ -27,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.Domain.Services", "App.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.Domain.AppServices", "App.Domain.AppServices\App.Domain.AppServices.csproj", "{51C1023A-98BA-4619-92AB-F06A55533569}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App.Infrastructures.Database.Repos.Ef", "App.Infrastructures.Database.Repos.Ef\App.Infrastructures.Database.Repos.Ef.csproj", "{50CA22F0-53A2-4681-A0CF-D52C3F8EC892}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.Infrastructures.Database.Repos.Ef", "App.Infrastructures.Database.Repos.Ef\App.Infrastructures.Database.Repos.Ef.csproj", "{50CA22F0-53A2-4681-A0CF-D52C3F8EC892}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

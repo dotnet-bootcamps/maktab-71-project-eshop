@@ -38,7 +38,7 @@ namespace App.Domain.Core.Product.Entities
 
         public virtual Brand Brand { get; set; } = null!;
         public virtual Category Category { get; set; } = null!;
-        public virtual Model Model { get; set; } = null!;
+        public virtual ProductModel Model { get; set; } = null!;
         public virtual OperatorEntities.Operator Operator { get; set; } = null!;
 
         public virtual ICollection<CollectionProduct> CollectionProducts { get; set; }

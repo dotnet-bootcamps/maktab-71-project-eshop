@@ -1,55 +1,102 @@
 ﻿
+using App.Domain.Core.BaseData.Contarcts.AppServices;
 using App.Domain.Core.BaseData.Entities;
-
+using App.EndPoints.Mvc.AdminUI.Models.ViewModels.Product;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
     public class ModelController : Controller
     {
+        private readonly IProductModelAppService _productModelAppService;
+        private readonly IBrandAppService _brandAppService;
 
-        public IActionResult Index()
+        public ModelController(IProductModelAppService productModelAppService, IBrandAppService brandAppService)
         {
-            //var models = _modelRepostitory.GetAll();
-            //return View(models);
-            return View();
+            _productModelAppService = productModelAppService;
+            _brandAppService = brandAppService;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var productModels = await _productModelAppService.GetProductModels();
+            var productModel = productModels.Select(p => new ProductModelOutputViewModel()
+            {
+                Id = p.Id,
+                Name = p.Name,
+                BrandName = p.Brand.Name,
+                CreationDate = p.CreationDate,
+                ParentModelId = p.ParentModelId,
+                IsDeleted = p.IsDeleted,
+            }).ToList();
+            return View(productModel);
         }
 
 
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            ViewBag.Brands = (await _brandAppService.GetBrands())
+                .Select(s => new SelectListItem
+                {
+                    Text = s.Name,
+                    Value = s.Id.ToString()
+                });
             return View();
         }
 
         [HttpPost]
-        public IActionResult Create(Model model)
+        public async Task<IActionResult> Create(ProductModelOutputViewModel ProductModel)
         {
-            //_modelRepostitory.Add(model);
-            return RedirectToAction("Index");
+            await _productModelAppService.SetProductModel(ProductModel.Name, ProductModel.ParentModelId, ProductModel.BrandId);
+            return RedirectToAction("");
         }
 
         [HttpGet]
-        public IActionResult Update(int Id)
+        public async Task<IActionResult> Update(int id)
         {
-            //var model = _modelRepostitory.GetById(Id);
-            //return View(model);
-            return View();
+            ViewBag.Brands = (await _brandAppService.GetBrands())
+            .Select(s => new SelectListItem
+            {
+                Text = s.Name,
+                Value = s.Id.ToString()
+            });
+
+            var productModel = _productModelAppService.GetProductModel(id);
+            ProductModelOutputViewModel productModelInput = new ProductModelOutputViewModel()
+            {
+                Id = id,
+                Name = productModel.Name,
+                BrandName = productModel.Brand.Name,
+                CreationDate = productModel.CreationDate,
+                ParentModelId = productModel.ParentModelId,
+                IsDeleted = productModel.IsDeleted,
+            };
+            return View(productModelInput);
         }
 
         [HttpPost]
-        public IActionResult Update(Model model)
+        public IActionResult Update(ProductModelOutputViewModel ProductModel)
         {
-            //_modelRepostitory.Update(model);
-            return RedirectToAction("Index");
+            _productModelAppService.UpdateProductModel(ProductModel.Id, ProductModel.Name,
+                ProductModel.ParentModelId, ProductModel.BrandId);
+            return RedirectToAction("");
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            var productModel = _productModelAppService.GetProductModel(id);
+            return View(productModel);
         }
 
         [HttpPost]
-        public IActionResult Delete(int Id)
+        public IActionResult DeleteProductModel(int id)
         {
-            //_modelRepostitory.Delete(Id);
-            return RedirectToAction("Index");
+            _productModelAppService.DeleteProductModel(id);
+            return RedirectToAction("");
         }
+
     }
 }

@@ -27,7 +27,7 @@ namespace App.Infrastructures.Database.SqlServer.Data
         public virtual DbSet<Comment> Comments { get; set; } = null!;
         public virtual DbSet<FileType> FileTypes { get; set; } = null!;
         public virtual DbSet<FileTypeExtention> FileTypeExtentions { get; set; } = null!;
-        public virtual DbSet<Model> Models { get; set; } = null!;
+        public virtual DbSet<ProductModel> Models { get; set; } = null!;
         public virtual DbSet<Operator> Operators { get; set; } = null!;
         public virtual DbSet<Product> Products { get; set; } = null!;
         public virtual DbSet<ProductColor> ProductColors { get; set; } = null!;
@@ -122,7 +122,7 @@ namespace App.Infrastructures.Database.SqlServer.Data
                 entity.Property(e => e.Name).HasMaxLength(250);
             });
 
-            modelBuilder.Entity<Model>(entity =>
+            modelBuilder.Entity<ProductModel>(entity =>
             {
                 entity.Property(e => e.Name).HasMaxLength(250);
             });

@@ -64,6 +64,13 @@ builder.Services.AddScoped<ICategoryCommandRepository, CategoryCommandRepository
 builder.Services.AddScoped<ICategoryQueryRepository, CategoryQueryRepository>();
 #endregion Category
 
+#region ProductModel
+builder.Services.AddScoped<IProductModelAppService, ProductModelAppService>();
+builder.Services.AddScoped<IProductModelService, ProductModelService>();
+builder.Services.AddScoped<IProductModelCommandRepository, ProductModelCommandRepository>();
+builder.Services.AddScoped<IProductModelQueryRepository, ProductModelQueryRepository>();
+#endregion ProductModel
+
 
 #region Permission
 builder.Services.AddScoped<IPermissionService, PermissionService>();

@@ -1,0 +1,45 @@
+﻿@using App.EndPoints.Mvc.AdminUI.Models.ViewModels.Product
+
+@model ProductModelOutputViewModel
+
+@{
+	ViewData["Title"] = "ویرایش مدل";
+}
+
+<h3>ویرایش مدل</h3>
+<form>
+
+	<div class="form-group">
+		<label asp-for="Id"></label>
+		<input class="form-control" asp-for="Id" disabled>
+	</div>
+
+	<div class="form-group">
+		<label asp-for="Name"></label>
+		<input class="form-control" asp-for="Name">
+	</div>
+
+	<div class="form-group">
+		<label asp-for="ParentModelId"></label>
+		<input class="form-control" asp-for="ParentModelId">
+	</div>
+	
+    <div class="form-group row p-3">
+        <div class="col-4">
+            <label asp-for="BrandId"></label>
+        </div>
+        <div class="col-8">
+            <select asp-for="BrandId" class="form-control" asp-items="@ViewBag.Brands">
+                <option disabled selected>-- Select Brand --</option>
+            </select>
+            <span asp-validation-for="BrandId" class="text-danger"></span>
+        </div>
+    </div>
+
+
+	<div style="float:left; margin-top:5px;">
+		<button type="submit" class="btn btn-primary"  asp-action="Update" formmethod="post">ویرایش</button>
+		<button type="submit" class="btn btn-danger" asp-action="Index">انصراف</button>
+	</div>
+
+</form>
