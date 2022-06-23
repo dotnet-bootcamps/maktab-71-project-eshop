@@ -80,7 +80,10 @@ builder.Services.AddScoped<ITagService, TagService>();
 builder.Services.AddScoped<ITagAppService, TagAppService>();
 #endregion
 #region Product
-
+builder.Services.AddScoped<IProductCommandRepository, ProductCommandRepository>();
+builder.Services.AddScoped<IProductQueryRepository, ProductQueryRepository>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IProductAppService, ProductAppService>();
 #endregion
 
 
