@@ -24,7 +24,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<AppDbContext>(option =>
 {
-    option.UseSqlServer("Data Source=(LocalDb)\\MSSQLLocalDB; Initial Catalog=DotNetShopDb; Integrated Security=TRUE");
+    option.UseSqlServer("Data Source=MASOUD;Initial Catalog=DotNetShopDb;Persist Security Info=True;User ID=sa;Password=25915491");
 });
 
 
@@ -39,12 +39,23 @@ builder.Services.AddScoped<IBaseDataService, BaseDataService>();
 builder.Services.AddScoped<IBaseDataCommandRepository, BaseDataCommandRepository>();
 builder.Services.AddScoped<IBaseDataQueryRepository, BaseDataQueryRepository>();
 #endregion BaseData
+
 #region Brand
 builder.Services.AddScoped<IBrandAppService, BrandAppService>();
 builder.Services.AddScoped<IBrandService, BrandService>();
 builder.Services.AddScoped<IBrandCommandRepository, BrandCommandRepository>();
 builder.Services.AddScoped<IBrandQueryRepository, BrandQueryRepository>();
 #endregion Brand
+
+
+#region Color
+builder.Services.AddScoped<IColorAppService, ColorAppService>();
+builder.Services.AddScoped<IColorService, ColorService>();
+builder.Services.AddScoped<IColorCommandRepository, ColorCommandRepository>();
+builder.Services.AddScoped<IColorQueryRepository, ColorQueryRepository>();
+#endregion Color
+
+
 
 #region Permission
 builder.Services.AddScoped<IPermissionService, PermissionService>();

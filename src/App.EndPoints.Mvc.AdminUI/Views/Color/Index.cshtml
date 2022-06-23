@@ -1,0 +1,50 @@
+﻿@model List<App.EndPoints.Mvc.AdminUI.Models.ViewModels.Product.ColorOutputViewModel>
+@{
+	ViewData["Title"] = "لیست رنگ‌ها";
+	int rowCount = 1;
+}
+
+<h3 style="float:right;">لیست رنگ‌ها</h3>
+<div style="float:left;">
+	<a class="btn btn-success" asp-controller="Color" asp-action="Create">
+		جدید
+	</a>
+</div>
+
+<br>
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th scope="col">#</th>
+			<th scope="col">شناسه</th>
+			<th scope="col">نام</th>
+			<th scope="col">کد رنگ</th>
+			<th scope="col">تاریخ ایجاد</th>
+			<th scope="col">عملیات</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var color in Model)
+		{
+			<tr>
+				<th scope="row">
+					@rowCount
+				</th>
+				<td>@color.Id</td>
+				<td>@color.Name</td>
+				<td>@color.Code</td>
+				<td>@color.CreationDate</td>
+				<td>
+					<a class="btn btn-primary" asp-controller="Color" asp-action="Update" asp-route-id=@color.Id>
+						ویرایش
+					</a>
+					|
+					<a class="btn btn-danger" asp-controller="Color" asp-action="Delete" asp-route-id="@color.Id">
+						حذف
+					</a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>

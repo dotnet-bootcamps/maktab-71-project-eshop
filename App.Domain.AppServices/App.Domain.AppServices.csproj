@@ -7,12 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\App.Domain.Core\App.Domain.Core.csproj" />
-    <ProjectReference Include="..\App.Domain.Services\App.Domain.Services.csproj" />
+    <Compile Remove="Operator\**" />
+    <EmbeddedResource Remove="Operator\**" />
+    <None Remove="Operator\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Operator\" />
+    <ProjectReference Include="..\App.Domain.Core\App.Domain.Core.csproj" />
+    <ProjectReference Include="..\App.Domain.Services\App.Domain.Services.csproj" />
   </ItemGroup>
 
 </Project>

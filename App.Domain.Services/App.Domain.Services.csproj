@@ -7,11 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\App.Domain.Core\App.Domain.Core.csproj" />
+    <Compile Remove="Operator\**" />
+    <EmbeddedResource Remove="Operator\**" />
+    <None Remove="Operator\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Operator\" />
+    <ProjectReference Include="..\App.Domain.Core\App.Domain.Core.csproj" />
   </ItemGroup>
 
 </Project>
