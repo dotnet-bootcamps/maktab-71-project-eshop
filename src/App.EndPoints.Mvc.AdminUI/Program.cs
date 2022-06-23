@@ -40,6 +40,7 @@ builder.Services.AddScoped<IOperatorQueryRepository, OperatorQueryRepository>();
 #endregion
 #region Permission
 builder.Services.AddScoped<IPermissionCommandRepository, PermissionCommandRepository>();
+builder.Services.AddScoped<IPermissionQueryRepository, PermissionQueryRepository>();
 builder.Services.AddScoped<IPermissionService, PermissionService>();
 #endregion
 #region Brand
@@ -96,7 +97,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-//app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();

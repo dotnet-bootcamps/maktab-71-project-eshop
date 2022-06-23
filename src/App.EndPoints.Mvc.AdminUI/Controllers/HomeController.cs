@@ -17,11 +17,11 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
         public IActionResult Index()
         {
-            IEnumerable<Brand> result = _appDbContext.Brands.Where(x=>x.Id==1);
-            foreach (Brand brand in result)
-            {
-                var t=brand.Name;
-            }
+            //IEnumerable<Brand> result = _appDbContext.Brands.Where(x=>x.Id==1);
+            //foreach (Brand brand in result)
+            //{
+            //    var t=brand.Name;
+            //}
             return View();
         }
 

@@ -24,7 +24,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
                 Id=p.Id,
                 Name=p.Name
             }).ToList();
-            return View(brandModel.OrderBy(x=>x.DisplayOrder));
+            return View(brandModel);
         }
 
         [HttpGet]

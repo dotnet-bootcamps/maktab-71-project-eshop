@@ -26,7 +26,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
                 ParentCagetoryId = p.ParentCagetoryId,
                 IsDeleted = p.IsDeleted,
                 IsActive = p.IsActive
-            }).ToList().OrderBy(x=>x.DisplayOrder);
+            }).ToList();
             return View(categoryModels);
         }
 
