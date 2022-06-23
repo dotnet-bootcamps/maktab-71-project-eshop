@@ -12,43 +12,40 @@ namespace App.Infrastructures.Database.SqlServer.Repositories
         public TagCommandRepository(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
+        }        
+
+        public async Task<int> Add(string name, int tagCategoryId, bool hasValue, DateTime creationDate, bool isDeleted)
+        {
+            var tag = new Tag()
+            {
+                Name = name,
+                CreationDate = creationDate,
+                IsDeleted = isDeleted,
+                HasValue = hasValue,
+                TagCategoryId = tagCategoryId
+            };
+            _appDbContext.Tags.Add(tag);
+            await _appDbContext.SaveChangesAsync();
+            return tag.Id;
         }
 
-        public int Create(Tag model)
+        public async Task Remove(int id)
         {
-            _appDbContext.Tags.Add(model);
-            _appDbContext.SaveChanges();
-            return model.Id;
-        }
-        public void Update(Tag tag)
-        {
-            var record = _appDbContext.Tags.First(p => p.Id == tag.Id);
-            record.Name = tag.Name;
-            record.CreationDate = tag.CreationDate;
-            _appDbContext.SaveChanges();
-        }
-        public bool Remove(int id)
-        {
-            var record = _appDbContext.Tags.FirstOrDefault(p => p.Id == id);
-            _appDbContext.Tags.Remove(record);
-            _appDbContext.SaveChanges();
-            return true;
-        }
-        public List<Tag> GetAll()
-        {
-            var record = _appDbContext.Tags.ToList();
-            return record;
-        }
-        public Tag GetById(int id)
-        {
-            var record = _appDbContext.Tags.FirstOrDefault(p => p.Id == id);
-            return record;
+            var tag = await _appDbContext.Tags.FirstOrDefaultAsync(x => x.Id == id);
+            _appDbContext.Tags.Remove(tag);
+            await _appDbContext.SaveChangesAsync();
         }
 
-        public Tag GetByName(string name)
+        public async Task Update(int id, string name, int tagCategoryId, bool hasValue, bool isDeleted)
         {
-            var record = _appDbContext.Tags.FirstOrDefault(p => p.Name == name);
-            return record;
-        }
+            var model = await _appDbContext.Tags.FirstOrDefaultAsync(x => x.Id == id);
+            model.Name = name;
+            model.IsDeleted = isDeleted;
+            model.TagCategoryId = tagCategoryId;
+            model.HasValue = hasValue;
+            await _appDbContext.SaveChangesAsync();
+        }        
+
+        
     }
 }

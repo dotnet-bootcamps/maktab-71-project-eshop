@@ -2,6 +2,7 @@
 using App.Domain.Core.Product.Entities;
 using App.Infrastructures.Database.SqlServer.Data;
 using App.Domain.Core.Product.Contracts.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 public class CollectionCommandRepository :ICollectionCommandRepository
 {
@@ -11,42 +12,33 @@ public class CollectionCommandRepository :ICollectionCommandRepository
     {
         _appDbContext = appDbContext;
     }
+    
 
-    public int Create(Collection model)
+    public async Task<int> Add(string name, DateTime creationDate, bool isDeleted)
     {
-        _appDbContext.Collections.Add(model);
-        _appDbContext.SaveChanges();
-        return model.Id;
-
-    }
-    public void Update(Collection model)
-    {
-        var record = _appDbContext.Collections.FirstOrDefault(p => p.Id == model.Id);
-        record.Name = model.Name;
-        record.CreationDate = model.CreationDate;
-        _appDbContext.SaveChanges();
-    }
-    public bool Remove(int id)
-    {
-        var record = _appDbContext.Collections.FirstOrDefault(p => p.Id == id);
-        _appDbContext.Collections.Remove(record);
-        _appDbContext.SaveChanges();
-        return true;
-    }
-    public List<Collection> GetAll()
-    {
-        var record = _appDbContext.Collections.ToList();
-        return record;
-    }
-    public Collection GetById(int id)
-    {
-        var record = _appDbContext.Collections.FirstOrDefault(p => p.Id == id);
-        return record;
+        var collection = new Collection()
+        {
+            Name = name,
+            CreationDate = creationDate,
+            IsDeleted = isDeleted,
+        };
+        _appDbContext.Collections.Add(collection);
+        await _appDbContext.SaveChangesAsync();
+        return collection.Id;
     }
 
-    public Collection GetByName(string name)
+    public async Task Remove(int id)
     {
-        var record = _appDbContext.Collections.FirstOrDefault(p => p.Name == name);
-        return record;
+        var collection = await _appDbContext.Collections.FirstOrDefaultAsync(x=>x.Id == id);
+        _appDbContext.Collections.Remove(collection);
+        await _appDbContext.SaveChangesAsync();
+    }
+
+    public async Task Update(int id, string name, bool isDeleted)
+    {
+        var collection = await _appDbContext.Collections.FirstOrDefaultAsync(x => x.Id == id);
+        collection.Name = name;
+        collection.IsDeleted = isDeleted;
+        await _appDbContext.SaveChangesAsync();
     }
 }

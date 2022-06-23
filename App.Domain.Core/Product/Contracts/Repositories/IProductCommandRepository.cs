@@ -9,12 +9,7 @@ namespace App.Domain.Core.Product.Contracts.Repositories
 {
     public interface IProductCommandRepository
     {
-        App.Domain.Core.Product.Entities.Product GetById(int Id);
-        List<App.Domain.Core.Product.Entities.Product> GetAll();
-        int Create(App.Domain.Core.Product.Entities.Product model);
-        void Update(App.Domain.Core.Product.Entities.Product model);
-        bool Remove(int Id);
-        App.Domain.Core.Product.Entities.Product GetExitingProduct(string name, int categoryId, int brandId, int modelId);
+       
 
     }
 }

@@ -10,11 +10,8 @@ namespace App.Domain.Core.Product.Contracts.Repositories
 {
     public interface ICollectionCommandRepository
     {
-        Collection GetById(int Id);
-        Collection GetByName(string name);
-        List<Collection> GetAll();
-        int Create(Collection model);
-        void Update(Collection model);
-        bool Remove(int Id);
+        Task<int> Add(string name,DateTime creationDate,bool isDeleted);
+        Task Update(int id, string name, bool isDeleted);
+        Task Remove(int Id);
     }
 }

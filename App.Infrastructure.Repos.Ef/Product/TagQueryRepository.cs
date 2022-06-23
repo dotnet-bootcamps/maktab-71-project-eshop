@@ -10,56 +10,56 @@ using System.Threading.Tasks;
 
 namespace App.Infrastructure.Repos.Ef.Product
 {
-    public class ModelQueryRepository : IModelQueryRepository
+    public class TagQueryRepository : ITagQueryRepository
     {
         private readonly AppDbContext _appDbContext;
 
-        public ModelQueryRepository(AppDbContext appDbContext)
+        public TagQueryRepository(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
         }
-        public async Task<ModelDto?> Get(int id)
+        public async Task<TagDto?> Get(int id)
         {
-            var model = await _appDbContext.Models.Where(x => x.Id == id)
-                .Select(x => new ModelDto()
+            var tag = await _appDbContext.Tags.Where(x => x.Id == id)
+                .Select(x => new TagDto()
                 {
                     Id = x.Id,
                     Name = x.Name,
                     IsDeleted = x.IsDeleted,
                     CreationDate = x.CreationDate,
-                    BrandId = x.BrandId,
-                    ParentModelId = x.ParentModelId
+                    HasValue=x.HasValue,
+                    TagCategoryId = x.TagCategoryId
                 }).FirstOrDefaultAsync();
-            return model;
+            return tag;
         }
 
-        public async Task<ModelDto?> Get(string name)
+        public async Task<TagDto?> Get(string name)
         {
-            var model = await _appDbContext.Models.Where(x => x.Name == name)
-                .Select(x => new ModelDto()
+            var tag = await _appDbContext.Tags.Where(x => x.Name == name)
+                .Select(x => new TagDto()
                 {
                     Id = x.Id,
                     Name = x.Name,
                     IsDeleted = x.IsDeleted,
                     CreationDate = x.CreationDate,
-                    BrandId = x.BrandId,
-                    ParentModelId = x.ParentModelId
+                    HasValue = x.HasValue,
+                    TagCategoryId = x.TagCategoryId
                 }).SingleOrDefaultAsync();
-            return model;
+            return tag;
         }
 
-        public async Task<List<ModelDto>> GetAll()
+        public async Task<List<TagDto>> GetAll()
         {
-            var models = await _appDbContext.Models.Select(x => new ModelDto()
+            var tags = await _appDbContext.Tags.Select(x => new TagDto()
             {
                 Id = x.Id,
                 Name = x.Name,
                 IsDeleted = x.IsDeleted,
                 CreationDate = x.CreationDate,
-                BrandId = x.BrandId,
-                ParentModelId = x.ParentModelId
+                HasValue = x.HasValue,
+                TagCategoryId = x.TagCategoryId
             }).ToListAsync();
-            return models;
+            return tags;
         }
     }
 }

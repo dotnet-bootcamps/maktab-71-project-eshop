@@ -18,43 +18,36 @@ namespace App.Infrastructures.Database.SqlServer.Repositories
             _appDbContext = appDbContext;
         }
 
-        public int Create(Model model)
+        public async Task<int> Add(string name, int parentModelId, int brandId, DateTime creationDate, bool isDeleted)
         {
+            var model = new Model()
+            {
+                Name = name,
+                CreationDate = creationDate,
+                IsDeleted = isDeleted,
+                BrandId = brandId,
+                ParentModelId = parentModelId                
+            };
             _appDbContext.Models.Add(model);
-            _appDbContext.SaveChanges();
+            await _appDbContext.SaveChangesAsync();
             return model.Id;
         }
-        public void Update(Model model)
+
+        public async Task Remove(int id)
         {
-            var record = _appDbContext.Models.FirstOrDefault(x => x.Id == model.Id);
-            record.Name = model.Name;
-            record.BrandId = model.BrandId;
-            _appDbContext.SaveChanges();
-        }
-        public bool Remove(int id)
-        {
-            var record = _appDbContext.Models.FirstOrDefault(p => p.Id == id);
-            _appDbContext.Models.Remove(record);
-            _appDbContext.SaveChanges();
-            return true;
+            var model = await _appDbContext.Models.FirstOrDefaultAsync(x => x.Id == id);
+            _appDbContext.Models.Remove(model);
+            await _appDbContext.SaveChangesAsync();
         }
 
-        public List<Model> GetAll()
+        public async Task Update(int id, string name, int parentModelId, int brandId, bool isDeleted)
         {
-            var record = _appDbContext.Models.ToList();
-            return record;
-        }
-
-        public Model GetById(int id)
-        {
-            var record = _appDbContext.Models.FirstOrDefault(p => p.Id == id);
-            return record;
-        }
-
-        public Model GetByName(string name)
-        {
-            var record = _appDbContext.Models.FirstOrDefault(p => p.Name == name);
-            return record;
-        }
+            var model = await _appDbContext.Models.FirstOrDefaultAsync(x => x.Id == id);
+            model.Name = name;
+            model.IsDeleted = isDeleted;
+            model.ParentModelId = parentModelId;
+            model.BrandId = brandId;
+            await _appDbContext.SaveChangesAsync();
+        }   
     }
 }

@@ -9,11 +9,8 @@ namespace App.Domain.Core.Product.Contracts.Repositories
 {
     public interface IModelCommandRepository
     {
-        Model GetById(int Id);
-        Model GetByName(string name);
-        List<Model> GetAll();
-        int Create(Model model);
-        void Update(Model model);
-        bool Remove(int Id);
+        Task<int> Add(string name, int parentModelId, int brandId,DateTime creationDate, bool isDeleted);
+        Task Update(int id, string name, int parentModelId, int brandId, bool isDeleted);
+        Task Remove(int Id);
     }
 }

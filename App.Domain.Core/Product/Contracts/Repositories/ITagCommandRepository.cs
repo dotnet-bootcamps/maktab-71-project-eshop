@@ -9,11 +9,8 @@ namespace App.Domain.Core.Product.Contracts.Repositories
 {
     public interface ITagCommandRepository 
     {
-        Tag GetById(int Id);
-        Tag GetByName(string name);
-        List<Tag> GetAll();
-        int Create(Tag model);
-        void Update(Tag model);
-        bool Remove(int Id);
+        Task<int> Add(string name, int tagCategoryId,bool hasValue, DateTime creationDate, bool isDeleted);
+        Task Update(int id, string name, int tagCategoryId, bool hasValue,bool isDeleted);
+        Task Remove(int Id);
     }
 }
