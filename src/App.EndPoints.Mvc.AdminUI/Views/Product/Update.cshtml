@@ -1,12 +1,17 @@
 ﻿@using App.EndPoints.Mvc.AdminUI.Models.ViewModels.Product
-@model ProductInputViewModel
+@model ProductOutputViewModel
 
 @{
-    ViewData["Title"] = "افزودن محصول جدید";
+    ViewData["Title"] = "ویرایش محصول ";
 }
 
-<h3>افزودن محصول جدید</h3>
+<h3>ویرایش محصول </h3>
 <form>
+
+   <div class="form-group">
+		<label asp-for="Id"></label>
+		<input class="form-control" asp-for="Id" disabled>
+	</div>
 
     <div class="form-group">
         <label asp-for="Name"></label>
@@ -67,7 +72,7 @@
     </div>
 
     <div style="float:left; margin-top:5px;">
-        <button type="submit" class="btn btn-primary" asp-action="Create" formmethod="post">ایجاد</button>
+        <button type="submit" class="btn btn-primary" asp-action="Update" formmethod="post">ویرایش</button>
         <button type="submit" class="btn btn-danger" asp-action="Index">انصراف</button>
     </div>
 

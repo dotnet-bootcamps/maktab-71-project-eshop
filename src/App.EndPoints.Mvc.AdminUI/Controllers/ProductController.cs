@@ -6,94 +6,169 @@ using App.Infrastructures.Database.SqlServer.Data;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using App.EndPoints.Mvc.AdminUI.ViewModels;
 using App.Domain.Core.Product.Entities;
+using App.Domain.Core.Product.Contacts.AppServices;
+using App.Domain.Core.BaseData.Contarcts.AppServices;
+using App.EndPoints.Mvc.AdminUI.Models.ViewModels.Product;
+using App.Domain.Core.Product.Dtos;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
 
     public class ProductController : Controller
     {
-       
+        private readonly IProductModelAppService _productModelAppService;
+        private readonly ICategoryAppService _categoryAppService;
+        private readonly IProductAppService _productAppService;
+        private readonly IBrandAppService _brandAppService;
 
-
-        public IActionResult Index()
+        public ProductController(IProductModelAppService productModelAppService,
+            ICategoryAppService categoryAppService,
+            IProductAppService productAppService,
+            IBrandAppService brandAppService)
         {
-            //var products = _productRepository.GetAll();
-            //return View(products);
-            return View();
+            _productModelAppService = productModelAppService;
+            _categoryAppService = categoryAppService;
+            _productAppService = productAppService;
+            _brandAppService = brandAppService;
         }
 
-
+        public async Task<IActionResult> Index()
+        {
+            var product = await _productAppService.GetProducts();
+            var productModel = product.Select(p => new ProductOutputViewModel()
+            {
+                Id = p.Id,
+                Name = p.Name,
+                CategoryId = p.CategoryId,
+                CategoryName = p.Category.Name,
+                BrandId = p.BrandId,
+                BrandName = p.Brand.Name,
+                Weight = p.Weight,
+                IsOrginal = p.IsOrginal,
+                Description = p.Description,
+                Count = p.Count,
+                ProductModelId = p.ProductModelId,
+                ProductModelName = p.ProductModel.Name,
+                Price = p.Price,
+                CreationDate = p.CreationDate
+            }).ToList();
+            return View(productModel);
+        }
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            //ViewBag.Brands = _brandRepository.GetAll()
-            //    .Select(s => new SelectListItem
-            //    {
-            //        Text = s.Name,
-            //        Value = s.Id.ToString()
-            //    });
+            ViewBag.Brands = (await _brandAppService.GetBrands())
+                .Select(s => new SelectListItem
+                {
+                    Text = s.Name,
+                    Value = s.Id.ToString()
+                });
 
-            //ViewBag.Colors = _colorRepository.GetAll()
-            //    .Select(s => new SelectListItem
-            //    {
-            //        Text = s.Name,
-            //        Value = s.Id.ToString()
-            //    });
+            ViewBag.Categories = (await _categoryAppService.GetCategories())
+                .Select(s => new SelectListItem
+                {
+                    Text = s.Name,
+                    Value = s.Id.ToString()
+                });
 
-            //ViewBag.Categories = _categoryRepository.GetAll()
-            //    .Select(s => new SelectListItem
-            //    {
-            //        Text = s.Name,
-            //        Value = s.Id.ToString()
-            //    });
-
-            //ViewBag.Models = _modelRepository.GetAll()
-            //    .Select(s => new SelectListItem
-            //    {
-            //        Text = s.Name,
-            //        Value = s.Id.ToString()
-            //    });
+            ViewBag.Models = (await _productModelAppService.GetProductModels())
+                .Select(s => new SelectListItem
+                {
+                    Text = s.Name,
+                    Value = s.Id.ToString()
+                });
 
             return View();
         }
-
-        [HttpPost]
-        public IActionResult Create(CreateProductViewModel model)
+        public async Task<IActionResult> Create(ProductOutputViewModel Product)
         {
-            //_productRepository.Create(new Product
-            //{
-            //    Name = model.Name,
-            //    Description=model.Description,
-            //    Price=model.Price,
-            //    BrandId=model.BrandId,
-            //    CategoryId=model.CategoryId,
-            //    ModelId = model.ModelId
-            //});
-            return RedirectToAction("Index");
+            CreateProductDto createProductDto = new CreateProductDto
+            {
+                IsOrginal = Product.IsOrginal,
+                Price = Product.Price,
+                BrandId = Product.BrandId,
+                CategoryId = Product.CategoryId,
+                Description = Product.Description,
+                ModelId = Product.ProductModelId,
+                Name = Product.Name,
+                OperatorId = 1,
+                Weight = Product.Weight
+            };
+            await _productAppService.SetProduct(createProductDto);
+            return RedirectToAction("");
         }
+        public async Task<IActionResult> Update(int id)
+        {
+            ViewBag.Brands = (await _brandAppService.GetBrands())
+                .Select(s => new SelectListItem
+                {
+                    Text = s.Name,
+                    Value = s.Id.ToString()
+                });
 
+            ViewBag.Categories = (await _categoryAppService.GetCategories())
+                .Select(s => new SelectListItem
+                {
+                    Text = s.Name,
+                    Value = s.Id.ToString()
+                });
 
+            ViewBag.Models = (await _productModelAppService.GetProductModels())
+                .Select(s => new SelectListItem
+                {
+                    Text = s.Name,
+                    Value = s.Id.ToString()
+                });
+
+            var product = _productAppService.GetProduct(id);
+            ProductOutputViewModel productModelInput = new ProductOutputViewModel()
+            {
+                Id = product.Id,
+                Name = product.Name,
+                CategoryId = product.CategoryId,
+                CategoryName = product.Category.Name,
+                BrandId = product.BrandId,
+                BrandName = product.Brand.Name,
+                Weight = product.Weight,
+                IsOrginal = product.IsOrginal,
+                Description = product.Description,
+                Count = product.Count,
+                ProductModelId = product.ProductModelId,
+                ProductModelName = product.ProductModel.Name,
+                Price = product.Price,
+                CreationDate = product.CreationDate
+            };
+            return View(productModelInput);
+        }
+        [HttpPost]
+        public IActionResult Update(ProductOutputViewModel Product)
+        {
+            UpdateProductDto updateProductDto = new UpdateProductDto
+            {
+                Id = Product.Id,
+                IsOrginal = Product.IsOrginal,
+                Price = Product.Price,
+                BrandId = Product.BrandId,
+                CategoryId = Product.CategoryId,
+                Description = Product.Description,
+                ModelId = Product.ProductModelId,
+                Name = Product.Name,
+                Weight = Product.Weight
+            };
+            _productAppService.UpdateProduct(updateProductDto);
+            return RedirectToAction("");
+        }
         [HttpGet]
-        public IActionResult Update(int Id)
+        public IActionResult Delete(int id)
         {
-            //var product = _productRepository.GetById(Id);
-            //return View(product);
-            return View();
+            var product = _productAppService.GetProduct(id);
+            return View(product);
         }
         [HttpPost]
-        public IActionResult Update(Product model1)
+        public IActionResult DeleteProductModel(int id)
         {
-            //_productRepository.Edit(model);
-
-            return RedirectToAction("Index");
-        }
-   
-        [HttpPost]
-        public IActionResult Delete(int Id)
-        {
-            //_productRepository.Delete(Id);
-
-            return RedirectToAction("Index");
+            _productAppService.DeleteProduct(id);
+            return RedirectToAction("");
         }
 
     }

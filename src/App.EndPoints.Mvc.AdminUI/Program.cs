@@ -30,39 +30,30 @@ builder.Services.AddDbContext<AppDbContext>(option =>
     option.UseSqlServer("Data Source=MASOUD;Initial Catalog=DotNetShopDb;Persist Security Info=True;User ID=sa;Password=25915491");
 });
 
-
-
-
-
 builder.Services.AddScoped<IProductAppService, ProductAppService>();
 
-#region BaseData
-builder.Services.AddScoped<IBaseDataAppService, BaseDataAppService>();
-builder.Services.AddScoped<IBaseDataService, BaseDataService>();
-builder.Services.AddScoped<IBaseDataCommandRepository, BaseDataCommandRepository>();
-builder.Services.AddScoped<IBaseDataQueryRepository, BaseDataQueryRepository>();
-#endregion BaseData
-
-#region Brand
-builder.Services.AddScoped<IBrandAppService, BrandAppService>();
-builder.Services.AddScoped<IBrandService, BrandService>();
-builder.Services.AddScoped<IBrandCommandRepository, BrandCommandRepository>();
-builder.Services.AddScoped<IBrandQueryRepository, BrandQueryRepository>();
-#endregion Brand
-
-#region Color
-builder.Services.AddScoped<IColorAppService, ColorAppService>();
-builder.Services.AddScoped<IColorService, ColorService>();
-builder.Services.AddScoped<IColorCommandRepository, ColorCommandRepository>();
-builder.Services.AddScoped<IColorQueryRepository, ColorQueryRepository>();
-#endregion Color
-
+#region Permission
+builder.Services.AddScoped<IPermissionService, PermissionService>();
+builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
+#endregion Permission
 #region Category
 builder.Services.AddScoped<ICategoryAppService, CategoryAppService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ICategoryCommandRepository, CategoryCommandRepository>();
 builder.Services.AddScoped<ICategoryQueryRepository, CategoryQueryRepository>();
 #endregion Category
+#region BaseData
+builder.Services.AddScoped<IBaseDataAppService, BaseDataAppService>();
+builder.Services.AddScoped<IBaseDataService, BaseDataService>();
+builder.Services.AddScoped<IBaseDataCommandRepository, BaseDataCommandRepository>();
+builder.Services.AddScoped<IBaseDataQueryRepository, BaseDataQueryRepository>();
+#endregion BaseData
+#region Product
+builder.Services.AddScoped<IProductAppService, ProductAppService>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IProductCommandRepository, ProductCommandRepository>();
+builder.Services.AddScoped<IProductQueryRepository, ProductQueryRepository>();
+#endregion Product
 
 #region ProductModel
 builder.Services.AddScoped<IProductModelAppService, ProductModelAppService>();
@@ -72,12 +63,18 @@ builder.Services.AddScoped<IProductModelQueryRepository, ProductModelQueryReposi
 #endregion ProductModel
 
 
-#region Permission
-builder.Services.AddScoped<IPermissionService, PermissionService>();
-builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
-#endregion Permission
-
-
+#region Brand
+builder.Services.AddScoped<IBrandAppService, BrandAppService>();
+builder.Services.AddScoped<IBrandService, BrandService>();
+builder.Services.AddScoped<IBrandCommandRepository, BrandCommandRepository>();
+builder.Services.AddScoped<IBrandQueryRepository, BrandQueryRepository>();
+#endregion Brand
+#region Color
+builder.Services.AddScoped<IColorAppService, ColorAppService>();
+builder.Services.AddScoped<IColorService, ColorService>();
+builder.Services.AddScoped<IColorCommandRepository, ColorCommandRepository>();
+builder.Services.AddScoped<IColorQueryRepository, ColorQueryRepository>();
+#endregion Color
 
 var app = builder.Build();
 
