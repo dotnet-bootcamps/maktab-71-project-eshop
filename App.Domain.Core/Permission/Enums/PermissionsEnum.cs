@@ -14,6 +14,7 @@ namespace App.Domain.Core.Permission.Enums
         ViewProducts=4,
         ViewModels=5,
         ViewColors=6,
+        ViewCollections=7
 
     }
 }
