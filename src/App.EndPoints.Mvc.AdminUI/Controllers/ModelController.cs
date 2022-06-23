@@ -17,7 +17,6 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
             _productModelAppService = productModelAppService;
             _brandAppService = brandAppService;
         }
-
         public async Task<IActionResult> Index()
         {
             var productModels = await _productModelAppService.GetProductModels();
@@ -32,8 +31,6 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
             }).ToList();
             return View(productModel);
         }
-
-
         [HttpGet]
         public async Task<IActionResult> Create()
         {
@@ -45,14 +42,12 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
                 });
             return View();
         }
-
         [HttpPost]
         public async Task<IActionResult> Create(ProductModelOutputViewModel ProductModel)
         {
             await _productModelAppService.SetProductModel(ProductModel.Name, ProductModel.ParentModelId, ProductModel.BrandId);
             return RedirectToAction("");
         }
-
         [HttpGet]
         public async Task<IActionResult> Update(int id)
         {
@@ -75,7 +70,6 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
             };
             return View(productModelInput);
         }
-
         [HttpPost]
         public IActionResult Update(ProductModelOutputViewModel ProductModel)
         {
@@ -83,14 +77,12 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
                 ProductModel.ParentModelId, ProductModel.BrandId);
             return RedirectToAction("");
         }
-
         [HttpGet]
         public IActionResult Delete(int id)
         {
             var productModel = _productModelAppService.GetProductModel(id);
             return View(productModel);
         }
-
         [HttpPost]
         public IActionResult DeleteProductModel(int id)
         {

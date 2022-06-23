@@ -14,7 +14,6 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         {
             _colorService = colorService;
         }
-
         public async Task<IActionResult> Index()
         {
             var colors = await _colorService.GetColors();
@@ -28,19 +27,16 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
             }).ToList();
             return View(colorsModel);
         }
-
         public IActionResult Create()
         {
             return View();
         }
-
         [HttpPost]
         public async Task<IActionResult> Create(ColorInputViewModel color)
         {
             await _colorService.SetColor(color.Name,color.Code);
             return RedirectToAction("");
         }
-
         [HttpGet]
         public IActionResult Update(int id)
         {
@@ -53,14 +49,12 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
             };
             return View(colorInput);
         }
-
         [HttpPost]
         public IActionResult Update(ColorOutputViewModel color)
         {
             _colorService.UpdateColor(color.Id, color.Name,color.Code);
             return RedirectToAction("");
         }
-
         [HttpGet]
         public IActionResult Delete(int id)
         {
@@ -68,7 +62,6 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
             return View(color);
 
         }
-
         [HttpPost]
         public IActionResult DeleteColor(int id)
         {

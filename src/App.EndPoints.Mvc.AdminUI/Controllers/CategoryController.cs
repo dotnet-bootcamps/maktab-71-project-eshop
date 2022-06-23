@@ -16,7 +16,6 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         {
             _categoryAppService = categoryAppService;
         }
-
         public async Task<IActionResult> Index()
         {
             var categories = await _categoryAppService.GetCategories();
@@ -31,21 +30,17 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
             }).ToList();
             return View(categoryModel);
         }
-
-
         [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
-
         [HttpPost]
         public async Task<IActionResult> Create(CategoryOutputViewModel brand)
         {
             await _categoryAppService.SetCategory(brand.Name, brand.DisplayOrder,brand.ParentCategoryId);
             return RedirectToAction("");
         }
-
         [HttpGet]
         public IActionResult Update(int id)
         {
@@ -59,14 +54,12 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
             };
             return View(categoryInput);
         }
-
         [HttpPost]
         public IActionResult Update(CategoryOutputViewModel category)
         {
             _categoryAppService.UpdateCategory(category.Id, category.Name, category.DisplayOrder, category.ParentCategoryId);
             return RedirectToAction("");
         }
-
         [HttpGet]
         public IActionResult Delete(int id)
         {
@@ -74,7 +67,6 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
             return View(category);
 
         }
-
         [HttpPost]
         public IActionResult DeleteCategory(int id)
         {
@@ -82,7 +74,6 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
             return RedirectToAction("");
 
         }
-
 
     }
 }

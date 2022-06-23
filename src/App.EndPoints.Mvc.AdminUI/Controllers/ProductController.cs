@@ -80,23 +80,6 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
 
             return View();
         }
-        public async Task<IActionResult> Create(ProductOutputViewModel Product)
-        {
-            CreateProductDto createProductDto = new CreateProductDto
-            {
-                IsOrginal = Product.IsOrginal,
-                Price = Product.Price,
-                BrandId = Product.BrandId,
-                CategoryId = Product.CategoryId,
-                Description = Product.Description,
-                ModelId = Product.ProductModelId,
-                Name = Product.Name,
-                OperatorId = 1,
-                Weight = Product.Weight
-            };
-            await _productAppService.SetProduct(createProductDto);
-            return RedirectToAction("");
-        }
         public async Task<IActionResult> Update(int id)
         {
             ViewBag.Brands = (await _brandAppService.GetBrands())
