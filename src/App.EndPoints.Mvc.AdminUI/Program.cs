@@ -7,11 +7,14 @@ using App.Domain.Core.Operator.Contract.Repositories;
 using App.Domain.Core.Permission.Contarcts.Repositories;
 using App.Domain.Core.Permission.Contarcts.Services;
 using App.Domain.Core.Product.Contacts.AppServices;
-
+using App.Domain.Core.Product.Contacts.Repositories;
+using App.Domain.Core.Product.Contacts.Services;
 using App.Domain.Services.BaseData;
 using App.Domain.Services.Permission;
+using App.Domain.Services.Product;
 using App.Infrastructures.Database.Repos.Ef.BaseData;
 using App.Infrastructures.Database.Repos.Ef.Permission;
+using App.Infrastructures.Database.Repos.Ef.Product;
 using App.Infrastructures.Database.SqlServer.Data;
 
 using Microsoft.EntityFrameworkCore;
@@ -24,7 +27,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<AppDbContext>(option =>
 {
-    option.UseSqlServer("Data Source=(LocalDb)\\MSSQLLocalDB; Initial Catalog=DotNetShopDb; Integrated Security=TRUE");
+    option.UseSqlServer("Data Source=.; Initial Catalog=DotNetShopDb; Integrated Security=TRUE");
 });
 
 
@@ -32,6 +35,15 @@ builder.Services.AddDbContext<AppDbContext>(option =>
 
 
 builder.Services.AddScoped<IProductAppService, ProductAppService>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IProductCommandRepository, ProductCommandRepository>();
+builder.Services.AddScoped<IProductQueryRepository, ProductQueryRepository>();
+
+builder.Services.AddScoped<IColorAppService, ColorAppService>();
+builder.Services.AddScoped<IColorService, ColorService>();
+builder.Services.AddScoped<IColorCommandRepository, ColorCommandRepository>();
+builder.Services.AddScoped<IColorQueryRepository, ColorQueryRepository>();
+
 
 #region BaseData
 builder.Services.AddScoped<IBaseDataAppService, BaseDataAppService>();

@@ -1,14 +1,17 @@
-﻿@model ColorViewModel
+﻿@model App.EndPoints.Mvc.AdminUI.Models.ViewModels.Product.ColorInputViewModel
+@{
+    ViewData["Title"] = "افزودن رنگ";
+}
 
-<form method="post" asp-controller="Colors" asp-action="SubmitCreatedColor">
-    <label asp-for="Id">Id:</label><br>
-    <input type="text" asp-for="Id" readonly><br>
+<div class="col-6 m-auto">
+    <form method="post" asp-controller="Colors" asp-action="SubmitCreatedColor">
+    
+        <label asp-for="Name"></label><br>
+        <input class="form-control" asp-for="Name"><br>
 
-    <label asp-for="Name">Name:</label><br>
-    <input type="text" asp-for="Name"><br>
+        <label asp-for="ColorCode"></label><br>
+        <input type="color" class="form-control form-control-color m-auto w-50 h-75" asp-for="ColorCode"><br>
 
-    <label asp-for="Code">Code:</label><br>
-    <input type="text" asp-for="Code"><br>
-
-    <input type="submit" class="btn btn-primary" value="Submit">
-</form>
+        <input type="submit" class="btn btn-primary" value="Submit">
+    </form>
+</div>

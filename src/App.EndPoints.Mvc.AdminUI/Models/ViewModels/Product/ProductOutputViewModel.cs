@@ -1,11 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace App.EndPoints.Mvc.AdminUI.ViewModels
+namespace App.EndPoints.Mvc.AdminUI.Models.ViewModels.Product
 {
-    public partial class CreateProductViewModel
+    public class ProductOutputViewModel
     {
-
-
+        public int? Id { set; get; }
         [Display(Name = "نام محصول")]
         public string Name { get; set; } = null!;
 
@@ -25,5 +24,6 @@ namespace App.EndPoints.Mvc.AdminUI.ViewModels
         public long Price { get; set; }
         public bool IsShowPrice { get; set; }
         public bool IsActive { get; set; }
+        public int operatorId { set; get; }
     }
 }

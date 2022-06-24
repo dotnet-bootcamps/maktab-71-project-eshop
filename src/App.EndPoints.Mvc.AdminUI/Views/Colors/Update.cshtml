@@ -1,14 +1,14 @@
-﻿@model ColorViewModel
+﻿@model App.EndPoints.Mvc.AdminUI.Models.ViewModels.Product.ColorOutputViewModel
 
 <form asp-controller="Colors" asp-action="SubmitUpdatedColor">
     <label asp-for="Id">Id:</label><br>
-    <input type="text" value="@Model.Id" asp-for="Id" readonly><br>
+    <input type="text" asp-for="Id" readonly><br>
 
     <label asp-for="Name">Name:</label><br>
-    <input type="text" value="@Model.Name" asp-for="Name"><br>
+    <input type="text" asp-for="Name"><br>
 
-    <label asp-for="Code">Code:</label><br>
-    <input type="text" value="@Model.Code" asp-for="Code"><br>
+    <label asp-for="ColorCode">Code:</label><br>
+    <input type="color" asp-for="ColorCode"><br>
 
     <input type="submit" class="btn btn-primary" value="Submit">
 </form>
