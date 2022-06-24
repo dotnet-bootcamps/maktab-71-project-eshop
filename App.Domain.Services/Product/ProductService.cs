@@ -71,7 +71,8 @@ namespace App.Domain.Services.Product
 
         public async Task Set(ProductDto model)
         {
-            await _productCommandRepository.AddProduct(model);
+            model.CreationDate = DateTime.Now;
+            await _productCommandRepository.AddProduct(model);  
         }
 
         public async Task Update(ProductDto model)

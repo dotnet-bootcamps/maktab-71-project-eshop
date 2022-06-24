@@ -36,14 +36,15 @@ namespace App.Domain.AppServices.Product
             return await _productService.Get(name);
         }
 
-        public Task<List<ProductDto>> GetAll()
+        public async Task<List<ProductDto>> GetAll()
         {
-           return _productService.GetAll();
+           return await _productService.GetAll();
         }
 
         public async Task Set(ProductDto model)
         {
             await _productService.EnsureProductDoesNotExist(model.Name);
+            model.CreationDate = DateTime.Now;
             await _productService.Set(model);
         }
 
