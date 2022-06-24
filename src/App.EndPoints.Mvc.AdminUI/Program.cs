@@ -46,6 +46,16 @@ builder.Services.AddScoped<IBrandCommandRepository, BrandCommandRepository>();
 builder.Services.AddScoped<IBrandQueryRepository, BrandQueryRepository>();
 #endregion Brand
 
+
+#region Color
+builder.Services.AddScoped<IColorAppService, ColorAppService>();
+builder.Services.AddScoped<IColorService, ColorService>();
+builder.Services.AddScoped<IColorCommandRepository, ColorCommandRepository>();
+builder.Services.AddScoped<IColorQueryRepository, ColorQueryRepository>();
+#endregion 
+
+
+
 #region Permission
 builder.Services.AddScoped<IPermissionService, PermissionService>();
 builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
