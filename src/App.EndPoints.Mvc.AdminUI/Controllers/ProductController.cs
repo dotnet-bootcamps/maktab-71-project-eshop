@@ -6,15 +6,20 @@ using App.Infrastructures.Database.SqlServer.Data;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using App.EndPoints.Mvc.AdminUI.ViewModels;
 using App.Domain.Core.Product.Entities;
+using App.Domain.Core.Product.Dtos;
+using App.Domain.Core.Product.Contacts.AppServices;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
 
     public class ProductController : Controller
     {
-       
+        private readonly IProductAppService _productAppService;
 
-
+        public ProductController(IProductAppService ProductAppService)
+        {
+            _productAppService = ProductAppService;
+        }
         public IActionResult Index()
         {
             //var products = _productRepository.GetAll();
@@ -58,15 +63,40 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(CreateProductViewModel model)
+        public IActionResult Create(ProductDto model)
         {
-            //_productRepository.Create(new Product
+            try
+            {
+                _productAppService.SetProduct(new ProductDto
+                {
+
+                    BrandId = model.BrandId,
+                    CategoryId = model.CategoryId,
+                    Count = model.Count,
+                    Description = model.Description,
+                    Price = model.Price,
+                    Weight = model.Weight,
+                    ModelId = model.ModelId,
+
+                });
+            }
+            catch (Exception)
+            {
+
+                //return View mode
+            }
+          
+
+
+
+
+            //_productAppService.Create(new Product
             //{
             //    Name = model.Name,
-            //    Description=model.Description,
-            //    Price=model.Price,
-            //    BrandId=model.BrandId,
-            //    CategoryId=model.CategoryId,
+            //    Description = model.Description,
+            //    Price = model.Price,
+            //    BrandId = model.BrandId,
+            //    CategoryId = model.CategoryId,
             //    ModelId = model.ModelId
             //});
             return RedirectToAction("Index");
