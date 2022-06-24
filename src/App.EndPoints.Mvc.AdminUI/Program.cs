@@ -7,11 +7,14 @@ using App.Domain.Core.Operator.Contract.Repositories;
 using App.Domain.Core.Permission.Contarcts.Repositories;
 using App.Domain.Core.Permission.Contarcts.Services;
 using App.Domain.Core.Product.Contacts.AppServices;
-
+using App.Domain.Core.Product.Contacts.Repositories;
+using App.Domain.Core.Product.Contacts.Services;
 using App.Domain.Services.BaseData;
 using App.Domain.Services.Permission;
+using App.Domain.Services.Product;
 using App.Infrastructures.Database.Repos.Ef.BaseData;
 using App.Infrastructures.Database.Repos.Ef.Permission;
+using App.Infrastructures.Database.Repos.Ef.Product;
 using App.Infrastructures.Database.SqlServer.Data;
 
 using Microsoft.EntityFrameworkCore;
@@ -31,8 +34,13 @@ builder.Services.AddDbContext<AppDbContext>(option =>
 
 
 
-builder.Services.AddScoped<IProductAppService, ProductAppService>();
 
+#region Product
+builder.Services.AddScoped<IProductAppService, ProductAppService>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IProductCommandRepository, ProductCommandRepository>();
+builder.Services.AddScoped<IProductQueryRepository, ProductQueryRepository>();
+#endregion Product
 #region BaseData
 builder.Services.AddScoped<IBaseDataAppService, BaseDataAppService>();
 builder.Services.AddScoped<IBaseDataService, BaseDataService>();
@@ -45,11 +53,22 @@ builder.Services.AddScoped<IBrandService, BrandService>();
 builder.Services.AddScoped<IBrandCommandRepository, BrandCommandRepository>();
 builder.Services.AddScoped<IBrandQueryRepository, BrandQueryRepository>();
 #endregion Brand
-
+#region Color
+builder.Services.AddScoped<IColorAppService, ColorAppService>();
+builder.Services.AddScoped<IColorService, ColorService>();
+builder.Services.AddScoped<IColorCommandRepository, ColorCommandRepository>();
+builder.Services.AddScoped<IColorQueryRepository, ColorQueryRepository>();
+#endregion Color
 #region Permission
 builder.Services.AddScoped<IPermissionService, PermissionService>();
 builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
 #endregion Permission
+#region FileType
+builder.Services.AddScoped<IFileTypeAppService, FileTypeAppService>();
+builder.Services.AddScoped<IFileTypeService, FileTypeService>();
+builder.Services.AddScoped<IFileTypeCommandRepository, FileTypeCommandRepository>();
+builder.Services.AddScoped<IFileTypeQueryRepository, FileTypeQueryRepository>();
+#endregion FileType
 
 
 
