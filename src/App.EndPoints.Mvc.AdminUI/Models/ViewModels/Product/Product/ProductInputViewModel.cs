@@ -11,6 +11,7 @@ namespace App.EndPoints.Mvc.AdminUI.ViewModels
     {
         [Display(Name = "شناسه")]
         public int Id { get; set; }
+        
         [Display(Name = "شناسه دسته بندی")]
         public int CategoryId { get; set; }
         [Display(Name = "شناسه برند")]

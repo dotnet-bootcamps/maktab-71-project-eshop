@@ -1,4 +1,4 @@
-using App.Domain.Core.BaseData.Contarcts.AppServices;
+﻿using App.Domain.Core.BaseData.Contarcts.AppServices;
 using App.Domain.Core.BaseData.Dtos;
 using App.EndPoints.Mvc.AdminUI.Models.ViewModels.Product;
 using Microsoft.AspNetCore.Mvc;
@@ -39,8 +39,15 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(BrandInputViewModel brand)
         {
-            await _brandAppService.Set(brand.Name,brand.DisplayOrder);
-            return RedirectToAction("");
+            //if (ModelState.IsValid && brand.Name.ToLower() == "hp" && brand.DisplayOrder > 2)
+            //    ModelState.AddModelError("", "برند اچ پی باید در ابتدای لیست قرار بگیرد");
+
+            if (ModelState.IsValid)
+            {
+                await _brandAppService.Set(brand.Name, brand.DisplayOrder);
+                return RedirectToAction("");
+            }
+            return View(brand);
         }
 
         [HttpGet]
@@ -68,6 +75,13 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         {
             _brandAppService.Delete(id);
             return RedirectToAction("Index");
+        }
+
+        public bool CheckName(string Manefacture)
+        {
+            if (Manefacture.Contains("hp"))
+                return true;
+            return false;
         }
     }
 }

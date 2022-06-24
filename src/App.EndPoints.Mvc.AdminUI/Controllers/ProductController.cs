@@ -111,28 +111,34 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(ProductInputViewModel product)
         {
-            
 
-            var dto = new ProductDto
+            if (ModelState.IsValid)
             {
-                Id = product.Id,
-                Name = product.Name,
-                CreationDate = DateTime.Now,
-                IsDeleted = product.IsDeleted,
-                CategoryId = product.CategoryId,
-                Weight = product.Weight,
-                IsOrginal = product.IsOrginal,
-                Description = product.Description,
-                Count = product.Count,
-                ModelId = product.ModelId,
-                Price = product.Price,
-                IsShowPrice = product.IsShowPrice,
-                IsActive = product.IsActive,
-                OperatorId = product.OperatorId,
-                BrandId = product.BrandId,
-            };
-            await _productAppService.Set(dto);
-            return RedirectToAction("Index");
+                var dto = new ProductDto
+                {
+                    Id = product.Id,
+                    Name = product.Name,
+                    CreationDate = DateTime.Now,
+                    IsDeleted = product.IsDeleted,
+                    CategoryId = product.CategoryId,
+                    Weight = product.Weight,
+                    IsOrginal = product.IsOrginal,
+                    Description = product.Description,
+                    Count = product.Count,
+                    ModelId = product.ModelId,
+                    Price = product.Price,
+                    IsShowPrice = product.IsShowPrice,
+                    IsActive = product.IsActive,
+                    OperatorId = product.OperatorId,
+                    BrandId = product.BrandId,
+                };
+                await _productAppService.Set(dto);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View(product);
+            }
         }
 
         [HttpGet]

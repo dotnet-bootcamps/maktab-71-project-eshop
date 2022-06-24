@@ -5,16 +5,32 @@
 }
 
 <h3>اضافه کردن برند جدید</h3>
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 <form>
 
 	<div class="form-group">
 		<label asp-for="Name"></label>
 		<input class="form-control" asp-for="Name">
+		<span asp-validation-for="Name" class="text-danger"></span>
 	</div>
+	
+	<@*div class="form-group">
+		<label asp-for="ConfirmName"></label>
+		<input class="form-control" asp-for="ConfirmName">
+		<span asp-validation-for="ConfirmName" class="text-danger"></span>
+	</div>
+
+	
+	<div class="form-group">
+		<label asp-for="Manefacture"></label>
+		<input class="form-control" asp-for="Manefacture">
+		<span asp-validation-for="Manefacture" class="text-danger"></span>
+	</div>*@
 
 	<div class="form-group">
 		<label asp-for="DisplayOrder"></label>
 		<input class="form-control" asp-for="DisplayOrder">
+		<span asp-validation-for="DisplayOrder" class="text-danger"></span>
 	</div>
 
 	<div style="float:left; margin-top:5px;">

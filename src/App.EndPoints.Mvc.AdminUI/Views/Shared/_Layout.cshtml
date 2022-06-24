@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <title>@ViewData["Title"] - App.EndPoints.Mvc.AdminUI</title>
-
     <link href="~/css/app.css" rel="stylesheet">
     <link href="~/css/custom.css" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
@@ -184,13 +183,13 @@
 <main class="content">
 <div class="container-fluid p-0">
 
-@*<h1 class="h3 mb-3"><strong>دات نت</strong> فروشگاه بوت کمپ</h1>*@
+        @*<h1 class="h3 mb-3"><strong>دات نت</strong> فروشگاه بوت کمپ</h1>*@
 
 <div class="row">
         <div class="w-100">
             <div class="row">
                 <div class="col-12">
-                                        @RenderBody()
+        @RenderBody()
                 </div>
             </div>
         </div>
@@ -447,18 +446,32 @@
     });
 </script>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var date = new Date(Date.now() - 5 * 24 * 60 * 60 * 1000);
-        var defaultDate = date.getUTCFullYear() + "-" + (date.getUTCMonth() + 1) + "-" + date.getUTCDate();
-        document.getElementById("datetimepicker-dashboard").flatpickr({
-            inline: true,
-            prevArrow: "<span title=\"Previous month\">&laquo;</span>",
-            nextArrow: "<span title=\"Next month\">&raquo;</span>",
-            defaultDate: defaultDate
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var date = new Date(Date.now() - 5 * 24 * 60 * 60 * 1000);
+            var defaultDate = date.getUTCFullYear() + "-" + (date.getUTCMonth() + 1) + "-" + date.getUTCDate();
+            document.getElementById("datetimepicker-dashboard").flatpickr({
+                inline: true,
+                prevArrow: "<span title=\"Previous month\">&laquo;</span>",
+                nextArrow: "<span title=\"Next month\">&raquo;</span>",
+                defaultDate: defaultDate
+            });
         });
-    });
-</script>
+
+        
+    </script>
+    <script src="~/lib/jquery/jquery.min.js" type="text/javascript"></script>
+    <script src="~/lib/jquery-validate/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+        
+    <script>
+        $(document).ready(function(){
+            // alert('test');
+            $("input.input-validation-error").addClass("is-invalid");
+            $("span.field-validation-error").addClass("text-danger");
+        });
+
+    </script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

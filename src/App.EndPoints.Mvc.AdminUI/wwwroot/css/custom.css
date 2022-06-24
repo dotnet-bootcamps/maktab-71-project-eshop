@@ -19,3 +19,7 @@
     text-align:start;
 }
 
+/*is-invalid*/
+/*.input-validation-error{
+    border:1px solid red;
+}*/
