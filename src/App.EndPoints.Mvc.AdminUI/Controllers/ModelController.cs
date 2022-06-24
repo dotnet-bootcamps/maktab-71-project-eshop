@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using App.Domain.Core.Product.Entities;
 using App.Domain.Core.Product.Contracts.AppServices;
 using App.EndPoints.Mvc.AdminUI.Models.ViewModels.Product;
 

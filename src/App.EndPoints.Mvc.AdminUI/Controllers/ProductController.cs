@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using App.Domain.Core.Product.Entities;
 using App.Domain.Core.Product.Contracts.AppServices;
 using App.EndPoints.Mvc.AdminUI.Models.ViewModels.Product;
 using App.Domain.Core.Product.Dtos;
+using App.Domain.Core.BaseData.Contracts.AppServices;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
@@ -10,10 +10,25 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
     public class ProductController : Controller
     {
         private readonly IProductAppService _productAppService;
+        private readonly ITagAppService _tagAppService;
+        private readonly IModelAppService _modelAppService;
+        private readonly IColorAppService _colorAppService;
+        private readonly IBrandAppService _brandAppService;
+        private readonly ICategoryAppService _categoryAppService;
 
-        public ProductController(IProductAppService productAppService)
+        public ProductController(IProductAppService productAppService
+            ,ITagAppService tagAppService
+            ,IModelAppService modelAppService
+            ,IColorAppService colorAppService
+            ,IBrandAppService brandAppService
+            ,ICategoryAppService categoryAppService)
         {
             _productAppService = productAppService;
+            _tagAppService = tagAppService;
+            _modelAppService = modelAppService;
+            _colorAppService = colorAppService;
+            _brandAppService = brandAppService;
+            _categoryAppService = categoryAppService;
         }
         public async Task<IActionResult> Index()
         {
@@ -41,9 +56,13 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
 
 
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-
+            var categories = await _categoryAppService.GetAll();
+            var colors = await _colorAppService.GetAll();
+            var brands = await _brandAppService.GetAll();
+            var models = await _modelAppService.GetAll();
+            var tags = await _tagAppService.GetAll();
             return View();
         }
 
