@@ -1,13 +1,13 @@
-﻿@model IEnumerable<CategoryListVM>
+﻿@model IEnumerable<CategoryOutputViewModel>
 
 
 <div class="d-flex justify-content-between">
     <h1>دسته بندی ها</h1>
     <div class="d-inline-flex">
-        <form asp-controller="Category" asp-action="Search" method="get" class="align-self-md-center mx-2">
+        @*<form asp-controller="Category" asp-action="Search" method="get" class="align-self-md-center mx-2">
             <input type="text" name="q" autocomplete="off" />
             <button type="submit" class="btn btn-secondary">جستجو</button>
-        </form>
+        </form>*@
         <a class='btn btn-success align-self-md-center' asp-controller="Category" asp-action="Create">ایجاد</a>
     </div>
 </div>
@@ -33,6 +33,7 @@
             <th scope="col">
                 @Html.DisplayNameFor(model => model.CreationDate)
             </th>
+            <th>عملیات</th>
         </tr>
     </thead>
     <tbody>
@@ -59,8 +60,8 @@
                     @item.CreationDate
                     </td>
                     <td>
-                        <a class="btn btn-secondary" asp-action="Update" asp-route-id="@item.Id">Edit</a>
-                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        <a class="btn btn-secondary" asp-action="Update" asp-controller="Category" asp-route-id="@item.Id">ویرایش</a>
+                        <a class="btn btn-danger" asp-action="Delete" asp-controller="Category" asp-route-id="@item.Id">حذف</a>
                     </td>
                 </tr>
         }

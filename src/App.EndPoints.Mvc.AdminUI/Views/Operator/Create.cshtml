@@ -1,0 +1,25 @@
+﻿@model ModelInputViewModel
+
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-controller="Operator" asp-action="Create" method="post">
+            <div class="form-group">
+                <label asp-for=Name></label>
+                <input type="text" class="form-control" asp-for=Name>
+            </div>
+            <div class="form-group">
+                <label asp-for=BrandId></label>
+                <input type="number" class="form-control" asp-for=BrandId>
+            </div>
+            <div class="form-group">
+                <label asp-for=ParentModelId></label>
+                <input type="number" class="form-control" asp-for=ParentModelId>
+            </div>
+
+            <button type="submit" class="btn btn-primary">ایجاد</button>
+        </form>
+    </div>
+</div>
+
+

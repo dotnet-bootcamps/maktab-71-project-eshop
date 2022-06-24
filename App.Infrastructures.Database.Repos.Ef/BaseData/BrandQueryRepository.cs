@@ -13,7 +13,7 @@ public class BrandQueryRepository : IBrandQueryRepository
     {
         _context = context;
     }
-    public async Task<List<BrandDto>> GetAllBrands()
+    public async Task<List<BrandDto>> GetAll()
     {
         return await _context.Brands.AsNoTracking().Select(p => new BrandDto()
         {
@@ -25,9 +25,9 @@ public class BrandQueryRepository : IBrandQueryRepository
         }).ToListAsync();
     }
 
-    public BrandDto? GetBrand(int id)
+    public BrandDto? Get(int id)
     {
-        return _context.Brands.AsNoTracking().Where(p => p.Id == id).Select(p => new BrandDto()
+        return _context.Brands.Where(p => p.Id == id).Select(p => new BrandDto()
         {
             Id = p.Id,
             DisplayOrder = p.DisplayOrder,
@@ -35,12 +35,11 @@ public class BrandQueryRepository : IBrandQueryRepository
             Name = p.Name,
             IsDeleted = p.IsDeleted,
         }).FirstOrDefault();
-     
     }
 
-    public BrandDto? GetBrand(string name)
+    public BrandDto? Get(string name)
     {
-        return _context.Brands.AsNoTracking().Where(p => p.Name == name).Select(p => new BrandDto()
+        return _context.Brands.Where(p => p.Name == name).Select(p => new BrandDto()
         {
             Id = p.Id,
             DisplayOrder = p.DisplayOrder,
