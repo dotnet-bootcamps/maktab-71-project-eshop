@@ -53,12 +53,22 @@ namespace App.Domain.Services.Product
 
         public async Task<ColorDto> Get(int id)
         {
-            return await _queryRepository.Get(id);
+            var record = await _queryRepository.Get(id);
+            if (record == null)
+            {
+                throw new Exception($"Category {id} Doesn't Exists!");
+            }
+            return record;
         }
 
         public async Task<ColorDto> Get(string name)
         {
-            return await _queryRepository.Get(name);
+            var record = await _queryRepository.Get(name);
+            if (record == null)
+            {
+                throw new Exception($"Category {name} Doesn't Exists!");
+            }
+            return record;
         }
 
         public async Task<List<ColorDto>> GetAll()

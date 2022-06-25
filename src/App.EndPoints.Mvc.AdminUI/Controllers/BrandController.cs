@@ -1,5 +1,7 @@
 ﻿using App.Domain.Core.BaseData.Contarcts.AppServices;
+using App.Domain.Core.BaseData.Contarcts.Services;
 using App.Domain.Core.BaseData.Dtos;
+using App.EndPoints.Mvc.AdminUI.Models.ViewModels.BaseData.Brand;
 using App.EndPoints.Mvc.AdminUI.Models.ViewModels.Product;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,22 +12,24 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
     public class BrandController : Controller
     {
         private readonly IBrandAppService _brandAppService;
+        private readonly IBrandService _brandService;
 
-        public BrandController(IBrandAppService brandAppService)
+        public BrandController(IBrandAppService brandAppService, IBrandService brandService)
         {
             _brandAppService = brandAppService;
+            _brandService = brandService;
         }
 
         public async Task<IActionResult> Index()
         {
             var brands = await _brandAppService.GetAll();
-            var brandsModel= brands.Select(p=> new BrandOutputViewModel()
+            var brandsModel = brands.Select(p => new BrandOutputViewModel()
             {
                 Id = p.Id,
-                Name= p.Name,
+                Name = p.Name,
                 DisplayOrder = p.DisplayOrder,
                 CreationDate = p.CreationDate,
-                IsDeleted= p.IsDeleted,
+                IsDeleted = p.IsDeleted,
             }).ToList();
             return View(brandsModel);
         }
@@ -37,36 +41,40 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(BrandInputViewModel brand)
+        public async Task<IActionResult> Create(BrandAddViewModel brand)
         {
             //if (ModelState.IsValid && brand.Name.ToLower() == "hp" && brand.DisplayOrder > 2)
             //    ModelState.AddModelError("", "برند اچ پی باید در ابتدای لیست قرار بگیرد");
-
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                await _brandAppService.Set(brand.Name, brand.DisplayOrder);
-                return RedirectToAction("");
+                return View(brand);
             }
-            return View(brand);
+            await _brandAppService.Set(brand.Name, brand.DisplayOrder);
+            return RedirectToAction("");
         }
 
         [HttpGet]
         public IActionResult Update(int id)
         {
-            var brand= _brandAppService.Get(id);
-            BrandOutputViewModel brandInput = new BrandOutputViewModel()
+            var brand = _brandAppService.Get(id);
+            var brandInput = new BrandUpdateViewModel
             {
-               Id=id,
-               Name = brand.Name,
-               DisplayOrder=brand.DisplayOrder,
+                Id = id,
+                Name = brand.Name,
+                DisplayOrder = brand.DisplayOrder,
+                IsDeleted = brand.IsDeleted,
             };
             return View(brandInput);
         }
 
         [HttpPost]
-        public IActionResult Update(BrandOutputViewModel brand)
+        public IActionResult Update(BrandUpdateViewModel brand)
         {
-            _brandAppService.Update(brand.Id,brand.Name,brand.DisplayOrder, brand.IsDeleted);
+            if (!ModelState.IsValid)
+            {
+                return View(brand);
+            }
+            _brandAppService.Update(brand.Id, brand.Name, brand.DisplayOrder, brand.IsDeleted);
             return RedirectToAction("");
         }
 
@@ -77,11 +85,18 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
             return RedirectToAction("Index");
         }
 
-        public bool CheckName(string Manefacture)
+        public bool CheckName(string name)
         {
-            if (Manefacture.Contains("hp"))
+            try
+            {
+                _brandService.EnsureDoesNotExist(name);
                 return true;
-            return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
         }
     }
 }

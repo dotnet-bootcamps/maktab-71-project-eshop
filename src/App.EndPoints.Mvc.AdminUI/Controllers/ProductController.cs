@@ -12,6 +12,7 @@ using App.Domain.Core.BaseData.Contarcts.AppServices;
 using App.Domain.Core.Operator.Entities;
 using App.Domain.Core.Operator.Contract.AppServices;
 using Microsoft.AspNetCore.Mvc.Filters;
+using App.EndPoints.Mvc.AdminUI.Models.ViewModels.Product.Product;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
@@ -98,7 +99,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
                     Text = s.Name,
                     Value = s.Id.ToString()
                 });
-            var operators = await _operatorAppService.GetAll();          
+            var operators = await _operatorAppService.GetAll();
             ViewBag.Operators = operators
                 .Select(s => new SelectListItem
                 {
@@ -109,7 +110,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(ProductInputViewModel product)
+        public async Task<IActionResult> Create(ProductAddViewModel product)
         {
 
             if (ModelState.IsValid)
@@ -119,7 +120,6 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
                     Id = product.Id,
                     Name = product.Name,
                     CreationDate = DateTime.Now,
-                    IsDeleted = product.IsDeleted,
                     CategoryId = product.CategoryId,
                     Weight = product.Weight,
                     IsOrginal = product.IsOrginal,
@@ -181,7 +181,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
                 });
 
             var dto = await _productAppService.Get(id);
-            var viewProduct = new ProductInputViewModel
+            var viewProduct = new ProductUpdateViewModel
             {
                 Id = dto.Id,
                 Name = dto.Name,
@@ -203,7 +203,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(ProductInputViewModel product)
+        public async Task<IActionResult> Update(ProductUpdateViewModel product)
         {
             var dto = new ProductDto
             {
@@ -231,6 +231,20 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         {
             await _productAppService.Delete(id);
             return RedirectToAction("Index");
+        }
+
+        public async Task<bool> CheckName(string name)
+        {
+            try
+            {
+                await _productAppService.Get(name);
+                return false;
+            }
+            catch (Exception)
+            {
+                return true;
+            }
+
         }
     }
 }

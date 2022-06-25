@@ -35,30 +35,32 @@ namespace App.Domain.Services.Product
 
         public async Task EnsureExists(string name)
         {
-            var record = await _queryRepository.Get(name);
-            if (record == null)
-            {
-                throw new Exception($"Category {name} Doesn't Exists!");
-            }
+            await _queryRepository.Get(name);
         }
 
         public async Task EnsureExists(int id)
+        {
+            await _queryRepository.Get(id);
+        }
+
+        public async Task<ModelDto> Get(int id)
         {
             var record = await _queryRepository.Get(id);
             if (record == null)
             {
                 throw new Exception($"Category {id} Doesn't Exists!");
             }
-        }
-
-        public async Task<ModelDto> Get(int id)
-        {
-            return await _queryRepository.Get(id);
+            return record;
         }
 
         public async Task<ModelDto> Get(string name)
         {
-            return await _queryRepository.Get(name);
+            var record = await _queryRepository.Get(name);
+            if (record == null)
+            {
+                throw new Exception($"Category {name} Doesn't Exists!");
+            }
+            return record;
         }
 
         public async Task<List<ModelDto>> GetAll()
