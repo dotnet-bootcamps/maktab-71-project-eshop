@@ -1,4 +1,4 @@
-﻿@model App.EndPoints.Mvc.AdminUI.Models.ViewModels.Product.BrandInputViewModel
+﻿@model App.EndPoints.Mvc.AdminUI.Models.ViewModels.Product.BrandAddViewModel
 
 @{
 	ViewData["Title"] = "اضافه کردن برند جدید";
@@ -11,21 +11,8 @@
 	<div class="form-group">
 		<label asp-for="Name"></label>
 		<input class="form-control" asp-for="Name">
-		<span asp-validation-for="Name" class="text-danger"></span>
+		<span asp-validation-for="Name" class="text-danger"></span>		
 	</div>
-	
-	<@*div class="form-group">
-		<label asp-for="ConfirmName"></label>
-		<input class="form-control" asp-for="ConfirmName">
-		<span asp-validation-for="ConfirmName" class="text-danger"></span>
-	</div>
-
-	
-	<div class="form-group">
-		<label asp-for="Manefacture"></label>
-		<input class="form-control" asp-for="Manefacture">
-		<span asp-validation-for="Manefacture" class="text-danger"></span>
-	</div>*@
 
 	<div class="form-group">
 		<label asp-for="DisplayOrder"></label>
@@ -33,9 +20,13 @@
 		<span asp-validation-for="DisplayOrder" class="text-danger"></span>
 	</div>
 
-	<div style="float:left; margin-top:5px;">
-		<button type="submit" class="btn btn-primary" asp-action="Create" formmethod="post">ایجاد</button>
-		<button type="submit" class="btn btn-danger" asp-action="Index">انصراف</button>
-	</div>
+	<div class="d-flex flex-row justify-content-end">
+        <button type="submit" class="btn btn-primary mx-1" asp-action="Create" formmethod="post">ایجاد</button>
+        <button type="submit" class="btn btn-danger" asp-action="Index">انصراف</button>
+    </div>
 
 </form>
+
+@section Scripts{
+        <partial name="_ValidationScriptsPartial" /> 
+}

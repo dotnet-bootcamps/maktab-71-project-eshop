@@ -3,6 +3,7 @@
 using App.EndPoints.Mvc.AdminUI.ViewModels;
 using App.Domain.Core.Product.Contacts.AppServices;
 using App.Domain.Core.Product.Dtos.Color;
+using App.EndPoints.Mvc.AdminUI.Models.ViewModels.Product.Color;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
@@ -37,13 +38,16 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(ColorInputViewModel color)
+        public async Task<IActionResult> Create(ColorAddViewModel color)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(color);
+            }
             var dto = new ColorDto
             {
                 Id = color.Id,
-                Name = color.Name,                
-                IsDeleted = color.IsDeleted,              
+                Name = color.Name,
                 CreationDate = DateTime.Now,
                 Code = color.Code,
             };
@@ -55,7 +59,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         public async Task<IActionResult> Update(int id)
         {
             var dto = await _appService.Get(id);
-            var viewModel = new ColorInputViewModel
+            var viewModel = new ColorUpdateViewModel
             {
                 Id = dto.Id,
                 Name = dto.Name,
@@ -67,14 +71,18 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(ColorInputViewModel model)
+        public async Task<IActionResult> Update(ColorUpdateViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
             var dto = new ColorDto
             {
                 Id = model.Id,
-                Name = model.Name,               
+                Name = model.Name,
                 IsDeleted = model.IsDeleted,
-                Code = model.Code 
+                Code = model.Code
             };
             await _appService.Update(dto);
             return RedirectToAction("Index");
@@ -85,6 +93,20 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         {
             await _appService.Delete(id);
             return RedirectToAction("Index");
+        }
+
+        public async Task<bool> CheckName(string name)
+        {
+            try
+            {
+                await _appService.Get(name);
+                return false;
+            }
+            catch (Exception)
+            {
+                return true;
+            }
+
         }
     }
 }

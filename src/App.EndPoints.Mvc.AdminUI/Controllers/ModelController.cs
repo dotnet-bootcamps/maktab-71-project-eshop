@@ -1,26 +1,30 @@
 ﻿
+using App.Domain.Core.BaseData.Contarcts.AppServices;
 using App.Domain.Core.BaseData.Entities;
 using App.Domain.Core.Product.Contacts.AppServices;
 using App.Domain.Core.Product.Dtos;
+using App.EndPoints.Mvc.AdminUI.Models.ViewModels.Product.Model;
 using App.EndPoints.Mvc.AdminUI.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
     public class ModelController : Controller
     {
 
-        private readonly IModelAppService _appService;
+        private readonly IModelAppService _modelAppService;
+        private readonly IBrandAppService _brandAppService;
 
-        public ModelController(IModelAppService appService)
+        public ModelController(IModelAppService appService, IBrandAppService brandAppService)
         {
-            _appService = appService;
+            _modelAppService = appService;
+            _brandAppService = brandAppService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var records = await _appService.GetAll();
+            var records = await _modelAppService.GetAll();
             var recordsModel = records.Select(p => new ModelOutputViewModel()
             {
                 Id = p.Id,
@@ -34,37 +38,67 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            var models = await _modelAppService.GetAll();
+            ViewBag.Models = models.Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = x.Id.ToString(),
+            });
+
+            var brands = await _brandAppService.GetAll();
+            ViewBag.Brands = brands.Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = x.Id.ToString(),
+            });
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(ModelInputViewModel model)
+        public async Task<IActionResult> Create(ModelAddViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
             var dto = new ModelDto
             {
                 Id = model.Id,
                 Name = model.Name,
-                IsDeleted = model.IsDeleted,
                 CreationDate = DateTime.Now,
                 ParentModelId = model.ParentModelId,
                 BrandId = model.BrandId,
             };
-            await _appService.Set(dto);
+            await _modelAppService.Set(dto);
             return RedirectToAction("Index");
         }
 
         [HttpGet]
         public async Task<IActionResult> Update(int id)
         {
-            var dto = await _appService.Get(id);
-            var viewModel = new ModelInputViewModel
+            var models = await _modelAppService.GetAll();
+            ViewBag.Models = models.Where(x => x.Id != id).Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = x.Id.ToString(),
+            });
+
+            var brands = await _brandAppService.GetAll();
+            ViewBag.Brands = brands.Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = x.Id.ToString(),
+            });
+
+            var dto = await _modelAppService.Get(id);
+            var viewModel = new ModelUpdateViewModel
             {
                 Id = dto.Id,
                 Name = dto.Name,
                 IsDeleted = dto.IsDeleted,
-                BrandId= dto.BrandId,
+                BrandId = dto.BrandId,
                 ParentModelId = dto.ParentModelId
             };
 
@@ -72,8 +106,12 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(ModelInputViewModel model)
+        public async Task<IActionResult> Update(ModelUpdateViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
             var dto = new ModelDto
             {
                 Id = model.Id,
@@ -82,15 +120,29 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
                 BrandId = model.BrandId,
                 ParentModelId = model.ParentModelId
             };
-            await _appService.Update(dto);
+            await _modelAppService.Update(dto);
             return RedirectToAction("Index");
         }
 
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
-            await _appService.Delete(id);
+            await _modelAppService.Delete(id);
             return RedirectToAction("Index");
+        }
+
+        public async Task<bool> CheckName(string name)
+        {
+            try
+            {
+                await _modelAppService.Get(name);
+                return false;
+            }
+            catch (Exception)
+            {
+                return true;
+            }
+
         }
     }
 }

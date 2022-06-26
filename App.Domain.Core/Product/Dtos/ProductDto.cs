@@ -1,4 +1,6 @@
-﻿using System;
+﻿using App.Domain.Core.Product.Dtos.Color;
+using App.Domain.Core.Product.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,5 +25,7 @@ namespace App.Domain.Core.Product.Dtos
         public string Name { get; set; } = null!;
         public DateTime CreationDate { get; set; }
         public bool IsDeleted { get; set; }
+
+        public List<ColorDto> Colors { get; set; } = new List<ColorDto>();
     }
 }

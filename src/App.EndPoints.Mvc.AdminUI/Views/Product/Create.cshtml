@@ -1,7 +1,6 @@
-﻿@model ProductInputViewModel
-<form method="post"  asp-controller="Product" asp-action="Create">
+﻿@model ProductAddViewModel
+<form method="post" asp-controller="Product" asp-action="Create">
 
-    @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
 
     <div class="form-group row">
         <h2 class="text-info pl-3">ثبت محصول جدید</h2>
@@ -26,7 +25,7 @@
                     <label asp-for="CategoryId"></label>
                 </div>
                 <div class="col-8">
-                    <select asp-for="CategoryId"  class="form-control" asp-items="@ViewBag.Categories">
+                    <select asp-for="CategoryId" class="form-control" asp-items="@ViewBag.Categories">
                         <option disabled selected>-- Select Category --</option>
                     </select>
                     <span asp-validation-for="CategoryId" class="text-danger"></span>
@@ -38,7 +37,7 @@
                     <label asp-for="BrandId"></label>
                 </div>
                 <div class="col-8">
-                    <select asp-for="BrandId"  class="form-control" asp-items="@ViewBag.Brands">
+                    <select asp-for="BrandId" class="form-control" asp-items="@ViewBag.Brands">
                         <option disabled selected>-- Select Brand --</option>
                     </select>
                     <span asp-validation-for="BrandId" class="text-danger"></span>
@@ -50,7 +49,7 @@
                     <label asp-for="ModelId"></label>
                 </div>
                 <div class="col-8">
-                    <select asp-for="ModelId"  class="form-control" asp-items="@ViewBag.Models">
+                    <select asp-for="ModelId" class="form-control" asp-items="@ViewBag.Models">
                         <option disabled selected>-- Select Model --</option>
                     </select>
                     <span asp-validation-for="ModelId" class="text-danger"></span>
@@ -92,12 +91,26 @@
                     <label asp-for="OperatorId"></label>
                 </div>
                 <div class="col-8">
-                    <select asp-for="OperatorId"  class="form-control" asp-items="@ViewBag.Operators">
+                    <select asp-for="OperatorId" class="form-control" asp-items="@ViewBag.Operators">
                         <option disabled selected>-- Select Operator --</option>
                     </select>
                     <span asp-validation-for="OperatorId" class="text-danger"></span>
                 </div>
             </div>
+
+            <div class="form-group row p-3">
+                <div class="col-4">
+                    <label asp-for="ColorIds"></label>
+                </div>
+                <div class="col-8">
+                    <select asp-for="ColorIds" class="select-chosen" asp-items="@ViewBag.Colors" multiple>
+                        <option disabled selected>انتخاب رنگ ها</option>
+                    </select>
+                    <span asp-validation-for="ColorIds" class="text-danger"></span>
+                </div>
+            </div>
+
+
 
             <div class="form-group row p-3">
                 <div class="col-4">
@@ -110,24 +123,26 @@
             </div>
 
 
-            
+
             <div class="form-group my-2">
                 <input asp-for=IsActive type="radio" id="true" name="IsActive" value="True" />
                 <label for="true">فعال</label>
                 <input asp-for=IsActive type="radio" id="false" name="IsActive" value="False" />
                 <label for="false">غیر فعال</label>
+                <span asp-validation-for="IsActive" class="text-danger"></span>
             </div>
 
             <div class="form-group my-2">
                 <input asp-for=IsShowPrice type="radio" id="true" name="IsShowPrice" value="True" />
                 <label for="true">قیمت نمایش داده شود</label>
-                <input asp-for=IsActive type="radio" id="false" name="IsShowPrice" value="False" />
+                <input asp-for=IsShowPrice type="radio" id="false" name="IsShowPrice" value="False" />
                 <label for="false">قیمت نمایش داده نشود</label>
+                <span asp-validation-for="IsShowPrice" class="text-danger"></span>
             </div>
             <div class="form-group row p-3">
                 <div class="col-8 offset-4 row">
                     <div class="col">
-                        <input type="submit"  value="ذخیره" class="btn btn-primary w-100" />
+                        <input type="submit" value="ذخیره" class="btn btn-primary w-100" />
                     </div>
                     <div class="col">
                         <a asp-controller="Category" asp-action="Index" class="btn btn-secondary"><i class="fas fa-sign-out-alt">بازگشت به لیست</i></a>
@@ -135,14 +150,19 @@
                 </div>
             </div>
         </div>
-        <div class="col-4">
-        @* Keep this empty *@
-        </div>
     </div>
 
 
 </form>
 
 @section Scripts{
-        <partial name="_ValidationScriptsPartial" /> 
+<partial name="_ValidationScriptsPartial" />
+<script>
+
+            $(function() {
+        $(".select-chosen").chosen({rtl: true});
+    });
+
+</script>
 }
+

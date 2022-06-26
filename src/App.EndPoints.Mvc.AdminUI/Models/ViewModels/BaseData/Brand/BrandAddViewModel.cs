@@ -3,10 +3,14 @@ using System.ComponentModel.DataAnnotations;
 
 namespace App.EndPoints.Mvc.AdminUI.Models.ViewModels.Product
 {
-    public class BrandInputViewModel
+    public class BrandAddViewModel
     {
+        [Display(Name = "شناسه")]
+        public int Id { get; set; }
+
         [Display(Name = "نام")]
-        [Required(ErrorMessage ="تکمیل فیلد نام اجباری می باشد")]
+        [Required(ErrorMessage = "تکمیل فیلد نام اجباری می باشد")]
+        [Remote(action: "CheckName", controller: "Brand", ErrorMessage = "این برند قبلا ثبت شده است")]
         public string Name { get; set; } = null!;
 
 
@@ -19,14 +23,11 @@ namespace App.EndPoints.Mvc.AdminUI.Models.ViewModels.Product
         //[Display(Name = "سازنده")]
         //[Required(ErrorMessage = "تکمیل فیلد تکرار سازنده می باشد")]
         //[Remote("CheckName","Brand",ErrorMessage ="این سازنده این برند را ندارد")]
-        //public string Manefacture { get; set; } = null!;
+        //public string Manufacturer { get; set; } = null!;
 
         [Display(Name = "ترتیب نمایش")]
         [Required(ErrorMessage = "تکمیل فیلد ترتیب نمایش اجباری می باشد")]
-        [Range(1,3,ErrorMessage ="مقدار باید بین 1 تا 3 باشد")]
+        [Range(1, int.MaxValue, ErrorMessage = "مقدار باید بزرگتر از {1} باشد")]
         public int DisplayOrder { get; set; }
-
-        [Display(Name = "حذف شده")]
-        public bool IsDeleted { get; set; }
     }
 }

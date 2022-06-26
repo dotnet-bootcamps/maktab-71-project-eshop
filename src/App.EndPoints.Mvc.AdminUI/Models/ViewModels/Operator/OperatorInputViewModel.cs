@@ -3,7 +3,7 @@
 namespace App.EndPoints.Mvc.AdminUI.Models.ViewModels.Operator
 {
     public class OperatorInputViewModel
-    {       
+    {
         [Display(Name = "شناسه")]
         public int Id { get; set; }
         [Display(Name = "کد رنگ")]

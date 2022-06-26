@@ -13,10 +13,10 @@ namespace App.Domain.Services.Operator
     {
         private readonly IOperatorCommandRepository _commandRepository;
         private readonly IOperatorQueryRepository _queryRepository;
-        public OperatorService(IOperatorCommandRepository categoryCommandRepository, IOperatorQueryRepository categoryQueryRepository)
+        public OperatorService(IOperatorCommandRepository operatorCommandRepository, IOperatorQueryRepository operatorQueryRepository)
         {
-            _queryRepository = categoryQueryRepository;
-            _commandRepository = categoryCommandRepository;
+            _queryRepository = operatorQueryRepository;
+            _commandRepository = operatorCommandRepository;
         }
 
         public async Task Delete(int id)

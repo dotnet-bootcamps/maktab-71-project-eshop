@@ -26,11 +26,9 @@ namespace App.Domain.Services.Product
 
         public async Task EnsureDoesNotExist(string name)
         {
-            var record = await _queryRepository.Get(name);
-            if (record != null)
-            {
-                throw new Exception($"Category {name} Already Exists!");
-            }           
+            var category = await _queryRepository.Get(name);
+            if (category != null)
+                throw new Exception($"there is already a category with name = {name}");
         }
 
         public async Task EnsureExists(string name)
@@ -53,12 +51,22 @@ namespace App.Domain.Services.Product
 
         public async Task<CategoryDto> Get(int id)
         {
-            return await _queryRepository.Get(id);
+            var record = await _queryRepository.Get(id);
+            if (record == null)
+            {
+                throw new Exception($"No Category with id : {id}!");
+            }
+            return record;
         }
 
         public async Task<CategoryDto> Get(string name)
         {
-            return await _queryRepository.Get(name);
+            var record = await _queryRepository.Get(name);
+            if (record == null)
+            {
+                throw new Exception($"No Category with name : {name}!");
+            }
+            return record;
         }
 
         public async Task<List<CategoryDto>> GetAll()

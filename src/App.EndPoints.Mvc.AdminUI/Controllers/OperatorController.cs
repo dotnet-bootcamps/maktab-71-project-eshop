@@ -36,6 +36,10 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(OperatorInputViewModel o)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(o);
+            }
             var dto = new OperatorDto
             {
                 Id = o.Id,
@@ -67,6 +71,10 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(OperatorInputViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
             var dto = new OperatorDto
             {
                 Id = model.Id,
