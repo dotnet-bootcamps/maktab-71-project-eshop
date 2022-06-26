@@ -28,7 +28,6 @@
 
 	<ItemGroup>
 		<Folder Include="wwwroot\lib\chosen\" />
-		<Folder Include="wwwroot\Upload\" />
 	</ItemGroup>
 	
   <ItemGroup>
