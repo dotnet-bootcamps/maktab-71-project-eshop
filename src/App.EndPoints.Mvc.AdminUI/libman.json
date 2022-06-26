@@ -15,6 +15,11 @@
       "provider": "cdnjs",
       "library": "jquery-validation-unobtrusive@3.2.12",
       "destination": "wwwroot/lib/jquery-validation-unobtrusive/"
+    },
+    {
+      "provider": "filesystem",
+      "library": "wwwroot/lib/chosen",
+      "destination": "wwwroot/lib/chosen/"
     }
   ]
 }

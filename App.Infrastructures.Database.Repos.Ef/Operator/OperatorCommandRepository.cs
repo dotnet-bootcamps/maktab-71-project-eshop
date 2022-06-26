@@ -26,7 +26,7 @@ namespace App.Infrastructures.Database.Repos.Ef.Operator
                 CreationDate = dto.CreationDate,
                 IsDeleted = dto.IsDeleted,
             };
-            await _context.AddAsync(o);
+            await _context.Operators.AddAsync(o);
             await _context.SaveChangesAsync();
         }
 

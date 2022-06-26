@@ -43,6 +43,10 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CategoryAddViewModel category)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(category);
+            }
             var dto = new CategoryDto
             {
                 Id = category.Id,
@@ -60,6 +64,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         [HttpGet]
         public async Task<IActionResult> Update(int id)
         {
+
             var dto = await _categoryAppService.Get(id);
             var viewModel = new CategoryUpdateViewModel
             {
@@ -77,6 +82,10 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(CategoryUpdateViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
             var dto = new CategoryDto
             {
                 Id = model.Id,

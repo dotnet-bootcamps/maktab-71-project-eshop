@@ -59,6 +59,10 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(ModelAddViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
             var dto = new ModelDto
             {
                 Id = model.Id,
@@ -75,7 +79,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         public async Task<IActionResult> Update(int id)
         {
             var models = await _modelAppService.GetAll();
-            ViewBag.Models = models.Select(x => new SelectListItem
+            ViewBag.Models = models.Where(x => x.Id != id).Select(x => new SelectListItem
             {
                 Text = x.Name,
                 Value = x.Id.ToString(),
@@ -104,6 +108,10 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(ModelUpdateViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
             var dto = new ModelDto
             {
                 Id = model.Id,

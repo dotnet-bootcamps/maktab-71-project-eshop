@@ -13,30 +13,33 @@ namespace App.EndPoints.Mvc.AdminUI.ViewModels
         [Display(Name = "شناسه")]
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "فیلد الزامی میباشد")]
         [Display(Name = "شناسه دسته بندی")]
         public int CategoryId { get; set; }
-        [Required]
+        [Required(ErrorMessage = "فیلد الزامی میباشد")]
         [Display(Name = "شناسه برند")]
         public int BrandId { get; set; }
+
+        [Required(ErrorMessage = "فیلد الزامی میباشد")]
         [Display(Name = "وزن")]
         public decimal Weight { get; set; }
-        [Required]
+        [Required(ErrorMessage = "فیلد الزامی میباشد")]
         [Display(Name = "اصل بودن")]
         public bool IsOrginal { get; set; }
         [Display(Name = "توضیحات")]
+        [Required(AllowEmptyStrings = true)]
         public string Description { get; set; } = null!;
 
-        [Required]
         [Range(0, 10000, ErrorMessage = "تعداد محصول باید بین {1} تا {2} باشد")]
         [Display(Name = "تعداد")]
+        [Required(ErrorMessage = "فیلد الزامی میباشد")]
         public int Count { get; set; }
 
-
+        [Required(ErrorMessage = "فیلد الزامی میباشد")]
         [Display(Name = "شناسه مدل")]
         public int ModelId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "فیلد الزامی میباشد")]
         [Display(Name = "قیمت")]
         public long Price { get; set; }
 
@@ -49,6 +52,7 @@ namespace App.EndPoints.Mvc.AdminUI.ViewModels
         public bool IsActive { get; set; }
 
         [Display(Name = "شناسه اپراتور")]
+        [Required(ErrorMessage = "فیلد الزامی میباشد")]
         public int OperatorId { get; set; }
 
         [Display(Name = "نام محصول")]
@@ -56,5 +60,8 @@ namespace App.EndPoints.Mvc.AdminUI.ViewModels
         [StringLength(40, ErrorMessage = "حداکثر 40 کاراکتر")]
         [Remote(action: "CheckName", controller: "Product", ErrorMessage = "این محصول قبلا ثبت شده است")]
         public string Name { get; set; } = String.Empty;
+
+        [Display(Name = "رنگ های محصول")]
+        public List<int> ColorIds { get; set; } = new List<int>();
     }
 }

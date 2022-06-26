@@ -51,5 +51,8 @@ namespace App.EndPoints.Mvc.AdminUI.Models.ViewModels.Product.Product
         public string Name { get; set; } = String.Empty;
         [Display(Name = "حذف شده")]
         public bool IsDeleted { get; set; }
+
+        [Display(Name = "رنگ های محصول")]
+        public List<int> ColorIds { get; set; } = new List<int>();
     }
 }

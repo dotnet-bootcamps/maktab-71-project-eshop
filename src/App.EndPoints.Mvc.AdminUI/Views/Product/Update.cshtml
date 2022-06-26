@@ -102,6 +102,18 @@
 
             <div class="form-group row p-3">
                 <div class="col-4">
+                    <label asp-for="ColorIds"></label>
+                </div>
+                <div class="col-8">
+                    <select asp-for="ColorIds" class="select-chosen" asp-items="@ViewBag.Colors" multiple>
+                        <option disabled selected>انتخاب رنگ ها</option>
+                    </select>
+                    <span asp-validation-for="ColorIds" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group row p-3">
+                <div class="col-4">
                     <label asp-for="Price"></label>
                 </div>
                 <div class="col-8">
@@ -152,6 +164,13 @@
 @section Scripts{
     @{
     <partial name="_ValidationScriptsPartial" />
+    <script>
+
+            $(function() {
+        $(".select-chosen").chosen({rtl: true});
+    });
+
+</script>
 }
 
 }

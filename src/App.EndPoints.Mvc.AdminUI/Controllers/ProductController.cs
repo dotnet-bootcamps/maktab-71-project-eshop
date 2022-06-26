@@ -99,6 +99,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
                     Text = s.Name,
                     Value = s.Id.ToString()
                 });
+
             var operators = await _operatorAppService.GetAll();
             ViewBag.Operators = operators
                 .Select(s => new SelectListItem
@@ -115,6 +116,10 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
 
             if (ModelState.IsValid)
             {
+                var colors = await _colorAppService.GetAll();
+                // select the selected colors
+                var selectedColors = colors.Where(x => product.ColorIds.Contains(x.Id)).ToList();
+
                 var dto = new ProductDto
                 {
                     Id = product.Id,
@@ -131,6 +136,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
                     IsActive = product.IsActive,
                     OperatorId = product.OperatorId,
                     BrandId = product.BrandId,
+                    Colors = selectedColors,
                 };
                 await _productAppService.Set(dto);
                 return RedirectToAction("Index");
@@ -205,6 +211,14 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(ProductUpdateViewModel product)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(product);
+            }
+            var colors = await _colorAppService.GetAll();
+            // select the selected colors
+            var selectedColors = colors.Where(x => product.ColorIds.Contains(x.Id)).ToList();
+
             var dto = new ProductDto
             {
                 Id = product.Id,
@@ -221,6 +235,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
                 IsActive = product.IsActive,
                 OperatorId = product.OperatorId,
                 BrandId = product.BrandId,
+                Colors = selectedColors,
             };
             await _productAppService.Update(dto);
             return RedirectToAction("Index");

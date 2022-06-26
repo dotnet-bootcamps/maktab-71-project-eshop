@@ -40,6 +40,10 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(ColorAddViewModel color)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(color);
+            }
             var dto = new ColorDto
             {
                 Id = color.Id,
@@ -69,6 +73,10 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(ColorUpdateViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
             var dto = new ColorDto
             {
                 Id = model.Id,

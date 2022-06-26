@@ -12,9 +12,9 @@ namespace App.Domain.AppServices.Operator
     public class OperatorAppService : IOperatorAppService
     {
         private readonly IOperatorService _service;
-        public OperatorAppService(IOperatorService categoryService)
+        public OperatorAppService(IOperatorService operatorService)
         {
-            _service = categoryService;
+            _service = operatorService;
         }
         public async Task Delete(int id)
         {
