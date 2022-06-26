@@ -1,0 +1,20 @@
+﻿@model ColorAddViewModel
+
+<form method="post" asp-controller="Color" asp-action="Create" class="col-md-4">
+    <div class="form-group">
+        <label asp-for="Name"></label><br>
+        <input type="text" class="form-control" asp-for="Name"><br>
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Code"></label><br>
+        <input type="text" class="form-control" asp-for="Code"><br>
+        <span asp-validation-for="Code" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">ایجاد</button>
+</form>
+
+@section Scripts{
+<partial name="_ValidationScriptsPartial" />
+}

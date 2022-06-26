@@ -1,0 +1,49 @@
+﻿@model List<App.EndPoints.Mvc.AdminUI.Models.ViewModels.Product.BrandOutputViewModel>
+@{
+	ViewData["Title"] = "لیست برند‌ها";
+	Model.OrderBy(x=>x.DisplayOrder);
+	int rowCount = 1;
+}
+
+<h3 style="float:right;">لیست برند‌ها</h3>
+<div style="float:left;">
+	<a class="btn btn-success" asp-controller="Brand" asp-action="Create">
+		جدید
+	</a>
+</div>
+
+<br>
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th scope="col">#</th>
+			<th scope="col">شناسه</th>
+			<th scope="col">نام</th>
+			<th scope="col">تاریخ ایجاد</th>
+			<th scope="col">عملیات</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var brand in Model)
+		{
+			<tr>
+				<th scope="row">
+					@rowCount
+				</th>
+				<td>@brand.Id</td>
+				<td>@brand.Name</td>
+				<td>@brand.CreationDate</td>
+				<td>
+					<a class="btn btn-primary" asp-controller="Brand" asp-action="Update" asp-route-id=@brand.Id>
+						ویرایش
+					</a>
+					|
+					<a class="btn btn-danger" asp-controller="Brand" asp-action="Delete" asp-route-id="@brand.Id">
+						حذف
+					</a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>

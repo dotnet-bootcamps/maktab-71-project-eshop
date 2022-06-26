@@ -1,0 +1,37 @@
+﻿@model CategoryAddViewModel
+
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-controller="Category" asp-action="Create" method="post">
+            <div class="form-group">
+                <label asp-for=Name></label>
+                <input type="text" class="form-control" asp-for=Name>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for=DisplayOrder></label>
+                <input type="number" class="form-control" asp-for=DisplayOrder>
+                <span asp-validation-for="DisplayOrder" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for=ParentCategoryId></label>
+                <input type="number" class="form-control" asp-for=ParentCategoryId>
+                <span asp-validation-for="ParentCategoryId" class="text-danger"></span>
+            </div>
+            <div class="form-group my-2">
+                <input asp-for=IsActive type="radio" id="true" name="IsActive" value="True" />
+                <label for="true">فعال</label>
+                <input asp-for=IsActive type="radio" id="false" name="IsActive" value="False" />
+                <label for="false">غیر فعال</label>
+                <span asp-validation-for="IsActive" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">ایجاد</button>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts{
+        <partial name="_ValidationScriptsPartial" /> 
+}

@@ -1,0 +1,25 @@
+﻿*, html, body {
+    direction: rtl !important;
+}
+
+*, p, div, span, a, ul, li {
+    font-family: 'Segoe UI';
+}
+
+
+.navbar-align {
+    margin-right: auto;
+    margin-left: 0;
+}
+
+.sidebar-nav {
+    padding-right: 6px !important;
+}
+.dropdown-item{
+    text-align:start;
+}
+
+/*is-invalid*/
+/*.input-validation-error{
+    border:1px solid red;
+}*/

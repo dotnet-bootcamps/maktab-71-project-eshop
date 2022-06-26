@@ -1,0 +1,25 @@
+﻿@model ColorUpdateViewModel
+
+<form asp-controller="Color" asp-action="Update">
+    <div class="form-group">
+        <label asp-for="Name"></label><br>
+        <input type="text" class="form-control" asp-for="Name"><br>
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Code"></label><br>
+        <input type="text" class="form-control" asp-for="Code"><br>
+        <span asp-validation-for="Code" class="text-danger"></span>
+    </div>
+    <div class="form-check-inline mx-0 my-1">
+        <input asp-for=IsDeleted class="form-check-input" type="checkbox" value="True" />
+        <label class="form-check-label mx-1" asp-for=IsDeleted>
+        </label>
+    </div>
+
+    <button type="submit" class="btn btn-primary">ایجاد</button>
+</form>
+
+@section Scripts{
+<partial name="_ValidationScriptsPartial" />
+}
