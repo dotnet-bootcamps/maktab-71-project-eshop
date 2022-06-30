@@ -1,5 +1,5 @@
 ﻿@model ProductAddViewModel
-<form method="post" asp-controller="Product" asp-action="Create">
+<form method="post" asp-controller="Product" asp-action="Create" enctype="multipart/form-data">
 
 
     <div class="form-group row">
@@ -125,10 +125,11 @@
             
             <div class="form-group row p-3">
                 <div class="col-4">
-                    Image
+                    <label>Image</label>
                 </div>
                 <div class="col-8">
-                    <input class="form-control" type="file" />
+                    @*<input class="form-control" asp type="file" asp-for="Image.Name" />*@
+                    <input type="file" name="files" id="uploadBox" multiple class="form-control" />
                 </div>
             </div>
 

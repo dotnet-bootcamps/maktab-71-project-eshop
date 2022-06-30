@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using App.Domain.Core.Product.Entities;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -63,5 +64,9 @@ namespace App.EndPoints.Mvc.AdminUI.ViewModels
 
         [Display(Name = "رنگ های محصول")]
         public List<int> ColorIds { get; set; } = new List<int>();
+        //public List<ProductFile> Images { get; set; } = new List<ProductFile>();
+        /*public ProductFile Image { get; set; } = new ProductFile();*/
+        public string? fileName { get; set; } = null;
+        public string? fileExtension { get; set; } = null;
     }
 }
