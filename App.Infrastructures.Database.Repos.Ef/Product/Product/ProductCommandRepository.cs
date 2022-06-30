@@ -14,10 +14,12 @@ namespace App.Infrastructures.Database.Repos.Ef.Product.Product
     public class ProductCommandRepository : IProductCommandRepository
     {
         private readonly AppDbContext _context;
+        private readonly IProductQueryRepository _productQueryRepository;
 
-        public ProductCommandRepository(AppDbContext context)
+        public ProductCommandRepository(AppDbContext context, IProductQueryRepository productQueryRepository)
         {
             _context = context;
+            _productQueryRepository = productQueryRepository;
         }
         public async Task Add(ProductDto dto)
         {
@@ -52,6 +54,19 @@ namespace App.Infrastructures.Database.Repos.Ef.Product.Product
                     IsDeleted = false,
                 };
                 record.ProductColors.Add(productColor);
+            }
+            foreach (var file in dto.files)
+            {
+               var fileTypeId =await _productQueryRepository.GetFileTypeExtentionId(file.FileType);
+                ProductFile productFile = new ProductFile
+                {
+                    FileTypeId = fileTypeId,
+                    ProductId = record.Id,
+                    Name =file.Name,
+                    CreationDate=DateTime.Now,
+                    IsDeleted=false,
+                };
+                record.ProductFiles.Add(productFile);
             }
             await _context.SaveChangesAsync();
         }

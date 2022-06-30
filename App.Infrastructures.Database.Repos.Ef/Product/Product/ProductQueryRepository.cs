@@ -85,5 +85,7 @@ namespace App.Infrastructures.Database.Repos.Ef.Product.Product
             }).SingleOrDefaultAsync();
             return record;
         }
+        public async Task<int> GetFileTypeExtentionId(string ExtentionName) =>
+            await _context.FileTypeExtentions.Where(x => x.Name == ExtentionName).Select(x => x.Id).FirstOrDefaultAsync();
     }
 }

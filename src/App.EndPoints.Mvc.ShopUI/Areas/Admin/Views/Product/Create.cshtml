@@ -1,5 +1,5 @@
 ﻿@model ProductAddViewModel
-<form method="post" asp-controller="Product" asp-action="Create">
+<form enctype="multipart/form-data" method="post" asp-controller="Product" asp-action="Create">
 
 
     <div class="form-group row">
@@ -128,7 +128,7 @@
                     Image
                 </div>
                 <div class="col-8">
-                    <input class="form-control" type="file" />
+                    <input name="FormFile" id="FormFile" class="form-control" type="file" multiple />
                 </div>
             </div>
 

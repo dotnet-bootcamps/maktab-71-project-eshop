@@ -13,6 +13,7 @@ using App.Domain.Core.Operator.Entities;
 using App.Domain.Core.Operator.Contract.AppServices;
 using Microsoft.AspNetCore.Mvc.Filters;
 using App.EndPoints.Mvc.AdminUI.Models.ViewModels.Product.Product;
+using System.Net.Http.Headers;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
@@ -112,11 +113,39 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(ProductAddViewModel product)
+        public async Task<IActionResult> Create(ProductAddViewModel product, List<IFormFile> FormFile)
         {
 
             if (ModelState.IsValid)
             {
+                #region ImagesUpload
+                var files = new List<string>();
+                foreach (var formFile in FormFile)
+                {
+                    if (formFile.Length > 0)
+                    {
+                        var filename = Path.Combine("wwwroot", "Upload", Guid.NewGuid().ToString() +
+                            ContentDispositionHeaderValue.Parse(formFile.ContentDisposition).FileName.Trim('"'));
+                        files.Add(filename);
+                        using (var stream = System.IO.File.Create(filename))
+                        {
+                            await formFile.CopyToAsync(stream);
+                        }
+                    }
+                }
+                var productFiles = new List<ProductFileDto>();
+                foreach (var file in files)
+                {
+                    ProductFileDto productfile = new ProductFileDto
+                    {
+                        Name = file,
+                        FileType= System.IO.Path.GetExtension(file).ToLower(),
+                        ProductId=product.Id
+                        
+                    };
+                    productFiles.Add(productfile);
+                }
+                #endregion ImagesUpload
                 var colors = await _colorAppService.GetAll();
                 // select the selected colors
                 var selectedColors = colors.Where(x => product.ColorIds.Contains(x.Id)).ToList();
@@ -138,6 +167,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
                     OperatorId = product.OperatorId,
                     BrandId = product.BrandId,
                     Colors = selectedColors,
+                    files = productFiles
                 };
                 await _productAppService.Set(dto);
                 return RedirectToAction(nameof(Index));

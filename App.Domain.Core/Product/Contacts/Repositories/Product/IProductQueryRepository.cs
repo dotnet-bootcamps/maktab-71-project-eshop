@@ -12,5 +12,6 @@ namespace App.Domain.Core.Product.Contacts.Repositories.Product
         Task<List<ProductDto>> GetAll();
         Task<ProductDto>? Get(int id);
         Task<ProductDto>? Get(string name);
+        Task<int> GetFileTypeExtentionId(string ExtentionName);
     }
 }
