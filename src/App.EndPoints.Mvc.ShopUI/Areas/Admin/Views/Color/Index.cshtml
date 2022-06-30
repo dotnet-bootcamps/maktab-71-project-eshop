@@ -38,7 +38,7 @@
                 <tr>
                     <td>@item.Id</td>
                     <td>@item.Name</td>
-                    <td>@item.Code</td>
+                    <td style="background-color:@item.Code;">@item.Code</td>
                     <td><a type="button" class="btn btn-warning" asp-action="Update" asp-controller="Color" asp-route-id="@item.Id">ویرایش</a></td>
                     <td><a type="button" class="btn btn-danger" asp-action="Delete" asp-controller="Color" asp-route-id="@item.Id">حذف</a></td>
                 </tr>
