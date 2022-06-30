@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using App.Infrastructures.Database.SqlServer.Data;
-
+using Microsoft.AspNetCore.Hosting;
 
 
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -20,6 +20,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
     [Area("Admin")]
     public class ProductController : Controller
     {
+        private Microsoft.AspNetCore.Hosting.IHostingEnvironment _environment;
         private readonly IProductAppService _productAppService;
         private readonly IBrandAppService _brandAppService;
         private readonly IColorAppService _colorAppService;
@@ -34,7 +35,8 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
             IColorAppService colorAppService,
             IModelAppService modelAppService,
             ICategoryAppService categoryAppService,
-            IOperatorAppService operatorAppService
+            IOperatorAppService operatorAppService,
+            Microsoft.AspNetCore.Hosting.IHostingEnvironment hostingEnvironment
             )
         {
             _productAppService = appService;
@@ -43,10 +45,12 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
             _modelAppService = modelAppService;
             _categoryAppService = categoryAppService;
             _operatorAppService = operatorAppService;
+            _environment = hostingEnvironment;
         }
 
         public async Task<IActionResult> Index()
         {
+            
             var records = await _productAppService.GetAll();
             var recordsProduct = records.Select(p => new ProductOutputViewModel()
             {
@@ -111,17 +115,18 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
             return View();
         }
 
+
         [HttpPost]
-        public async Task<IActionResult> Create(ProductAddViewModel product)
+        public async Task<IActionResult> Create(ProductAddViewModel product,ICollection<IFormFile> files)
         {
 
             if (ModelState.IsValid)
             {
-                var colors = await _colorAppService.GetAll();
+                 var colors = await _colorAppService.GetAll();
                 // select the selected colors
                 var selectedColors = colors.Where(x => product.ColorIds.Contains(x.Id)).ToList();
 
-                var dto = new ProductDto
+                    var dto = new ProductDto
                 {
                     Id = product.Id,
                     Name = product.Name,
@@ -139,8 +144,25 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
                     BrandId = product.BrandId,
                     Colors = selectedColors,
                 };
+
                 await _productAppService.Set(dto);
+
+                List<string> fileName= new List<string>();
+
+                var uploads = Path.Combine(_environment.WebRootPath, "Upload");
+                foreach (var file in files)
+                {
+                    if (file.Length > 0)
+                    {
+                        using (var fileStream = new FileStream(Path.Combine(uploads, file.FileName), FileMode.Create))
+                        {
+                            await file.CopyToAsync(fileStream);
+                        }
+                        fileName.Add(file.FileName);
+                    }
+                }
                 return RedirectToAction(nameof(Index));
+                
             }
             else
             {

@@ -40,6 +40,7 @@ namespace App.Infrastructures.Database.Repos.Ef.Product.Product
             };
             await _context.AddAsync(record);
             await _context.SaveChangesAsync();
+           
             foreach (var color in dto.Colors)
             {
                 ProductColor productColor = new ProductColor
