@@ -79,9 +79,9 @@ namespace App.Domain.Services.Product
             return await _queryRepository.GetAll();
         }
 
-        public async Task Set(ProductDto dto)
+        public async Task<int> Set(ProductDto dto)
         {
-            await _commandRepository.Add(dto);
+            return await _commandRepository.Add(dto);
         }
 
         public async Task Update(ProductDto dto)

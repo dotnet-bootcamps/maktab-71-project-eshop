@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace App.Domain.Core.Product.Contacts.Repositories.Product
+namespace App.Domain.Core.Product.Contacts.Repositories.PFile
 {
-    public interface IProductCommandRepository
+    public interface IPFileCommandRepository
     {
-        Task<int> Add(ProductDto dto);
-        Task Update(ProductDto dto);
+        Task Add(PFileDto dto);
+        Task Update(PFileDto dto);
         Task Delete(int id);
     }
 }

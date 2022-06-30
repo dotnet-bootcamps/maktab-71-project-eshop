@@ -3,6 +3,7 @@ using App.Domain.Core.Product.Contacts.AppServices;
 using App.Domain.Core.Product.Contacts.Services;
 using App.Domain.Core.Product.Dtos;
 using App.Domain.Core.Product.Entities;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,10 +40,10 @@ namespace App.Domain.AppServices.Product
             return await _service.GetAll();
         }
 
-        public async Task Set(ProductDto dto)
+        public async Task<int> Set(ProductDto dto)
         {
             await _service.EnsureDoesNotExist(dto.Name);
-            await _service.Set(dto);
+            return await _service.Set(dto);
         }
 
         public async Task Update(ProductDto dto)
@@ -50,6 +51,7 @@ namespace App.Domain.AppServices.Product
             await _service.EnsureExists(dto.Id);
             await _service.Update(dto);
         }
+
 
     }
 }

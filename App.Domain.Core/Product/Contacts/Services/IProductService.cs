@@ -4,7 +4,7 @@ namespace App.Domain.Core.Product.Contacts.Services
     public interface IProductService
     {
         Task<List<ProductDto>> GetAll();
-        Task Set(ProductDto dto);
+        Task<int> Set(ProductDto dto);
         Task<ProductDto> Get(int id);
         Task<ProductDto> Get(string name);
         Task Update(ProductDto dto);

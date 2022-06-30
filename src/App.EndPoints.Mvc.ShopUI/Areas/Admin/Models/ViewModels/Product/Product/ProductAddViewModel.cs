@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using App.EndPoints.Mvc.ShopUI.Areas.Admin.Validations;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -63,5 +64,11 @@ namespace App.EndPoints.Mvc.AdminUI.ViewModels
 
         [Display(Name = "رنگ های محصول")]
         public List<int> ColorIds { get; set; } = new List<int>();
+
+        [Display(Name = "عکس محصول")]
+        [Required(ErrorMessage = "لطفا یک عکس انتخاب کنید")]
+        [DataType(DataType.Upload)]
+        [UploadFileExtentions(".png,.jpg,.jpeg,.gif")]
+        public IFormFile Photo { get; set; } = null!;
     }
 }

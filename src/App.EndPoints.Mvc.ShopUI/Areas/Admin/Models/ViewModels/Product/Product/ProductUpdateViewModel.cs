@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using App.EndPoints.Mvc.ShopUI.Areas.Admin.Validations;
+using System.ComponentModel.DataAnnotations;
 
 namespace App.EndPoints.Mvc.AdminUI.Models.ViewModels.Product.Product
 {
@@ -54,5 +55,10 @@ namespace App.EndPoints.Mvc.AdminUI.Models.ViewModels.Product.Product
 
         [Display(Name = "رنگ های محصول")]
         public List<int> ColorIds { get; set; } = new List<int>();
+
+        [Display(Name = "عکس محصول")]
+        [DataType(DataType.Upload)]
+        [UploadFileExtentions(".png,.jpg,.jpeg,.gif")]
+        public IFormFile Photo { get; set; } = null!;
     }
 }

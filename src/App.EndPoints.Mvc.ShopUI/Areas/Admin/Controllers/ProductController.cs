@@ -26,7 +26,8 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         private readonly IModelAppService _modelAppService;
         private readonly ICategoryAppService _categoryAppService;
         private readonly IOperatorAppService _operatorAppService;
-        // TODO : Operator
+        private readonly IPFileAppService _fileAppService;
+        private readonly IWebHostEnvironment _environment;
 
         public ProductController(
             IProductAppService appService,
@@ -34,7 +35,9 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
             IColorAppService colorAppService,
             IModelAppService modelAppService,
             ICategoryAppService categoryAppService,
-            IOperatorAppService operatorAppService
+            IOperatorAppService operatorAppService,
+            IPFileAppService fileAppService,
+            IWebHostEnvironment environment
             )
         {
             _productAppService = appService;
@@ -43,6 +46,8 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
             _modelAppService = modelAppService;
             _categoryAppService = categoryAppService;
             _operatorAppService = operatorAppService;
+            _fileAppService = fileAppService;
+            _environment = environment;
         }
 
         public async Task<IActionResult> Index()
@@ -117,6 +122,30 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
 
             if (ModelState.IsValid)
             {
+
+                var formFile = product.Photo;
+                if (formFile == null || formFile.Length == 0)
+                {
+                    ModelState.AddModelError("", "Uploaded file is empty or null.");
+                    return View();
+                }
+
+                // Don't know where to put these!
+                var uploadsRootFolder = Path.Combine(_environment.WebRootPath, "Upload");
+                if (!Directory.Exists(uploadsRootFolder))
+                {
+                    Directory.CreateDirectory(uploadsRootFolder);
+                }
+
+                var filePath = Path.Combine(uploadsRootFolder, formFile.FileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await formFile.CopyToAsync(fileStream).ConfigureAwait(false);
+                }
+
+
+
+
                 var colors = await _colorAppService.GetAll();
                 // select the selected colors
                 var selectedColors = colors.Where(x => product.ColorIds.Contains(x.Id)).ToList();
@@ -139,7 +168,9 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
                     BrandId = product.BrandId,
                     Colors = selectedColors,
                 };
-                await _productAppService.Set(dto);
+                int productId = await _productAppService.Set(dto);
+
+                await _fileAppService.Set(new PFileDto { FileName = formFile.FileName, Size = formFile.Length, ProductId = productId });
                 return RedirectToAction(nameof(Index));
             }
             else

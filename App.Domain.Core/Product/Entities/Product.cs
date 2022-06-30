@@ -47,5 +47,6 @@ namespace App.Domain.Core.Product.Entities
         public virtual ICollection<ProductFile> ProductFiles { get; set; }
         public virtual ICollection<ProductTag> ProductTags { get; set; }
         public virtual ICollection<ProductView> ProductViews { get; set; }
+        public virtual ICollection<PFile> Files { get; set; }
     }
 }

@@ -19,7 +19,7 @@ namespace App.Infrastructures.Database.Repos.Ef.Product.Product
         {
             _context = context;
         }
-        public async Task Add(ProductDto dto)
+        public async Task<int> Add(ProductDto dto)
         {
             App.Domain.Core.Product.Entities.Product record = new()
             {
@@ -54,6 +54,7 @@ namespace App.Infrastructures.Database.Repos.Ef.Product.Product
                 record.ProductColors.Add(productColor);
             }
             await _context.SaveChangesAsync();
+            return record.Id;
         }
 
         public async Task Delete(int id)

@@ -13,6 +13,7 @@ using App.Domain.Core.Product.Contacts.AppServices;
 using App.Domain.Core.Product.Contacts.Repositories.Category;
 using App.Domain.Core.Product.Contacts.Repositories.Color;
 using App.Domain.Core.Product.Contacts.Repositories.Model;
+using App.Domain.Core.Product.Contacts.Repositories.PFile;
 using App.Domain.Core.Product.Contacts.Repositories.Product;
 using App.Domain.Core.Product.Contacts.Services;
 using App.Domain.Services.BaseData;
@@ -25,6 +26,7 @@ using App.Infrastructures.Database.Repos.Ef.Permission;
 using App.Infrastructures.Database.Repos.Ef.Product.Category;
 using App.Infrastructures.Database.Repos.Ef.Product.Color;
 using App.Infrastructures.Database.Repos.Ef.Product.Model;
+using App.Infrastructures.Database.Repos.Ef.Product.PFile;
 using App.Infrastructures.Database.Repos.Ef.Product.Product;
 using App.Infrastructures.Database.SqlServer.Data;
 
@@ -92,6 +94,13 @@ builder.Services.AddScoped<IOperatorService, OperatorService>();
 builder.Services.AddScoped<IOperatorCommandRepository, OperatorCommandRepository>();
 builder.Services.AddScoped<IOperatorQueryRepository, OperatorQueryRepository>();
 #endregion
+#region file 
+builder.Services.AddScoped<IPFileAppService, PFileAppService>();
+builder.Services.AddScoped<IPFileService, PFileService>();
+builder.Services.AddScoped<IPFileCommandRepository, PFileCommandRepository>();
+builder.Services.AddScoped<IPFileQueryRepository, PFileQueryRepository>();
+#endregion
+
 #region Permission
 builder.Services.AddScoped<IPermissionService, PermissionService>();
 builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
