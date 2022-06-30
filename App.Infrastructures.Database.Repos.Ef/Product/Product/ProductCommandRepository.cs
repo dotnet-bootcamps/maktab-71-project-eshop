@@ -40,6 +40,19 @@ namespace App.Infrastructures.Database.Repos.Ef.Product.Product
             };
             await _context.AddAsync(record);
             await _context.SaveChangesAsync();
+            var savedProductId = record.Id;
+            var fileTypeExt = _context.FileTypeExtentions.SingleOrDefault(x => x.Name.Contains(dto.fileExtension));
+            var fileType = _context.FileTypes.SingleOrDefault(x => x.Id == fileTypeExt.Id);
+            ProductFile productFile = new ProductFile()
+            {
+                ProductId = savedProductId,
+                FileTypeId=fileType.Id,
+                Name=dto.fileName,
+                IsDeleted=false,
+                CreationDate=DateTime.Now,  
+            };
+            await _context.AddAsync(productFile);
+            await _context.SaveChangesAsync();
             foreach (var color in dto.Colors)
             {
                 ProductColor productColor = new ProductColor

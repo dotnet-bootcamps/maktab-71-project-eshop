@@ -26,6 +26,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         private readonly IModelAppService _modelAppService;
         private readonly ICategoryAppService _categoryAppService;
         private readonly IOperatorAppService _operatorAppService;
+        private readonly IWebHostEnvironment _webHostEnvironment;
         // TODO : Operator
 
         public ProductController(
@@ -34,7 +35,8 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
             IColorAppService colorAppService,
             IModelAppService modelAppService,
             ICategoryAppService categoryAppService,
-            IOperatorAppService operatorAppService
+            IOperatorAppService operatorAppService,
+            IWebHostEnvironment webHostEnvironment
             )
         {
             _productAppService = appService;
@@ -43,6 +45,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
             _modelAppService = modelAppService;
             _categoryAppService = categoryAppService;
             _operatorAppService = operatorAppService;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public async Task<IActionResult> Index()
@@ -112,39 +115,51 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(ProductAddViewModel product)
+        public async Task<IActionResult> Create(ProductAddViewModel model)
         {
 
             if (ModelState.IsValid)
             {
                 var colors = await _colorAppService.GetAll();
                 // select the selected colors
-                var selectedColors = colors.Where(x => product.ColorIds.Contains(x.Id)).ToList();
-
+                var selectedColors = colors.Where(x => model.ColorIds.Contains(x.Id)).ToList();
+                //Image
+                var files = HttpContext.Request.Form.Files;
+                string webRootPath = _webHostEnvironment.WebRootPath;
+                string NewLocation = webRootPath + @"\Upload\product\";
+                string generatedFileName = Guid.NewGuid().ToString();
+                string fileExtension = Path.GetExtension(files[0].FileName);
+                using (var fileStream = new FileStream(Path.Combine(NewLocation, generatedFileName + fileExtension), FileMode.Create))
+                {
+                    files[0].CopyTo(fileStream);
+                }
+                //Fill DTO
                 var dto = new ProductDto
                 {
-                    Id = product.Id,
-                    Name = product.Name,
+                    Id = model.Id,
+                    Name = model.Name,
                     CreationDate = DateTime.Now,
-                    CategoryId = product.CategoryId,
-                    Weight = product.Weight,
-                    IsOrginal = product.IsOrginal,
-                    Description = product.Description,
-                    Count = product.Count,
-                    ModelId = product.ModelId,
-                    Price = product.Price,
-                    IsShowPrice = product.IsShowPrice,
-                    IsActive = product.IsActive,
-                    OperatorId = product.OperatorId,
-                    BrandId = product.BrandId,
+                    CategoryId = model.CategoryId,
+                    Weight = model.Weight,
+                    IsOrginal = model.IsOrginal,
+                    Description = model.Description,
+                    Count = model.Count,
+                    ModelId = model.ModelId,
+                    Price = model.Price,
+                    IsShowPrice = model.IsShowPrice,
+                    IsActive = model.IsActive,
+                    OperatorId = model.OperatorId,
+                    BrandId = model.BrandId,
                     Colors = selectedColors,
+                    fileName = generatedFileName,
+                    fileExtension= fileExtension,
                 };
                 await _productAppService.Set(dto);
                 return RedirectToAction(nameof(Index));
             }
             else
             {
-                return View(product);
+                return View(model);
             }
         }
 
