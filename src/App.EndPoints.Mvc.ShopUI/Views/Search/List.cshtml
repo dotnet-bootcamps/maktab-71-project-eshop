@@ -1,4 +1,4 @@
-﻿@model List<App.EndPoints.Mvc.ShopUI.Models.SearchItemViewModel>
+﻿@model List<App.EndPoints.Mvc.ShopUI.Models.SearchItemViewModel>?
 
 <div class="single-row-slider-tab-area section-space">
     <div class="container">           
@@ -11,7 +11,7 @@
                         <div class="single-grid-product col-3">
                             <div class="single-grid-product__image">
                                 <a asp-controller="Search" asp-action="Details" asp-route-id="@item.ProductId">
-                                    <img src="~/upload/@item.ImageName" class="img-fluid" alt="">
+                                    <img src="@item.ImageUrls.FirstOrDefault()" class="img-fluid" alt="">
                                 </a>
                                 @*<div class="hover-icons">
                                     <a href="javascript:void(0)"><i class="ion-bag"></i></a>
@@ -26,14 +26,14 @@
                             <div class="single-grid-product__content">
                                 <div class="single-grid-product__category-rating">
                                     <span class="category">
-                                        <a asp-controller="Search" asp-action="Details" asp-route-id="@item.ProductId">@item.ProductName</a></span>
+                                        <a asp-controller="Search" asp-action="Details" asp-route-id="@item.ProductId">@item.Name</a></span>
                                 </div>
 
                                 <h3 class="single-grid-product__title"> 
-                                    <a asp-controller="Search" asp-action="Details" asp-route-id="@item.ProductId">@item.ProductDescription</a>
+                                    <a asp-controller="Search" asp-action="Details" asp-route-id="@item.ProductId">@item.Price</a>
                                 </h3>
                                 <p class="single-grid-product__price">
-                                    <span class="main-price">@item.ProductPrice</span>
+                                    <span class="main-price">@item.Price</span>
                                 </p>
                             </div>
                         </div>

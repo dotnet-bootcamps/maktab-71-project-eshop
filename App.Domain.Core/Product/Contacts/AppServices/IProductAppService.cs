@@ -11,5 +11,7 @@ namespace App.Domain.Core.Product.Contacts.AppServices
         Task<ProductDto> Get(string name);
         Task Update(ProductDto dto);
         Task Delete(int id);
+
+        Task<List<ProductBriefDto>?> GetProducts(int? categoryId, string? keyword, int? minPrice, int? maxPrice, int? brandId,CancellationToken cancellationToken);
     }
 }

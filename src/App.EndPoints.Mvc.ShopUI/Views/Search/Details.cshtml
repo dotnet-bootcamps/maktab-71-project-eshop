@@ -6,7 +6,7 @@
             <div class="col-3">
                 <div class="single-grid-product__image">
                     <a asp-controller="Search" asp-action="Details" asp-route-id="@Model.ProductId">
-                        <img src="~/upload/@Model.ImageName" class="img-fluid" alt="">
+                        <img src="@Model.ImageUrls.FirstOrDefault()" class="img-fluid" alt="">
                     </a>
                 </div>                    
             </div>
@@ -14,14 +14,14 @@
                 <div class="single-grid-product__content">
                     <div class="single-grid-product__category-rating">
                         <span class="category">
-                            <a asp-controller="Search" asp-action="Details" asp-route-id="@Model.ProductId">@Model.ProductName</a></span>
+                            <a asp-controller="Search" asp-action="Details" asp-route-id="@Model.ProductId">@Model.Name</a></span>
                     </div>
 
                     <h3 class="single-grid-product__title"> 
-                        <a asp-controller="Search" asp-action="Details" asp-route-id="@Model.ProductId">@Model.ProductDescription</a>
+                        <a asp-controller="Search" asp-action="Details" asp-route-id="@Model.ProductId">@Model.Price</a>
                     </h3>
                     <p class="single-grid-product__price">
-                        <span class="main-price">@Model.ProductPrice</span>
+                        <span class="main-price">@Model.Price</span>
                     </p>
                     <input type="submit" class="btn btn-success" value="اضافه نمودن به سبد خرید" />
                 </div>

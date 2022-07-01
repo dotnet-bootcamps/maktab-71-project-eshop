@@ -12,5 +12,6 @@ namespace App.Domain.Core.Product.Contacts.Repositories.Product
         Task<List<ProductDto>> GetAll();
         Task<ProductDto>? Get(int id);
         Task<ProductDto>? Get(string name);
+        Task<List<ProductBriefDto>?> Search(int? categoryId, string? keyword, int? minPrice, int? maxPrice, int? brandId,CancellationToken cancellationToken);
     }
 }

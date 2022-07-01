@@ -79,6 +79,11 @@ namespace App.Domain.Services.Product
             return await _queryRepository.GetAll();
         }
 
+        public async Task<List<ProductBriefDto>?> GetProducts(int? categoryId, string? keyword, int? minPrice, int? maxPrice, int? brandId, CancellationToken cancellationToken)
+        {
+            return await _queryRepository.Search(categoryId, keyword, minPrice, maxPrice, brandId, cancellationToken);
+        }
+
         public async Task Set(ProductDto dto)
         {
             await _commandRepository.Add(dto);
