@@ -21,7 +21,7 @@ namespace App.Infrastructures.Database.Repos.Ef.Product.Product
             _context = context;
             _productQueryRepository = productQueryRepository;
         }
-        public async Task Add(ProductDto dto)
+        public async Task<int> Add(ProductDto dto)
         {
             App.Domain.Core.Product.Entities.Product record = new()
             {
@@ -40,8 +40,6 @@ namespace App.Infrastructures.Database.Repos.Ef.Product.Product
                 CreationDate = dto.CreationDate,
                 IsDeleted = dto.IsDeleted,
             };
-            await _context.AddAsync(record);
-            await _context.SaveChangesAsync();
             foreach (var color in dto.Colors)
             {
                 ProductColor productColor = new ProductColor
@@ -55,22 +53,37 @@ namespace App.Infrastructures.Database.Repos.Ef.Product.Product
                 };
                 record.ProductColors.Add(productColor);
             }
-            foreach (var file in dto.files)
+
+            try
             {
-               var fileTypeId =await _productQueryRepository.GetFileTypeExtentionId(file.FileType);
+                await _context.AddAsync(record);
+                await _context.SaveChangesAsync();
+            }
+            catch
+            {
+                throw new Exception("Product registration has failed");
+            }
+
+            return record.Id;
+        }
+
+        public async Task addProductFiles(List<ProductFileDto> dto,int productId)
+        {
+            foreach (var file in dto)
+            {
+                var fileTypeId = await _productQueryRepository.GetFileTypeExtentionId(file.FileType);
                 ProductFile productFile = new ProductFile
                 {
                     FileTypeId = fileTypeId,
-                    ProductId = record.Id,
-                    Name =file.Name,
-                    CreationDate=DateTime.Now,
-                    IsDeleted=false,
+                    ProductId = productId,
+                    Name = file.Name,
+                    CreationDate = DateTime.Now,
+                    IsDeleted = false,
                 };
-                record.ProductFiles.Add(productFile);
+                _context.ProductFiles.Add(productFile);
             }
             await _context.SaveChangesAsync();
         }
-
         public async Task Delete(int id)
         {
 

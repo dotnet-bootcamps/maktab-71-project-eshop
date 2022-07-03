@@ -9,7 +9,8 @@ namespace App.Domain.Core.Product.Contacts.Repositories.Product
 {
     public interface IProductCommandRepository
     {
-        Task Add(ProductDto dto);
+        Task<int> Add(ProductDto dto);
+        Task addProductFiles(List<ProductFileDto> dto, int productId);
         Task Update(ProductDto dto);
         Task Delete(int id);
     }

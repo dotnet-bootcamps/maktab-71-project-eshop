@@ -3,9 +3,12 @@ using App.Domain.Core.Product.Contacts.Repositories.Product;
 using App.Domain.Core.Product.Contacts.Services;
 using App.Domain.Core.Product.Dtos;
 using App.Domain.Core.Product.Entities;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -76,14 +79,54 @@ namespace App.Domain.Services.Product
 
         public async Task<List<ProductDto>> GetAll()
         {
+            var t = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+
             return await _queryRepository.GetAll();
         }
 
-        public async Task Set(ProductDto dto)
-        {
-            await _commandRepository.Add(dto);
-        }
+        public async Task<int> Set(ProductDto dto) 
+            => await _commandRepository.Add(dto);
 
+        public async Task SetProductFiles(List<ProductFileDto> dto,int productId)
+           => await _commandRepository.addProductFiles(dto, productId);
+
+        public async Task<List<ProductFileDto>> UploadFiles(List<IFormFile> FormFile, int ProductId)
+        {
+            var files = new List<string>();
+            foreach (var formFile in FormFile)
+            {
+                if (formFile.Length > 0)
+                {
+                    var filename = Path.Combine("Upload", Guid.NewGuid().ToString() +
+                        ContentDispositionHeaderValue.Parse(formFile.ContentDisposition).FileName.Trim('"'));
+                    files.Add(filename);
+                    try
+                    {
+                        using (var stream = System.IO.File.Create(filename))
+                        {
+                            await formFile.CopyToAsync(stream);
+                        }
+                    }
+                    catch
+                    {
+                        throw new Exception("Upload files operation failed");
+                    }
+                }
+            }
+            var productFiles = new List<ProductFileDto>();
+            foreach (var file in files)
+            {
+                ProductFileDto productfile = new ProductFileDto
+                {
+                    Name = file,
+                    FileType = System.IO.Path.GetExtension(file).ToLower(),
+                    ProductId = ProductId
+
+                };
+                productFiles.Add(productfile);
+            }
+            return productFiles;
+        }
         public async Task Update(ProductDto dto)
         {
             await _commandRepository.Update(dto);
