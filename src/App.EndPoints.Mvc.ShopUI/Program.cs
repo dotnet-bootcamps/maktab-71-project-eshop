@@ -19,6 +19,7 @@ using App.Domain.Services.BaseData;
 using App.Domain.Services.Operator;
 using App.Domain.Services.Permission;
 using App.Domain.Services.Product;
+using App.EndPoints.Mvc.ShopUI.Services;
 using App.Infrastructures.Database.Repos.Ef.BaseData;
 using App.Infrastructures.Database.Repos.Ef.Operator;
 using App.Infrastructures.Database.Repos.Ef.Permission;
@@ -39,7 +40,9 @@ builder.Services.AddControllersWithViews()
     .AddRazorRuntimeCompilation();
 builder.Services.AddDbContext<AppDbContext>(option =>
 {
-    option.UseSqlServer("Data Source=(LocalDb)\\MSSQLLocalDB; Initial Catalog=DotNetShopDb; Integrated Security=TRUE");
+    //option.UseSqlServer("Data Source=(LocalDb)\\MSSQLLocalDB; Initial Catalog=DotNetShopDb; Integrated Security=TRUE");
+    option.UseSqlServer("Data Source=MASOUD;Initial Catalog=DotNetShopDb;Persist Security Info=True;User ID=sa;Password=25915491");
+
 });
 
 
@@ -84,6 +87,8 @@ builder.Services.AddScoped<IProductAppService, ProductAppService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IProductCommandRepository, ProductCommandRepository>();
 builder.Services.AddScoped<IProductQueryRepository, ProductQueryRepository>();
+builder.Services.AddScoped<IUploadFileService, UploadFileService>();
+
 #endregion
 #endregion
 #region Operator 

@@ -14,6 +14,7 @@ using App.Domain.Core.Operator.Contract.AppServices;
 using Microsoft.AspNetCore.Mvc.Filters;
 using App.EndPoints.Mvc.AdminUI.Models.ViewModels.Product.Product;
 using System.Net.Http.Headers;
+using App.EndPoints.Mvc.ShopUI.Services;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
@@ -27,6 +28,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         private readonly IModelAppService _modelAppService;
         private readonly ICategoryAppService _categoryAppService;
         private readonly IOperatorAppService _operatorAppService;
+        private readonly IUploadFileService _uploadFileService;
         // TODO : Operator
 
         public ProductController(
@@ -35,8 +37,8 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
             IColorAppService colorAppService,
             IModelAppService modelAppService,
             ICategoryAppService categoryAppService,
-            IOperatorAppService operatorAppService
-            )
+            IOperatorAppService operatorAppService,
+            IUploadFileService uploadFileService)
         {
             _productAppService = appService;
             _brandAppService = brandAppService;
@@ -44,6 +46,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
             _modelAppService = modelAppService;
             _categoryAppService = categoryAppService;
             _operatorAppService = operatorAppService;
+            _uploadFileService = uploadFileService;
         }
 
         public async Task<IActionResult> Index()
@@ -113,26 +116,13 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(ProductAddViewModel product, List<IFormFile> FormFile)
+        public async Task<IActionResult> Create(ProductAddViewModel product)
         {
 
             if (ModelState.IsValid)
             {
                 #region ImagesUpload
-                var files = new List<string>();
-                foreach (var formFile in FormFile)
-                {
-                    if (formFile.Length > 0)
-                    {
-                        var filename = Path.Combine("wwwroot", "Upload", Guid.NewGuid().ToString() +
-                            ContentDispositionHeaderValue.Parse(formFile.ContentDisposition).FileName.Trim('"'));
-                        files.Add(filename);
-                        using (var stream = System.IO.File.Create(filename))
-                        {
-                            await formFile.CopyToAsync(stream);
-                        }
-                    }
-                }
+                var files = await _uploadFileService.Upload(product.FormFile);
                 var productFiles = new List<ProductFileDto>();
                 foreach (var file in files)
                 {
@@ -146,6 +136,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
                     productFiles.Add(productfile);
                 }
                 #endregion ImagesUpload
+
                 var colors = await _colorAppService.GetAll();
                 // select the selected colors
                 var selectedColors = colors.Where(x => product.ColorIds.Contains(x.Id)).ToList();

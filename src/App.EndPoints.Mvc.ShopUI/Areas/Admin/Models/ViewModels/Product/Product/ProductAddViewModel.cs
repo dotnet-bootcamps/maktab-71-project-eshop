@@ -63,5 +63,6 @@ namespace App.EndPoints.Mvc.AdminUI.ViewModels
 
         [Display(Name = "رنگ های محصول")]
         public List<int> ColorIds { get; set; } = new List<int>();
+        public List<IFormFile> FormFile { get; set; }
     }
 }
