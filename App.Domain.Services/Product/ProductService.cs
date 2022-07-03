@@ -79,8 +79,6 @@ namespace App.Domain.Services.Product
 
         public async Task<List<ProductDto>> GetAll()
         {
-            var t = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-
             return await _queryRepository.GetAll();
         }
 
