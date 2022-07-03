@@ -27,25 +27,23 @@ using App.Infrastructures.Database.Repos.Ef.Product.Color;
 using App.Infrastructures.Database.Repos.Ef.Product.Model;
 using App.Infrastructures.Database.Repos.Ef.Product.Product;
 using App.Infrastructures.Database.SqlServer.Data;
-
 using Microsoft.EntityFrameworkCore;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllers();
 builder.Services.AddDbContext<AppDbContext>(option =>
 {
     option.UseSqlServer("Data Source=(LocalDb)\\MSSQLLocalDB; Initial Catalog=DotNetShopDb; Integrated Security=TRUE");
 });
 
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 
-
-
-builder.Services.AddScoped<IProductAppService, ProductAppService>();
 
 #region BaseData
 builder.Services.AddScoped<IBaseDataAppService, BaseDataAppService>();
@@ -96,40 +94,19 @@ builder.Services.AddScoped<IPermissionService, PermissionService>();
 builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
 #endregion Permission
 
-
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
-app.UseHttpsRedirection();
-app.UseStaticFiles();
 
-app.UseRouting();
+app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-
-//app.UseEndpoints(endpoints =>
-//{
-//    endpoints.MapControllerRoute(
-//      name: "areas",
-//      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
-//    );
-//});
-
-app.MapAreaControllerRoute(
-    name: "areas",
-    areaName: "Admin",
-    pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
-
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapControllers();
 
 app.Run();

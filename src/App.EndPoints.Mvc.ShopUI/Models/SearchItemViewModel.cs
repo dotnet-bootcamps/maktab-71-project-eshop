@@ -8,7 +8,7 @@
         public List<string>? ImageUrls { get; set; }
         public List<string>? VideoUrls { get; set; }
         public string Name { get; set; } = null!;
-        public string Price { get; set; } = null!;
+        public string? Price { get; set; } = null!;
         public bool IsOrginal { get; set; }
         public int Count { get; set; }
         public List<string>? Colors { get; set; }

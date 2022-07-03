@@ -27,6 +27,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.Domain.AppServices", "A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App.Infrastructures.Database.Repos.Ef", "App.Infrastructures.Database.Repos.Ef\App.Infrastructures.Database.Repos.Ef.csproj", "{50CA22F0-53A2-4681-A0CF-D52C3F8EC892}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App.EndPoints.Api", "App.EndPoints.Api\App.EndPoints.Api.csproj", "{E07C0138-A62A-487E-B445-27CDDAE07500}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{50CA22F0-53A2-4681-A0CF-D52C3F8EC892}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{50CA22F0-53A2-4681-A0CF-D52C3F8EC892}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{50CA22F0-53A2-4681-A0CF-D52C3F8EC892}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E07C0138-A62A-487E-B445-27CDDAE07500}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E07C0138-A62A-487E-B445-27CDDAE07500}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E07C0138-A62A-487E-B445-27CDDAE07500}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E07C0138-A62A-487E-B445-27CDDAE07500}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -73,6 +79,7 @@ Global
 		{A6BEEC06-813D-43A9-A60E-7821F1393014} = {13FAE28F-8E12-449C-A867-D428F67BB2A9}
 		{51C1023A-98BA-4619-92AB-F06A55533569} = {13FAE28F-8E12-449C-A867-D428F67BB2A9}
 		{50CA22F0-53A2-4681-A0CF-D52C3F8EC892} = {BD520F99-027D-4B73-ABB5-77BCD6C30AA5}
+		{E07C0138-A62A-487E-B445-27CDDAE07500} = {54355E0A-CEFB-4327-869F-BA576EE85CCC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E33D7C88-1A57-4CA3-AE1A-7AF235D0924A}
