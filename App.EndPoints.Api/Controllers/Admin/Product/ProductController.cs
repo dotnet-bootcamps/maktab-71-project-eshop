@@ -1,4 +1,5 @@
 ﻿using App.Domain.Core.Product.Contacts.AppServices;
+using App.Domain.Core.Product.Dtos;
 using App.EndPoints.Api.Attributes;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,6 +23,12 @@ namespace App.EndPoints.Api.Controllers.Admin.Product
             var products = await _productAppService.GetProducts(categoryId, keyword, minPrice, maxPrice, brandId, cancellationToken);
             return Ok(products);
         }
-
+        [HttpPost("[action]")]
+        [ApiKeyAuthorize]
+        public async Task<IActionResult> SetProduct(ProductDto product,CancellationToken cancellationToken)
+        {
+            await _productAppService.Set(product);
+            return Ok();
+        }
     }
 }
