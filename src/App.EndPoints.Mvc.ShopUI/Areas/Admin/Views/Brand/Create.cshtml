@@ -6,7 +6,7 @@
 
 <h3>اضافه کردن برند جدید</h3>
 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-<form>
+<form method="post" asp-area="admin" asp-controller="brand" asp-action="Create">
 
 	<div class="form-group">
 		<label asp-for="Name"></label>
@@ -21,7 +21,7 @@
 	</div>
 
 	<div class="d-flex flex-row justify-content-end">
-        <button type="submit" class="btn btn-primary mx-1" asp-action="Create" formmethod="post">ایجاد</button>
+        <button type="submit" class="btn btn-primary mx-1" >ایجاد</button>
         <button type="submit" class="btn btn-danger" asp-action="Index">انصراف</button>
     </div>
 
