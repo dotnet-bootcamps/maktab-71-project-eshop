@@ -13,6 +13,9 @@ using App.Domain.Core.Operator.Entities;
 using App.Domain.Core.Operator.Contract.AppServices;
 using Microsoft.AspNetCore.Mvc.Filters;
 using App.EndPoints.Mvc.AdminUI.Models.ViewModels.Product.Product;
+using Newtonsoft.Json;
+using System.Text;
+using System.Threading;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
@@ -26,6 +29,8 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         private readonly IModelAppService _modelAppService;
         private readonly ICategoryAppService _categoryAppService;
         private readonly IOperatorAppService _operatorAppService;
+        private readonly IConfiguration _configuration;
+
         // TODO : Operator
 
         public ProductController(
@@ -34,9 +39,10 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
             IColorAppService colorAppService,
             IModelAppService modelAppService,
             ICategoryAppService categoryAppService,
-            IOperatorAppService operatorAppService
-            )
+            IOperatorAppService operatorAppService,
+            IConfiguration configuration)
         {
+            _configuration = configuration;
             _productAppService = appService;
             _brandAppService = brandAppService;
             _colorAppService = colorAppService;
@@ -112,35 +118,56 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(ProductAddViewModel product)
+        public async Task<IActionResult> Create(ProductAddViewModel product,CancellationToken cancellationToken)
         {
 
             if (ModelState.IsValid)
             {
-                var colors = await _colorAppService.GetAll();
-                // select the selected colors
-                var selectedColors = colors.Where(x => product.ColorIds.Contains(x.Id)).ToList();
-
-                var dto = new ProductDto
+                try
                 {
-                    Id = product.Id,
-                    Name = product.Name,
-                    CreationDate = DateTime.Now,
-                    CategoryId = product.CategoryId,
-                    Weight = product.Weight,
-                    IsOrginal = product.IsOrginal,
-                    Description = product.Description,
-                    Count = product.Count,
-                    ModelId = product.ModelId,
-                    Price = product.Price,
-                    IsShowPrice = product.IsShowPrice,
-                    IsActive = product.IsActive,
-                    OperatorId = product.OperatorId,
-                    BrandId = product.BrandId,
-                    Colors = selectedColors,
-                };
-                await _productAppService.Set(dto);
-                return RedirectToAction(nameof(Index));
+                    var colors = await _colorAppService.GetAll();
+                    // select the selected colors
+                    var selectedColors = colors.Where(x => product.ColorIds.Contains(x.Id)).ToList();
+
+                    var dto = new ProductDto
+                    {
+                        Id = product.Id,
+                        Name = product.Name,
+                        CreationDate = DateTime.Now,
+                        CategoryId = product.CategoryId,
+                        Weight = product.Weight,
+                        IsOrginal = product.IsOrginal,
+                        Description = product.Description,
+                        Count = product.Count,
+                        ModelId = product.ModelId,
+                        Price = product.Price,
+                        IsShowPrice = product.IsShowPrice,
+                        IsActive = product.IsActive,
+                        OperatorId = product.OperatorId,
+                        BrandId = product.BrandId,
+                        Colors = selectedColors,
+                    };
+
+
+
+                    using var client = new HttpClient();
+                    var jsonContent = JsonConvert.SerializeObject(dto);
+                    HttpContent httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+                    client.DefaultRequestHeaders.Add("ApiKey", _configuration.GetSection("ApiKey").Value);
+                    var httpResponse = await client.PostAsync("https://localhost:7137/api/Product/SetProduct", httpContent, cancellationToken);
+                    if (!httpResponse.IsSuccessStatusCode)
+                    {
+                        throw new Exception("خطایی در دریافت اطلاعات رخ داد.");
+                    }
+                    //await _productAppService.Set(dto);
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Exception accord",ex);
+                }
+
+                
             }
             else
             {
