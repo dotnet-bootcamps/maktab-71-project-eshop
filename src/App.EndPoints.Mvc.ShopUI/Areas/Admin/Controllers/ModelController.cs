@@ -7,6 +7,8 @@ using App.EndPoints.Mvc.AdminUI.Models.ViewModels.Product.Model;
 using App.EndPoints.Mvc.AdminUI.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
@@ -16,17 +18,30 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
 
         private readonly IModelAppService _modelAppService;
         private readonly IBrandAppService _brandAppService;
+        private readonly IConfiguration _configuration;
 
-        public ModelController(IModelAppService appService, IBrandAppService brandAppService)
+        public ModelController(IModelAppService appService,
+            IBrandAppService brandAppService,
+            IConfiguration configuration)
         {
             _modelAppService = appService;
             _brandAppService = brandAppService;
+            _configuration = configuration;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(CancellationToken cancellationToken)
         {
-            var records = await _modelAppService.GetAll();
-            var recordsModel = records.Select(p => new ModelOutputViewModel()
+            //var records = await _modelAppService.GetAll();
+            var client = new HttpClient();
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://localhost:7137/api/Model/GetModels");
+            request.Headers.Add("ApiKey", _configuration.GetSection("ApiKey").Value);
+            var response = await client.SendAsync(request, cancellationToken);
+            if (!response.IsSuccessStatusCode) 
+                throw new Exception("خطا در خواندن اصلاعات");
+            var responseBody = await response.Content.ReadAsStringAsync();
+            var records = JsonConvert.DeserializeObject<List<ModelDto>>(responseBody);
+
+            var recordsModel = records!.Select(p => new ModelOutputViewModel()
             {
                 Id = p.Id,
                 Name = p.Name,
@@ -58,7 +73,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(ModelAddViewModel model)
+        public async Task<IActionResult> Create(ModelAddViewModel model, CancellationToken cancellationToken)
         {
             if (!ModelState.IsValid)
             {
@@ -72,7 +87,14 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
                 ParentModelId = model.ParentModelId,
                 BrandId = model.BrandId,
             };
-            await _modelAppService.Set(dto);
+            //await _modelAppService.Set(dto);
+            using var client = new HttpClient();
+            var jsonModel = JsonConvert.SerializeObject(dto);
+            HttpContent content = new StringContent(jsonModel, Encoding.UTF8, "application/json");
+            content.Headers.Add("ApiKey", _configuration.GetSection("ApiKey").Value);
+            var response = await client.PostAsync("https://localhost:7137/api/Model/SetModel", content, cancellationToken);
+            if (response.IsSuccessStatusCode)
+                throw new Exception("خطا در ثبت اصلاعات");
             return RedirectToAction("Index");
         }
 
