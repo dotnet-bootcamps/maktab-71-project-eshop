@@ -63,6 +63,11 @@ public class BrandService :IBrandService
         return await _brandQueryRepository.GetAll();
     }
 
+    public async Task<List<BrandDto>?> GetBrands(string? name, int? id, CancellationToken cancellationToken)
+    {
+        return await _brandQueryRepository.GetBrands(name, id, cancellationToken);
+    }
+
     public async Task Set(string name, int displayOrder)
     {
         await _brandCommandRepository.Add(name, displayOrder, DateTime.Now, false);
