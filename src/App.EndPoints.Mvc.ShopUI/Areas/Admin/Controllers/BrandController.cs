@@ -25,7 +25,19 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var brands = await _brandAppService.GetAll();
+
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Add("ApiKey", _configuration.GetSection("ApiKey").Value);
+            var request = new HttpRequestMessage(HttpMethod.Get, @"https://localhost:7137/api/Brand");
+            var response = await client.SendAsync(request, new CancellationToken());
+            var responseBody = await response.Content.ReadAsStringAsync();
+            if (!response.IsSuccessStatusCode)
+            {
+                return View(new List<BrandOutputViewModel>());
+            }
+            var brands = JsonConvert.DeserializeObject<List<BrandDto>>(responseBody);
+
+            // var brands = await _brandAppService.GetAll();
             var brandsModel = brands.Select(p => new BrandOutputViewModel()
             {
                 Id = p.Id,
@@ -51,24 +63,13 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
                 return View(brand);
             }
 
-            //var client = new HttpClient();
-            //var jsonContent = JsonConvert.SerializeObject(dto);
-            //HttpContent httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-            //client.DefaultRequestHeaders.Add("ApiKey", _configuration.GetSection("ApiKey").Value);
-            //var httpResponse = await client.PostAsync("https://localhost:7137/api/Product/SetProduct", httpContent, cancellationToken);
-            //if (!httpResponse.IsSuccessStatusCode)
-            //{
-            //    throw new Exception("خطایی در دریافت اطلاعات رخ داد.");
-            //}
-            new Dictionary<string, string>()
-            {
-                {"name" , brand.Name},
-                {"displayOrder", brand.DisplayOrder.ToString()}
-            };
-
 
             var client = new HttpClient();
-            var jsonContent = JsonConvert.SerializeObject(brand);
+            var jsonContent = JsonConvert.SerializeObject(new BrandDto
+            {
+                Name = brand.Name,
+                DisplayOrder = brand.DisplayOrder,
+            });
             var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
             client.DefaultRequestHeaders.Add("ApiKey", _configuration.GetSection("ApiKey").Value);
             var response = await client.PostAsync(@"https://localhost:7137/api/Brand", httpContent, cancellationToken);

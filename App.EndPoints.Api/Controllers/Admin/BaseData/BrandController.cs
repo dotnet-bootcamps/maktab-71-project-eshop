@@ -25,9 +25,9 @@ namespace App.EndPoints.Api.Controllers.Admin.BaseData
 
         [HttpPost]
         [ApiKeyAuthorize]
-        public async Task<IActionResult> Post(string name, int displayOrder, CancellationToken cancellationToken)
+        public async Task<IActionResult> Post(BrandDto dto, CancellationToken cancellationToken)
         {
-            await _brandAppService.Set(name, displayOrder);
+            await _brandAppService.Set(dto.Name, dto.DisplayOrder);
             return Ok();
         }
     }
