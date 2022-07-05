@@ -38,7 +38,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<AppDbContext>(option =>
 {
-    option.UseSqlServer("Data Source=192.168.88.132;Initial Catalog=DotNetShopDb;Persist Security Info=True;User ID=sa;Password=25915491Em?");
+    option.UseSqlServer("Data Source=(LocalDb)\\MSSQLLocalDB; Initial Catalog=DotNetShopDb; Integrated Security=TRUE");
 });
 
 
