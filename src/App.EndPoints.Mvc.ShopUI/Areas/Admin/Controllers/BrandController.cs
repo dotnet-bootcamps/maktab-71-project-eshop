@@ -4,8 +4,9 @@ using App.Domain.Core.BaseData.Dtos;
 using App.EndPoints.Mvc.AdminUI.Models.ViewModels.BaseData.Brand;
 using App.EndPoints.Mvc.AdminUI.Models.ViewModels.Product;
 using Microsoft.AspNetCore.Mvc;
-
-
+using Newtonsoft.Json;
+using System.Text;
+using System.Threading;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
@@ -14,11 +15,15 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
     {
         private readonly IBrandAppService _brandAppService;
         private readonly IBrandService _brandService;
+        private readonly IConfiguration _configuration;
 
-        public BrandController(IBrandAppService brandAppService, IBrandService brandService)
+        public BrandController(IBrandAppService brandAppService
+            , IBrandService brandService
+            ,IConfiguration configuration)
         {
             _brandAppService = brandAppService;
             _brandService = brandService;
+            _configuration = configuration;
         }
 
         public async Task<IActionResult> Index()
@@ -42,22 +47,48 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(BrandAddViewModel brand)
+        public async Task<IActionResult> Create(BrandAddViewModel brand, CancellationToken cancellationToken)
         {
             //if (ModelState.IsValid && brand.Name.ToLower() == "hp" && brand.DisplayOrder > 2)
             //    ModelState.AddModelError("", "برند اچ پی باید در ابتدای لیست قرار بگیرد");
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var dto = new BrandDto
+                    {
+                      Id=brand.Id,
+                      DisplayOrder=brand.DisplayOrder,
+                      Name=brand.Name,
+                    };
+                    using var client = new HttpClient();
+                    var jsonContent = JsonConvert.SerializeObject(dto);
+                    HttpContent httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+                    client.DefaultRequestHeaders.Add("ApiKey", _configuration.GetSection("ApiKey").Value);
+                    var httpResponse = await client.PostAsync("https://localhost:7137/api/Brand/SetBrand", httpContent,cancellationToken);
+                    if (!httpResponse.IsSuccessStatusCode)
+                    {
+                        throw new Exception("خطایی در دریافت اطلاعات رخ داد.");
+                    }
+                    //await _brandAppService.Set(brand.Name, brand.DisplayOrder);
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Exception accured", ex);
+                }
+            }
+
+            else
             {
                 return View(brand);
             }
-            await _brandAppService.Set(brand.Name, brand.DisplayOrder);
-            return RedirectToAction("");
         }
 
         [HttpGet]
         public IActionResult Update(int id)
         {
-            var brand = _brandAppService.Get(id);
+            var brand =  _brandAppService.Get(id);
             var brandInput = new BrandUpdateViewModel
             {
                 Id = id,

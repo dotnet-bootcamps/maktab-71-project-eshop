@@ -1,4 +1,6 @@
-﻿using App.Domain.Core.Product.Contacts.AppServices;
+﻿using App.Domain.Core.BaseData.Contarcts.AppServices;
+using App.Domain.Core.BaseData.Dtos;
+using App.Domain.Core.Product.Contacts.AppServices;
 using App.Domain.Core.Product.Dtos;
 using App.EndPoints.Mvc.ShopUI.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -9,15 +11,19 @@ namespace App.EndPoints.Mvc.ShopUI.Controllers
     public class SearchController : Controller
     {
         private readonly IProductAppService _productAppService;
+        private readonly IBrandAppService _brandAppService;
         private readonly IConfiguration _configuration;
 
-        public SearchController(IProductAppService productAppService , IConfiguration configuration)
+        public SearchController(IProductAppService productAppService
+            , IBrandAppService brandAppService
+            , IConfiguration configuration)
         {
             _productAppService = productAppService;
+            _brandAppService = brandAppService;
             _configuration = configuration;
         }
         [HttpGet]
-        public async Task<IActionResult> List(int? categoryId, string? keyword,CancellationToken cancellationToken)
+        public async Task<IActionResult> List(int? categoryId, string? keyword, CancellationToken cancellationToken)
         {
             try
             {
@@ -47,25 +53,25 @@ namespace App.EndPoints.Mvc.ShopUI.Controllers
                         Count = p.Count,
                         Name = p.Name,
                         IsOrginal = p.IsOrginal,
-                        ImageUrls =p.Files is null ? null : p.Files.Where(p => p.FileTypeId == 2).Select(p => "/upload/" + p.Name).ToList(),
+                        ImageUrls = p.Files is null ? null : p.Files.Where(p => p.FileTypeId == 2).Select(p => "/upload/" + p.Name).ToList(),
                         VideoUrls = p.Files is null ? null : p.Files.Where(p => p.FileTypeId == 1).Select(p => "/upload/" + p.Name).ToList(),
 
                     }).ToList();
                     return View(viewmodel);
                 }
-                
+
             }
             catch (Exception ex)
             {
                 throw new Exception($"Error on GetCompanyIntegrationInfo endpoint of AtsIntegration , Error Message : {ex.Message}", ex);
             }
             //var model = await _productAppService.GetProducts(categoryId, keyword,null,null,null, cancellationToken);
-            
+
 
             return View();
 
-            
-            
+
+
         }
 
         [HttpGet]
@@ -80,6 +86,45 @@ namespace App.EndPoints.Mvc.ShopUI.Controllers
             //    ProductPrice = "15000"
             //};
             return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ListOfBrand(int? brandId, string? brandName, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var client = new HttpClient();
+                var request = new HttpRequestMessage(HttpMethod.Get,
+                    "https://localhost:7137/api/Brand/GetBrands" + $"/?brandId={brandId}&brandName={brandName}");
+                request.Headers.Add("ApiKey", _configuration.GetSection("ApiKey").Value);
+
+                var response = await client.SendAsync(request, cancellationToken);
+                var responseBody = await response.Content.ReadAsStringAsync();
+                var responseBodyModel = JsonConvert.DeserializeObject<List<BrandBriefDto>>(responseBody);
+                if (response.IsSuccessStatusCode == false)
+                    throw new Exception("خطا در دریافت اطلاعات");
+                if (responseBodyModel == null)
+                {
+
+                }
+                else
+                {
+                    var viewmodel = responseBodyModel.Select(p => new SearchBrandViewModel()
+                    {
+                        Name = p.Name,
+
+                    }).ToList();
+                    return View(viewmodel);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error on GetCompanyIntegrationInfo endpoint of AtsIntegration , Error Message : {ex.Message}", ex);
+            }
+
+            return View();
+
         }
     }
 }

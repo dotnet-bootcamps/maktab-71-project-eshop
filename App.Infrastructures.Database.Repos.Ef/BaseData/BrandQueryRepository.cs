@@ -48,4 +48,21 @@ public class BrandQueryRepository : IBrandQueryRepository
             IsDeleted = p.IsDeleted,
         }).SingleOrDefault();
     }
+
+    public async Task<List<BrandBriefDto>?> Search(int? brandId, string? brandName, CancellationToken cancellationToken)
+    {
+        {
+            var tt = await _context.Brands.AsNoTracking()
+                .Where(p => (brandId == null || p.Id == brandId))
+                .Where(p => (brandName == null || brandName == "" || p.Name.Contains(brandName)))
+                .Select(p => new BrandBriefDto()
+                {
+                    DisplayOrder = p.DisplayOrder,
+                    Name = p.Name,
+                }
+                    ).ToListAsync(cancellationToken);
+
+            return tt;
+        }
+    }
 }

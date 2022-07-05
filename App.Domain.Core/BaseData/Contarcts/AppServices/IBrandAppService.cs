@@ -8,4 +8,6 @@ public interface IBrandAppService
     BrandDto Get(string name);
     void Update(int id, string name, int displayOrder, bool isDeleted);
     void Delete(int id);
+
+    Task<List<BrandBriefDto>?> GetBrands(int? brandId, string? keyword, CancellationToken cancellationToken);
 }

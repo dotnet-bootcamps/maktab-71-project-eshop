@@ -11,4 +11,6 @@ public interface IBrandService
     void EnsureDoesNotExist(string name);
     void EnsureExists(string name);
     void EnsureExists(int id);
+
+    Task<List<BrandBriefDto>?> GetBrands(int? brandId, string? brandName, CancellationToken cancellationToken);
 }
