@@ -27,5 +27,6 @@ namespace App.Domain.Core.Product.Dtos
         public bool IsDeleted { get; set; }
 
         public List<ColorDto> Colors { get; set; } = new List<ColorDto>();
+        public int ParentModelId { get; set; }
     }
 }
