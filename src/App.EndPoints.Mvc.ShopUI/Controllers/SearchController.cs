@@ -29,6 +29,7 @@ namespace App.EndPoints.Mvc.ShopUI.Controllers
                 var response = await client.SendAsync(request, cancellationToken);
                 var responseBody = await response.Content.ReadAsStringAsync();
                 var responseBodyModel = JsonConvert.DeserializeObject<List<ProductBriefDto>>(responseBody);
+
                 if (response.IsSuccessStatusCode == false)
                     throw new Exception("خطا در دریافت اطلاعات");
                 if (responseBodyModel == null)

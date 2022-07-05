@@ -7,6 +7,8 @@ using App.EndPoints.Mvc.AdminUI.Models.ViewModels.Product.Model;
 using App.EndPoints.Mvc.AdminUI.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
@@ -25,7 +27,24 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var records = await _modelAppService.GetAll();
+
+
+            //var records = await _modelAppService.GetAll();
+            var client=new HttpClient();
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://localhost:7137/api/Model/GetModels");
+            var response = await client.SendAsync(request);
+            var responsebody=await response.Content.ReadAsStringAsync();
+            var records=JsonConvert.DeserializeObject<List<ModelDto>>(responsebody);
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception("خطا در دریافت اطلاعات");
+            }
+            else if (responsebody is null)
+            {
+
+            }
+            else
+            {
             var recordsModel = records.Select(p => new ModelOutputViewModel()
             {
                 Id = p.Id,
@@ -36,6 +55,10 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
                 BrandId = p.BrandId,
             }).ToList();
             return View(recordsModel);
+
+            }
+            return View();
+
         }
 
         [HttpGet]
@@ -72,7 +95,13 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
                 ParentModelId = model.ParentModelId,
                 BrandId = model.BrandId,
             };
-            await _modelAppService.Set(dto);
+
+            var client = new HttpClient();
+            var jsonContent=JsonConvert.SerializeObject(dto);
+            var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+            var response = await client.PostAsync("https://localhost:7137/api/Model/SetModel", content);
+
+            //await _modelAppService.Set(dto);
             return RedirectToAction("Index");
         }
 

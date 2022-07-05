@@ -16,6 +16,8 @@ namespace App.EndPoints.Api.Controllers.Admin.Product
         {
             _productAppService = productAppService;
         }
+
+
         [HttpGet("[action]")]
         [ApiKeyAuthorize]
         public async Task<IActionResult> GetProducts(int? categoryId, string? keyword, int? minPrice, int? maxPrice, int? brandId, CancellationToken cancellationToken)
@@ -23,6 +25,9 @@ namespace App.EndPoints.Api.Controllers.Admin.Product
             var products = await _productAppService.GetProducts(categoryId, keyword, minPrice, maxPrice, brandId, cancellationToken);
             return Ok(products);
         }
+
+
+        
         [HttpPost("[action]")]
         [ApiKeyAuthorize]
         public async Task<IActionResult> SetProduct(ProductDto product,CancellationToken cancellationToken)
