@@ -29,6 +29,7 @@
 
 	<ItemGroup>
 		<Folder Include="wwwroot\lib\chosen\" />
+		<Folder Include="wwwroot\lib\chosen\" />
 	</ItemGroup>
 	
   <ItemGroup>

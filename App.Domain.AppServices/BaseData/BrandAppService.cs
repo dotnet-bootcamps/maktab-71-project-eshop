@@ -38,6 +38,11 @@ public class BrandAppService : IBrandAppService
         return await _brandService.GetAll();
     }
 
+    public async Task<List<BrandBriefDto>?> GetBrands(int? brandId, string? keyword, CancellationToken cancellationToken)
+    {
+        return await GetBrands(brandId, keyword, cancellationToken);
+    }
+
     public async Task Set(string name, int displayOrder)
     {
         _permissionService.HasPermission(1, 5);
