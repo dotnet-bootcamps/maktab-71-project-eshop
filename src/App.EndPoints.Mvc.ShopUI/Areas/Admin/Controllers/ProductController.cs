@@ -154,7 +154,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
                     var jsonContent = JsonConvert.SerializeObject(dto);
                     HttpContent httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
                     client.DefaultRequestHeaders.Add("ApiKey", _configuration.GetSection("ApiKey").Value);
-                    var httpResponse = await client.PostAsync("https://localhost:7137/api/Product/SetProduct", httpContent, cancellationToken);
+                    var httpResponse = await client.PostAsync("https://localhost:44345/api/Product/SetProduct", httpContent, cancellationToken);
                     if (!httpResponse.IsSuccessStatusCode)
                     {
                         throw new Exception("خطایی در دریافت اطلاعات رخ داد.");

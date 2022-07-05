@@ -7,6 +7,8 @@ using App.EndPoints.Mvc.AdminUI.Models.ViewModels.Product.Model;
 using App.EndPoints.Mvc.AdminUI.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
@@ -16,11 +18,13 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
 
         private readonly IModelAppService _modelAppService;
         private readonly IBrandAppService _brandAppService;
+        private readonly IConfiguration _configuration;
 
-        public ModelController(IModelAppService appService, IBrandAppService brandAppService)
+        public ModelController(IModelAppService appService, IBrandAppService brandAppService, IConfiguration configuration)
         {
             _modelAppService = appService;
             _brandAppService = brandAppService;
+            _configuration = configuration;
         }
 
         public async Task<IActionResult> Index()
@@ -58,7 +62,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(ModelAddViewModel model)
+        public async Task<IActionResult> Create(ModelAddViewModel model, CancellationToken cancellationToken)
         {
             if (!ModelState.IsValid)
             {
@@ -72,7 +76,21 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
                 ParentModelId = model.ParentModelId,
                 BrandId = model.BrandId,
             };
-            await _modelAppService.Set(dto);
+
+            using var client = new HttpClient();
+            var jsonContent = JsonConvert.SerializeObject(dto);
+            HttpContent httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+            client.DefaultRequestHeaders.Add("ApiKey", _configuration.GetSection("ApiKey").Value);
+            var httpResponse = await client.PostAsync("https://localhost:44345/api/Model/SetModel", httpContent, cancellationToken);
+            if (!httpResponse.IsSuccessStatusCode)
+            {
+                throw new Exception("خطایی در دریافت اطلاعات رخ داد.");
+            }
+            //await _productAppService.Set(dto);
+            return RedirectToAction(nameof(Index));
+
+
+            //await _modelAppService.Set(dto);
             return RedirectToAction("Index");
         }
 
