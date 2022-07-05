@@ -99,6 +99,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
                     //await _productAppService.Set(dto);
                     return RedirectToAction(nameof(Index));
                 }
+
                 catch (Exception ex)
                 {
                     throw new Exception("Exception accord", ex);
