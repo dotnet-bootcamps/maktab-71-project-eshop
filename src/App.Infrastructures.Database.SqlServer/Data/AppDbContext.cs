@@ -10,15 +10,12 @@ namespace App.Infrastructures.Database.SqlServer.Data
 {
     public partial class AppDbContext : DbContext
     {
-        public AppDbContext()
-        {
-        }
 
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         {
         }
-
+     
         public virtual DbSet<Brand> Brands { get; set; } = null!;
         public virtual DbSet<Category> Categories { get; set; } = null!;
         public virtual DbSet<Collection> Collections { get; set; } = null!;
