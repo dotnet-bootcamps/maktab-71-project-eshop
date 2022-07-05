@@ -11,7 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\Admin\BaseData\" />
     <Folder Include="Controllers\ShopUI\BaseData\" />
     <Folder Include="Controllers\ShopUI\Product\" />
   </ItemGroup>
