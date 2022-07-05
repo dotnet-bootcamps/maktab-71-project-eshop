@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using App.Domain.Core.BaseData.Dtos;
+using App.Domain.Core.Product.Dtos.Color;
 
 namespace App.Infrastructures.Database.Repos.Ef.Product.Product
 {
@@ -36,7 +38,19 @@ namespace App.Infrastructures.Database.Repos.Ef.Product.Product
                 OperatorId = p.OperatorId,
                 Name = p.Name,
                 IsDeleted = p.IsDeleted,
-                CreationDate = p.CreationDate
+                CreationDate = p.CreationDate,
+                Files = p.ProductFiles.Select(x => new FileTypeDto()
+                {
+                    Id = x.FileType.Id,
+                    Name = x.FileType.Name,
+                    FileTypeExtentionId = x.FileType.FileTypeExtentionId
+                }).ToList(),
+                Colors = p.ProductColors.Select(c => new ColorDto()
+                {
+                    Id = c.Id,
+                    Name = c.Color.Name,
+                    Code = c.Color.Code
+                }).ToList()
             }).ToListAsync();
         }
 
@@ -58,7 +72,19 @@ namespace App.Infrastructures.Database.Repos.Ef.Product.Product
                 OperatorId = p.OperatorId,
                 Name = p.Name,
                 IsDeleted = p.IsDeleted,
-                CreationDate = p.CreationDate
+                CreationDate = p.CreationDate,
+                Files = p.ProductFiles.Select(x => new FileTypeDto()
+                {
+                    Id = x.FileType.Id,
+                    Name = x.FileType.Name,
+                    FileTypeExtentionId = x.FileType.FileTypeExtentionId
+                }).ToList(),
+                Colors = p.ProductColors.Select(c => new ColorDto()
+                {
+                    Id = c.Id,
+                    Name = c.Color.Name,
+                    Code = c.Color.Code
+                }).ToList()
             }).SingleOrDefaultAsync();
             return record;
         }
@@ -81,7 +107,19 @@ namespace App.Infrastructures.Database.Repos.Ef.Product.Product
                 OperatorId = p.OperatorId,
                 Name = p.Name,
                 IsDeleted = p.IsDeleted,
-                CreationDate = p.CreationDate
+                CreationDate = p.CreationDate,
+                Files = p.ProductFiles.Select(x => new FileTypeDto()
+                {
+                    Id = x.FileType.Id,
+                    Name = x.FileType.Name,
+                    FileTypeExtentionId = x.FileType.FileTypeExtentionId
+                }).ToList(),
+                Colors = p.ProductColors.Select(c => new ColorDto()
+                {
+                    Id = c.Id,
+                    Name = c.Color.Name,
+                    Code = c.Color.Code
+                }).ToList()
             }).SingleOrDefaultAsync();
             return record;
         }

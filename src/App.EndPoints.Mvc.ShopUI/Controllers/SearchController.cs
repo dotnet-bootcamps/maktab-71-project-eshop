@@ -1,77 +1,45 @@
-﻿using App.EndPoints.Mvc.ShopUI.Models;
+﻿using App.Domain.Core.Product.Contacts.AppServices;
+using App.EndPoints.Mvc.ShopUI.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace App.EndPoints.Mvc.ShopUI.Controllers
 {
     public class SearchController : Controller
     {
+        private readonly IProductAppService _productAppService;
+
+        public SearchController(IProductAppService productAppService)
+        {
+            _productAppService = productAppService;
+        }
+
         [HttpGet]
         public IActionResult List(int? categoryId, string? keyword)
         {
-            var model = new List<SearchItemViewModel>
+            var model = _productAppService.GetAll().Result.Where(x=>x.CategoryId==categoryId).Select(x => new SearchItemViewModel
             {
-                new SearchItemViewModel
-                {
-                    ProductId =1,
-                    ImageName = "productImage.jpg",
-                    ProductName = "ZBook HP ",
-                    ProductDescription = "لپ تاپ اچ پی زد بوک نسل 3 ",
-                    ProductPrice = "15000"
-                },
-                new SearchItemViewModel
-                {
-                    ProductId =1,
-                    ImageName = "productImage.jpg",
-                    ProductName = "ZBook HP ",
-                    ProductDescription = "لپ تاپ اچ پی زد بوک نسل 3 ",
-                    ProductPrice = "15000"
-                },
-                new SearchItemViewModel
-                {
-                    ProductId =1,
-                    ImageName = "productImage.jpg",
-                    ProductName = "ZBook HP ",
-                    ProductDescription = "لپ تاپ اچ پی زد بوک نسل 3 ",
-                    ProductPrice = "15000"
-                },
-                new SearchItemViewModel
-                {
-                    ProductId =1,
-                    ImageName = "productImage.jpg",
-                    ProductName = "ZBook HP ",
-                    ProductDescription = "لپ تاپ اچ پی زد بوک نسل 3 ",
-                    ProductPrice = "15000"
-                },
-                new SearchItemViewModel
-                {
-                    ProductId =1,
-                    ImageName = "productImage.jpg",
-                    ProductName = "ZBook HP ",
-                    ProductDescription = "لپ تاپ اچ پی زد بوک نسل 3 ",
-                    ProductPrice = "15000"
-                },
-                new SearchItemViewModel
-                {
-                    ProductId =1,
-                    ImageName = "productImage.jpg",
-                    ProductName = "ZBook HP ",
-                    ProductDescription = "لپ تاپ اچ پی زد بوک نسل 3 ",
-                    ProductPrice = "15000"
-                },
-            };
+                ProductName = x.Name,
+                ProductId = x.Id,
+                ColoList = x.Colors,
+                ImageName = x.Files.Select(i=>i.Name).ToList(),
+                ProductDescription = x.Description,
+                ProductPrice = x.Price.ToString()
+            }).ToList();
             return View(model);
         }
 
         [HttpGet]
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            var model = new SearchItemViewModel
+            var product = await _productAppService.Get(id);
+            var model = new SearchItemViewModel()
             {
-                ProductId = 1,
-                ImageName = "productImage.jpg",
-                ProductName = "ZBook HP ",
-                ProductDescription = "لپ تاپ اچ پی زد بوک نسل 3 ",
-                ProductPrice = "15000"
+                ProductId = id,
+                ImageName = product.Files.Select(x => x.Name).ToList(),
+                ProductName = product.Name,
+                ProductDescription = product.Description,
+                ProductPrice = product.Price.ToString(),
+                ColoList = product.Colors
             };
             return View(model);
         }

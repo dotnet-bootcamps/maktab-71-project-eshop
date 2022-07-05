@@ -188,6 +188,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Views\Shared\Components\Category\_CategoryList.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Update="wwwroot\AdminAreaFiles\css\app.css">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>

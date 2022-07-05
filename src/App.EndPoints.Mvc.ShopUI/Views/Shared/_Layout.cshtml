@@ -12,24 +12,26 @@
     <!-- Custom CSS -->
     <link href="~/css/Custom.css" rel="stylesheet">
 
+    @RenderSection("StyleProductDetails", false)
+
     <style type="text/css">
-        *,span,div,p,a,h1,h2,h3,h4,h5,h6,html,body{
-            font-family : 'Segoe UI'
+        *, span, div, p, a, h1, h2, h3, h4, h5, h6, html, body {
+            font-family: 'Segoe UI'
         }
-        
-        .single-grid-product{
+
+        .single-grid-product {
             margin-top: 50px;
         }
     </style>
 
 </head>
-<body> 
+<body>
     <partial name="_Header" />
-  
+
     @RenderBody()
 
     <partial name="_BlogPosts" />
-    
+
     <partial name="_Newsletter" />
 
     <partial name="_Footer" />
@@ -271,12 +273,16 @@
                                 <a href="#">LANGUAGE: EN-GB </a>
                                 <ul class="sub-menu">
                                     <li>
-                                        <a href="javascript:void(0)"><img src="~/img/icons/en-gb.png" alt="">
-                                            English</a>
+                                        <a href="javascript:void(0)">
+                                            <img src="~/img/icons/en-gb.png" alt="">
+                                            English
+                                        </a>
                                     </li>
                                     <li>
-                                        <a href="javascript:void(0)"><img src="~/img/icons/de-de.png" alt="">
-                                            Germany</a>
+                                        <a href="javascript:void(0)">
+                                            <img src="~/img/icons/de-de.png" alt="">
+                                            Germany
+                                        </a>
                                     </li>
                                 </ul>
                             </li>
@@ -289,12 +295,13 @@
                         <div class="header-contact-info">
                             <ul class="header-contact-info__list">
                                 <li>
-                                    <i class="ion-android-phone-portrait"></i> <a href="tel://12452456012">(1245) 2456
-                                        012 </a>
+                                    <i class="ion-android-phone-portrait"></i> <a href="tel://12452456012">
+                                        (1245) 2456
+                                        012
+                                    </a>
                                 </li>
                                 <li>
-                                    <i class="ion-android-mail"></i> <a
-                                        href="mailto:info@yourdomain.com">info@yourdomain.com</a>
+                                    <i class="ion-android-mail"></i> <a href="mailto:info@yourdomain.com">info@yourdomain.com</a>
                                 </li>
                             </ul>
                         </div>
@@ -332,8 +339,8 @@
         <!--=======  search form  =======-->
 
         <div class="search-form">
-            <form action="#">
-                <input type="search" placeholder="جستجو در تمام فروشگاه"
+            <form asp-controller="Search" asp-action="List">
+                <input type="text" name="keyword" placeholder="جستجو در تمام فروشگاه" />
                 <button type="submit">
                     <i class="ion-android-search"></i>
                 </button>
@@ -351,6 +358,8 @@
     <script src="~/js/vendors.js"></script>
 
     <script src="~/js/active.js"></script>
+
+    @RenderSection("JsProductDetails", false)
 
     @await RenderSectionAsync("Scripts", required: false)
 

@@ -1,0 +1,9 @@
+﻿@model List<App.EndPoints.Mvc.ShopUI.ViewModels.CategoryVM>
+<ul class="sub-menu">
+    @foreach (var category in Model)
+    {
+        <li>
+            <a asp-controller="Search" asp-action="List" asp-route-categoryId=@category.id>@category.name</a>
+        </li>
+    }
+</ul>

@@ -11,10 +11,12 @@ namespace App.EndPoints.Mvc.AdminUI.ViewModels
     {
         [Display(Name = "شناسه")]
         public int Id { get; set; }
+        [Display(Name = "عکس محصول")]
+        public string ImageName { set; get; }
         [Display(Name = "شناسه دسته بندی")]
-        public int CategoryId { get; set; }
+        public string CategoryName { get; set; }
         [Display(Name = "شناسه برند")]
-        public int BrandId { get; set; }
+        public string BrandName { get; set; }
         [Display(Name = "وزن")]
         public decimal Weight { get; set; }
         [Display(Name = "اصل بودن")]
@@ -24,7 +26,7 @@ namespace App.EndPoints.Mvc.AdminUI.ViewModels
         [Display(Name = "تعداد")]
         public int Count { get; set; }
         [Display(Name = "شناسه مدل")]
-        public int ModelId { get; set; }
+        public string ModelName { get; set; }
         [Display(Name = "قیمت")]
         public long Price { get; set; }
         [Display(Name = "نشان دادن قیمت")]
@@ -32,12 +34,14 @@ namespace App.EndPoints.Mvc.AdminUI.ViewModels
         [Display(Name = "فعال بودن")]
         public bool IsActive { get; set; }
         [Display(Name = "شناسه اپراتور")]
-        public int OperatorId { get; set; }
+        public string OperatorName { get; set; }
         [Display(Name = "نام")]
         public string Name { get; set; } = null!;
         [Display(Name = "تاریخ ثبت")]
         public DateTime CreationDate { get; set; }
         [Display(Name = "حذف شده")]
         public bool IsDeleted { get; set; }
+        [Display(Name = "رنگ محصول")]
+        public List<string> Colors { set; get; }
     }
 }

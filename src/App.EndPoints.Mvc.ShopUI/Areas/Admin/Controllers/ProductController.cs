@@ -13,6 +13,7 @@ using App.Domain.Core.Operator.Entities;
 using App.Domain.Core.Operator.Contract.AppServices;
 using Microsoft.AspNetCore.Mvc.Filters;
 using App.EndPoints.Mvc.AdminUI.Models.ViewModels.Product.Product;
+using App.EndPoints.Mvc.AdminUI.Services;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
@@ -26,6 +27,8 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         private readonly IModelAppService _modelAppService;
         private readonly ICategoryAppService _categoryAppService;
         private readonly IOperatorAppService _operatorAppService;
+        private readonly IFileTypeAppService _fileTypeAppService;
+        private readonly UploadService _uploadService;
         // TODO : Operator
 
         public ProductController(
@@ -34,8 +37,8 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
             IColorAppService colorAppService,
             IModelAppService modelAppService,
             ICategoryAppService categoryAppService,
-            IOperatorAppService operatorAppService
-            )
+            IOperatorAppService operatorAppService,
+            IFileTypeAppService fileTypeAppService, UploadService uploadService)
         {
             _productAppService = appService;
             _brandAppService = brandAppService;
@@ -43,6 +46,8 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
             _modelAppService = modelAppService;
             _categoryAppService = categoryAppService;
             _operatorAppService = operatorAppService;
+            _fileTypeAppService = fileTypeAppService;
+            _uploadService = uploadService;
         }
 
         public async Task<IActionResult> Index()
@@ -51,20 +56,22 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
             var recordsProduct = records.Select(p => new ProductOutputViewModel()
             {
                 Id = p.Id,
+                ImageName = p.Files[0].Name,
                 Name = p.Name,
                 CreationDate = p.CreationDate,
                 IsDeleted = p.IsDeleted,
-                CategoryId = p.CategoryId,
+                CategoryName = _categoryAppService.Get(p.CategoryId).Result.Name,
                 Weight = p.Weight,
+                Colors = p.Colors.Select(x=>x.Code).ToList(),
                 IsOrginal = p.IsOrginal,
                 Description = p.Description,
                 Count = p.Count,
-                ModelId = p.ModelId,
+                ModelName = _modelAppService.Get(p.ModelId).Result.Name,
                 Price = p.Price,
                 IsShowPrice = p.IsShowPrice,
                 IsActive = p.IsActive,
-                OperatorId = p.OperatorId,
-                BrandId = p.BrandId,
+                OperatorName = _operatorAppService.Get(p.OperatorId).Result.Name,
+                BrandName = _brandAppService.Get(p.BrandId).Name,
             }).ToList();
             return View(recordsProduct);
         }
@@ -112,15 +119,23 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(ProductAddViewModel product)
+        public async Task<IActionResult> Create(ProductAddViewModel product,ICollection<IFormFile> files)
         {
 
             if (ModelState.IsValid)
             {
+                var fileName = await _uploadService.AddFile(files);
+                foreach (var file in fileName)
+                {
+                    product.FileIds.Add(_fileTypeAppService.Get(file).Id);
+                }
+
+                var listFile = await _fileTypeAppService.GetAll();
                 var colors = await _colorAppService.GetAll();
                 // select the selected colors
                 var selectedColors = colors.Where(x => product.ColorIds.Contains(x.Id)).ToList();
-
+                // select the selected files
+                var selectedFiles = listFile.Where(x => product.FileIds.Contains(x.Id)).ToList();
                 var dto = new ProductDto
                 {
                     Id = product.Id,
@@ -138,6 +153,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
                     OperatorId = product.OperatorId,
                     BrandId = product.BrandId,
                     Colors = selectedColors,
+                    Files = selectedFiles
                 };
                 await _productAppService.Set(dto);
                 return RedirectToAction(nameof(Index));

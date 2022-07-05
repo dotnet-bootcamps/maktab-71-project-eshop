@@ -70,23 +70,7 @@
 
                                     <li class="menu-item-has-children">
                                         <a href="blog-left-sidebar.html">دسته بندی ها</a>
-                                        <ul class="sub-menu">
-                                            <li>
-                                                <a asp-controller="Search" asp-action="List" asp-route-id="1">لپ تاپ</a>
-                                            </li>
-                                            <li>
-                                                <a asp-controller="Search" asp-action="List" asp-route-id="2">کامپیوتر رومیزی</a>
-                                            </li>
-                                            <li>
-                                                <a asp-controller="Search" asp-action="List" asp-route-id="3">تجهیزات ذخیره سازی</a>
-                                            </li>
-                                            <li>
-                                                <a asp-controller="Search" asp-action="List" asp-route-id="4">موبایل</a>
-                                            </li>
-                                            <li>
-                                                <a asp-controller="Search" asp-action="List" asp-route-id="5">لوازم جانبی</a>
-                                            </li>
-                                        </ul>
+                                        @await Component.InvokeAsync("Category")
                                     </li>
 
                                     <li>

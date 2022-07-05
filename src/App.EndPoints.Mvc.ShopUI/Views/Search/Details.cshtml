@@ -1,31 +1,47 @@
 ﻿@model App.EndPoints.Mvc.ShopUI.Models.SearchItemViewModel
+@section StyleProductDetails{
+    <link href="~/css/styleProductDetails.css" rel="stylesheet"/>
+}
+<div id="content-wrapper">
+    <div class="column">
+        <img id="featured" src="~/Upload/@Model.ImageName[0]" alt="laptop" />
 
-<div class="single-row-slider-tab-area section-space">
-    <div class="container">           
-        <div class="row">
-            <div class="col-3">
-                <div class="single-grid-product__image">
-                    <a asp-controller="Search" asp-action="Details" asp-route-id="@Model.ProductId">
-                        <img src="~/upload/@Model.ImageName" class="img-fluid" alt="">
-                    </a>
-                </div>                    
+        <div id="slide-wrapper">
+            <img id="slideRight" class="arrow" src="~/img/right.png" />
+            <div id="slider">
+                @foreach (var img in @Model.ImageName)
+                {
+                    <img src="~/Upload/@img" class="thumbnail"/>
+                }
             </div>
-            <div class="col-9">
-                <div class="single-grid-product__content">
-                    <div class="single-grid-product__category-rating">
-                        <span class="category">
-                            <a asp-controller="Search" asp-action="Details" asp-route-id="@Model.ProductId">@Model.ProductName</a></span>
-                    </div>
-
-                    <h3 class="single-grid-product__title"> 
-                        <a asp-controller="Search" asp-action="Details" asp-route-id="@Model.ProductId">@Model.ProductDescription</a>
-                    </h3>
-                    <p class="single-grid-product__price">
-                        <span class="main-price">@Model.ProductPrice</span>
-                    </p>
-                    <input type="submit" class="btn btn-success" value="اضافه نمودن به سبد خرید" />
-                </div>
-            </div>
+            <img id="slideLeft" class="arrow" src="~/img/left.png"/>
         </div>
     </div>
+    <div class="column">
+        <h1>@Model.ProductName</h1>
+        <hr />
+        <div class="colors mb-3">
+            <ul>
+                @foreach (var color in Model.ColoList)
+                {
+                    <li>
+                        <label>
+                            <input type="radio" name="color" value="@color.Id">
+                            <span class="swatch" style="background-color:@color.Code;"></span> @color.Name
+                        </label>
+                    </li>
+                }
+            </ul> 
+        </div>
+        <h3>@Model.ProductPrice</h3>
+        <p>
+            @Model.ProductDescription
+        </p>
+        <input type="number" value="1" min="1"/>
+        <a class="btn btn-dark" asp-controller="Cart" asp-action="Index" asp-route-id="@Model.ProductId">افزودن به سبد</a>
+    </div>
 </div>
+@section JsProductDetails
+{
+    <script src="~/js/ProductDetails.js" type="text/javascript"></script>
+}

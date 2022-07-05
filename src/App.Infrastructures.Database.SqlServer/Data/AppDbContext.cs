@@ -188,7 +188,6 @@ namespace App.Infrastructures.Database.SqlServer.Data
 
                 entity.HasIndex(e => e.ProductId, "IX_ProductFiles_ProductId");
 
-                entity.Property(e => e.Name).HasMaxLength(250);
 
                 entity.HasOne(d => d.FileType)
                     .WithMany(p => p.ProductFiles)

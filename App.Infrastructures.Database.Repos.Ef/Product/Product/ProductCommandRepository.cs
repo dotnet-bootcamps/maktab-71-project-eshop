@@ -53,6 +53,15 @@ namespace App.Infrastructures.Database.Repos.Ef.Product.Product
                 };
                 record.ProductColors.Add(productColor);
             }
+            foreach (var file in dto.Files)
+            {
+                ProductFile productFile = new ProductFile
+                {
+                    ProductId = record.Id,
+                    FileTypeId = file.Id
+                };
+                record.ProductFiles.Add(productFile);
+            }
             await _context.SaveChangesAsync();
         }
 

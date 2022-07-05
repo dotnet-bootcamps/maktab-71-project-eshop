@@ -1,5 +1,7 @@
 ﻿@model List<App.EndPoints.Mvc.ShopUI.Models.SearchItemViewModel>
-
+@{
+    Random random = new();
+}
 <div class="single-row-slider-tab-area section-space">
     <div class="container">           
         <div class="row">
@@ -8,10 +10,11 @@
                 <div class="row">
                     @foreach(var item in Model)
                     {
+                        int i = random.Next(0,item.ImageName.Count);
                         <div class="single-grid-product col-3">
                             <div class="single-grid-product__image">
                                 <a asp-controller="Search" asp-action="Details" asp-route-id="@item.ProductId">
-                                    <img src="~/upload/@item.ImageName" class="img-fluid" alt="">
+                                    <img src="~/upload/@item.ImageName[i]" class="img-fluid" alt="">
                                 </a>
                                 @*<div class="hover-icons">
                                     <a href="javascript:void(0)"><i class="ion-bag"></i></a>

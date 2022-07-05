@@ -29,6 +29,8 @@ namespace App.Infrastructures.Database.Repos.Ef.Product.Category
                 IsDeleted = p.IsDeleted,
                 ParentCagetoryId = p.ParentCagetoryId,
                 IsActive = p.IsActive,
+                Image = p.Products.SelectMany(x => x.ProductFiles.Select(x => x.FileType.Name)).FirstOrDefault()
+
             }).ToListAsync();
         }
 

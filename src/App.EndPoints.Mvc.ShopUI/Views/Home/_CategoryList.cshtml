@@ -5,53 +5,20 @@
             <div class="row">
                 <div class="col-lg-12">
                         <div class="row">
+                            @foreach (var category in ViewBag.Categorys)
+                            {
                                 <div class="single-category-item col-3">
                                     <div class="single-category-item__image">
-                                        <a asp-controller="Search" asp-action="List" asp-route-id="1">
-                                            <img src="~/img/category/img1-top-eposi1.jpg" class="img-fluid" alt="">
+                                        <a asp-controller="Search" asp-action="List" asp-route-categoryId="@category.id">
+                                            <img src="~/Upload/@category.image" class="img-fluid" alt="">
                                         </a>
                                     </div>
                                     <div class="single-category-item__content">
-                                        <h3 class="title">ذخیره سازی</h3>
-                                        <a asp-controller="Search" asp-action="List" asp-route-id="1"><i class="ion-android-arrow-dropleft-circle"></i>مشاهده</a>
+                                        <h3 class="title">@category.name</h3>
+                                        <a asp-controller="Search" asp-action="List" asp-route-categoryId="@category.id"><i class="ion-android-arrow-dropleft-circle"></i>مشاهده</a>
                                     </div>
                                 </div>
-
-                                <div class="single-category-item col-3">
-                                    <div class="single-category-item__image">
-                                        <a asp-controller="Search" asp-action="List" asp-route-id="1">
-                                            <img src="~/img/category/img1-top-eposi1.jpg" class="img-fluid" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="single-category-item__content">
-                                        <h3 class="title">ذخیره سازی</h3>
-                                        <a asp-controller="Search" asp-action="List" asp-route-id="1"><i class="ion-android-arrow-dropleft-circle"></i>مشاهده</a>
-                                    </div>
-                                </div>
-
-                                <div class="single-category-item col-3">
-                                    <div class="single-category-item__image">
-                                        <a asp-controller="Search" asp-action="List" asp-route-id="1">
-                                            <img src="~/img/category/img1-top-eposi1.jpg" class="img-fluid" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="single-category-item__content">
-                                        <h3 class="title">ذخیره سازی</h3>
-                                        <a asp-controller="Search" asp-action="List" asp-route-id="1"><i class="ion-android-arrow-dropleft-circle"></i>مشاهده</a>
-                                    </div>
-                                </div>
-                                 
-                                <div class="single-category-item col-3">
-                                    <div class="single-category-item__image">
-                                        <a asp-controller="Search" asp-action="List" asp-route-id="1">
-                                            <img src="~/img/category/img1-top-eposi1.jpg" class="img-fluid" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="single-category-item__content">
-                                        <h3 class="title">ذخیره سازی</h3>
-                                        <a asp-controller="Search" asp-action="List" asp-route-id="1"><i class="ion-android-arrow-dropleft-circle"></i>مشاهده</a>
-                                    </div>
-                                </div>
+                            }
 
                         </div>
                 </div>

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using App.Domain.Core.BaseData.Dtos;
 
 namespace App.Domain.Core.Product.Dtos
 {
@@ -27,5 +28,6 @@ namespace App.Domain.Core.Product.Dtos
         public bool IsDeleted { get; set; }
 
         public List<ColorDto> Colors { get; set; } = new List<ColorDto>();
+        public List<FileTypeDto> Files { get; set; } = new List<FileTypeDto>();
     }
 }

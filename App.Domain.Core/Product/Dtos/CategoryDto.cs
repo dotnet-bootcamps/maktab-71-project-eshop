@@ -15,5 +15,6 @@ namespace App.Domain.Core.Product.Dtos
         public string Name { get; set; } = String.Empty;
         public DateTime CreationDate { get; set; }
         public bool IsDeleted { get; set; }
+        public string? Image { set; get; }
     }
 }

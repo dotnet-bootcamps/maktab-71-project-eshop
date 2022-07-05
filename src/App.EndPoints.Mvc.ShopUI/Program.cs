@@ -19,6 +19,7 @@ using App.Domain.Services.BaseData;
 using App.Domain.Services.Operator;
 using App.Domain.Services.Permission;
 using App.Domain.Services.Product;
+using App.EndPoints.Mvc.AdminUI.Services;
 using App.Infrastructures.Database.Repos.Ef.BaseData;
 using App.Infrastructures.Database.Repos.Ef.Operator;
 using App.Infrastructures.Database.Repos.Ef.Permission;
@@ -35,11 +36,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllersWithViews()
-    .AddRazorRuntimeCompilation();
+builder.Services.AddControllersWithViews();
+
 builder.Services.AddDbContext<AppDbContext>(option =>
 {
-    option.UseSqlServer("Data Source=(LocalDb)\\MSSQLLocalDB; Initial Catalog=DotNetShopDb; Integrated Security=TRUE");
+    option.UseSqlServer("Data Source=.; Initial Catalog=DotNetShopDb; Integrated Security=TRUE");
 });
 
 
@@ -47,7 +48,13 @@ builder.Services.AddDbContext<AppDbContext>(option =>
 
 
 builder.Services.AddScoped<IProductAppService, ProductAppService>();
-
+builder.Services.AddScoped<UploadService, UploadService>();
+#region FileType
+builder.Services.AddScoped<IFileTypeAppService, FileTypeAppService>();
+builder.Services.AddScoped<IFileTypeService, FileTypeService>();
+builder.Services.AddScoped<IFileTypeCommandRepository, FileTypeCommandRepository>();
+builder.Services.AddScoped<IFileTypeQueryRepository, FileTypeQueryRepository>();
+#endregion FileType
 #region BaseData
 builder.Services.AddScoped<IBaseDataAppService, BaseDataAppService>();
 builder.Services.AddScoped<IBaseDataService, BaseDataService>();
