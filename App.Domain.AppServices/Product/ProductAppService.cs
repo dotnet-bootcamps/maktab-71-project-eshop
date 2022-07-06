@@ -24,6 +24,12 @@ namespace App.Domain.AppServices.Product
             await _service.Delete(id);
         }
 
+        public async Task<List<ProductBriefDto>?> GetProducts(int? categoryId, string? keyword, int? minPrice, int? maxPrice, int? brandId,
+            CancellationToken cancellationToken)
+        {
+            return await _service.GetProducts(categoryId, keyword, minPrice, maxPrice, brandId, cancellationToken);
+        }
+
         public async Task<ProductDto> Get(int id)
         {
             return await _service.Get(id);

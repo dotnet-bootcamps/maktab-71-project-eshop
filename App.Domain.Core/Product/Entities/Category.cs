@@ -7,6 +7,7 @@ namespace App.Domain.Core.Product.Entities
     {
         public Category()
         {
+            CategorySpacifications = new HashSet<CategorySpacification>();
             Products = new HashSet<Product>();
         }
 
@@ -18,6 +19,7 @@ namespace App.Domain.Core.Product.Entities
         public DateTime CreationDate { get; set; }
         public bool IsDeleted { get; set; }
 
+        public virtual ICollection<CategorySpacification> CategorySpacifications { get; set; }
         public virtual ICollection<Product> Products { get; set; }
     }
 }

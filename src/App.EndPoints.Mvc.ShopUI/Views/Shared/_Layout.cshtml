@@ -339,7 +339,7 @@
         <!--=======  search form  =======-->
 
         <div class="search-form">
-            <form asp-controller="Search" asp-action="List">
+            <form action="@Url.Action("List","Search")" method="get">
                 <input type="text" name="keyword" placeholder="جستجو در تمام فروشگاه" />
                 <button type="submit">
                     <i class="ion-android-search"></i>

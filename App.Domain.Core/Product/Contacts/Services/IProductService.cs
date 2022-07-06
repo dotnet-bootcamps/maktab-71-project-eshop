@@ -12,5 +12,6 @@ namespace App.Domain.Core.Product.Contacts.Services
         Task EnsureDoesNotExist(string name);
         Task EnsureExists(string name);
         Task EnsureExists(int id);
+        Task<List<ProductBriefDto>?> GetProducts(int? categoryId, string? keyword, int? minPrice, int? maxPrice, int? brandId, CancellationToken cancellationToken);
     }
 }

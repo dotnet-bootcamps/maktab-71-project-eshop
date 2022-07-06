@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Text;
+using Microsoft.AspNetCore.Mvc;
 using App.Infrastructures.Database.SqlServer.Data;
 
 
@@ -14,6 +15,7 @@ using App.Domain.Core.Operator.Contract.AppServices;
 using Microsoft.AspNetCore.Mvc.Filters;
 using App.EndPoints.Mvc.AdminUI.Models.ViewModels.Product.Product;
 using App.EndPoints.Mvc.AdminUI.Services;
+using Newtonsoft.Json;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
@@ -29,6 +31,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         private readonly IOperatorAppService _operatorAppService;
         private readonly IFileTypeAppService _fileTypeAppService;
         private readonly UploadService _uploadService;
+        private readonly IConfiguration _configuration;
         // TODO : Operator
 
         public ProductController(
@@ -38,7 +41,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
             IModelAppService modelAppService,
             ICategoryAppService categoryAppService,
             IOperatorAppService operatorAppService,
-            IFileTypeAppService fileTypeAppService, UploadService uploadService)
+            IFileTypeAppService fileTypeAppService, UploadService uploadService, IConfiguration configuration)
         {
             _productAppService = appService;
             _brandAppService = brandAppService;
@@ -48,6 +51,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
             _operatorAppService = operatorAppService;
             _fileTypeAppService = fileTypeAppService;
             _uploadService = uploadService;
+            _configuration = configuration;
         }
 
         public async Task<IActionResult> Index()
@@ -119,7 +123,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(ProductAddViewModel product,ICollection<IFormFile> files)
+        public async Task<IActionResult> Create(ProductAddViewModel product,ICollection<IFormFile> files,CancellationToken cancellationToken)
         {
 
             if (ModelState.IsValid)
@@ -155,7 +159,21 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
                     Colors = selectedColors,
                     Files = selectedFiles
                 };
-                await _productAppService.Set(dto);
+                //await _productAppService.Set(dto);
+                //return RedirectToAction(nameof(Index));
+
+                using var client= new HttpClient();
+                var jsonContent = JsonConvert.SerializeObject(dto);
+                HttpContent httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+                client.DefaultRequestHeaders.Add("ApiKey", _configuration.GetSection("ApiKey").Value);
+                var httpResponse = await client.PostAsync("https://localhost:7146/api/Product/SetProduct", httpContent,
+                    cancellationToken);
+                var res=httpResponse.Content.ReadAsStringAsync();
+                if (!httpResponse.IsSuccessStatusCode)
+                {
+                    throw new Exception("خطایی در دریاغت اطلاعات رخ داد");
+                }
+
                 return RedirectToAction(nameof(Index));
             }
             else

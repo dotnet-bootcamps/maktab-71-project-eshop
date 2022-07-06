@@ -123,5 +123,45 @@ namespace App.Infrastructures.Database.Repos.Ef.Product.Product
             }).SingleOrDefaultAsync();
             return record;
         }
+
+        public async Task<List<ProductBriefDto>?> Search(int? categoryId, string? keyword, int? minPrice, int? maxPrice,
+            int? brandId, CancellationToken cancellationToken)
+        {
+            var products = await _context.Products.AsNoTracking()
+                .Where(p => (categoryId == null || p.CategoryId == categoryId))
+                .Where(p => (minPrice == null || p.Price >= minPrice))
+                .Where(p => (maxPrice == null || p.Price <= maxPrice))
+                .Where(p => (keyword == null || keyword == "" || p.Description.Contains(keyword) ||
+                             p.Name.Contains(keyword)))
+                .Select(p => new ProductBriefDto()
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    BrandName = p.Brand.Name,
+                    CategoryName = p.Category.Name,
+                    Count = p.Count,
+                    Price = p.Price,
+                    IsOrginal = p.IsOrginal,
+                    Description = p.Description,
+                    Colors = p.ProductColors.Select(c => c.Color).Select(c => new ColorDto()
+                    {
+                        Id = c.Id,
+                        Name = c.Name,
+                        CreationDate = c.CreationDate,
+                        Code = c.Code,
+                        IsDeleted = c.IsDeleted
+                    }).ToList(),
+                    Files = p.ProductFiles.Select(x=>x.FileType).Select(x=>new FileTypeDto()
+                    {
+                        Id = x.Id,
+                        Name = x.Name,
+                        CreationDate = x.CreationDate,
+                        FileTypeExtentionId = x.Id,
+                        IsDeleted = x.IsDeleted
+                    }).ToList()
+
+                }).ToListAsync();
+            return products;
+        }
     }
 }

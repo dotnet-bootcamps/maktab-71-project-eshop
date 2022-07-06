@@ -11,20 +11,12 @@
                     @foreach(var item in Model)
                     {
                         int i = random.Next(0,item.ImageName.Count);
-                        <div class="single-grid-product col-3">
+                        <div class="single-grid-product col-3  border rounded m-1">
                             <div class="single-grid-product__image">
                                 <a asp-controller="Search" asp-action="Details" asp-route-id="@item.ProductId">
                                     <img src="~/upload/@item.ImageName[i]" class="img-fluid" alt="">
                                 </a>
-                                @*<div class="hover-icons">
-                                    <a href="javascript:void(0)"><i class="ion-bag"></i></a>
-                                    <a href="javascript:void(0)"><i class="ion-heart"></i></a>
-                                    <a href="javascript:void(0)"><i
-                                            class="ion-android-options"></i></a>
-                                    <a href="javascript:void(0)" data-toggle="modal"
-                                        data-target="#quick-view-modal-container"><i
-                                            class="ion-android-open"></i></a>
-                                </div>*@
+                                
                             </div>
                             <div class="single-grid-product__content">
                                 <div class="single-grid-product__category-rating">
@@ -33,7 +25,7 @@
                                 </div>
 
                                 <h3 class="single-grid-product__title"> 
-                                    <a asp-controller="Search" asp-action="Details" asp-route-id="@item.ProductId">@item.ProductDescription</a>
+                                    <a class="defult" asp-controller="Search" asp-action="Details" asp-route-id="@item.ProductId">@item.ProductDescription</a>
                                 </h3>
                                 <p class="single-grid-product__price">
                                     <span class="main-price">@item.ProductPrice</span>

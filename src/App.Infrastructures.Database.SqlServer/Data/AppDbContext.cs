@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
 using App.Domain.Core.Product.Entities;
 using App.Domain.Core.BaseData.Entities;
 using App.Domain.Core.Operator.Entities;
@@ -10,17 +7,16 @@ namespace App.Infrastructures.Database.SqlServer.Data
 {
     public partial class AppDbContext : DbContext
     {
-        public AppDbContext()
-        {
-        }
+
 
         public AppDbContext(DbContextOptions<AppDbContext> options)
-            : base(options)
+           : base(options)
         {
         }
 
         public virtual DbSet<Brand> Brands { get; set; } = null!;
         public virtual DbSet<Category> Categories { get; set; } = null!;
+        public virtual DbSet<CategorySpacification> CategorySpacifications { get; set; } = null!;
         public virtual DbSet<Collection> Collections { get; set; } = null!;
         public virtual DbSet<CollectionProduct> CollectionProducts { get; set; } = null!;
         public virtual DbSet<Color> Colors { get; set; } = null!;
@@ -39,6 +35,14 @@ namespace App.Infrastructures.Database.SqlServer.Data
         public virtual DbSet<TagCategory> TagCategories { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Server=.;Database=DotNetShopDb;Trusted_Connection=True;");
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -50,6 +54,23 @@ namespace App.Infrastructures.Database.SqlServer.Data
             modelBuilder.Entity<Category>(entity =>
             {
                 entity.Property(e => e.Name).HasMaxLength(250);
+            });
+
+            modelBuilder.Entity<CategorySpacification>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.HasOne(d => d.Category)
+                    .WithMany(p => p.CategorySpacifications)
+                    .HasForeignKey(d => d.CategoryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_CategorySpacifications_Categories");
+
+                entity.HasOne(d => d.TagCategory)
+                    .WithMany(p => p.CategorySpacifications)
+                    .HasForeignKey(d => d.TagCategoryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_CategorySpacifications_TagCategories");
             });
 
             modelBuilder.Entity<Collection>(entity =>
@@ -169,8 +190,6 @@ namespace App.Infrastructures.Database.SqlServer.Data
 
                 entity.HasIndex(e => e.ProductId, "IX_ProductColors_ProductID");
 
-                entity.Property(e => e.Name).HasMaxLength(250);
-
                 entity.Property(e => e.ProductId).HasColumnName("ProductID");
 
                 entity.HasOne(d => d.Color)
@@ -187,7 +206,6 @@ namespace App.Infrastructures.Database.SqlServer.Data
                 entity.HasIndex(e => e.FileTypeId, "IX_ProductFiles_FileTypeId");
 
                 entity.HasIndex(e => e.ProductId, "IX_ProductFiles_ProductId");
-
 
                 entity.HasOne(d => d.FileType)
                     .WithMany(p => p.ProductFiles)

@@ -2345,6 +2345,13 @@ select {
 	line-height: 18px;
 	margin-bottom: 12px;
 }
+.defult {
+    width: 100%;
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
 .single-grid-product__title a:hover {
 	color: #e33;

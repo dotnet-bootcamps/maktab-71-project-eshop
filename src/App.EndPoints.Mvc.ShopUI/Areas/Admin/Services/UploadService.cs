@@ -27,7 +27,6 @@ namespace App.EndPoints.Mvc.AdminUI.Services
                     {
                         await file.CopyToAsync(fileStream);
                     }
-                    var fileContentType = file.ContentType;
                 }
                 await _fileTypeAppService.Set(rondom, 1);
                 filesList.Add(rondom);

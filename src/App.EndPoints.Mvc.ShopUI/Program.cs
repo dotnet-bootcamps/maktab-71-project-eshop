@@ -45,8 +45,6 @@ builder.Services.AddDbContext<AppDbContext>(option =>
 
 
 
-
-
 builder.Services.AddScoped<IProductAppService, ProductAppService>();
 builder.Services.AddScoped<UploadService, UploadService>();
 #region FileType

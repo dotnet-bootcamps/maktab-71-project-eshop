@@ -38,18 +38,14 @@ namespace App.Infrastructures.Database.Repos.Ef.Product.Product
                 CreationDate = dto.CreationDate,
                 IsDeleted = dto.IsDeleted,
             };
-            await _context.AddAsync(record);
+            await _context.Products.AddAsync(record);
             await _context.SaveChangesAsync();
             foreach (var color in dto.Colors)
             {
                 ProductColor productColor = new ProductColor
                 {
-
                     ProductId = record.Id,
                     ColorId = color.Id,
-                    Name = color.Name + record.Name,
-                    CreationDate = DateTime.Now,
-                    IsDeleted = false,
                 };
                 record.ProductColors.Add(productColor);
             }
@@ -61,6 +57,7 @@ namespace App.Infrastructures.Database.Repos.Ef.Product.Product
                     FileTypeId = file.Id
                 };
                 record.ProductFiles.Add(productFile);
+                
             }
             await _context.SaveChangesAsync();
         }
@@ -97,9 +94,6 @@ namespace App.Infrastructures.Database.Repos.Ef.Product.Product
 
                     ProductId = record.Id,
                     ColorId = color.Id,
-                    Name = color.Name + record.Name,
-                    CreationDate = DateTime.Now,
-                    IsDeleted = false,
                 };
                 productColors.Add(productColor);
             }
