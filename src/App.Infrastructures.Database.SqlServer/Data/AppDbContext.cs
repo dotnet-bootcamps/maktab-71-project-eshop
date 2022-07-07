@@ -38,6 +38,7 @@ namespace App.Infrastructures.Database.SqlServer.Data
         public virtual DbSet<Tag> Tags { get; set; } = null!;
         public virtual DbSet<TagCategory> TagCategories { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
+        public virtual DbSet<CategoryTagGroup> CategoryTagGroups { get; set; } = null!;
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
