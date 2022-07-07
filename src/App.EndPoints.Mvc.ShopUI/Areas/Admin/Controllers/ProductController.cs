@@ -111,7 +111,6 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
                 .SelectMany(s => s).ToList();
 
 
-
             var brands = await _brandAppService.GetAll();
             ViewBag.Brands = brands.Select
             (s => new SelectListItem
