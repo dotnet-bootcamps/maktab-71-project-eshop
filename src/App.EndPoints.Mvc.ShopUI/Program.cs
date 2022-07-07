@@ -14,6 +14,7 @@ using App.Domain.Core.Product.Contacts.Repositories.Category;
 using App.Domain.Core.Product.Contacts.Repositories.Color;
 using App.Domain.Core.Product.Contacts.Repositories.Model;
 using App.Domain.Core.Product.Contacts.Repositories.Product;
+using App.Domain.Core.Product.Contacts.Repositories.TagCategory;
 using App.Domain.Core.Product.Contacts.Services;
 using App.Domain.Services.BaseData;
 using App.Domain.Services.Operator;
@@ -23,6 +24,7 @@ using App.Infrastructures.Database.Repos.Ef.BaseData;
 using App.Infrastructures.Database.Repos.Ef.Operator;
 using App.Infrastructures.Database.Repos.Ef.Permission;
 using App.Infrastructures.Database.Repos.Ef.Product.Category;
+using App.Infrastructures.Database.Repos.Ef.Product.CategoryTagGroup;
 using App.Infrastructures.Database.Repos.Ef.Product.Color;
 using App.Infrastructures.Database.Repos.Ef.Product.Model;
 using App.Infrastructures.Database.Repos.Ef.Product.Product;
@@ -84,6 +86,11 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IProductCommandRepository, ProductCommandRepository>();
 builder.Services.AddScoped<IProductQueryRepository, ProductQueryRepository>();
 #endregion
+#region CategoryTagGroup
+builder.Services.AddScoped<ICategoryTagGroupAppService, CategoryTagGroupAppService>();
+builder.Services.AddScoped<ICategoryTagGroupService, CategoryTagGroupService>();
+builder.Services.AddScoped<ICategoryTagGroupRepository, CategoryTagGroupRepository>();
+#endregion
 #endregion
 #region Operator 
 builder.Services.AddScoped<IOperatorAppService, OperatorAppService>();
@@ -91,6 +98,7 @@ builder.Services.AddScoped<IOperatorService, OperatorService>();
 builder.Services.AddScoped<IOperatorCommandRepository, OperatorCommandRepository>();
 builder.Services.AddScoped<IOperatorQueryRepository, OperatorQueryRepository>();
 #endregion
+
 #region Permission
 builder.Services.AddScoped<IPermissionService, PermissionService>();
 builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();

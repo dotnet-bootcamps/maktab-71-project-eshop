@@ -6,7 +6,12 @@
             <h2 class="text-primary">لیست محصولات</h2>
         </div>
         <div>
-            <a class="btn btn-success" asp-controller="Product" asp-action="Create">ایجاد</a>
+            <form method="get" asp-controller="Product" asp-action="Create">
+                <select name="categoryId" class="form-control" asp-items="@ViewBag.Categories">
+                        <option disabled selected>-- Select Category --</option>
+                    </select>
+                    <button type="submit">ایجاد</button>
+            </form>
         </div>
     </div>
     <br />

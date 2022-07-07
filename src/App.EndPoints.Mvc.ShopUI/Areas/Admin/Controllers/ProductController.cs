@@ -30,7 +30,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         private readonly ICategoryAppService _categoryAppService;
         private readonly IOperatorAppService _operatorAppService;
         private readonly IConfiguration _configuration;
-
+        private readonly ICategoryTagGroupAppService _categoryTagGroupAppService;
         // TODO : Operator
 
         public ProductController(
@@ -40,7 +40,8 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
             IModelAppService modelAppService,
             ICategoryAppService categoryAppService,
             IOperatorAppService operatorAppService,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            ICategoryTagGroupAppService categoryTagGroupAppService)
         {
             _configuration = configuration;
             _productAppService = appService;
@@ -49,10 +50,19 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
             _modelAppService = modelAppService;
             _categoryAppService = categoryAppService;
             _operatorAppService = operatorAppService;
+            _categoryTagGroupAppService = categoryTagGroupAppService;
         }
 
         public async Task<IActionResult> Index()
         {
+            var categories = await _categoryAppService.GetAll();
+            ViewBag.Categories = categories
+                .Select(s => new SelectListItem
+                {
+                    Text = s.Name,
+                    Value = s.Id.ToString()
+                });
+
             var records = await _productAppService.GetAll();
             var recordsProduct = records.Select(p => new ProductOutputViewModel()
             {
@@ -76,8 +86,32 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> Create(int categoryId)
         {
+
+            // generate a list of all the tag categories that need to be selected( a list of lists?)
+            var tagDtos = await _categoryTagGroupAppService.getTags(categoryId);
+            if (tagDtos == null)
+            {
+                return View("Index");
+            }
+            var grouped = tagDtos.GroupBy(x => x.TagCategoryId)
+                                 .Select(y => y.Select(x => new TagDto { Id = x.Id, HasValue = x.HasValue, Name = x.Name }).ToList())
+                                 .ToList();
+
+            ViewBag.selectListTags = grouped
+                .Where(s => s.First().HasValue == false)
+                .Select(s => s.Select(x => new SelectListItem
+                {
+                    Text = x.Name,
+                    Value = x.Id.ToString()
+                }).ToList()).ToList();
+
+            ViewBag.inputTags = grouped.Where(s => s.First().HasValue == true)
+                .SelectMany(s => s).ToList();
+
+
+
             var brands = await _brandAppService.GetAll();
             ViewBag.Brands = brands.Select
             (s => new SelectListItem
@@ -118,7 +152,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(ProductAddViewModel product,CancellationToken cancellationToken)
+        public async Task<IActionResult> Create(ProductAddViewModel product, CancellationToken cancellationToken)
         {
 
             if (ModelState.IsValid)
@@ -164,10 +198,10 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception("Exception accord",ex);
+                    throw new Exception("Exception accord", ex);
                 }
 
-                
+
             }
             else
             {
