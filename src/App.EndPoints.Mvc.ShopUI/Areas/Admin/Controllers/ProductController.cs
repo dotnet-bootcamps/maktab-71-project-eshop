@@ -1,18 +1,11 @@
 ﻿using System.Text;
 using Microsoft.AspNetCore.Mvc;
-using App.Infrastructures.Database.SqlServer.Data;
-
-
-
 using Microsoft.AspNetCore.Mvc.Rendering;
 using App.EndPoints.Mvc.AdminUI.ViewModels;
-using App.Domain.Core.Product.Entities;
 using App.Domain.Core.Product.Contacts.AppServices;
 using App.Domain.Core.Product.Dtos;
 using App.Domain.Core.BaseData.Contarcts.AppServices;
-using App.Domain.Core.Operator.Entities;
 using App.Domain.Core.Operator.Contract.AppServices;
-using Microsoft.AspNetCore.Mvc.Filters;
 using App.EndPoints.Mvc.AdminUI.Models.ViewModels.Product.Product;
 using App.EndPoints.Mvc.AdminUI.Services;
 using Newtonsoft.Json;
@@ -32,6 +25,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         private readonly IFileTypeAppService _fileTypeAppService;
         private readonly UploadService _uploadService;
         private readonly IConfiguration _configuration;
+        private readonly ICategoryTagAppService _categoryTagAppService;
         // TODO : Operator
 
         public ProductController(
@@ -41,7 +35,10 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
             IModelAppService modelAppService,
             ICategoryAppService categoryAppService,
             IOperatorAppService operatorAppService,
-            IFileTypeAppService fileTypeAppService, UploadService uploadService, IConfiguration configuration)
+            IFileTypeAppService fileTypeAppService,
+            UploadService uploadService,
+            IConfiguration configuration,
+            ICategoryTagAppService categoryTagAppService)
         {
             _productAppService = appService;
             _brandAppService = brandAppService;
@@ -52,6 +49,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
             _fileTypeAppService = fileTypeAppService;
             _uploadService = uploadService;
             _configuration = configuration;
+            _categoryTagAppService = categoryTagAppService;
         }
 
         public async Task<IActionResult> Index()
@@ -81,7 +79,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> Create(int categoryId)
         {
             var brands = await _brandAppService.GetAll();
             ViewBag.Brands = brands.Select
@@ -119,7 +117,28 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
                     Text = s.Name,
                     Value = s.Id.ToString()
                 });
+
+
             return View();
+        }
+
+        public async Task<IActionResult> GetTag(int id)
+        {
+            var tagDtos = await _categoryTagAppService.getTags(id);
+            if (tagDtos == null)
+            {
+                return View();
+            }
+            var tagCategory = tagDtos.GroupBy(x => x.TagCategoryId)
+                .Select(y => y.Select(x => new TagDto { Id = x.Id, HasValue = x.HasValue, Name = x.Name,TagCategoryName = x.TagCategoryName}).ToList())
+                .ToList();
+
+            ViewBag.selectListTags = tagCategory
+                .Where(s => s.First().HasValue == false).ToList();
+
+            ViewBag.inputTags = tagCategory.Where(s => s.First().HasValue == true)
+                .SelectMany(s => s).ToList();
+            return PartialView();
         }
 
         [HttpPost]

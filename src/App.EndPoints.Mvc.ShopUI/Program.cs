@@ -14,6 +14,7 @@ using App.Domain.Core.Product.Contacts.Repositories.Category;
 using App.Domain.Core.Product.Contacts.Repositories.Color;
 using App.Domain.Core.Product.Contacts.Repositories.Model;
 using App.Domain.Core.Product.Contacts.Repositories.Product;
+using App.Domain.Core.Product.Contacts.Repositories.TagCategory;
 using App.Domain.Core.Product.Contacts.Services;
 using App.Domain.Services.BaseData;
 using App.Domain.Services.Operator;
@@ -24,6 +25,7 @@ using App.Infrastructures.Database.Repos.Ef.BaseData;
 using App.Infrastructures.Database.Repos.Ef.Operator;
 using App.Infrastructures.Database.Repos.Ef.Permission;
 using App.Infrastructures.Database.Repos.Ef.Product.Category;
+using App.Infrastructures.Database.Repos.Ef.Product.Category.CategoryTag;
 using App.Infrastructures.Database.Repos.Ef.Product.Color;
 using App.Infrastructures.Database.Repos.Ef.Product.Model;
 using App.Infrastructures.Database.Repos.Ef.Product.Product;
@@ -47,6 +49,11 @@ builder.Services.AddDbContext<AppDbContext>(option =>
 
 builder.Services.AddScoped<IProductAppService, ProductAppService>();
 builder.Services.AddScoped<UploadService, UploadService>();
+#region CategoryTagGroup
+builder.Services.AddScoped<ICategoryTagAppService, CategoryTagAppService>();
+builder.Services.AddScoped<ICategoryTagService, CategoryTagService>();
+builder.Services.AddScoped<ICategoryTagQueryRepository, CategoryTagQueryRepository>();
+#endregion
 #region FileType
 builder.Services.AddScoped<IFileTypeAppService, FileTypeAppService>();
 builder.Services.AddScoped<IFileTypeService, FileTypeService>();

@@ -11,4 +11,8 @@
     <ProjectReference Include="..\src\App.Infrastructures.Database.SqlServer\App.Infrastructures.Database.SqlServer.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Product\Category\CategoryTag\" />
+  </ItemGroup>
+
 </Project>

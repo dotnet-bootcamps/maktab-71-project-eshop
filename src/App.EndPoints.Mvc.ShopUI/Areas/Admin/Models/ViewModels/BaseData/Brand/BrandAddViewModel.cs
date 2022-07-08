@@ -10,7 +10,6 @@ namespace App.EndPoints.Mvc.AdminUI.Models.ViewModels.Product
 
         [Display(Name = "نام")]
         [Required(ErrorMessage = "تکمیل فیلد نام اجباری می باشد")]
-        [Remote(action: "CheckName", controller: "Brand", ErrorMessage = "این برند قبلا ثبت شده است")]
         public string Name { get; set; } = null!;
 
 

@@ -58,6 +58,7 @@ public class BrandService :IBrandService
         return brand;
     }
 
+
     public async Task<List<BrandDto>> GetAll()
     {
         return await _brandQueryRepository.GetAll();

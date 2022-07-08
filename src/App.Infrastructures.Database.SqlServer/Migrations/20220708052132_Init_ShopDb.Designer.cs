@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace App.Infrastructures.Database.SqlServer.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220706180132_Edit_ProductColor")]
-    partial class Edit_ProductColor
+    [Migration("20220708052132_Init_ShopDb")]
+    partial class Init_ShopDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -277,6 +277,26 @@ namespace App.Infrastructures.Database.SqlServer.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("App.Domain.Core.Product.Entities.CategorySpacification", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TagCategoryId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("TagCategoryId");
+
+                    b.ToTable("CategorySpacifications");
                 });
 
             modelBuilder.Entity("App.Domain.Core.Product.Entities.Collection", b =>
@@ -588,9 +608,6 @@ namespace App.Infrastructures.Database.SqlServer.Migrations
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("HasValue")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -619,6 +636,9 @@ namespace App.Infrastructures.Database.SqlServer.Migrations
 
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("HasValue")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -669,6 +689,25 @@ namespace App.Infrastructures.Database.SqlServer.Migrations
                         .IsRequired();
 
                     b.Navigation("FileTypeExtention");
+                });
+
+            modelBuilder.Entity("App.Domain.Core.Product.Entities.CategorySpacification", b =>
+                {
+                    b.HasOne("App.Domain.Core.Product.Entities.Category", "Category")
+                        .WithMany("CategorySpacifications")
+                        .HasForeignKey("CategoryId")
+                        .IsRequired()
+                        .HasConstraintName("FK_CategorySpacifications_Categories");
+
+                    b.HasOne("App.Domain.Core.Product.Entities.TagCategory", "TagCategory")
+                        .WithMany("CategorySpacifications")
+                        .HasForeignKey("TagCategoryId")
+                        .IsRequired()
+                        .HasConstraintName("FK_CategorySpacifications_TagCategories");
+
+                    b.Navigation("Category");
+
+                    b.Navigation("TagCategory");
                 });
 
             modelBuilder.Entity("App.Domain.Core.Product.Entities.CollectionProduct", b =>
@@ -836,6 +875,8 @@ namespace App.Infrastructures.Database.SqlServer.Migrations
 
             modelBuilder.Entity("App.Domain.Core.Product.Entities.Category", b =>
                 {
+                    b.Navigation("CategorySpacifications");
+
                     b.Navigation("Products");
                 });
 
@@ -876,6 +917,8 @@ namespace App.Infrastructures.Database.SqlServer.Migrations
 
             modelBuilder.Entity("App.Domain.Core.Product.Entities.TagCategory", b =>
                 {
+                    b.Navigation("CategorySpacifications");
+
                     b.Navigation("Tags");
                 });
 #pragma warning restore 612, 618

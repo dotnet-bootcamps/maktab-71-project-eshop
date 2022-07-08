@@ -17,18 +17,17 @@ namespace App.EndPoints.Mvc.ShopUI.Controllers
             _categoryAppService = categoryAppService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var model = _categoryAppService.GetAll().Result.Select(x => new CategoryVM()
+            var model = await _categoryAppService.GetAll();
+            ViewBag.Categorys = model.Select(x=>new CategoryVM
             {
-                id = x.Id,
+                image = x.Image,
                 name = x.Name,
-                image = x.Image
+                id = x.Id,
             }).ToList();
-            ViewBag.Categorys = model;
             return View();
         }
-
         public IActionResult Privacy()
         {
             return View();

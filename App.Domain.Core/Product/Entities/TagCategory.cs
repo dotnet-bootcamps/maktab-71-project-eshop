@@ -12,6 +12,8 @@ namespace App.Domain.Core.Product.Entities
 
         public int Id { get; set; }
         public string Name { get; set; } = null!;
+        public bool HasValue { get; set; }
+
         public DateTime CreationDate { get; set; }
         public bool IsDeleted { get; set; }
 
