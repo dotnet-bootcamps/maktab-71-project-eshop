@@ -84,6 +84,13 @@ namespace App.Infrastructures.Database.Repos.Ef.Product.Product
                     Id = c.Id,
                     Name = c.Color.Name,
                     Code = c.Color.Code
+                }).ToList(),
+                Tags = p.ProductTags.Select(x=>new ProductTagDto()
+                {
+                    Name = x.Name,
+                    Value = x.Value,
+                    TagId = x.TagId,
+                    Id = x.Id
                 }).ToList()
             }).SingleOrDefaultAsync();
             return record;
@@ -158,6 +165,14 @@ namespace App.Infrastructures.Database.Repos.Ef.Product.Product
                         CreationDate = x.CreationDate,
                         FileTypeExtentionId = x.Id,
                         IsDeleted = x.IsDeleted
+                    }).ToList(),
+                    Tags = p.ProductTags.Select(x=>new ProductTagDto()
+                    {
+                        Id = x.Id,
+                        Name = x.Name,
+                        Value = x.Value,
+                        ProductId = x.ProductId,
+                        TagId = x.TagId
                     }).ToList()
 
                 }).ToListAsync();

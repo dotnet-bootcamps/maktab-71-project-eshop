@@ -64,7 +64,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
                 IsDeleted = p.IsDeleted,
                 CategoryName = _categoryAppService.Get(p.CategoryId).Result.Name,
                 Weight = p.Weight,
-                Colors = p.Colors.Select(x=>x.Code).ToList(),
+                Colors = p.Colors.Select(x => x.Code).ToList(),
                 IsOrginal = p.IsOrginal,
                 Description = p.Description,
                 Count = p.Count,
@@ -79,7 +79,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Create(int categoryId)
+        public async Task<IActionResult> Create()
         {
             var brands = await _brandAppService.GetAll();
             ViewBag.Brands = brands.Select
@@ -130,7 +130,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
                 return View();
             }
             var tagCategory = tagDtos.GroupBy(x => x.TagCategoryId)
-                .Select(y => y.Select(x => new TagDto { Id = x.Id, HasValue = x.HasValue, Name = x.Name,TagCategoryName = x.TagCategoryName}).ToList())
+                .Select(y => y.Select(x => new TagDto { Id = x.Id, HasValue = x.HasValue, Name = x.Name, TagCategoryName = x.TagCategoryName, IsMult = x.IsMult }).ToList())
                 .ToList();
 
             ViewBag.selectListTags = tagCategory
@@ -142,23 +142,52 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(ProductAddViewModel product,ICollection<IFormFile> files,CancellationToken cancellationToken)
+        public async Task<IActionResult> Create(ProductAddViewModel product, ICollection<IFormFile> files, CancellationToken cancellationToken, List<int> tags, Dictionary<int, string> input)
         {
 
             if (ModelState.IsValid)
             {
+                #region SelectTag
+                var tagList = await _categoryTagAppService.getTags(product.CategoryId);
+                var selectTag = tagList.Where(t => tags.Contains(t.Id)).Select(x => new ProductTagDto()
+                {
+                    Name = tagList.FirstOrDefault(t => t.Id == x.Id).TagCategoryName,
+                    Value = x.Name,
+                    TagId = x.Id,
+                }).ToList();
+                foreach (var key in input.Keys)
+                {
+                    selectTag.Add(new ProductTagDto()
+                    {
+                        TagId = key,
+                        Name = tagList.FirstOrDefault(x => x.Id == key).Name,
+                        Value = input[key],
+                    });
+                }
+
+                #endregion
+
+                #region Upload&RecordFile
+
                 var fileName = await _uploadService.AddFile(files);
                 foreach (var file in fileName)
                 {
                     product.FileIds.Add(_fileTypeAppService.Get(file).Id);
                 }
-
                 var listFile = await _fileTypeAppService.GetAll();
-                var colors = await _colorAppService.GetAll();
-                // select the selected colors
-                var selectedColors = colors.Where(x => product.ColorIds.Contains(x.Id)).ToList();
-                // select the selected files
                 var selectedFiles = listFile.Where(x => product.FileIds.Contains(x.Id)).ToList();
+
+                #endregion
+
+                #region SelectColor
+
+                var colors = await _colorAppService.GetAll();
+
+                var selectedColors = colors.Where(x => product.ColorIds.Contains(x.Id)).ToList();
+
+                #endregion
+
+
                 var dto = new ProductDto
                 {
                     Id = product.Id,
@@ -176,18 +205,19 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
                     OperatorId = product.OperatorId,
                     BrandId = product.BrandId,
                     Colors = selectedColors,
-                    Files = selectedFiles
+                    Files = selectedFiles,
+                    Tags = selectTag
                 };
                 //await _productAppService.Set(dto);
                 //return RedirectToAction(nameof(Index));
 
-                using var client= new HttpClient();
+                using var client = new HttpClient();
                 var jsonContent = JsonConvert.SerializeObject(dto);
                 HttpContent httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
                 client.DefaultRequestHeaders.Add("ApiKey", _configuration.GetSection("ApiKey").Value);
                 var httpResponse = await client.PostAsync("https://localhost:7146/api/Product/SetProduct", httpContent,
                     cancellationToken);
-                var res=httpResponse.Content.ReadAsStringAsync();
+                var res = httpResponse.Content.ReadAsStringAsync();
                 if (!httpResponse.IsSuccessStatusCode)
                 {
                     throw new Exception("خطایی در دریاغت اطلاعات رخ داد");

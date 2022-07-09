@@ -15,5 +15,6 @@ namespace App.Domain.Core.Product.Dtos
         public string Name { get; set; } = null!;
         public List<ColorDto>? Colors { get; set; }
         public List<FileTypeDto>? Files { get; set; }
+        public List<ProductTagDto> Tags { get; set; }
     }
 }

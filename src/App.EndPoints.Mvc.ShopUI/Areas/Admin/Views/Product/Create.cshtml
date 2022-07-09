@@ -104,7 +104,7 @@
                     <label asp-for="ColorIds"></label>
                 </div>
                 <div class="col-8">
-                    <select asp-for="ColorIds" class="select-chosen" asp-items="@ViewBag.Colors" multiple>
+                    <select asp-for="ColorIds" class="select-chosen form-select" asp-items="@ViewBag.Colors" multiple>
                         <option disabled selected>انتخاب رنگ ها</option>
                     </select>
                     <span asp-validation-for="ColorIds" class="text-danger"></span>
@@ -123,13 +123,13 @@
                 </div>
             </div>
 
-            
+
             <div class="form-group row p-3">
                 <div class="col-4">
                     عکس محصول
                 </div>
                 <div class="col-8">
-                    <input class="form-control" name="files" multiple accept="image/png, image/jpeg" type="file"/>
+                    <input class="form-control" name="files" multiple accept="image/png, image/jpeg" type="file" />
                 </div>
             </div>
 
@@ -163,28 +163,29 @@
 <partial name="_ValidationScriptsPartial" />
 <script>
 
-            $(function() {
-        $(".select-chosen").chosen({rtl: true});
-    });
-    
+        $(function() {
+    $(".select-chosen").chosen({rtl: true});
+        });
+
+
 </script>
 }
 @section script{
-    <script>
-        $("#select").change(function () {
-            var id = + $(this).val();
-            search(id);
+<script>
+    $("#select").change(function () {
+        var id = + $(this).val();
+        search(id);
+    });
+    function search(id) {
+        $("#tag").append("<partial name='GetTag'/>");
+        $.ajax({
+            type: "Get",
+            url: "/Admin/Product/GetTag/"+id,
+            data: {}
+        }).done(function (result) {
+            $("#tag").html(result);
         });
-        function search(id) {
-            $("#tag").append("<partial name='GetTag'/>");
-            $.ajax({
-                type: "Get",
-                url: "/Admin/Product/GetTag/"+id,
-                data: {}
-            }).done(function (result) {
-                $("#tag").html(result);
-            });
-        }
-    </script>
+    }
+</script>
 }
 

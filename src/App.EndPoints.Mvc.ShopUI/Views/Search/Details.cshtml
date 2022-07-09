@@ -1,6 +1,9 @@
 ﻿@model App.EndPoints.Mvc.ShopUI.Models.SearchItemViewModel
+@{
+    int n = -1;
+}
 @section StyleProductDetails{
-    <link href="~/css/styleProductDetails.css" rel="stylesheet"/>
+<link href="~/css/styleProductDetails.css" rel="stylesheet" />
 }
 <div id="content-wrapper">
     <div class="column">
@@ -11,10 +14,10 @@
             <div id="slider">
                 @foreach (var img in @Model.ImageName)
                 {
-                    <img src="~/Upload/@img" class="thumbnail"/>
+                    <img src="~/Upload/@img" class="thumbnail" />
                 }
             </div>
-            <img id="slideLeft" class="arrow" src="~/img/left.png"/>
+            <img id="slideLeft" class="arrow" src="~/img/left.png" />
         </div>
     </div>
     <div class="column">
@@ -31,17 +34,47 @@
                         </label>
                     </li>
                 }
-            </ul> 
+            </ul>
         </div>
         <h3>@Model.ProductPrice</h3>
         <p>
             @Model.ProductDescription
         </p>
-        <input type="number" value="1" min="1"/>
+        <input type="number" value="1" min="1" />
         <a class="btn btn-dark" asp-controller="Cart" asp-action="Index" asp-route-id="@Model.ProductId">افزودن به سبد</a>
     </div>
 </div>
+<br/>
+<hr/>
+<div class="mt-3 mr-3">
+
+    @for (int i = 0; i < Model.ProductTags.Count; i++)
+    {
+
+        @if (i > 0)
+        {
+            @if (@Model.ProductTags[i].Name != @Model.ProductTags[i - 1].Name)
+            {
+                <br/>
+                <span class="text-danger font-weight-bolder col-6">@Model.ProductTags[i].Name</span>
+            }
+            <div class="text-center">
+                <span class="font-weight-bold col-3">@Model.ProductTags[i].Value,</span>
+            </div>
+        }
+        else
+        {
+            <span class="text-danger font-weight-bolder col-6">@Model.ProductTags[i].Name</span>
+            <div class="text-center">
+                <span class="font-weight-bold col-3">@Model.ProductTags[i].Value,</span>
+            </div>
+        }
+
+    }
+
+</div>
+
 @section JsProductDetails
 {
-    <script src="~/js/ProductDetails.js" type="text/javascript"></script>
+<script src="~/js/ProductDetails.js" type="text/javascript"></script>
 }

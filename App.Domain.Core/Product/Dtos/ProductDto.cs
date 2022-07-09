@@ -29,5 +29,6 @@ namespace App.Domain.Core.Product.Dtos
 
         public List<ColorDto> Colors { get; set; } = new List<ColorDto>();
         public List<FileTypeDto> Files { get; set; } = new List<FileTypeDto>();
+        public List<ProductTagDto> Tags { get; set; } = new List<ProductTagDto>();
     }
 }

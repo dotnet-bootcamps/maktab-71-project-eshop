@@ -83,7 +83,8 @@ namespace App.EndPoints.Mvc.ShopUI.Controllers
                 ProductName = product.Name,
                 ProductDescription = product.Description,
                 ProductPrice = product.Price.ToString(),
-                ColoList = product.Colors
+                ColoList = product.Colors,
+                ProductTags = product.Tags
             };
             return View(model);
         }

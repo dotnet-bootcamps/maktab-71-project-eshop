@@ -23,6 +23,7 @@ public class CategoryTagQueryRepository:ICategoryTagQueryRepository
             TagCategoryId = t.TagCategoryId,
             HasValue = t.TagCategory.HasValue,
             TagCategoryName = t.TagCategory.Name,
+            IsMult = t.TagCategory.IsMult,
         })).ToListAsync();
         return tags;
     }

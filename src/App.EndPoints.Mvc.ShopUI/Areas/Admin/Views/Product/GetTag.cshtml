@@ -1,4 +1,6 @@
-﻿@model List<List<App.Domain.Core.Product.Dtos.TagDto>>
+﻿@{
+    int i = 0;
+}
 @foreach (var item in ViewBag.inputTags)
 {
     <div class="form-group row p-3">
@@ -6,25 +8,49 @@
             <label for="input">@item.Name</label>
         </div>
         <div class="col-8">
-            <input id="input" name=@(item.Name) class="form-control" />
+            <input type="hidden" name="input[@i].Key" value="@item.Id" />
+            <input class="form-control" name="input[@i].Value"/>
         </div>
     </div>
+    i++;
 }
-
 @foreach (var item in ViewBag.selectListTags)
 {
-    <div class="form-group row p-3">
-        <div class="col-4">
-            <p>@item[0].TagCategoryName</p>
+    if (item[0].IsMult)
+    {
+        <div class="form-group row p-3">
+            <div class="col-4">
+                <p>@item[0].TagCategoryName</p>
+            </div>
+            <div class="col-8">
+                <select name="tags" data-placeholder="انتخاب @item[0].TagCategoryName" multiple class="chosen-select form-select">
+                    @foreach (var tag in item)
+                    {
+                        <option value="@tag.Id">@tag.Name</option>
+                    }
+                </select>
+            </div>
         </div>
-        <div class="col-8">
-            <select class="form-control">
-                <option disabled selected>انتخاب @item[0].TagCategoryName</option>
-                @foreach (var tag in item)
-                {
-                    <option value="@tag.Id">@tag.Name</option>
-                }
-            </select>
+    }
+    else
+    {
+        <div class="form-group row p-3">
+            <div class="col-4">
+                <p>@item[0].TagCategoryName</p>
+            </div>
+            <div class="col-8">
+                <select class="form-select" name="tags">
+                    <option disabled selected>انتخاب @item[0].TagCategoryName</option>
+                    @foreach (var tag in item)
+                    {
+                        <option value="@tag.Id">@tag.Name</option>
+                    }
+                </select>
+            </div>
         </div>
-    </div>
+    }
 }
+<script>
+    $(".chosen-select").chosen({rtl: true}).chosen({
+        no_results_text: "Oops, nothing found!" });
+</script>

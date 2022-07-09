@@ -3,11 +3,6 @@ using App.Domain.Core.Product.Dtos;
 using App.Domain.Core.Product.Entities;
 using App.Infrastructures.Database.SqlServer.Data;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace App.Infrastructures.Database.Repos.Ef.Product.Product
 {
@@ -37,7 +32,7 @@ namespace App.Infrastructures.Database.Repos.Ef.Product.Product
                 Name = dto.Name,
                 CreationDate = dto.CreationDate,
                 IsDeleted = dto.IsDeleted,
-            };
+            }; 
             await _context.Products.AddAsync(record);
             await _context.SaveChangesAsync();
             foreach (var color in dto.Colors)
@@ -57,7 +52,19 @@ namespace App.Infrastructures.Database.Repos.Ef.Product.Product
                     FileTypeId = file.Id
                 };
                 record.ProductFiles.Add(productFile);
-                
+
+            }
+            foreach (var tag in dto.Tags)
+            {
+                ProductTag productTag = new ProductTag
+                {
+                    ProductId = record.Id,
+                    Name = tag.Name,
+                    Value = tag.Value,
+                    TagId = tag.TagId
+                };
+                record.ProductTags.Add(productTag);
+
             }
             await _context.SaveChangesAsync();
         }
