@@ -27,7 +27,7 @@ using App.Infrastructures.Database.Repos.Ef.Product.Color;
 using App.Infrastructures.Database.Repos.Ef.Product.Model;
 using App.Infrastructures.Database.Repos.Ef.Product.Product;
 using App.Infrastructures.Database.SqlServer.Data;
-
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -35,17 +35,42 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllersWithViews();
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Account/Login";
+    options.LogoutPath = "/Account/Logout";
+    //options.AccessDeniedPath = 
+
+});
+
+builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 builder.Services.AddDbContext<AppDbContext>(option =>
 {
     option.UseSqlServer("Data Source=(LocalDb)\\MSSQLLocalDB; Initial Catalog=DotNetShopDb; Integrated Security=TRUE");
 });
 
+builder.Services.AddIdentity<IdentityUser<int>, IdentityRole<int>>(
+        options =>
+        {
+            options.SignIn.RequireConfirmedAccount = false;
+            options.SignIn.RequireConfirmedEmail = false;
+            options.SignIn.RequireConfirmedPhoneNumber = false;
+
+            //options.User.AllowedUserNameCharacters
+            //options.User.RequireUniqueEmail
+
+            options.Password.RequireDigit = false;
+            options.Password.RequireLowercase = false;
+            options.Password.RequireNonAlphanumeric = false;
+            options.Password.RequireUppercase = false;
+            options.Password.RequiredLength = 3;
+            options.Password.RequiredUniqueChars = 1;
+
+        })
+    .AddEntityFrameworkStores<AppDbContext>();
 
 
 
-
-builder.Services.AddScoped<IProductAppService, ProductAppService>();
 
 #region BaseData
 builder.Services.AddScoped<IBaseDataAppService, BaseDataAppService>();
@@ -59,7 +84,6 @@ builder.Services.AddScoped<IBrandService, BrandService>();
 builder.Services.AddScoped<IBrandCommandRepository, BrandCommandRepository>();
 builder.Services.AddScoped<IBrandQueryRepository, BrandQueryRepository>();
 #endregion Brand
-#region Product
 #region Category
 builder.Services.AddScoped<ICategoryAppService, CategoryAppService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
@@ -83,7 +107,6 @@ builder.Services.AddScoped<IProductAppService, ProductAppService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IProductCommandRepository, ProductCommandRepository>();
 builder.Services.AddScoped<IProductQueryRepository, ProductQueryRepository>();
-#endregion
 #endregion
 #region Operator 
 builder.Services.AddScoped<IOperatorAppService, OperatorAppService>();
@@ -111,7 +134,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 
