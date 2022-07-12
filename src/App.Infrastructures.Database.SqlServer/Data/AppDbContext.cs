@@ -1,22 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
-using App.Domain.Core.Product.Entities;
-using App.Domain.Core.BaseData.Entities;
+﻿using App.Domain.Core.BaseData.Entities;
 using App.Domain.Core.Operator.Entities;
+using App.Domain.Core.Product.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 
 namespace App.Infrastructures.Database.SqlServer.Data
 {
-    public partial class AppDbContext : DbContext
+    public partial class AppDbContext : IdentityDbContext<IdentityUser<int>,IdentityRole<int>,int>
     {
-        public AppDbContext()
-        {
-        }
-
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         {
+
         }
 
         public virtual DbSet<Brand> Brands { get; set; } = null!;
@@ -38,10 +35,12 @@ namespace App.Infrastructures.Database.SqlServer.Data
         public virtual DbSet<Tag> Tags { get; set; } = null!;
         public virtual DbSet<TagCategory> TagCategories { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
+        public virtual DbSet<TagCategoryCategory> TagCategoryCategories { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Brand>(entity =>
             {
                 entity.Property(e => e.Name).HasMaxLength(250);
@@ -205,7 +204,6 @@ namespace App.Infrastructures.Database.SqlServer.Data
 
                 entity.HasIndex(e => e.TagId, "IX_ProductTags_TagId");
 
-                entity.Property(e => e.Name).HasMaxLength(250);
 
                 entity.Property(e => e.Value).HasMaxLength(500);
 

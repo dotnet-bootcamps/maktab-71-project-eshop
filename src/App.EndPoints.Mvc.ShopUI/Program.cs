@@ -27,7 +27,7 @@ using App.Infrastructures.Database.Repos.Ef.Product.Color;
 using App.Infrastructures.Database.Repos.Ef.Product.Model;
 using App.Infrastructures.Database.Repos.Ef.Product.Product;
 using App.Infrastructures.Database.SqlServer.Data;
-
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -35,17 +35,34 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+    .AddRazorRuntimeCompilation();
+
 builder.Services.AddDbContext<AppDbContext>(option =>
 {
     option.UseSqlServer(@"Data Source=.\SQL2019; Initial Catalog=DotNetShopDb; Integrated Security=TRUE");
 });
 
+builder.Services.AddIdentity<IdentityUser<int>, IdentityRole<int>>(
+    options => 
+    { 
+        options.SignIn.RequireConfirmedEmail = false;
+        options.SignIn.RequireConfirmedPhoneNumber = false;
+        options.SignIn.RequireConfirmedAccount = false;
+        options.Password.RequireLowercase = false;
+        options.Password.RequireUppercase = false;
+        options.Password.RequireDigit = false;
+        options.Password.RequireNonAlphanumeric = false;
+        options.Password.RequiredUniqueChars = 0;
+        options.Password.RequiredLength = 2;
+    })
+    .AddEntityFrameworkStores<AppDbContext>();
 
 
 
 
 builder.Services.AddScoped<IProductAppService, ProductAppService>();
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 #region BaseData
 builder.Services.AddScoped<IBaseDataAppService, BaseDataAppService>();

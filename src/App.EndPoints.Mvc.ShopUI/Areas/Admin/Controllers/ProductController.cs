@@ -72,6 +72,13 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
                 OperatorId = p.OperatorId,
                 BrandId = p.BrandId,
             }).ToList();
+            var categories = await _categoryAppService.GetAll();
+            ViewBag.Categories = categories
+                .Select(s => new SelectListItem
+                {
+                    Text = s.Name,
+                    Value = s.Id.ToString()
+                });
             return View(recordsProduct);
         }
 
