@@ -1,15 +1,24 @@
 ﻿using App.Domain.Core.BaseData.Entities;
 using App.Domain.Core.Operator.Entities;
-using App.Domain.Core.Product.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using System.Reflection.Emit;
 
 namespace App.Infrastructures.Database.SqlServer.Data
 {
-    public partial class AppDbContext : IdentityDbContext<IdentityUser<int>,IdentityRole<int>,int>
+    //public partial class AppIdentityDbContext : IdentityDbContext
+    //{
+    //}
+
+    //public class AppUser : IdentityUser
+    //{
+    //    public string Address { get; set; }
+    //}
+    public partial class AppDbContext : IdentityDbContext<IdentityUser<int>, IdentityRole<int>, int>
     {
+        //public AppDbContext()
+        //{
+        //}
+
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         {
@@ -253,9 +262,7 @@ namespace App.Infrastructures.Database.SqlServer.Data
                 entity.Property(e => e.Name).HasMaxLength(250);
             });
 
-            OnModelCreatingPartial(modelBuilder);
         }
-
-        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+        
     }
 }
