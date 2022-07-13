@@ -1,0 +1,29 @@
+﻿@model IdentityUser<int>
+
+<form>
+    <div ><input disabled style="display:none" asp-for=Id />@Model.Id</div>
+    <div>
+        <label>یوزر نیم</label>
+        <input asp-for=UserName />
+    </div>
+
+    <div>
+        <label>ایمیل</label>
+        <input asp-for=Email type="email" />
+    </div>
+
+    <div>
+        <label>پسوورد</label>
+        <input asp-for=PasswordHash type="password" />
+    </div>
+
+    <div>
+        <label>نقش</label>
+        <select name="roles" multiple asp-items="@ViewBag.Roles">
+            <option selected value="0">انتخاب نقش</option>
+        </select>
+    </div>
+
+
+    <input type="submit" class="btn btn-primary" />
+</form>

@@ -1,1 +1,45 @@
-﻿
+﻿@using App.EndPoints.Mvc.ShopUI.Areas.Admin.Models.ViewModels.User
+@model List<UserViewModel>
+
+
+<form class="form-inline form-row col-3 " asp-controller="UserManagment" asp-action="Index" method="get">
+        <div class="form-group mb-2 d-inline-block">
+            <input type="text" class="form-control" id="staticEmail2" placeholder="جستجوی کاربر">
+       
+        <button type="submit" class="btn btn-primary mb-2 d-inline-block">جستجو</button>
+    </div>
+
+
+</form>
+
+<div ><a class="btn btn-primary" asp-controller="UserManagment" asp-action="Create">ایجاد کاربر جدید</a></div>
+<table class="table table-hover tabletable-striped">
+    <thead>
+        <tr>
+            <th>شناسه</th>
+            <th>یوزنیم</th>
+            <th>ایمیل</th>
+            <th>پسوورد</th>
+            <th>نقش</th>
+            <th>عملیات</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.UserName</td>
+                <td>@item.Email</td>
+                <td>@item.Password</td>
+                <td>
+                    <p>@item.Roles</p>
+                </td>
+                <td>
+                    <a calss="btn btn-primary" asp-controller="UserManagment" asp-action="Edit" asp-route-id="@item.Id">ویرایش</a>
+                    <a calss="btn btn-danger" asp-controller="UserManagment" asp-action="Block" asp-route-id="@item.Id">لغو کاربر</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
