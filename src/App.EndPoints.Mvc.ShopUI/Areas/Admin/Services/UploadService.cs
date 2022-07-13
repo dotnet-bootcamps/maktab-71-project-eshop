@@ -6,17 +6,19 @@ namespace App.EndPoints.Mvc.AdminUI.Services
     {
         private readonly IWebHostEnvironment _environment;
         private readonly IFileTypeAppService _fileTypeAppService;
+        private readonly IConfiguration _configuration;
 
-        public UploadService(IWebHostEnvironment environment, IFileTypeAppService fileTypeAppService)
+        public UploadService(IWebHostEnvironment environment, IFileTypeAppService fileTypeAppService, IConfiguration configuration)
         {
             _environment = environment;
             _fileTypeAppService = fileTypeAppService;
+            _configuration = configuration;
         }
 
         public async Task<List<string>> AddFile(ICollection<IFormFile> files)
         {
             List<string> filesList = new List<string>();
-            var uploads = Path.Combine(_environment.WebRootPath, "Upload");
+            var uploads = _configuration.GetSection("UploadPath").Value;
             var rondom = "";
             foreach (var file in files)
             {

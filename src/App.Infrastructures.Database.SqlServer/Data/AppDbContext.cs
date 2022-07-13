@@ -2,10 +2,12 @@
 using App.Domain.Core.Product.Entities;
 using App.Domain.Core.BaseData.Entities;
 using App.Domain.Core.Operator.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace App.Infrastructures.Database.SqlServer.Data
 {
-    public partial class AppDbContext : DbContext
+    public partial class AppDbContext : IdentityDbContext<IdentityUser<int>, IdentityRole<int>,int>
     {
 
 
@@ -46,6 +48,7 @@ namespace App.Infrastructures.Database.SqlServer.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Brand>(entity =>
             {
                 entity.Property(e => e.Name).HasMaxLength(250);

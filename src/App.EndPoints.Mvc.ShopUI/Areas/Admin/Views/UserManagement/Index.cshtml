@@ -1,0 +1,54 @@
+﻿@model List<App.EndPoints.Mvc.ShopUI.Areas.Admin.Models.ViewModels.BaseData.User.UserOutputVM>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="row">
+    <div class="col-6">
+        <h2>لیست کاربران</h2>
+    </div>
+    <div class="col-6 text-start">
+        <form asp-controller="UserManagement" asp-action="Index">
+            <p>
+                <label for="search">Search: </label>
+                <input type="text" name="SearchStrin" id="search"/>
+                <input type="submit" value="جستجو"/>
+            </p>
+        </form>
+    </div>
+</div>
+<a asp-area="Admin" asp-controller="UserManagement" asp-action="Create" class="btn btn-success">ایجاد کاربر</a>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>شناسه</th>
+        <th>نام کاربری</th>
+        <th>ایمیل</th>
+        <th>نقش</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var user in Model)
+    {
+        <tr>
+            <th>@user.Id</th>
+            <td>@user.UserName</td>
+            <td>@user.Email</td>
+            <td>
+                @foreach (var rol in user.Roles)
+                {
+                    if (user.Roles.Count-1 == user.Roles.IndexOf(rol))
+                    {
+                        <span> @rol</span>
+                        break;
+                    }
+                    <span>@rol / </span>
+                    
+                }
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+

@@ -1,0 +1,36 @@
+﻿@model App.EndPoints.Mvc.ShopUI.ViewModels.RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+}
+<div class="col-6 m-auto">
+    <h4 class="mb-3">فرم ثبت نام</h4>
+        <form asp-controller="Account" asp-action="Register" method="post">
+            <div class="form-group mb-3">
+                <label asp-for="UserName"></label>
+                <input asp-for="UserName" class="form-control"/>
+                <span asp-validation-for="UserName"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="form-control"/>
+                <span asp-validation-for="Email"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Password"></label>
+                <input asp-for="Password" class="form-control"/>
+                <span asp-validation-for="Password"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="ConfirmPassword"></label>
+                <input asp-for="ConfirmPassword" class="form-control"/>
+                <span asp-validation-for="ConfirmPassword"></span>
+            </div>
+            <input type="submit" value="ثبت نام" class="btn btn-success"/>
+        </form>
+</div>
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial"/>
+}
+
+
