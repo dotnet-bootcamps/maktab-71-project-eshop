@@ -1,7 +1,9 @@
 ﻿using App.Domain.Core.BaseData.Entities;
 using App.Domain.Core.Operator.Entities;
+using App.Domain.Core.Product.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace App.Infrastructures.Database.SqlServer.Data
 {

@@ -66,7 +66,7 @@ namespace App.Infrastructures.Database.Repos.Ef.Product.Product
 
         public async Task Update(ProductDto dto)
         {
-            var record = await _context.Products.Where(p => p.Id == dto.Id).Include(x => x.ProductColors).SingleAsync();
+            Domain.Core.Product.Entities.Product record = await _context.Products.Where(p => p.Id == dto.Id).Include(x => x.ProductColors).SingleAsync();
             record.CategoryId = dto.CategoryId;
             record.BrandId = dto.BrandId;
             record.Weight = dto.Weight;
