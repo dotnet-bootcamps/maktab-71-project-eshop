@@ -1,0 +1,50 @@
+﻿@using App.EndPoints.Mvc.ShopUI.Areas.Admin.Models.ViewModels.BaseData.User
+@model UserManagmentViewModel;
+
+<div class="col-6 m-auto">
+    <h3 class="text-center">ایجاد کاربر</h3>
+    <form asp-area="Admin" asp-controller="UserManagement" asp-action="Create" method="post">
+
+        <div class="form-group mb-3">
+            <label asp-for="UserName"></label>
+            <input asp-for="UserName" class="form-control"/>
+            <span asp-validation-for="UserName"></span>
+        </div>
+
+        <div class="form-group mb-3">
+            <label asp-for="Email"></label>
+            <input asp-for="Email" class="form-control"/>
+            <span asp-validation-for="Email"></span>
+        </div>
+
+        <div class="form-group row p-3">
+            <div class="col-4">
+                <label asp-for="Roles"></label>
+            </div>
+            <div class="col-8">
+                <select asp-for="Roles" class="select-chosen form-select" asp-items="@ViewBag.Roles" multiple>
+                    <option disabled selected>انتخاب نقش</option>
+                </select>
+                <span asp-validation-for="Roles" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="Password"></label>
+            <input asp-for="Password" class="form-control"/>
+            <span asp-validation-for="Password"></span>
+        </div>
+        <input type="submit" value="ثبت نام" class="btn btn-success"/>
+    </form>
+</div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+
+        $(function() {
+            $(".select-chosen").chosen({rtl: true});
+        });
+
+
+    </script>
+}
