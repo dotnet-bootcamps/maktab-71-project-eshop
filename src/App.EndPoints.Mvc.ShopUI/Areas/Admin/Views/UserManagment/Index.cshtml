@@ -1,1 +1,53 @@
-﻿
+﻿@using App.EndPoints.Mvc.ShopUI.Areas.Admin.Models.ViewModels.BaseData.User
+@model List<UserManagmentViewModel>
+
+    <div class="row">
+        <div class="col-6">
+            <h2>لیست کاربران</h2>
+        </div>
+
+        <div class="col-6 text-start">
+            <form asp-controller="UserManagment" asp-action="Index" method="post">
+            <div class="row-cols-">
+                <input name="name" />
+                <input type="submit" value="Search"
+                />
+            </div>
+        </form>
+        </div>
+    </div>
+
+    <div>
+        <a class="btn btn-outline-success" asp-controller="UserManagment" asp-action="Create">ثبت کاربر</a>
+    </div>
+
+
+    <table class ="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>UserName</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Operators</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach(var user in Model)
+        {
+            <tr>
+                <td>@user.Id</td>
+                <td>@user.UserName</td>
+                <td>@user.Email</td>
+                <td>@foreach(var role in @user.Roles)
+                    {
+                        <span>@role</span>
+                    }
+                    </td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="UserManagment" asp-action="Edit">ویرایش</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
