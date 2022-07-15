@@ -43,7 +43,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 });
 
-builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
+builder.Services.AddControllersWithViews()/*.AddRazorRuntimeCompilation()*/;
 builder.Services.AddDbContext<AppDbContext>(option =>
 {
     option.UseSqlServer("Data Source=(LocalDb)\\MSSQLLocalDB; Initial Catalog=DotNetShopDb; Integrated Security=TRUE");

@@ -1,0 +1,90 @@
+﻿@model UserUpdateViewModel
+<form method="post" asp-controller="UserManagment" asp-action="Update">
+
+
+    <div class="form-group row">
+        <h2 class="text-info pl-3">ثبت محصول جدید</h2>
+    </div>
+    <input hidden asp-for=Id value=@Model.Id />
+    <div class="row">
+        <div class="col-8">
+            <div class="form-group row p-3">
+                <div class="col-4">
+                    <label asp-for="UserName"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="UserName" class="form-control" />
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group row p-3">
+                <div class="col-4">
+                    <label asp-for="OldPassword"></label>
+                </div>
+                <div class="col-8">
+                    <input type="password" asp-for="OldPassword" class="form-control" />
+                    <span asp-validation-for="OldPassword" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group row p-3">
+                <div class="col-4">
+                    <label asp-for="NewPassword"></label>
+                </div>
+                <div class="col-8">
+                    <input type="password" asp-for="NewPassword" class="form-control" />
+                    <span asp-validation-for="NewPassword" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group row p-3">
+                <div class="col-4">
+                    <label asp-for="Email"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            </div>
+                        
+
+            <div class="form-group row p-3">
+                <div class="col-4">
+                    <label asp-for="Roles"></label>
+                </div>
+                <div class="col-8">
+                    <select asp-for="Roles" class="form-control" asp-items="@ViewBag.Roles" multiple>
+                        <option disabled>-- Select Role --</option>
+                    </select>
+                    <span asp-validation-for="Roles" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group row p-3">
+                <div class="col-8 offset-4 row">
+                    <div class="col">
+                        <input type="submit" value="ذخیره" class="btn btn-primary w-100" />
+                    </div>
+                    <div class="col">
+                        <a asp-controller="UserManagment" asp-action="Index" class="btn btn-secondary"><i class="fas fa-sign-out-alt">بازگشت به لیست</i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</form>
+
+@section Scripts{
+<partial name="_ValidationScriptsPartial" />
+<script>
+
+            $(function() {
+        $(".select-chosen").chosen({rtl: true});
+    });
+
+</script>
+}
+

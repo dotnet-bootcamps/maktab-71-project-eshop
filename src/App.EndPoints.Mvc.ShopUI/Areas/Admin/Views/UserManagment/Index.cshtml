@@ -1,1 +1,62 @@
-﻿
+﻿@model IEnumerable<UserListViewModel>
+<div class="container p-3">
+    <div class="d-flex justify-content-between">
+        <div>
+            <h2 class="text-primary">لیست کاربران</h2>
+        </div>
+        <div>
+            <a class="btn btn-success" asp-controller="UserManagment" asp-action="Create">ایجاد</a>
+        </div>
+    </div>
+    <br />
+    <br />
+    <hr />
+    @if (Model.Count() > 0)
+    {
+        <table class="table table-hover table-bordered table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.UserName)</th>
+                    <th>@Html.DisplayNameFor(model => model.Email)</th>
+                    <th>@Html.DisplayNameFor(model => model.Roles)</th>
+                    <th>عملیات</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.UserName</td>
+                        <td>@item.Email</td>
+                        <td>
+                            <table>
+                                @if (item.Roles.Count > 0)
+                                {
+                                    @foreach (var role in item.Roles)
+                                    {
+                                        <tr>
+                                            <td>@role</td>
+                                        </tr>
+                                    }
+                                }
+                            </table>
+                        </td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a asp-controller="UserManagment" asp-action="Update" asp-route-Id="@item.Id" class="btn btn-primary m-1 p-1"><i class="fas fa-edit"></i>ویرایش</a>
+                                <a asp-controller="UserManagment" asp-action="Delete" asp-route-Id="@item.Id" class="btn btn-danger m-1 p-1"><i class="far fa-trash-alt"></i>حذف</a>
+                            </div>
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <h1>هنوز هیچ کاربری وارد سیستم نشده است</h1>
+    }
+
+
+</div>
