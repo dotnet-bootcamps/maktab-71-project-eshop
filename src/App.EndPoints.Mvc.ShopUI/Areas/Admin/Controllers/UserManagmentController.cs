@@ -75,7 +75,7 @@ namespace App.EndPoints.Mvc.ShopUI.Areas.Admin.Controllers
         {
             var result =await _userManager.Users.Where(x=>x.Id==id).SingleOrDefaultAsync();
             await _userManager.DeleteAsync(result);
-            return View(result);
+            return RedirectToAction(nameof(Index));
         }
 
 
@@ -84,7 +84,7 @@ namespace App.EndPoints.Mvc.ShopUI.Areas.Admin.Controllers
         public async Task<IActionResult> Create()
         {
 
-            var roles = _roleManager.Roles.Select(x => new SelectListItem() { Value = x.Id.ToString(), Text = x.Name }).ToList();
+            var roles = _roleManager.Roles.Select(x => new SelectListItem() { Value = x.Name, Text = x.Name }).ToList();
             ViewBag.Roles = roles;
             return View();
         }
