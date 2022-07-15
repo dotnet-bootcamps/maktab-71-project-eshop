@@ -14,9 +14,9 @@ namespace App.Infrastructures.Database.SqlServer.Data
     //{
     //}
 
-    //public class AppUser : IdentityUser
+    //public class AppUser : IdentityUser<int>
     //{
-    //    public string Address { get; set; }
+    //    public IdentityRole Role { get; set; }
     //}
     public partial class AppDbContext : IdentityDbContext<IdentityUser<int>, IdentityRole<int>, int>
     {

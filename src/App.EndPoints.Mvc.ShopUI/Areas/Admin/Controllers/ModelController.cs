@@ -5,6 +5,7 @@ using App.Domain.Core.Product.Contacts.AppServices;
 using App.Domain.Core.Product.Dtos;
 using App.EndPoints.Mvc.AdminUI.Models.ViewModels.Product.Model;
 using App.EndPoints.Mvc.AdminUI.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -22,7 +23,7 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
             _modelAppService = appService;
             _brandAppService = brandAppService;
         }
-
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var records = await _modelAppService.GetAll();
