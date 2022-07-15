@@ -66,7 +66,7 @@ namespace App.EndPoints.Mvc.ShopUI.Areas.Admin.Controllers
             //user.Email = email;
             //user.UserName = username;
             await _userManager.ChangePasswordAsync(user, user.PasswordHash, password);
-            return View(user);
+            return RedirectToAction(nameof(Index));
         }
 
 
