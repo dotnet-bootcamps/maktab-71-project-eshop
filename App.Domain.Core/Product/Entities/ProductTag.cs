@@ -9,7 +9,6 @@ namespace App.Domain.Core.Product.Entities
         public int ProductId { get; set; }
         public int TagId { get; set; }
         public string Value { get; set; } = null!;
-        public string Name { get; set; } = null!;
         public DateTime CreationDate { get; set; }
         public bool IsDeleted { get; set; }
 

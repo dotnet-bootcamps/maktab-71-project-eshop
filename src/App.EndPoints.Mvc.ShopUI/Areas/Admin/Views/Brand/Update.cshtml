@@ -1,37 +1,37 @@
 ﻿@model BrandUpdateViewModel
 
 @{
-    ViewData["Title"] = "ویرایش برند";
+	ViewData["Title"] = "ویرایش برند";
 }
 
 <h3>ویرایش برند</h3>
 <form class="col-md-4">
 
-    <div class="form-group">
-        <label asp-for="Id"></label>
-        <input class="form-control" asp-for="Id" disabled>
-    </div>
+	<div class="form-group">
+		<label asp-for="Id"></label>
+		<input class="form-control" asp-for="Id" disabled>
+	</div>
 
-    <div class="form-group">
-        <label asp-for="Name"></label>
-        <input class="form-control" asp-for="Name">
-    </div>
+	<div class="form-group">
+		<label asp-for="Name"></label>
+		<input class="form-control" asp-for="Name">
+	</div>
 
-    <div class="form-group">
-        <label asp-for="DisplayOrder"></label>
-        <input class="form-control" asp-for="DisplayOrder">
-    </div>
+	<div class="form-group">
+		<label asp-for="DisplayOrder"></label>
+		<input class="form-control" asp-for="DisplayOrder">
+	</div>
 
-    <div class="form-check-inline mx-0 my-1">
-        <input asp-for=IsDeleted class="form-check-input" type="checkbox" value="True" />
-        <label class="form-check-label mx-1" asp-for=IsDeleted>
-        </label>
-    </div>
+	<div class="form-check-inline mx-0 my-1">
+		<input asp-for=IsDeleted class="form-check-input" type="checkbox" value="True" />
+		<label class="form-check-label mx-1" asp-for=IsDeleted>
+		</label>
+	</div>
 
-    <div class="d-flex flex-row justify-content-end">
-        <button type="submit" class="btn btn-primary mx-1" asp-action="Update" formmethod="post">ویرایش</button>
-        <button type="submit" class="btn btn-danger" asp-action="Index">انصراف</button>
-    </div>
+	<div class="d-flex flex-row justify-content-end">
+		<button type="submit" class="btn btn-primary mx-1" asp-action="Update" formmethod="post">ویرایش</button>
+		<a class="btn btn-danger" asp-action="Index">انصراف</a>
+	</div>
 
 </form>
 

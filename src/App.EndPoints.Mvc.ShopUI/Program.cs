@@ -46,31 +46,29 @@ builder.Services.ConfigureApplicationCookie(options =>
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 builder.Services.AddDbContext<AppDbContext>(option =>
 {
-    option.UseSqlServer("Data Source=(LocalDb)\\MSSQLLocalDB; Initial Catalog=DotNetShopDb; Integrated Security=TRUE");
+    option.UseSqlServer(@"Data Source=.\SQL2019; Initial Catalog=DotNetShopDb; Integrated Security=TRUE");
 });
 
 builder.Services.AddIdentity<IdentityUser<int>, IdentityRole<int>>(
-        options =>
-        {
-            options.SignIn.RequireConfirmedAccount = false;
-            options.SignIn.RequireConfirmedEmail = false;
-            options.SignIn.RequireConfirmedPhoneNumber = false;
-
-            //options.User.AllowedUserNameCharacters
-            //options.User.RequireUniqueEmail
-
-            options.Password.RequireDigit = false;
-            options.Password.RequireLowercase = false;
-            options.Password.RequireNonAlphanumeric = false;
-            options.Password.RequireUppercase = false;
-            options.Password.RequiredLength = 3;
-            options.Password.RequiredUniqueChars = 1;
-
-        })
+    options => 
+    { 
+        options.SignIn.RequireConfirmedEmail = false;
+        options.SignIn.RequireConfirmedPhoneNumber = false;
+        options.SignIn.RequireConfirmedAccount = false;
+        options.Password.RequireLowercase = false;
+        options.Password.RequireUppercase = false;
+        options.Password.RequireDigit = false;
+        options.Password.RequireNonAlphanumeric = false;
+        options.Password.RequiredUniqueChars = 0;
+        options.Password.RequiredLength = 2;
+    })
     .AddEntityFrameworkStores<AppDbContext>();
 
 
 
+
+builder.Services.AddScoped<IProductAppService, ProductAppService>();
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 #region BaseData
 builder.Services.AddScoped<IBaseDataAppService, BaseDataAppService>();

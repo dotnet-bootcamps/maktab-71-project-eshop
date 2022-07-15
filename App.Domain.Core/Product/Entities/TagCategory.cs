@@ -16,5 +16,6 @@ namespace App.Domain.Core.Product.Entities
         public bool IsDeleted { get; set; }
 
         public virtual ICollection<Tag> Tags { get; set; }
+        public virtual ICollection<TagCategoryCategory> TagCategoryCategories { get; set; }
     }
 }

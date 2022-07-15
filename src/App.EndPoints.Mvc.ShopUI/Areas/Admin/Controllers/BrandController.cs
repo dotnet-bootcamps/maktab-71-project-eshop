@@ -1,11 +1,14 @@
 ﻿using App.Domain.Core.BaseData.Contarcts.AppServices;
 using App.Domain.Core.BaseData.Contarcts.Services;
 using App.Domain.Core.BaseData.Dtos;
+using App.Domain.Core.BaseData.Entities;
 using App.EndPoints.Mvc.AdminUI.Models.ViewModels.BaseData.Brand;
 using App.EndPoints.Mvc.AdminUI.Models.ViewModels.Product;
 using Microsoft.AspNetCore.Mvc;
-
-
+using Microsoft.AspNetCore.WebUtilities;
+using Newtonsoft.Json;
+using System.Text;
+using System.Threading;
 
 namespace App.EndPoints.Mvc.AdminUI.Controllers
 {
@@ -14,24 +17,31 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
     {
         private readonly IBrandAppService _brandAppService;
         private readonly IBrandService _brandService;
+        private readonly IConfiguration _configuration;
 
-        public BrandController(IBrandAppService brandAppService, IBrandService brandService)
+        public BrandController(IBrandAppService brandAppService, IBrandService brandService, IConfiguration configuration)
         {
             _brandAppService = brandAppService;
             _brandService = brandService;
+            _configuration = configuration;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? name,int? id)
         {
-            var brands = await _brandAppService.GetAll();
-            var brandsModel = brands.Select(p => new BrandOutputViewModel()
+            using var client = new HttpClient();
+            var query = new Dictionary<string, string?>()
+{
+                ["name"] = name,
+                ["id"] = id.ToString()
+            };
+            var uri = QueryHelpers.AddQueryString("https://localhost:7137/api/Brand/GetBrands", query);
+            client.DefaultRequestHeaders.Add("ApiKey", _configuration.GetSection("ApiKey").Value);
+            var httpResponse = await client.GetAsync(uri);
+            if (!httpResponse.IsSuccessStatusCode)
             {
-                Id = p.Id,
-                Name = p.Name,
-                DisplayOrder = p.DisplayOrder,
-                CreationDate = p.CreationDate,
-                IsDeleted = p.IsDeleted,
-            }).ToList();
+                throw new Exception("خطایی در دریافت اطلاعات رخ داد.");
+            }
+            var brandsModel = await httpResponse.Content.ReadFromJsonAsync<List<BrandOutputViewModel>>();
             return View(brandsModel);
         }
 
@@ -42,16 +52,29 @@ namespace App.EndPoints.Mvc.AdminUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(BrandAddViewModel brand)
+        public async Task<IActionResult> Create(BrandAddViewModel brand, CancellationToken cancellationToken)
         {
             //if (ModelState.IsValid && brand.Name.ToLower() == "hp" && brand.DisplayOrder > 2)
             //    ModelState.AddModelError("", "برند اچ پی باید در ابتدای لیست قرار بگیرد");
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                return View(brand);
+                using var client = new HttpClient();
+                var query = new Dictionary<string, string?>()
+                {
+                    ["name"] = brand.Name,
+                    ["id"] = brand.Id.ToString()
+                };
+                var uri = QueryHelpers.AddQueryString("https://localhost:7137/api/Brand/SetBrand", query);
+                client.DefaultRequestHeaders.Add("ApiKey", _configuration.GetSection("ApiKey").Value);
+                var httpResponse = await client.PostAsync(uri, null, cancellationToken);
+                if (!httpResponse.IsSuccessStatusCode)
+                {
+                    throw new Exception("خطایی در دریافت اطلاعات رخ داد.");
+                }
+                return RedirectToAction(nameof(Index));
+                
             }
-            await _brandAppService.Set(brand.Name, brand.DisplayOrder);
-            return RedirectToAction("");
+            return View(brand);
         }
 
         [HttpGet]

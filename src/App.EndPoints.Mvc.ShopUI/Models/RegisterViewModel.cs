@@ -10,7 +10,7 @@ public class RegisterViewModel
     public string Email { get; set; }
 
     [Required]
-    [StringLength(100, ErrorMessage = "{0} حداقل {1} کاراکتر و حداکتر {2} باشد", MinimumLength = 3)]
+    [StringLength(100, ErrorMessage = "{0} حداقل {2} کاراکتر و حداکتر {1} باشد", MinimumLength = 3)]
     [DataType(DataType.Password)]
     [Display(Name = "رمز عبور")]
     public string Password { get; set; }
