@@ -11,10 +11,14 @@ namespace App.EndPoints.Api.Controllers.Admin.Product
     public class ProductController : ControllerBase
     {
         private readonly IProductAppService _productAppService;
+        private readonly IModelAppService _modelAppService;
+        
 
-        public ProductController(IProductAppService productAppService)
+        public ProductController(IProductAppService productAppService, IModelAppService ModelAppServic)
         {
             _productAppService = productAppService;
+            _modelAppService = ModelAppServic;
+            
         }
         [HttpGet("[action]")]
         [ApiKeyAuthorize]
@@ -23,6 +27,9 @@ namespace App.EndPoints.Api.Controllers.Admin.Product
             var products = await _productAppService.GetProducts(categoryId, keyword, minPrice, maxPrice, brandId, cancellationToken);
             return Ok(products);
         }
+
+     
+
         [HttpPost("[action]")]
         [ApiKeyAuthorize]
         public async Task<IActionResult> SetProduct(ProductDto product,CancellationToken cancellationToken)
@@ -30,5 +37,22 @@ namespace App.EndPoints.Api.Controllers.Admin.Product
             await _productAppService.Set(product);
             return Ok();
         }
+
+        [HttpGet("[action]")]
+        [ApiKeyAuthorize]
+        public async Task<IActionResult> GetAllModel()
+        {
+            var records = await _modelAppService.GetAll();
+            return Ok(records);
+
+        }
+        [HttpPost("[action]")]
+        [ApiKeyAuthorize]
+        public async Task<IActionResult> SetModel(ProductDto product, CancellationToken cancellationToken)
+        {
+            await _productAppService.Set(product);
+            return Ok();
+        }
+
     }
 }
